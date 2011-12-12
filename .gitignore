@@ -1,0 +1,8 @@
+wp-config.php
+/misc
+/wp-content/themes/revivalcry/js/hashgrid.js
+/wp-content/themes/revivalcry/css/hashgrid.css
+/wp-content/themes/revivalcry/included
+.htaccess
+sitemap.xml
+sitemap.xml.gz
