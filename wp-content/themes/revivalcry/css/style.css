@@ -5,6 +5,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section { display: bl
 }
 html { overflow-y: scroll; }
 html, body { height: 100%; }
+.open-sans { font-family: 'Open Sans', sans-serif; }
+.open-sans-condensed { font-family: 'Open Sans Condensed', sans-serif; }
+body { font-family: 'Open Sans', sans-serif; }
+.container { padding: 0 20px; }
 header { margin-bottom: 6em; }
 nav {
   background: #dddddd;
