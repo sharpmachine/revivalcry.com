@@ -78,40 +78,51 @@
 	<body <?php body_class(); ?>>
 
 		<header role="banner">
-			<hgroup>
-				<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
-				<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
-			</hgroup>
-					
-				<!-- This is the header function.  Uncomment if you want to use it, if not then delete it
-					<?php
-						// Check if this is a post or page, if it has a thumbnail, and if it's a big one
-						if ( is_singular() && current_theme_supports( 'post-thumbnails' ) &&
-								has_post_thumbnail( $post->ID ) &&
-								( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' ) ) &&
-								$image[1] >= HEADER_IMAGE_WIDTH ) :
-							// Houston, we have a new header image!
-							echo get_the_post_thumbnail( $post->ID );
-						elseif ( get_header_image() ) : ?>
-							<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
-						<?php endif; ?>-->
-	
-				<nav role="navigation">
-				  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
-					<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
-					<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
-					<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
-				</nav><!-- nav -->
+			<div id="header">
+				<div id="top-menu">
+					<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'top-menu' ) ); ?>
+				</div><!-- #top-menu -->
 				
-				<!-- Breadcrumbs NavXT-->
-				<div class="breadcrumbs">
-					<?php
-					if(function_exists('bcn_display'))
-					{
-					    bcn_display();
-					}
-					?>
-				</div>
+				<hgroup>
+					<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+				</hgroup>
+				
+				
+						
+					<!-- This is the header function.  Uncomment if you want to use it, if not then delete it
+						<?php
+							// Check if this is a post or page, if it has a thumbnail, and if it's a big one
+							if ( is_singular() && current_theme_supports( 'post-thumbnails' ) &&
+									has_post_thumbnail( $post->ID ) &&
+									( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' ) ) &&
+									$image[1] >= HEADER_IMAGE_WIDTH ) :
+								// Houston, we have a new header image!
+								echo get_the_post_thumbnail( $post->ID );
+							elseif ( get_header_image() ) : ?>
+								<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
+							<?php endif; ?>-->
+		
+					<nav role="navigation">
+					  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
+						<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
+						<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
+						<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
+					</nav><!-- nav -->
+					
+					<div id="banner">
+						<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1000" height="429" alt="Dummy Banner">
+					</div><!-- #banner -->
+					
+					<!-- Breadcrumbs NavXT
+					<div class="breadcrumbs">
+						<?php
+						if(function_exists('bcn_display'))
+						{
+						    bcn_display();
+						}
+						?>
+					</div>-->
+				</div><!-- #header -->
 		</header>
 		<div class="container"> <!-- some layouts will require this to moved down just above the #main tag -->
 			<section id="page">

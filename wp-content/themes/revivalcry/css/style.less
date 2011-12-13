@@ -7,7 +7,9 @@ html { overflow-y: scroll; } /* force scrollbar */
 html, body { height: 100%; }
 
 /*.......................................................the LESS colors*/
-
+@rc-black: #1D1B1B;
+@rc-blue: #33CBCB;
+@rc-white: #EDEBEB;
 
 /*.......................................................the LESS font families*/
 .open-sans
@@ -88,22 +90,37 @@ a
 header
 {
 	margin-bottom: 6em;
+	width: 100%;
+	background-color: @rc-black;
+	
+	#header
+	{
+		width: 1000px;
+		height: 460px;
+		margin: 0 auto;
+	}
+	
+	hgroup
+	{
+		width: 200px;
+		float: left;
+	}
 }
 
 /*.......................................................the navigation*/
 nav
 {
-	background: #ddd;
 	display: block;
 	float: left;
 	margin: 0 auto;
-	width: 940px;
+	width: 780px;
+	float: left;
 	
 	.menu-header, div.menu
 	{
 		font-size: 13px;
 		margin-left: 12px;
-		width: 928px;
+		width: 750px;
 		
 		ul
 		{
@@ -121,7 +138,7 @@ nav
 	
 	a
 	{
-		color: #666;
+		color: @rc-white;
 		display: block;
 		line-height: 38px;
 		padding: 0 10px;
@@ -164,8 +181,7 @@ nav
 	
 	li:hover > a, ul ul :hover > a
 	{
-		background: #333;
-		color: #fff;
+		color: @rc-blue;
 	}
 	
 	ul li:hover > ul
@@ -178,7 +194,8 @@ nav
 	ul li.current-menu-item > a,
 	ul li.current-menu-parent > a 
 	{
-		color: #000;
+		color: @rc-white;
+		background: @rc-blue;
 	}
 }
 

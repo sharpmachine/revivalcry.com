@@ -9,18 +9,31 @@ html, body { height: 100%; }
 .open-sans-condensed { font-family: 'Open Sans Condensed', sans-serif; }
 body { font-family: 'Open Sans', sans-serif; }
 .container { padding: 0 20px; }
-header { margin-bottom: 6em; }
+header {
+  margin-bottom: 6em;
+  width: 100%;
+  background-color: #1d1b1b;
+}
+header #header {
+  width: 1000px;
+  height: 460px;
+  margin: 0 auto;
+}
+header hgroup {
+  width: 200px;
+  float: left;
+}
 nav {
-  background: #dddddd;
   display: block;
   float: left;
   margin: 0 auto;
-  width: 940px;
+  width: 780px;
+  float: left;
 }
 nav .menu-header {
   font-size: 13px;
   margin-left: 12px;
-  width: 928px;
+  width: 750px;
 }
 nav .menu-header ul {
   list-style: none;
@@ -34,7 +47,7 @@ nav .menu-header li {
 nav div.menu {
   font-size: 13px;
   margin-left: 12px;
-  width: 928px;
+  width: 750px;
 }
 nav div.menu ul {
   list-style: none;
@@ -46,7 +59,7 @@ nav div.menu li {
   position: relative;
 }
 nav a {
-  color: #666666;
+  color: #edebeb;
   display: block;
   line-height: 38px;
   padding: 0 10px;
@@ -76,19 +89,25 @@ nav ul ul a {
   width: 160px;
   height: auto;
 }
-nav li:hover > a {
-  background: #333333;
-  color: #ffffff;
-}
-nav ul ul:hover > a {
-  background: #333333;
-  color: #ffffff;
-}
+nav li:hover > a { color: #33cbcb; }
+nav ul ul:hover > a { color: #33cbcb; }
 nav ul li:hover > ul { display: block; }
-nav ul li.current_page_item > a { color: #000000; }
-nav ul li.current-menu-ancestor > a { color: #000000; }
-nav ul li.current-menu-item > a { color: #000000; }
-nav ul li.current-menu-parent > a { color: #000000; }
+nav ul li.current_page_item > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+nav ul li.current-menu-ancestor > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+nav ul li.current-menu-item > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+nav ul li.current-menu-parent > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
 * html nav ul li.current_page_item a { color: #000000; }
 * html nav ul li.current-menu-ancestor a { color: #000000; }
 * html nav ul li.current-menu-item a { color: #000000; }
