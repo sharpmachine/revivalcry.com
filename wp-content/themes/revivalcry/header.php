@@ -84,7 +84,7 @@
 				</div><!-- #top-menu -->
 				
 				<hgroup>
-					<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+					<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png" width="223" height="32" alt="Logo"></a></span></h1>
 				</hgroup>
 				
 				
@@ -109,8 +109,10 @@
 						<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 					</nav><!-- nav -->
 					
+				</div><!-- #header -->
+				
 					<div id="banner">
-						<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1000" height="429" alt="Dummy Banner">
+						<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1280" height="429" alt="Dummy Banner">
 					</div><!-- #banner -->
 					
 					<!-- Breadcrumbs NavXT
@@ -122,7 +124,7 @@
 						}
 						?>
 					</div>-->
-				</div><!-- #header -->
+				
 		</header>
 		<div class="container"> <!-- some layouts will require this to moved down just above the #main tag -->
 			<section id="page">

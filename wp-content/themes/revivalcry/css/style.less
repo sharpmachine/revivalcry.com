@@ -92,41 +92,66 @@ header
 	margin-bottom: 6em;
 	width: 100%;
 	background-color: @rc-black;
+	height: 460px;
 	
 	#header
 	{
-		width: 1000px;
-		height: 460px;
+		width: 820px;
+		padding: 0 60px;
+		height: 80px;
 		margin: 0 auto;
 	}
 	
 	hgroup
 	{
-		width: 200px;
+		width: 223px;
+		height: 32px;
 		float: left;
+		position: relative;
+		z-index: 999;
+		
+		img
+		{
+			
+		}
+	}
+	
+	#banner
+	{
+		width: 100%;
+		overflow: hidden;
+		height: 429px;
+		margin-top: -49px;
+		
+		img
+		{
+			display: block;
+			margin: 0 auto;
+		}
 	}
 }
 
 /*.......................................................the navigation*/
-nav
+nav, #top-menu
 {
 	display: block;
-	float: left;
+	float: right;
 	margin: 0 auto;
-	width: 780px;
-	float: left;
+	width: 570px;
 	
 	.menu-header, div.menu
 	{
-		font-size: 13px;
+		font-size: 16px;
 		margin-left: 12px;
-		width: 750px;
+		width: 568px;
+		margin-top: 9px;
 		
 		ul
 		{
 			list-style: none;
 			margin: 0;
 			padding-left: 0;
+			float: right;
 		}
 		
 		li
@@ -140,9 +165,16 @@ nav
 	{
 		color: @rc-white;
 		display: block;
-		line-height: 38px;
+		line-height: 22px;
 		padding: 0 10px;
 		text-decoration: none;
+		text-transform: uppercase;
+		.open-sans-condensed;
+		
+		:after
+		{
+			content: ".";
+		}
 	}
 	
 	ul ul
@@ -205,6 +237,41 @@ nav
 * html nav ul li.current-menu-parent a,
 * html nav ul li a:hover {
 	color: #000;
+}
+
+#top-menu
+{
+	width: 800px;
+	height: 30px;
+	margin-bottom: 30px;
+	
+	.menu-header
+	{
+		width: 809px;
+		font-size: 14px;
+		margin: 0;
+	}
+	
+	ul#menu-top-nagivation
+	{
+		float: right;
+		
+		
+		li
+		{
+			
+			a
+			{
+				line-height: 30px;
+				color: @rc-blue;
+				
+				:hover
+				{
+					color: @rc-white;
+				}
+			}
+		}
+	}
 }
 
 /*.......................................................the sidebar*/

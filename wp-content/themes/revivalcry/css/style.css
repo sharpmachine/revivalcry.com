@@ -13,46 +13,64 @@ header {
   margin-bottom: 6em;
   width: 100%;
   background-color: #1d1b1b;
+  height: 460px;
 }
 header #header {
-  width: 1000px;
-  height: 460px;
+  width: 820px;
+  padding: 0 60px;
+  height: 80px;
   margin: 0 auto;
 }
 header hgroup {
-  width: 200px;
+  width: 223px;
+  height: 32px;
   float: left;
+  position: relative;
+  z-index: 999;
+}
+header #banner {
+  width: 100%;
+  overflow: hidden;
+  height: 429px;
+  margin-top: -49px;
+}
+header #banner img {
+  display: block;
+  margin: 0 auto;
 }
 nav {
   display: block;
-  float: left;
+  float: right;
   margin: 0 auto;
-  width: 780px;
-  float: left;
+  width: 570px;
 }
 nav .menu-header {
-  font-size: 13px;
+  font-size: 16px;
   margin-left: 12px;
-  width: 750px;
+  width: 568px;
+  margin-top: 9px;
 }
 nav .menu-header ul {
   list-style: none;
   margin: 0;
   padding-left: 0;
+  float: right;
 }
 nav .menu-header li {
   float: left;
   position: relative;
 }
 nav div.menu {
-  font-size: 13px;
+  font-size: 16px;
   margin-left: 12px;
-  width: 750px;
+  width: 568px;
+  margin-top: 9px;
 }
 nav div.menu ul {
   list-style: none;
   margin: 0;
   padding-left: 0;
+  float: right;
 }
 nav div.menu li {
   float: left;
@@ -61,10 +79,13 @@ nav div.menu li {
 nav a {
   color: #edebeb;
   display: block;
-  line-height: 38px;
+  line-height: 22px;
   padding: 0 10px;
   text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Open Sans Condensed', sans-serif;
 }
+nav a:after { content: "."; }
 nav ul ul {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
@@ -108,11 +129,118 @@ nav ul li.current-menu-parent > a {
   color: #edebeb;
   background: #33cbcb;
 }
+#top-menu {
+  display: block;
+  float: right;
+  margin: 0 auto;
+  width: 570px;
+}
+#top-menu .menu-header {
+  font-size: 16px;
+  margin-left: 12px;
+  width: 568px;
+  margin-top: 9px;
+}
+#top-menu .menu-header ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  float: right;
+}
+#top-menu .menu-header li {
+  float: left;
+  position: relative;
+}
+#top-menu div.menu {
+  font-size: 16px;
+  margin-left: 12px;
+  width: 568px;
+  margin-top: 9px;
+}
+#top-menu div.menu ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  float: right;
+}
+#top-menu div.menu li {
+  float: left;
+  position: relative;
+}
+#top-menu a {
+  color: #edebeb;
+  display: block;
+  line-height: 22px;
+  padding: 0 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+#top-menu a:after { content: "."; }
+#top-menu ul ul {
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  display: none;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  float: left;
+  width: 180px;
+  z-index: 99999;
+}
+#top-menu ul ul li { min-width: 180px; }
+#top-menu ul ul ul {
+  left: 100%;
+  top: 0;
+}
+#top-menu ul ul a {
+  background: #333333;
+  line-height: 1em;
+  padding: 10px;
+  width: 160px;
+  height: auto;
+}
+#top-menu li:hover > a { color: #33cbcb; }
+#top-menu ul ul:hover > a { color: #33cbcb; }
+#top-menu ul li:hover > ul { display: block; }
+#top-menu ul li.current_page_item > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+#top-menu ul li.current-menu-ancestor > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+#top-menu ul li.current-menu-item > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
+#top-menu ul li.current-menu-parent > a {
+  color: #edebeb;
+  background: #33cbcb;
+}
 * html nav ul li.current_page_item a { color: #000000; }
 * html nav ul li.current-menu-ancestor a { color: #000000; }
 * html nav ul li.current-menu-item a { color: #000000; }
 * html nav ul li.current-menu-parent a { color: #000000; }
 * html nav ul li a:hover { color: #000000; }
+#top-menu {
+  width: 800px;
+  height: 30px;
+  margin-bottom: 30px;
+}
+#top-menu .menu-header {
+  width: 809px;
+  font-size: 14px;
+  margin: 0;
+}
+#top-menu ul#menu-top-nagivation { float: right; }
+#top-menu ul#menu-top-nagivation li a {
+  line-height: 30px;
+  color: #33cbcb;
+}
+#top-menu ul#menu-top-nagivation li a:hover { color: #edebeb; }
 footer { clear: both; }
 .wp-paginate {
   padding: 0;
