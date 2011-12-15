@@ -12,6 +12,7 @@ body {
   background: url(../images/bg.gif);
 }
 .container { padding: 0 20px; }
+a { color: #33cbcb; }
 header {
   margin-bottom: 6em;
   width: 100%;
@@ -38,14 +39,18 @@ header #banner {
   margin-top: -49px;
 }
 header #banner img {
-  display: block;
-  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  margin-left: -640px;
+  z-index: 1;
 }
 nav {
   display: block;
   float: right;
   margin: 0 auto;
   width: 570px;
+  position: relative;
+  z-index: 2;
 }
 nav .menu-header {
   font-size: 16px;
@@ -136,6 +141,8 @@ nav ul li.current-menu-parent > a {
   float: right;
   margin: 0 auto;
   width: 570px;
+  position: relative;
+  z-index: 2;
 }
 #top-menu .menu-header {
   font-size: 16px;
@@ -242,7 +249,46 @@ nav ul li.current-menu-parent > a {
   color: #33cbcb;
 }
 #top-menu ul#menu-top-nagivation li a:hover { color: #edebeb; }
-footer { clear: both; }
+footer {
+  clear: both;
+  width: 100%;
+  height: 235px;
+  background: #171717;
+  background: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#171717));
+  background: -webkit-linear-gradient(#333333, #171717);
+  background: -moz-linear-gradient(center top, #333333 0%, #171717 100%);
+  background: -moz-gradient(center top, #333333 0%, #171717 100%);
+  background: -moz-gradient(center top, #333333 0%, #171717 100%);
+  background: gradient(center top, #333333 0%, #171717 100%);
+}
+footer #footer {
+  width: 940px;
+  height: 190px;
+}
+footer #site-info {
+  width: 100%;
+  height: 45px;
+  font-size: 14px;
+  text-align: center;
+  background-color: #1d1b1b;
+  color: #edebeb;
+}
+footer #site-info a {
+  line-height: 45px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#page-gradient {
+  width: 100%;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(rgba(0, 0, 0, 0.5)));
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5));
+  background: -moz-linear-gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background: -moz-gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background: -moz-gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background: gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
 .wp-paginate {
   padding: 0;
   margin: 0;

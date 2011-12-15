@@ -1,19 +1,29 @@
 
 	</section><!-- #page -->
+</div><!-- .container -->
+
+<div id="page-gradient">
+	&nbsp;
+</div><!-- #page-gradient -->
 
 	<footer role="contentinfo">
+		<div id="footer">
+			
+		</div><!-- #footer -->
 
-<?php get_sidebar( 'footer' ); ?>
 
 			<div id="site-info">
 				&copy;<?php echo date ('Y'); ?><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-					<?php bloginfo( 'name' ); ?>
-				</a>
+					<?php bloginfo( 'name' ); ?> Ministries
+				</a> | <a href="<?php bloginfo('url'); ?>/privacy-policy">Privacy Policy</a> | <a href="<?php bloginfo('url'); ?>/terms-conditions">Terms &amp; Conditions</a>
+				<?php if (page_is("store")): ?>
+					| <a href="<?php bloginfo('url'); ?>/shipping-returns-policy">Shipping &amp; Returns Policy</a>
+				<?php endif; ?>
 			</div><!-- #site-info -->
 
 	</footer>
 
-</div><!-- .container - some layouts will require this to moved just above the footer tag -->
+
   
 <?php wp_footer(); ?>
 

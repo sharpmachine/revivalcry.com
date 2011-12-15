@@ -24,7 +24,25 @@ html, body { height: 100%; }
 
 
 /*.......................................................the misc LESS mixins & variables*/
+.gradient(@start:#333333, @stop:#171717) {
+   background: @stop;
+   background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
+   background: -webkit-linear-gradient(@start, @stop);
+   background: -moz-linear-gradient(center top, @start 0%, @stop 100%);
+   background: -moz-gradient(center top, @start 0%, @stop 100%);
+   background: -moz-gradient(center top, @start 0%, @stop 100%);
+   background:  gradient(center top, @start 0%, @stop 100%);
+}
 
+.page-gradient(@start:rgba(255, 255, 255, 0.0) , @stop:rgba(0, 0, 0, 0.5)) {
+   background: @stop;
+   background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
+   background: -webkit-linear-gradient(@start, @stop);
+   background: -moz-linear-gradient(center top, @start 0%, @stop 100%);
+   background: -moz-gradient(center top, @start 0%, @stop 100%);
+   background: -moz-gradient(center top, @start 0%, @stop 100%);
+   background:  gradient(center top, @start 0%, @stop 100%);
+}
 
 /*.......................................................the usual*/
 body
@@ -70,6 +88,7 @@ h6
 
 a
 {
+	color: @rc-blue;
 	
 	:visited
 	{
@@ -126,8 +145,10 @@ header
 		
 		img
 		{
-			display: block;
-			margin: 0 auto;
+			 position: relative;
+			 left: 50%;
+			 margin-left: -640px;
+			 z-index: 1;
 		}
 	}
 }
@@ -139,6 +160,8 @@ nav, #top-menu
 	float: right;
 	margin: 0 auto;
 	width: 570px;
+	position: relative;
+	z-index: 2;
 	
 	.menu-header, div.menu
 	{
@@ -284,8 +307,46 @@ nav, #top-menu
 footer
 {
 	clear: both;
+	width: 100%;
+	height: 235px;
+	.gradient;
+	
+	#footer
+	{
+		width: 940px;
+		height: 190px;
+	}
+	
+	#site-info
+	{
+		width: 100%;
+		height: 45px;
+		font-size: 14px;
+		text-align: center;
+		background-color: @rc-black;
+		color: @rc-white;
+		
+		a
+		{
+			line-height: 45px;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+	}
 }
 
+#page-gradient
+{
+	width: 100%;
+	height: 50px;
+	.page-gradient;
+	/*background: url(../images/page-gradient.png) repeat-x bottom center;*/
+}
+
+section#page
+{
+	
+}
 
 /*.......................................................the pagination*/
 .wp-paginate
