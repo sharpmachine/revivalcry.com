@@ -52,6 +52,14 @@ html { overflow-y: scroll; } /* force scrollbar */
 	border-radius: @radius;
 }
 
+.scale(@scale:1.1)
+{
+	-moz-transform: scale(@scale);
+  	-webkit-transform: scale(@scale);
+  	-o-transform: scale(@scale);
+  	transform: scale(@scale);
+}
+
 /*.......................................................the usual*/
 body
 {
@@ -325,7 +333,7 @@ nav, #top-menu
 		color: @rc-black;
 	    background-color: @rc-blue;
 	    position: relative;
-	    top: 60px;
+	    top: 65px;
 	    .rounded-corners;
     
     :after
@@ -342,7 +350,7 @@ nav, #top-menu
 
 body.logged-in .tooltipsy
 {
-	top: 88px;
+	top: 93px;
 }
 
 /*.......................................................the footer*/
@@ -453,6 +461,63 @@ input[type=email]
 	padding: 5px;
 	border:  none;
 	.open-sans;
+}
+
+
+/*.......................................................the homepage*/
+.feature-box
+{
+	width: 300px;
+	height: 90px;
+	margin-bottom: 40px;
+	background: url(../images/blue-box-edge.png) no-repeat top right;
+	
+	:hover
+		{
+			.scale;
+		}
+	
+	a
+	{
+		text-decoration: none;
+	}
+	
+	.content
+	{
+		width: 170px;
+		height: 50px;
+		float: left;
+		padding: 20px 10px 20px 20px;
+		background-color: @rc-blue;
+		text-transform: uppercase;
+		
+		h2
+		{
+			margin-bottom: 1px;
+			font-size: 30px;
+			line-height: 30px;
+			color: @rc-white;
+			.open-sans-condensed;
+		}
+		
+		span
+		{
+			font-size: 14px;
+			color: @rc-black;
+		}
+	}
+	
+	img
+	{
+		display: block;
+		float: left;
+		
+	}
+}
+
+.no-mb
+{
+	margin-bottom: 0;
 }
 /*.......................................................the pagination*/
 .wp-paginate

@@ -3,6 +3,7 @@
 */
 /* Tooltipsy - for top menu */
  jQuery('ul#menu-top-nagivation li a').tooltipsy();
+
  
  /* scrollTo - for newsletter signup */
  jQuery(document).ready(function(){

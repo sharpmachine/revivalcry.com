@@ -274,7 +274,7 @@ nav ul li.current-menu-parent > a {
   color: #1d1b1b;
   background-color: #33cbcb;
   position: relative;
-  top: 60px;
+  top: 65px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -288,7 +288,7 @@ nav ul li.current-menu-parent > a {
   right: 35%;
   z-index: -1;
 }
-body.logged-in .tooltipsy { top: 88px; }
+body.logged-in .tooltipsy { top: 93px; }
 footer, .footer-push { height: 235px; }
 footer {
   clear: both;
@@ -379,6 +379,43 @@ input[type=email] {
   border: none;
   font-family: 'Open Sans', sans-serif;
 }
+.feature-box {
+  width: 300px;
+  height: 90px;
+  margin-bottom: 40px;
+  background: url(../images/blue-box-edge.png) no-repeat top right;
+}
+.feature-box:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.feature-box a { text-decoration: none; }
+.feature-box .content {
+  width: 170px;
+  height: 50px;
+  float: left;
+  padding: 20px 10px 20px 20px;
+  background-color: #33cbcb;
+  text-transform: uppercase;
+}
+.feature-box .content h2 {
+  margin-bottom: 1px;
+  font-size: 30px;
+  line-height: 30px;
+  color: #edebeb;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+.feature-box .content span {
+  font-size: 14px;
+  color: #1d1b1b;
+}
+.feature-box img {
+  display: block;
+  float: left;
+}
+.no-mb { margin-bottom: 0; }
 .wp-paginate {
   padding: 0;
   margin: 0;
