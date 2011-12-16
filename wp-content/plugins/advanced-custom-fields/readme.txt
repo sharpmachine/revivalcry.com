@@ -94,6 +94,10 @@ http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 == Changelog ==
 
+= 3.0.4 =
+* Bug fix: WYSIWYG is now compatible with WP 3.3 (May have incidentally added support for gravity forms media button! But not 100% sure...)
+* Fix : Taxonomy Location rule now only shows hierarchal taxonomies to improve speed and reduce php memory issues
+
 = 3.0.3 =
 * New translation: French (thanks to Netactions)
 * Support: added support for new wp3.3 editor

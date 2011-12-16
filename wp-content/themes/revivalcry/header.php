@@ -12,7 +12,6 @@
 <!--[if (gte IE 9)|!(IE)]><!--> 
 <html class="no-js" <?php language_attributes(); ?>> 
 <!--<![endif]-->
-
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -38,12 +37,9 @@
 
 	?></title>
 	<meta name="author" content="Jesse Kade of Sharp Machine Media">
-	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
 	<link rel="shortcut icon" href="<?php bloginfo('template_directory'); ?>/images/icons/favicon.ico">
 	<link rel="apple-touch-icon" href="<?php bloginfo('template_directory'); ?>/images/icons/apple-touch-icon.png">
-	
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -54,10 +50,8 @@
 	<!--[if lt IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 	<!-- Hashgrid - remove before moving to productions -->
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">
-	
 	<!-- Uncomment for mobile browsers-->
 	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/handheld.css" />
-
 	
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	
@@ -67,54 +61,38 @@
 	<![endif]--> 
 
 <?php
-
 	if ( is_singular() && get_option( 'thread_comments' ) )
 		wp_enqueue_script( 'comment-reply' );
 		
 	wp_head();
 ?>
 </head>
-
 	<body <?php body_class(); ?>>
-
+		<div class="wrapper">
 		<header role="banner">
 			<div id="header">
 				<div id="top-menu">
 					<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'top-menu' ) ); ?>
 				</div><!-- #top-menu -->
-				
 				<hgroup>
-					<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png" width="223" height="32" alt="Logo"></a></span></h1>
+					<h1 id="site-title">
+						<span>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+								<img src="<?php bloginfo('template_directory'); ?>/images/logo.png" width="223" height="32" alt="Logo">
+							</a>
+						</span>
+					</h1>
 				</hgroup>
-				
-				
-						
-					<!-- This is the header function.  Uncomment if you want to use it, if not then delete it
-						<?php
-							// Check if this is a post or page, if it has a thumbnail, and if it's a big one
-							if ( is_singular() && current_theme_supports( 'post-thumbnails' ) &&
-									has_post_thumbnail( $post->ID ) &&
-									( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' ) ) &&
-									$image[1] >= HEADER_IMAGE_WIDTH ) :
-								// Houston, we have a new header image!
-								echo get_the_post_thumbnail( $post->ID );
-							elseif ( get_header_image() ) : ?>
-								<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
-							<?php endif; ?>-->
-		
-					<nav role="navigation">
-					  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
-						<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
+				<nav role="navigation">
+					<?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
+					<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
 						<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
 						<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
-					</nav><!-- nav -->
-					
-				</div><!-- #header -->
-				
-					<div id="banner">
-						<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1280" height="429" alt="Dummy Banner">
-					</div><!-- #banner -->
-					
+				</nav><!-- nav -->
+			</div><!-- #header -->	
+			<div id="banner">
+				<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1280" height="429" alt="Dummy Banner">
+			</div><!-- #banner -->
 					<!-- Breadcrumbs NavXT
 					<div class="breadcrumbs">
 						<?php
@@ -124,7 +102,6 @@
 						}
 						?>
 					</div>-->
-				
 		</header>
-		<div class="container"> <!-- some layouts will require this to moved down just above the #main tag -->
+		<div class="container">
 			<section id="page">

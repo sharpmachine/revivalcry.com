@@ -3,8 +3,9 @@ menu, nav, section { display: block; }
 
 .screen-reader-text {position: absolute;left: -9000px;} /* Text meant only for screen readers */
 
-html { overflow-y: scroll; } /* force scrollbar */
 html, body { height: 100%; }
+html { overflow-y: scroll; } /* force scrollbar */
+
 
 /*.......................................................the LESS colors*/
 @rc-black: #1D1B1B;
@@ -44,6 +45,13 @@ html, body { height: 100%; }
    background:  gradient(center top, @start 0%, @stop 100%);
 }
 
+.rounded-corners(@radius:2px)
+{
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
 /*.......................................................the usual*/
 body
 {
@@ -54,6 +62,14 @@ body
 .container
 {
 	padding: 0 20px;
+}
+
+.wrapper
+{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -235px;
 }
 
 h1
@@ -92,24 +108,19 @@ a
 	
 	:visited
 	{
-		
+		color: #32C7C7;
 	}
 	
 	:hover
 	{
-		
-	}
-	
-	:active
-	{
-		
+		color: #28A1A1;
 	}
 }
 
 /*.......................................................the header*/
 header
 {
-	margin-bottom: 6em;
+	margin-bottom: 65px;
 	width: 100%;
 	background-color: @rc-black;
 	height: 460px;
@@ -195,6 +206,11 @@ nav, #top-menu
 		text-transform: uppercase;
 		.open-sans-condensed;
 		
+		:visited
+		{
+			color: @rc-white;
+		}
+		
 		:after
 		{
 			content: ".";
@@ -203,19 +219,16 @@ nav, #top-menu
 	
 	ul ul
 	{
-		box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
-		-moz-box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
-		-webkit-box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
 		display: none;
 		position: absolute;
 		left: 0;
 		float: left;
-		width: 180px;
+		width: 130px;
 		z-index: 99999;
 		
 		li
 		{
-			min-width: 180px;
+			min-width: 130px;
 		}
 		
 		ul
@@ -226,10 +239,10 @@ nav, #top-menu
 		
 		a
 		{
-			background: #333;
+			background: @rc-black;
 			line-height: 1em;
 			padding: 10px;
-			width: 160px;
+			width: 110px;
 			height: auto;
 		}
 	}
@@ -295,26 +308,83 @@ nav, #top-menu
 			}
 		}
 	}
+	
+	ul li.current_page_item > a,
+	ul li.current-menu-ancestor > a,
+	ul li.current-menu-item > a,
+	ul li.current-menu-parent > a 
+	{
+		color: @rc-white;
+		background: none;
+	}
 }
 
-/*.......................................................the sidebar*/
-#sidebar
+.tooltipsy
+    {
+		padding: 2px 10px;
+		color: @rc-white;
+	    background-color: @rc-blue;
+	    position: relative;
+	    top: 60px;
+	    .rounded-corners;
+    
+    :after
+    {
+    	content: '';
+	    position: absolute;
+	    border: 10px solid transparent;
+	    border-left-color: @rc-blue;
+	    top: -10px;
+	    right: 35px;
+	    z-index: -1;
+    }
+}
+
+body.logged-in .tooltipsy
 {
-	
+	top: 88px;
 }
 
 /*.......................................................the footer*/
+footer, .footer-push
+{
+	height: 235px;
+}
+
 footer
 {
 	clear: both;
 	width: 100%;
-	height: 235px;
 	.gradient;
 	
 	#footer
 	{
 		width: 940px;
-		height: 190px;
+		height: 143px;
+		padding-top: 47px;
+		margin: 0 auto;
+		color: @rc-white;
+		
+		h3
+		{
+			font-size: 18px;
+			color: @rc-white;
+		}
+		
+		.connect-with-us
+		{
+			text-align: right;
+			
+			img
+			{
+				opacity: 0.9;
+				
+				:hover
+				{
+					opacity: 1;
+				}
+			}
+		}
 	}
 	
 	#site-info
@@ -325,6 +395,7 @@ footer
 		text-align: center;
 		background-color: @rc-black;
 		color: @rc-white;
+		.open-sans-condensed;
 		
 		a
 		{
@@ -339,15 +410,44 @@ footer
 {
 	width: 100%;
 	height: 50px;
+	margin-top: 15px;
 	.page-gradient;
-	/*background: url(../images/page-gradient.png) repeat-x bottom center;*/
-}
-
-section#page
-{
 	
 }
 
+/*.......................................................the buttons*/
+a.button, input[type="submit"]
+{
+	background-color: @rc-blue;
+	border: none;
+	color: @rc-white;
+	height: 25px;
+	line-height: 25px;
+	font-size: 12px;
+	padding: 4px 10px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+input[type="submit"]
+{
+	line-height: 0;
+}
+
+input
+{
+	display: block;
+	float: left;
+}
+
+input[type=email]
+{
+	width: 196px;
+	height: 15px;
+	padding: 5px;
+	border:  none;
+	.open-sans;
+}
 /*.......................................................the pagination*/
 .wp-paginate
 {
@@ -557,9 +657,7 @@ a.comment-edit-link:hover {
 }
 
 /* Comments form */
-input[type=submit] {
-	color: #333;
-}
+
 #respond {
 	border-top: 1px solid #e7e7e7;
 	margin: 24px 0;

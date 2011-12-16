@@ -459,9 +459,6 @@ form.inline p { margin-bottom:0; }
 
 /* Success, info, notice and error/alert boxes
 -------------------------------------------------------------- */
-
-.error,
-.alert, 
 .notice,
 .success, 
 .info 			{ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
