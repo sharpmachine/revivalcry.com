@@ -9,27 +9,18 @@
 			<div id="footer">
 				<section class="span-4">
 					<h3>Newsletter Signup.</h3>
-					
 					<!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
-<form action="http://revivalcry.us2.list-manage.com/subscribe/post?u=6d71c38ad8a27939100932ac7&amp;id=522c3a5cda" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
-<div class="mc-field-group">
-</label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="email address">
-	<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-</div>
-</form>
-</div>
-
-<!--End mc_embed_signup-->
-					
-					
-					
-					
-					
-					
+					<div id="mc_embed_signup">
+						<form action="http://revivalcry.us2.list-manage.com/subscribe/post?u=6d71c38ad8a27939100932ac7&amp;id=522c3a5cda" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
+							<div class="mc-field-group">
+								<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="email address">
+								<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+							</div>
+						</form>
+					</div>
+					<!--End mc_embed_signup-->				
 				</section>
-				<section class="span-2">
+				<section class="span-2 prepend-1">
 					<h3>Support us.</h3>
 					<a href="<?php bloginfo('url'); ?>/give" class="button">Donate</a>
 				</section>
@@ -37,7 +28,7 @@
 					<h3>Invite a revivalist.</h3>
 					<a href="<?php bloginfo('url'); ?>/invite" class="button">Invite</a>
 				</section>
-				<section class="span-3 connect-with-us last">
+				<section class="span-2 connect-with-us last">
 					<h3>Connect with us.</h3>
 					<a href="http://www.youtube.com/user/RevivalCryMinistries" title="Youtube"><img src="<?php bloginfo('template_directory'); ?>/images/youtube.jpg" width="22" height="22" alt="Youtube"></a>
 					<a href="#" title="Twitter"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.jpg" width="22" height="22" alt="Twitter"></a>
