@@ -46,7 +46,7 @@ header #banner {
   height: 429px;
   margin-top: -49px;
 }
-header #banner img {
+header #banner .wt-rotator {
   position: relative;
   left: 50%;
   margin-left: -640px;

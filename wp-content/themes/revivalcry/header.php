@@ -47,6 +47,9 @@
     <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/print.css" type="text/css" media="print">
     <!--<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/wp-style.css">-->
     <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/style.css">
+    <?php if (is_home() || is_front_page()): ?>
+    <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/wt-rotator.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <?php endif ?>
 	<!--[if lt IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 	<!-- Hashgrid - remove before moving to productions -->
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">
@@ -66,6 +69,7 @@
 		
 	wp_head();
 ?>
+
 </head>
 	<body <?php body_class(); ?>>
 		<div class="wrapper">
@@ -90,18 +94,92 @@
 						<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 				</nav><!-- nav -->
 			</div><!-- #header -->	
+			
+			<?php if (is_home() || is_front_page()): ?>
+				
+			
 			<div id="banner">
-				<img src="<?php bloginfo('template_directory'); ?>/images/dummy-banner.jpg" width="1280" height="429" alt="Dummy Banner">
+				
+				
+				
+				
+		
+				
+				
+				
+				<div class="wt-rotator">
+    	<div class="screen">
+            <noscript>
+            	<!-- placeholder 1st image when javascript is off -->
+                <img src="<?php bloginfo('template_directory'); ?>/images/madness_arch2.jpg"/>
+            </noscript>
+      	</div>
+        <div class="c-panel">
+      		<div class="thumbnails">
+                <ul>
+                    <li>
+                    	<a href="<?php bloginfo('template_directory'); ?>/images/madness_arch2.jpg" title="architecture"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/madness_arch2.jpg"/></a>
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>                        
+                      
+                    </li>
+                    <li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/triworks_abstract17.jpg" title="3D abstract art"><img src="<?php bloginfo('template_directory');?>/images/thumbs/triworks_abstract17.jpg"/></a>
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>                        
+                    </li>
+           	  		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/krazy-kartoons-robot-dj02.jpg" title="krazy kartoons"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/krazy-kartoons-robot-dj02.jpg"/></a>
+                       	<a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                         
+                    </li>
+              		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/card10.jpg" title="rockable press"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/card10.jpg"/></a>
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                                              	
+                    </li>
+              		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/triworks_abstract26.jpg" title="3D abstract art"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/triworks_abstract26.jpg"/></a>   
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                                                     	                   
+                  	</li>
+           	  		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/triworks_objects17.jpg" title="3D objects"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/triworks_objects17.jpg"/></a>                  
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                                   	                          
+                    </li>
+              		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/scottwills_building2.jpg" title="building"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/scottwills_building2.jpg"/></a>        
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                                                          
+                    </li>     
+              		<li>
+                        <a href="<?php bloginfo('template_directory'); ?>/images/moo10.jpg" title="say it in print"><img src="<?php bloginfo('template_directory'); ?>/images/thumbs/moo10.jpg"/></a>                    
+                        <a href="http://codecanyon.net/user/webtako?ref=webtako" target="_blank"></a>
+                      	                           
+                    </li>     
+              	</ul>
+          	</div>     
+  			<div class="buttons">
+            	<div class="prev-btn"></div>
+                <div class="play-btn"></div>    
+            	<div class="next-btn"></div>               
+            </div>
+        </div>
+    </div>	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			</div><!-- #banner -->
-					<!-- Breadcrumbs NavXT
-					<div class="breadcrumbs">
-						<?php
-						if(function_exists('bcn_display'))
-						{
-						    bcn_display();
-						}
-						?>
-					</div>-->
+<?php endif; ?>
 		</header>
 		<div class="container">
 			<section id="page">
