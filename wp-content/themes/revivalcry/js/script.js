@@ -47,7 +47,7 @@
 					text_mouseover:false,
 					text_effect:"fade",
 					text_sync:true,
-					tooltip_type:"image",
+					tooltip_type:"none",
 					lock_tooltip:true,
 					shuffle:false,
 					block_size:75,
