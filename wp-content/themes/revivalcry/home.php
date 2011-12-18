@@ -34,7 +34,7 @@
 				</section>
 				
 				<section class="span-8 last">
-					<iframe src="http://player.vimeo.com/video/33640130?title=0&amp;byline=0&amp;portrait=0&amp;color=33CBCB" width="620" height="349" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+					<iframe width="620" height="345" src="http://www.youtube.com/embed/KBZaUTj_cuY?rel=0" frameborder="0" allowfullscreen></iframe>
 				</section>
 				
 			</section><!-- #content -->
