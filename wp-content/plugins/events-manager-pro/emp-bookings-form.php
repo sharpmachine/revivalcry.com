@@ -8,7 +8,7 @@ class EM_Booking_Form {
 		'Last Name' => 'last_name',
 		'Website' => 'user_url',
 		'AIM' => 'aim',
-		'Yahoo IM' => 'yahoo',
+		'Yahoo IM' => 'yim',
 		'Jabber / Google Talk' => 'jabber',
 		'Biographical Info' => 'about',
 		'Phone (EM)' => 'dbem_phone'
@@ -239,7 +239,7 @@ class EM_Booking_Form {
 		
 		$errors = array();
 		
-		if( empty($EM_Booking->booking_id ) ){
+		if( empty($EM_Booking->id ) ){
 			foreach($booking_form_fields as $fieldid => $field){
 				$value = '';
 				if(!empty($_REQUEST[$fieldid]) && !is_array($_REQUEST[$fieldid])){
@@ -249,33 +249,34 @@ class EM_Booking_Form {
 				}
 				if( in_array($fieldid, self::$user_fields) || in_array($fieldid, array('user_email','user_name')) ){
 					//registration fields
-					$EM_Booking->booking_meta['registration'][$fieldid] = $value;
+					$EM_Booking->meta['registration'][$fieldid] = $value;
 				}elseif( $fieldid != 'captcha' ){ //ignore captchas, only for verification
 					//booking fields
-					$EM_Booking->booking_meta['booking'][$fieldid] = $value;
+					$EM_Booking->meta['booking'][$fieldid] = $value;
 				}
 				$errors[] = self::validate_field($field, $value, $EM_Booking);
 			}
 			self::$validate = false;
 		}
+		
 		return apply_filters('emp_booking_form_get_post', !in_array(false,$errors) && $result, $EM_Booking);
 	}
 	
 	function em_booking_validate($result, $EM_Booking){
-		if( empty($EM_Booking->booking_id)  && self::$validate ){
+		if( empty($EM_Booking->id)  && self::$validate ){
 			//only run if taking post data, because validation could fail elsewhere 
 			$booking_form_fields = get_option('em_booking_form_fields');
 			$results = array();
 			if($result){
 				//go through each form field and run checks, we don't do it the opposite way to avoid invalidating old bookings without the meta data
-				if( !empty($EM_Booking->booking_meta['booking']) ){
-					foreach($EM_Booking->booking_meta['booking'] as $fieldid => $field){
+				if( !empty($EM_Booking->meta['booking']) ){
+					foreach($EM_Booking->meta['booking'] as $fieldid => $field){
 						//validate
 						$results[] = self::validate_field($booking_form_fields[$fieldid], $field, $EM_Booking);
 					}
 				}
-				if( !empty($EM_Booking->booking_meta['registration']) ){
-					foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field){
+				if( !empty($EM_Booking->meta['registration']) ){
+					foreach($EM_Booking->meta['registration'] as $fieldid => $field){
 						//registration fields too
 						$results[] = self::validate_field($booking_form_fields[$fieldid], $field, $EM_Booking);
 					}
@@ -288,8 +289,8 @@ class EM_Booking_Form {
 	
 	function em_register_new_user_pre($user_data){
 		global $EM_Booking;
-		if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) ){
-			foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field){
+		if( !empty($EM_Booking->meta['registration']) && is_array($EM_Booking->meta['registration']) ){
+			foreach($EM_Booking->meta['registration'] as $fieldid => $field){
 				if( trim($field) !== '' ){
 					$user_data[$fieldid] = $field;
 				}
@@ -451,10 +452,10 @@ class EM_Booking_Form {
 	function placeholders($placeholders, $EM_Booking){
 		$booking_form_fields = get_option('em_booking_form_fields');
 		foreach($booking_form_fields as $field){
-			$placeholders['#_BOOKINGFORMCUSTOM{'.$field['booking_form_fieldid'].'}'] = $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']];
+			$placeholders['#_BOOKINGFORMCUSTOM{'.$field['booking_form_fieldid'].'}'] = $EM_Booking->meta['booking'][$field['booking_form_fieldid']];
 		}
 		foreach($booking_form_fields as $field){
-			$placeholders['#_BOOKINGFORMCUSTOMREG{'.$field['booking_form_fieldid'].'}'] = $EM_Booking->booking_meta['registration'][$field['booking_form_fieldid']];
+			$placeholders['#_BOOKINGFORMCUSTOMREG{'.$field['booking_form_fieldid'].'}'] = $EM_Booking->meta['registration'][$field['booking_form_fieldid']];
 		}
 		return $placeholders; //no need for a filter, use the em_booking_email_placeholders filter
 	}
@@ -473,7 +474,7 @@ class EM_Booking_Form {
 		$booking_form_fields = get_option('em_booking_form_fields');
 		foreach($booking_form_fields as $fieldid => $field){
 			if( !in_array($fieldid, self::$user_fields) && !in_array($fieldid, array('user_email','user_name')) && $fieldid != 'booking_comment' ){
-				$field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
+				$field_value = (isset($EM_Booking->meta['booking'][$fieldid])) ? $EM_Booking->meta['booking'][$fieldid]:'n/a';
 				if(is_array($field_value)){ $field_value = implode(', ', $field_value); }
 				if($field['booking_form_type'] == 'checkbox'){ $field_value = ($field_value) ? __('Yes','dbem'):__('No','dbem'); }
 				//backward compatibility for old booking forms
@@ -484,7 +485,7 @@ class EM_Booking_Form {
 	}
 	
 	function admin_menu($plugin_pages){
-		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Booking Form Editor'),__('Booking Form Editor'),'activate_plugins','events-manager-booking-form',array('EM_Booking_Form','admin_page'));
+		$plugin_pages[] = add_submenu_page('events-manager', __('Booking Form Editor'),__('Booking Form Editor'),'activate_plugins','events-manager-booking-form',array('EM_Booking_Form','admin_page'));
 		return $plugin_pages; //use wp action/filters to mess with the menus
 	}
 	
@@ -545,11 +546,11 @@ class EM_Booking_Form {
 		$booking_form_fields = get_option('em_booking_form_fields');
 		foreach($booking_form_fields as $fieldid => $field){
 			if( !in_array($fieldid, self::$user_fields) && !in_array($fieldid, array('user_email','user_name')) ){
-				$field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
+				$field_value = (isset($EM_Booking->meta['booking'][$fieldid])) ? $EM_Booking->meta['booking'][$fieldid]:'n/a';
 				if(is_array($field_value)){ $field_value = implode(', ', $field_value); }
 				if($field['booking_form_type'] == 'checkbox'){ $field_value = ($field_value) ? __('Yes','dbem'):__('No','dbem'); }
 				//backward compatibility for old booking forms
-				if( $field['booking_form_fieldid'] == 'booking_comment' && $field_value == 'n/a' && !empty($EM_Booking->booking_comment) ){ $field_value = $EM_Booking->booking_comment; }
+				if( $field['booking_form_fieldid'] == 'booking_comment' && $field_value == 'n/a' && !empty($EM_Booking->comment) ){ $field_value = $EM_Booking->comment; }
 				?>
 				<tr><td><strong><?php echo $field['booking_form_label'] ?></strong> </td><td><?php echo $field_value; ?></td></tr>
 				<?php

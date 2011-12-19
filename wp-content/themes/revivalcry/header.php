@@ -82,7 +82,7 @@
 					<h1 id="site-title">
 						<span>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-								<img src="<?php bloginfo('template_directory'); ?>/images/logo.png" width="223" height="32" alt="Logo">
+								<img src="<?php bloginfo('template_directory'); ?>/images/logo1.png" width="223" height="43" alt="Logo">
 							</a>
 						</span>
 					</h1>

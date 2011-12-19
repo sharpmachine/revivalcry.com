@@ -49,7 +49,7 @@
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  background: #000000 url(../images/banner-assets/loader.gif) center no-repeat;
+  background: #1d1b1b url(../images/banner-assets/loader.gif) center no-repeat;
   background: rgba(0, 0, 0, 0.7) url(../images/banner-assets/loader.gif) center no-repeat;
   z-index: 4;
   display: none;
@@ -67,7 +67,7 @@
   font-size: 0;
 }
 .wt-rotator .desc {
-  color: #000000;
+  color: #1d1b1b;
   position: absolute;
   color: #ffffff;
   z-index: 6;
@@ -81,7 +81,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #000000;
+  background-color: #1d1b1b;
   -moz-opacity: 0.7;
   filter: alpha(opacity=70);
   opacity: 0.7;
@@ -105,12 +105,12 @@
 .wt-rotator .outer-hp {
   position: absolute;
   background: #333333;
-  border: 1px solid #000000;
+  border: 1px solid #1d1b1b;
 }
 .wt-rotator .outer-vp {
   position: absolute;
   background: #333333;
-  border: 1px solid #000000;
+  border: 1px solid #1d1b1b;
 }
 .wt-rotator .outer-hp {
   left: 0;
@@ -238,7 +238,7 @@
   background-color: #edebeb;
   cursor: default;
 }
-.wt-rotator .thumbnails li.image { background: #000000; }
+.wt-rotator .thumbnails li.image { background: #1d1b1b; }
 .wt-rotator .thumbnails li.image.curr-thumb { border-color: #0066ff; }
 .wt-rotator .thumbnails li.image.thumb-over { border-color: #0066ff; }
 .wt-rotator .thumbnails li.image a {
@@ -274,54 +274,54 @@
 }
 .wt-rotator .button-over { background-color: #cccccc !important; }
 .wt-rotator .play-btn {
-  background: #000000 url(../images/banner-assets/play.png);
-  background: url(../images/banner-assets/play.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/play.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/play.png);
+  background: url(../images/banner-assets/play.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/play.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .play-btn.button-over {
   background: url(../images/banner-assets/play.png), -moz-linear-gradient(#dddddd, #bbbbbb);
   background: url(../images/banner-assets/play.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#dddddd), to(#bbbbbb));
 }
 .wt-rotator .pause {
-  background: #000000 url(../images/banner-assets/pause.png);
-  background: url(../images/banner-assets/pause.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/pause.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/pause.png);
+  background: url(../images/banner-assets/pause.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/pause.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .pause.button-over {
   background: url(../images/banner-assets/pause.png), -moz-linear-gradient(#dddddd, #bbbbbb);
   background: url(../images/banner-assets/pause.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#dddddd), to(#bbbbbb));
 }
 .wt-rotator .prev-btn {
-  background: #000000 url(../images/banner-assets/prev.png);
-  background: url(../images/banner-assets/prev.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/prev.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/prev.png);
+  background: url(../images/banner-assets/prev.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/prev.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .prev-btn.button-over {
   background: url(../images/banner-assets/prev.png), -moz-linear-gradient(#dddddd, #bbbbbb);
   background: url(../images/banner-assets/prev.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#dddddd), to(#bbbbbb));
 }
 .wt-rotator .next-btn {
-  background: #000000 url(../images/banner-assets/next.png);
-  background: url(../images/banner-assets/next.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/next.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/next.png);
+  background: url(../images/banner-assets/next.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/next.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .next-btn.button-over {
   background: url(../images/banner-assets/next.png), -moz-linear-gradient(#dddddd, #bbbbbb);
   background: url(../images/banner-assets/next.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#dddddd), to(#bbbbbb));
 }
 .wt-rotator .up {
-  background: #000000 url(../images/banner-assets/up.png);
-  background: url(../images/banner-assets/up.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/up.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/up.png);
+  background: url(../images/banner-assets/up.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/up.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .up.button-over {
   background: url(../images/banner-assets/up.png), -moz-linear-gradient(#dddddd, #bbbbbb);
   background: url(../images/banner-assets/up.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#dddddd), to(#bbbbbb));
 }
 .wt-rotator .down {
-  background: #000000 url(../images/banner-assets/down.png);
-  background: url(../images/banner-assets/down.png), -moz-linear-gradient(#333333, #000000);
-  background: url(../images/banner-assets/down.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#000000));
+  background: #1d1b1b url(../images/banner-assets/down.png);
+  background: url(../images/banner-assets/down.png), -moz-linear-gradient(#333333, #1d1b1b);
+  background: url(../images/banner-assets/down.png), -webkit-gradient(linear, 0 top, 0 bottom, from(#333333), to(#1d1b1b));
 }
 .wt-rotator .down.button-over {
   background: url(../images/banner-assets/down.png), -moz-linear-gradient(#dddddd, #bbbbbb);
@@ -358,7 +358,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   color: #ffffff;
-  background-color: #000000;
+  background-color: #1d1b1b;
   max-width: 300px;
   padding: 4px;
   -moz-border-radius: 2px;
@@ -368,7 +368,7 @@
 }
 #rotator-tooltip img {
   display: none;
-  background-color: #000000;
+  background-color: #1d1b1b;
   padding: 3px;
   margin: 8px;
   -moz-border-radius: 2px;

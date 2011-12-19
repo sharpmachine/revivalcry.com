@@ -45,7 +45,6 @@ class acf_Wysiwyg extends acf_Field
    		}
    		else
    		{
-   			wp_enqueue_style('editor-buttons');
    			wp_tiny_mce();
    		}
 		
@@ -84,6 +83,7 @@ class acf_Wysiwyg extends acf_Field
 	function admin_print_styles()
 	{
   		wp_enqueue_style(array(
+  			'editor-buttons',
 			'thickbox',		
 		));
 	}

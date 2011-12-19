@@ -573,9 +573,20 @@ class SEO_Ultimate {
 		$this->remove_cron_jobs();
 		
 		//Tell the modules what their plugin page hooks are
-		foreach ($this->modules as $key => $module)
-			$this->modules[$key]->plugin_page_hook =
-				$this->modules[$key]->get_menu_parent_hook().'_page_'.$this->key_to_hook($this->modules[$key]->get_module_or_parent_key());
+		foreach ($this->modules as $key => $module) {
+			$menu_parent_hook = $this->modules[$key]->get_menu_parent_hook();
+			
+			if ($this->modules[$key]->is_menu_default())
+				$this->modules[$key]->plugin_page_hook = $plugin_page_hook = "toplevel_page_$menu_parent_hook";
+			elseif ('options-general.php' == $menu_parent_hook)
+				$this->modules[$key]->plugin_page_hook = $plugin_page_hook = 'settings_page_' .
+					$this->key_to_hook($this->modules[$key]->get_module_or_parent_key());
+			else
+				$this->modules[$key]->plugin_page_hook = $plugin_page_hook = $menu_parent_hook . '_page_' .
+					$this->key_to_hook($this->modules[$key]->get_module_or_parent_key());
+			
+			add_action("load-$plugin_page_hook", array($this->modules[$key], 'load_hook'));
+		}
 		
 		if (!$this->module_exists($this->default_menu_module)) {
 			foreach ($this->modules as $key => $module) {
@@ -1637,35 +1648,6 @@ class SEO_Ultimate {
 	 */
 	function get_readme_path() {
 		return $this->plugin_dir_path.'readme.txt';
-	}
-	
-	/**
-	 * Returns the full server path to the main documentation.txt file.
-	 * 
-	 * @since 2.7
-	 * @return string
-	 */
-	function get_mdoc_path() {
-		return $this->plugin_dir_path.'modules/documentation.txt';
-	}
-	
-	/**
-	 * Returns the full server path to the main documentation.txt file, or a translated documentation.txt file if it exists for the current WPLANG.
-	 * 
-	 * @since 2.7
-	 * @return string
-	 */
-	function get_translated_mdoc_path() {
-		if (defined('WPLANG') && strlen(WPLANG)) {
-			$wplang = sustr::preg_filter('a-zA-Z0-9_', WPLANG);
-			$langvars = array($wplang, array_shift(explode('_', $wplang)));
-			foreach ($langvars as $langvar) {
-				$path = $this->plugin_dir_path."translations/documentation-$langvar.txt";
-				if (is_readable($path)) return $path;
-			}
-		}
-		
-		return $this->plugin_dir_path.'modules/documentation.txt';
 	}
 	
 	/********** JLSUGGEST **********/

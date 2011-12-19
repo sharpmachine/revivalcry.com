@@ -2,7 +2,7 @@
 
 */
 /* Tooltipsy - for top menu */
- jQuery('ul#menu-top-nagivation li a').tooltipsy();
+ jQuery('ul#menu-top-nagivation li a, .connect-with-us a').tooltipsy();
 
  
  /* scrollTo - for newsletter signup */

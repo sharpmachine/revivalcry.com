@@ -1,9 +1,9 @@
 === SEO Ultimate ===
 Contributors: SEO Design Solutions, JohnLamansky
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate
-Requires at least: 3.2
-Tested up to: 3.2
-Stable tag: 6.9.8
+Requires at least: 3.3
+Tested up to: 3.3
+Stable tag: 7.0
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -11,11 +11,11 @@ This all-in-one SEO plugin gives you control over title tags, noindex, meta tags
 
 = Recent Releases =
 
+* Version 7.0 adds meta description pagination and WP 3.3 compatibility
 * Version 6.9 adds the Settings Monitor module
 * Version 6.8 adds rewrite method selection for Title Tag Rewriter
 * Version 6.7 adds 3 more features to Deeplink Juggernaut
 * Version 6.6 adds the SEO Ultimate Widgets module
-* Version 6.5 features Deeplink Juggernaut 3.0
 
 = Features =
 
@@ -28,7 +28,7 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Format the `<title>` tags of posts, pages, categories, tags, archives, search results, and more!
 	* Choose between two rewrite methods: "output buffering" or "filtering"
 
-* **Meta Description Editor**
+* **Meta Description Editor** -- UPDATED in Version 7.0
 	* Edit the `<meta>` description tags for posts, pages, attachments, categories, tags, post format archives, and the homepage.
 	* Increase SERP clickthrough rates by influencing search engine result snippets.
 	* Mass-editor makes it a cinch to go back and add descriptions to old posts.
@@ -84,22 +84,10 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Increase in-URL keyword potency by removing "filler words" (like "the," "with," "and," etc.) from post/page URLs.
 	* Lets you customize the "filler words" list as desired.
 
-* **Competition Researcher**
-	* Investigate multiple keywords or URLs with quick access to search engine tools. Competition Researcher does this without illicit scraping/automation methods.
-	* Find out how many webpages are competing for the keywords you specify.
-	* Choose to analyze the keyword relevance in competing webpages' titles, body content, URLs, or anchor text.
-	* Find out how many pages of a competing website are in Google's index.
-	* Access competitors' incoming links profile.
-	* Find out what external websites your competitors are linking to.
-
 * **More Link Customizer**
 	* SEO your posts' "read more" links by including the posts' keyword-rich titles in the anchor text.
 	* Override the "read more" link on a per-post basis.
 	* Include `<strong>` or `<em>` tags in the anchor text if so desired.
-
-* **Internal Relevance Researcher**
-	* Determine which of your webpages Google most strongly associates with the keywords you specify.
-	* Use the information to determine ideal targets for incoming links or ideal sources of outgoing links.
 
 * **Code Inserter**
 	* Easily insert custom HTML into your site's `<head>` tag, footer, or item content.
@@ -191,6 +179,11 @@ To install the plugin manually:
 * **I upgraded SEO Ultimate and something broke. What do I do?**
 	If a new version of SEO Ultimate introduces a bug, you can easily revert back to the previous version you were using. Just go to the `Settings > SEO Ultimate` page and click on the "Downgrade" tab. (Downgrading is available most of the time, but if the new version upgraded the plugin's settings infrastructure, SEO Ultimate won't let you downgrade, since doing so would cause you to lose your settings. There may be other cases in which downgrading isn't available or causes problems; it's an unsupported feature, but should work in most cases.)
 
+= Compatibility =
+
+* **What's the minimum version of WordPress required to run SEO Ultimate?**
+	In order for all the features to work, you need to be using WordPress 3.3 or above. SEO Ultimate will run on WordPress 3.1.3 or above, but a few features might not work. If you're using a WordPress version older than 3.1.3, SEO Ultimate will refuse to activate.
+
 = General FAQ =
 
 * **Why "SEO Ultimate" instead of "Ultimate SEO"?**
@@ -264,6 +257,14 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.0 (December 19, 2011) =
+* Compatibility: SEO Ultimate now supports and requires WordPress 3.3
+* Improvement: SEO Ultimate now uses the new help tabs system of WordPress 3.3
+* Feature: Meta Description Editor now supports page and pagination formats
+* Bugfix: Title Tag Rewriter's mass-editors no longer add backslashes before special characters in custom titles
+* Removed the Competition Researcher and Internal Relevance Researcher modules (due to Google website changes that make these tools unusable)
+* New Translation: Italian (partial) by [gidibao](http://gidibao.net)
 
 = Version 6.9.8 (December 1, 2011) =
 * Bugfix: Title Tag Rewriter now applies the Pagination Title Format to custom category/tag/taxonomy title tags
