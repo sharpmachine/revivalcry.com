@@ -5,10 +5,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section { display: bl
 }
 html, body { height: 100%; }
 html { overflow-y: scroll; }
-.open-sans { font-family: 'Open Sans', sans-serif; }
-.open-sans-condensed { font-family: 'Open Sans Condensed', sans-serif; }
+.open-sans { font-family: 'Open Sans', 'OpenSansRegular', sans-serif; }
+.open-sans-condensed { font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif; }
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
   background: url(../images/bg.gif);
 }
 .container { padding: 0 20px; }
@@ -99,7 +99,7 @@ nav a {
   padding: 0 10px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 nav a:visited { color: #edebeb; }
 nav a:after { content: "."; }
@@ -189,7 +189,7 @@ nav ul li.current-menu-parent > a {
   padding: 0 10px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 #top-menu a:visited { color: #edebeb; }
 #top-menu a:after { content: "."; }
@@ -322,7 +322,7 @@ footer #site-info {
   text-align: center;
   background-color: #1d1b1b;
   color: #edebeb;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 footer #site-info a {
   line-height: 45px;
@@ -352,6 +352,7 @@ a.button {
   text-transform: uppercase;
   text-decoration: none;
   opacity: 0.9;
+  font-weight: 600;
 }
 a.button:hover { opacity: 1; }
 input[type="submit"] {
@@ -365,9 +366,13 @@ input[type="submit"] {
   text-transform: uppercase;
   text-decoration: none;
   opacity: 0.9;
+  font-weight: 600;
 }
 input[type="submit"]:hover { opacity: 1; }
-input[type="submit"] { line-height: 0; }
+input[type="submit"] {
+  line-height: 0;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+}
 input {
   display: block;
   float: left;
@@ -377,7 +382,7 @@ input[type=email] {
   height: 15px;
   padding: 5px;
   border: none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
 .feature-box {
   width: 300px;
@@ -405,7 +410,7 @@ input[type=email] {
   font-size: 30px;
   line-height: 30px;
   color: #edebeb;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 .feature-box .content span {
   font-size: 14px;
