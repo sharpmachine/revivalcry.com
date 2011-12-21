@@ -9,18 +9,18 @@ html { overflow-y: scroll; } /* force scrollbar */
 
 /*.......................................................the LESS colors*/
 @rc-black: #1D1B1B;
-@rc-blue: #33CBCB;
+@rc-blue: #10bdd2;
 @rc-white: #EDEBEB;
 
 /*.......................................................the LESS font families*/
 .open-sans
 {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
 
 .open-sans-condensed
 {
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 
 
@@ -436,6 +436,7 @@ a.button, input[type="submit"]
 	text-transform: uppercase;
 	text-decoration: none;
 	opacity: 0.9;
+	font-weight: 600;
 	
 	:hover
 	{
@@ -446,6 +447,7 @@ a.button, input[type="submit"]
 input[type="submit"]
 {
 	line-height: 0;
+	.open-sans;
 }
 
 input

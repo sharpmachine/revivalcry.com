@@ -5,10 +5,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section { display: bl
 }
 html, body { height: 100%; }
 html { overflow-y: scroll; }
-.open-sans { font-family: 'Open Sans', sans-serif; }
-.open-sans-condensed { font-family: 'Open Sans Condensed', sans-serif; }
+.open-sans { font-family: 'Open Sans', 'OpenSansRegular', sans-serif; }
+.open-sans-condensed { font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif; }
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
   background: url(../images/bg.gif);
 }
 .container { padding: 0 20px; }
@@ -18,7 +18,7 @@ body {
   height: 100%;
   margin: 0 auto -235px;
 }
-a { color: #33cbcb; }
+a { color: #10bdd2; }
 a:visited { color: #32c7c7; }
 a:hover { color: #28a1a1; }
 header {
@@ -99,7 +99,7 @@ nav a {
   padding: 0 10px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 nav a:visited { color: #edebeb; }
 nav a:after { content: "."; }
@@ -123,24 +123,24 @@ nav ul ul a {
   width: 110px;
   height: auto;
 }
-nav li:hover > a { color: #33cbcb; }
-nav ul ul:hover > a { color: #33cbcb; }
+nav li:hover > a { color: #10bdd2; }
+nav ul ul:hover > a { color: #10bdd2; }
 nav ul li:hover > ul { display: block; }
 nav ul li.current_page_item > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 nav ul li.current-menu-ancestor > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 nav ul li.current-menu-item > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 nav ul li.current-menu-parent > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 #top-menu {
   display: block;
@@ -189,7 +189,7 @@ nav ul li.current-menu-parent > a {
   padding: 0 10px;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 #top-menu a:visited { color: #edebeb; }
 #top-menu a:after { content: "."; }
@@ -213,24 +213,24 @@ nav ul li.current-menu-parent > a {
   width: 110px;
   height: auto;
 }
-#top-menu li:hover > a { color: #33cbcb; }
-#top-menu ul ul:hover > a { color: #33cbcb; }
+#top-menu li:hover > a { color: #10bdd2; }
+#top-menu ul ul:hover > a { color: #10bdd2; }
 #top-menu ul li:hover > ul { display: block; }
 #top-menu ul li.current_page_item > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 #top-menu ul li.current-menu-ancestor > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 #top-menu ul li.current-menu-item > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 #top-menu ul li.current-menu-parent > a {
   color: #edebeb;
-  background: #33cbcb;
+  background: #10bdd2;
 }
 * html nav ul li.current_page_item a { color: #000000; }
 * html nav ul li.current-menu-ancestor a { color: #000000; }
@@ -250,7 +250,7 @@ nav ul li.current-menu-parent > a {
 #top-menu ul#menu-top-nagivation { float: right; }
 #top-menu ul#menu-top-nagivation li a {
   line-height: 30px;
-  color: #33cbcb;
+  color: #10bdd2;
 }
 #top-menu ul#menu-top-nagivation li a:hover { color: #edebeb; }
 #top-menu ul li.current_page_item > a {
@@ -272,7 +272,7 @@ nav ul li.current-menu-parent > a {
 .tooltipsy {
   padding: 2px 10px;
   color: #1d1b1b;
-  background-color: #33cbcb;
+  background-color: #10bdd2;
   position: relative;
   top: 65px;
   -webkit-border-radius: 2px;
@@ -283,7 +283,7 @@ nav ul li.current-menu-parent > a {
   content: '';
   position: absolute;
   border: 10px solid transparent;
-  border-left-color: #33cbcb;
+  border-left-color: #10bdd2;
   top: -10px;
   right: 35%;
   z-index: -1;
@@ -322,7 +322,7 @@ footer #site-info {
   text-align: center;
   background-color: #1d1b1b;
   color: #edebeb;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 footer #site-info a {
   line-height: 45px;
@@ -342,7 +342,7 @@ footer #site-info a {
   background: gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 a.button {
-  background-color: #33cbcb;
+  background-color: #10bdd2;
   border: none;
   color: #edebeb;
   height: 25px;
@@ -352,10 +352,11 @@ a.button {
   text-transform: uppercase;
   text-decoration: none;
   opacity: 0.9;
+  font-weight: 600;
 }
 a.button:hover { opacity: 1; }
 input[type="submit"] {
-  background-color: #33cbcb;
+  background-color: #10bdd2;
   border: none;
   color: #edebeb;
   height: 25px;
@@ -365,9 +366,13 @@ input[type="submit"] {
   text-transform: uppercase;
   text-decoration: none;
   opacity: 0.9;
+  font-weight: 600;
 }
 input[type="submit"]:hover { opacity: 1; }
-input[type="submit"] { line-height: 0; }
+input[type="submit"] {
+  line-height: 0;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+}
 input {
   display: block;
   float: left;
@@ -377,7 +382,7 @@ input[type=email] {
   height: 15px;
   padding: 5px;
   border: none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
 .feature-box {
   width: 300px;
@@ -397,7 +402,7 @@ input[type=email] {
   height: 50px;
   float: left;
   padding: 20px 10px 20px 20px;
-  background-color: #33cbcb;
+  background-color: #10bdd2;
   text-transform: uppercase;
 }
 .feature-box .content h2 {
@@ -405,7 +410,7 @@ input[type=email] {
   font-size: 30px;
   line-height: 30px;
   color: #edebeb;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
 .feature-box .content span {
   font-size: 14px;
