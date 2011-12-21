@@ -31,7 +31,7 @@
 				<section class="span-2 connect-with-us last">
 					<h3>Connect with us.</h3>
 					<a href="http://www.youtube.com/user/RevivalCryMinistries" title="Youtube"><img src="<?php bloginfo('template_directory'); ?>/images/youtube.jpg" width="22" height="22" alt="Youtube"></a>
-					<a href="#" title="Twitter"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.jpg" width="22" height="22" alt="Twitter"></a>
+					<a href="http://www.twitter.com/revivalcry" title="Twitter"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.jpg" width="22" height="22" alt="Twitter"></a>
 					<a href="http://www.facebook.com/revival.cry" title="Facebook"><img src="<?php bloginfo('template_directory'); ?>/images/facebook.jpg" width="22" height="22" alt="Facebook"></a>
 				</section>
 			</div><!-- #footer -->
