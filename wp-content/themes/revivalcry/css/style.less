@@ -9,7 +9,7 @@ html { overflow-y: scroll; } /* force scrollbar */
 
 /*.......................................................the LESS colors*/
 @rc-black: #1D1B1B;
-@rc-blue: #10bdd2;
+@rc-blue: #00bcd1;
 @rc-white: #EDEBEB;
 
 /*.......................................................the LESS font families*/
@@ -64,7 +64,7 @@ html { overflow-y: scroll; } /* force scrollbar */
 body
 {
 	.open-sans;
-	background: url(../images/bg.gif);
+	font-size: 12px;
 }
 
 .container
@@ -82,7 +82,9 @@ body
 
 h1
 {
-	
+	font-size: 30px;
+	.open-sans-condensed;
+	text-transform: uppercase;
 }
 
 h2
@@ -130,8 +132,9 @@ header
 {
 	margin-bottom: 65px;
 	width: 100%;
-	background-color: @rc-black;
-	height: 460px;
+	min-height: 150px;
+	max-height: 460px;
+	background: url(../images/bg.gif);
 	
 	#header
 	{
@@ -160,7 +163,8 @@ header
 		width: 100%;
 		overflow: hidden;
 		height: 429px;
-		margin-top: -49px;
+		position: relative;
+		top: -62px;
 		
 		.wt-rotator
 		{
@@ -206,7 +210,7 @@ nav, #top-menu
 	
 	a
 	{
-		color: @rc-white;
+		color: @rc-black;
 		display: block;
 		line-height: 22px;
 		padding: 0 10px;
@@ -216,7 +220,7 @@ nav, #top-menu
 		
 		:visited
 		{
-			color: @rc-white;
+			color: @rc-black;
 		}
 		
 		:after
@@ -233,6 +237,7 @@ nav, #top-menu
 		float: left;
 		width: 130px;
 		z-index: 99999;
+		background: url(../images/dd-arrow.png) no-repeat -10px -10px;
 		
 		li
 		{
@@ -248,10 +253,27 @@ nav, #top-menu
 		a
 		{
 			background: @rc-black;
+			color: @rc-white;
 			line-height: 1em;
 			padding: 10px;
 			width: 110px;
 			height: auto;
+			
+			:after
+			{
+				content: "";
+			}
+			
+			:hover
+			{
+				background-color: @rc-white;
+				color: @rc-black;
+			}
+			
+			:visited
+			{
+				color: @rc-white;
+			}
 		}
 	}
 	
@@ -283,17 +305,44 @@ nav, #top-menu
 	color: #000;
 }
 
+body.home nav
+{
+	ul li a
+	{
+		color: @rc-white;
+		
+		:hover
+		{
+			color: @rc-blue;
+		}
+	}
+	
+	ul ul li a
+	{
+		color: @rc-white;
+		background-color: @rc-black;
+		
+		:hover
+		{
+			color: @rc-black;
+			background-color: @rc-white;
+		}
+	}
+	
+}
+
 #top-menu
 {
-	width: 800px;
+	width: 100%;
 	height: 30px;
 	margin-bottom: 30px;
+	background-color: @rc-black;
 	
 	.menu-header
 	{
-		width: 809px;
+		width: 800px;
 		font-size: 14px;
-		margin: 0;
+		margin: 0 auto;
 	}
 	
 	ul#menu-top-nagivation
@@ -521,6 +570,224 @@ input[type=email]
 {
 	margin-bottom: 0;
 }
+
+
+/*.......................................................the events*/
+#em-wrapper
+{
+	article.event
+	{
+		height: 130px;
+		margin-bottom: 50px;
+
+		.date
+		{
+			float: left;
+			width: 140px;
+			height: 130px;
+			margin-right: 20px;
+			line-height: 0;
+			
+			.day
+			{
+				font-size: 124px;
+				font-weight: 600;
+				height: 92px;
+				line-height: 103px;
+			}
+			
+			.month
+			{
+				font-size: 24px;
+				text-transform: uppercase;
+				height: 28px;
+				line-height: 56px;
+			}
+		}
+		
+		.details
+		{
+			float: left;
+			width: 780px;
+			
+			h1
+			{
+				margin-bottom: 0;
+				
+				a
+				{
+					text-decoration: none;
+				}
+			}
+			
+			h2
+			{
+				font-size: 14px;
+				text-transform: uppercase;
+			}
+		}
+	}
+	
+	.dont-see-dennis
+	{
+		width: 270px;
+		float: left;
+		text-transform: uppercase;
+		font-size: 16px;
+		.open-sans-condensed;
+		position: relative;
+		bottom: -65px;
+		background: url(../images/box-corner.gif) no-repeat top right @rc-blue;
+		
+		:hover
+		{
+			.scale;
+			bottom: -59px;
+		}
+		
+		a
+		{
+			display: block;
+			padding: 20px 40px;
+			width: 190px;
+			color: @rc-white;
+			text-decoration: none;
+		}
+	}
+}
+
+.encourage-box
+{
+	.open-sans-condensed;
+	background-color: @rc-white;
+	font-size: 16px;
+	padding: 10px;
+	text-transform: uppercase;
+	float: right;
+	position: relative;
+	bottom: -100px;
+	
+	a
+	{
+		text-decoration: none;
+	}
+}
+
+
+/*.......................................................the contact form*/
+#contact-form
+{
+	.phone-number
+	{
+		color: @rc-blue;
+		font-size: 48px;
+		line-height: 30px;
+		display: block;
+		width: 100%;
+		text-align: center;
+		font-weight: 600;
+	}
+	
+	.rc-name
+	{
+		font-size: 24px;
+	}
+	
+	.address
+	{
+		font-size: 14px;
+		width: 310px;
+		margin: 0 auto;
+	}
+	
+	form.wpcf7-form
+	{
+		p
+		{
+			height: 30px;
+			margin-bottom: 12px;
+		}
+		
+		label
+		{
+			display: block;
+			float: left;
+			font-weight: normal;
+			font-size: 14px;
+			line-height: 30px;
+			width: 160px;
+		}
+		
+		input[type=text],
+		textarea,
+		select
+		{
+			float: left;
+			margin: 0;
+			border: 1px solid #cbcbcb;
+			.open-sans;
+		}
+		
+		input[type=text]
+		{
+			width: 208px;
+			height: 18px;
+			padding: 5px;
+		}
+		
+		select
+		{
+			width: 220px;
+			height: 30px;
+			padding: 5px;
+		}
+		
+		textarea
+		{
+			width: 286px;
+			height: 83px;
+		}
+		
+		input[type=submit]
+		{
+			margin: 15px 0 0 160px;
+		}
+		
+		br
+		{
+			display: none;
+		}
+		
+		.required
+		{
+			color: red;
+		}
+	}
+}
+
+div.wpcf7-validation-errors,
+div.wpcf7-mail-sent-ng
+{
+	border: none !important;
+	position: relative;
+	top: 8px;
+	left: 15px;
+	color: red;
+}
+
+div.wpcf7 img.ajax-loader
+{
+	margin-top: 20px;
+}
+
+span.wpcf7-not-valid-tip
+{
+	border: none !important;
+	margin-left: 10px;
+	background: none !important;
+	color: red;
+}
+
 /*.......................................................the pagination*/
 .wp-paginate
 {

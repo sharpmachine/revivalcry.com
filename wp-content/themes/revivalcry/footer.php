@@ -38,11 +38,11 @@
 
 			<div id="site-info">
 				&copy;<?php echo date ('Y'); ?>
-				<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"> <?php bloginfo( 'name' ); ?> Ministries</a> | 
-				<a href="<?php bloginfo('url'); ?>/privacy-policy">Privacy Policy</a> | 
-				<a href="<?php bloginfo('url'); ?>/terms-conditions">Terms &amp; Conditions</a>
+				<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"> <?php bloginfo( 'name' ); ?> Ministries.</a> 406-924-6477 | 
+				<a href="<?php bloginfo('url'); ?>/privacy-policy">Privacy Policy</a>.   
+				<a href="<?php bloginfo('url'); ?>/terms-conditions">Terms &amp; Conditions</a>.
 				<?php if (is_page("store")): ?>
-					| <a href="<?php bloginfo('url'); ?>/shipping-returns-policy">Shipping &amp; Returns Policy</a>
+					<a href="<?php bloginfo('url'); ?>/shipping-returns-policy">Shipping &amp; Returns Policy</a>.
 				<?php endif; ?>
 			</div><!-- #site-info -->
 		</footer>

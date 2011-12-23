@@ -58,7 +58,7 @@
   position: absolute;
   left: 0;
   height: 4px;
-  background-color: #33cbcb;
+  background-color: #00bcd1;
   -moz-opacity: 0.5;
   filter: alpha(opacity=50);
   opacity: 0.5;
@@ -172,7 +172,7 @@
   line-height: 24px;
   text-align: center;
   color: #edebeb;
-  background-color: #33cbcb;
+  background-color: #00bcd1;
   cursor: pointer;
   font-weight: bold;
   background-repeat: no-repeat !important;
@@ -189,7 +189,7 @@
   line-height: 24px;
   text-align: center;
   color: #edebeb;
-  background-color: #33cbcb;
+  background-color: #00bcd1;
   cursor: pointer;
   font-weight: bold;
   background-repeat: no-repeat !important;
@@ -206,7 +206,7 @@
   line-height: 24px;
   text-align: center;
   color: #edebeb;
-  background-color: #33cbcb;
+  background-color: #00bcd1;
   cursor: pointer;
   font-weight: bold;
   background-repeat: no-repeat !important;
@@ -223,7 +223,7 @@
   line-height: 24px;
   text-align: center;
   color: #edebeb;
-  background-color: #33cbcb;
+  background-color: #00bcd1;
   cursor: pointer;
   font-weight: bold;
   background-repeat: no-repeat !important;

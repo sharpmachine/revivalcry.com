@@ -9,7 +9,7 @@ html { overflow-y: scroll; }
 .open-sans-condensed { font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif; }
 body {
   font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
-  background: url(../images/bg.gif);
+  font-size: 12px;
 }
 .container { padding: 0 20px; }
 .wrapper {
@@ -18,14 +18,20 @@ body {
   height: 100%;
   margin: 0 auto -235px;
 }
-a { color: #10bdd2; }
+h1 {
+  font-size: 30px;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  text-transform: uppercase;
+}
+a { color: #00bcd1; }
 a:visited { color: #32c7c7; }
 a:hover { color: #28a1a1; }
 header {
   margin-bottom: 65px;
   width: 100%;
-  background-color: #1d1b1b;
-  height: 460px;
+  min-height: 150px;
+  max-height: 460px;
+  background: url(../images/bg.gif);
 }
 header #header {
   width: 820px;
@@ -44,7 +50,8 @@ header #banner {
   width: 100%;
   overflow: hidden;
   height: 429px;
-  margin-top: -49px;
+  position: relative;
+  top: -62px;
 }
 header #banner .wt-rotator {
   position: relative;
@@ -93,7 +100,7 @@ nav div.menu li {
   position: relative;
 }
 nav a {
-  color: #edebeb;
+  color: #1d1b1b;
   display: block;
   line-height: 22px;
   padding: 0 10px;
@@ -101,7 +108,7 @@ nav a {
   text-transform: uppercase;
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
-nav a:visited { color: #edebeb; }
+nav a:visited { color: #1d1b1b; }
 nav a:after { content: "."; }
 nav ul ul {
   display: none;
@@ -110,6 +117,7 @@ nav ul ul {
   float: left;
   width: 130px;
   z-index: 99999;
+  background: url(../images/dd-arrow.png) no-repeat -10px -10px;
 }
 nav ul ul li { min-width: 130px; }
 nav ul ul ul {
@@ -118,29 +126,36 @@ nav ul ul ul {
 }
 nav ul ul a {
   background: #1d1b1b;
+  color: #edebeb;
   line-height: 1em;
   padding: 10px;
   width: 110px;
   height: auto;
 }
-nav li:hover > a { color: #10bdd2; }
-nav ul ul:hover > a { color: #10bdd2; }
+nav ul ul a:after { content: ""; }
+nav ul ul a:hover {
+  background-color: #edebeb;
+  color: #1d1b1b;
+}
+nav ul ul a:visited { color: #edebeb; }
+nav li:hover > a { color: #00bcd1; }
+nav ul ul:hover > a { color: #00bcd1; }
 nav ul li:hover > ul { display: block; }
 nav ul li.current_page_item > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 nav ul li.current-menu-ancestor > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 nav ul li.current-menu-item > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 nav ul li.current-menu-parent > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 #top-menu {
   display: block;
@@ -183,7 +198,7 @@ nav ul li.current-menu-parent > a {
   position: relative;
 }
 #top-menu a {
-  color: #edebeb;
+  color: #1d1b1b;
   display: block;
   line-height: 22px;
   padding: 0 10px;
@@ -191,7 +206,7 @@ nav ul li.current-menu-parent > a {
   text-transform: uppercase;
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
 }
-#top-menu a:visited { color: #edebeb; }
+#top-menu a:visited { color: #1d1b1b; }
 #top-menu a:after { content: "."; }
 #top-menu ul ul {
   display: none;
@@ -200,6 +215,7 @@ nav ul li.current-menu-parent > a {
   float: left;
   width: 130px;
   z-index: 99999;
+  background: url(../images/dd-arrow.png) no-repeat -10px -10px;
 }
 #top-menu ul ul li { min-width: 130px; }
 #top-menu ul ul ul {
@@ -208,49 +224,67 @@ nav ul li.current-menu-parent > a {
 }
 #top-menu ul ul a {
   background: #1d1b1b;
+  color: #edebeb;
   line-height: 1em;
   padding: 10px;
   width: 110px;
   height: auto;
 }
-#top-menu li:hover > a { color: #10bdd2; }
-#top-menu ul ul:hover > a { color: #10bdd2; }
+#top-menu ul ul a:after { content: ""; }
+#top-menu ul ul a:hover {
+  background-color: #edebeb;
+  color: #1d1b1b;
+}
+#top-menu ul ul a:visited { color: #edebeb; }
+#top-menu li:hover > a { color: #00bcd1; }
+#top-menu ul ul:hover > a { color: #00bcd1; }
 #top-menu ul li:hover > ul { display: block; }
 #top-menu ul li.current_page_item > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 #top-menu ul li.current-menu-ancestor > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 #top-menu ul li.current-menu-item > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 #top-menu ul li.current-menu-parent > a {
   color: #edebeb;
-  background: #10bdd2;
+  background: #00bcd1;
 }
 * html nav ul li.current_page_item a { color: #000000; }
 * html nav ul li.current-menu-ancestor a { color: #000000; }
 * html nav ul li.current-menu-item a { color: #000000; }
 * html nav ul li.current-menu-parent a { color: #000000; }
 * html nav ul li a:hover { color: #000000; }
+body.home nav ul li a { color: #edebeb; }
+body.home nav ul li a:hover { color: #00bcd1; }
+body.home nav ul ul li a {
+  color: #edebeb;
+  background-color: #1d1b1b;
+}
+body.home nav ul ul li a:hover {
+  color: #1d1b1b;
+  background-color: #edebeb;
+}
 #top-menu {
-  width: 800px;
+  width: 100%;
   height: 30px;
   margin-bottom: 30px;
+  background-color: #1d1b1b;
 }
 #top-menu .menu-header {
-  width: 809px;
+  width: 800px;
   font-size: 14px;
-  margin: 0;
+  margin: 0 auto;
 }
 #top-menu ul#menu-top-nagivation { float: right; }
 #top-menu ul#menu-top-nagivation li a {
   line-height: 30px;
-  color: #10bdd2;
+  color: #00bcd1;
 }
 #top-menu ul#menu-top-nagivation li a:hover { color: #edebeb; }
 #top-menu ul li.current_page_item > a {
@@ -272,7 +306,7 @@ nav ul li.current-menu-parent > a {
 .tooltipsy {
   padding: 2px 10px;
   color: #1d1b1b;
-  background-color: #10bdd2;
+  background-color: #00bcd1;
   position: relative;
   top: 65px;
   -webkit-border-radius: 2px;
@@ -283,7 +317,7 @@ nav ul li.current-menu-parent > a {
   content: '';
   position: absolute;
   border: 10px solid transparent;
-  border-left-color: #10bdd2;
+  border-left-color: #00bcd1;
   top: -10px;
   right: 35%;
   z-index: -1;
@@ -342,7 +376,7 @@ footer #site-info a {
   background: gradient(center top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 a.button {
-  background-color: #10bdd2;
+  background-color: #00bcd1;
   border: none;
   color: #edebeb;
   height: 25px;
@@ -356,7 +390,7 @@ a.button {
 }
 a.button:hover { opacity: 1; }
 input[type="submit"] {
-  background-color: #10bdd2;
+  background-color: #00bcd1;
   border: none;
   color: #edebeb;
   height: 25px;
@@ -402,7 +436,7 @@ input[type=email] {
   height: 50px;
   float: left;
   padding: 20px 10px 20px 20px;
-  background-color: #10bdd2;
+  background-color: #00bcd1;
   text-transform: uppercase;
 }
 .feature-box .content h2 {
@@ -421,6 +455,150 @@ input[type=email] {
   float: left;
 }
 .no-mb { margin-bottom: 0; }
+#em-wrapper article.event {
+  height: 130px;
+  margin-bottom: 50px;
+}
+#em-wrapper article.event .date {
+  float: left;
+  width: 140px;
+  height: 130px;
+  margin-right: 20px;
+  line-height: 0;
+}
+#em-wrapper article.event .date .day {
+  font-size: 124px;
+  font-weight: 600;
+  height: 92px;
+  line-height: 103px;
+}
+#em-wrapper article.event .date .month {
+  font-size: 24px;
+  text-transform: uppercase;
+  height: 28px;
+  line-height: 56px;
+}
+#em-wrapper article.event .details {
+  float: left;
+  width: 780px;
+}
+#em-wrapper article.event .details h1 { margin-bottom: 0; }
+#em-wrapper article.event .details h1 a { text-decoration: none; }
+#em-wrapper article.event .details h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+#em-wrapper .dont-see-dennis {
+  width: 270px;
+  float: left;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  position: relative;
+  bottom: -65px;
+  background: url(../images/box-corner.gif) no-repeat top right #00bcd1;
+}
+#em-wrapper .dont-see-dennis:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+  bottom: -59px;
+}
+#em-wrapper .dont-see-dennis a {
+  display: block;
+  padding: 20px 40px;
+  width: 190px;
+  color: #edebeb;
+  text-decoration: none;
+}
+.encourage-box {
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  background-color: #edebeb;
+  font-size: 16px;
+  padding: 10px;
+  text-transform: uppercase;
+  float: right;
+  position: relative;
+  bottom: -100px;
+}
+.encourage-box a { text-decoration: none; }
+#contact-form .phone-number {
+  color: #00bcd1;
+  font-size: 48px;
+  line-height: 30px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+}
+#contact-form .rc-name { font-size: 24px; }
+#contact-form .address {
+  font-size: 14px;
+  width: 310px;
+  margin: 0 auto;
+}
+#contact-form form.wpcf7-form p {
+  height: 30px;
+  margin-bottom: 12px;
+}
+#contact-form form.wpcf7-form label {
+  display: block;
+  float: left;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 30px;
+  width: 160px;
+}
+#contact-form form.wpcf7-form input[type=text] {
+  float: left;
+  margin: 0;
+  border: 1px solid #cbcbcb;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+}
+#contact-form form.wpcf7-form textarea {
+  float: left;
+  margin: 0;
+  border: 1px solid #cbcbcb;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+}
+#contact-form form.wpcf7-form select {
+  float: left;
+  margin: 0;
+  border: 1px solid #cbcbcb;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+}
+#contact-form form.wpcf7-form input[type=text] {
+  width: 208px;
+  height: 18px;
+  padding: 5px;
+}
+#contact-form form.wpcf7-form select {
+  width: 220px;
+  height: 30px;
+  padding: 5px;
+}
+#contact-form form.wpcf7-form textarea {
+  width: 286px;
+  height: 83px;
+}
+#contact-form form.wpcf7-form input[type=submit] { margin: 15px 0 0 160px; }
+#contact-form form.wpcf7-form br { display: none; }
+#contact-form form.wpcf7-form .required { color: red; }
+div.wpcf7-validation-errors, div.wpcf7-mail-sent-ng {
+  border: none !important;
+  position: relative;
+  top: 8px;
+  left: 15px;
+  color: red;
+}
+div.wpcf7 img.ajax-loader { margin-top: 20px; }
+span.wpcf7-not-valid-tip {
+  border: none !important;
+  margin-left: 10px;
+  background: none !important;
+  color: red;
+}
 .wp-paginate {
   padding: 0;
   margin: 0;

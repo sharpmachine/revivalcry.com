@@ -74,16 +74,21 @@
 </head>
 	<body <?php body_class(); ?>>
 		<div class="wrapper">
-		<header role="banner">
-			<div id="header">
+			<header role="banner">
 				<div id="top-menu">
-					<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'top-menu' ) ); ?>
-				</div><!-- #top-menu -->
+						<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'top-menu' ) ); ?>
+					</div><!-- #top-menu -->
+			<div id="header">
+				
 				<hgroup>
 					<h1 id="site-title">
 						<span>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-								<img src="<?php bloginfo('template_directory'); ?>/images/logo1.png" width="223" height="43" alt="Logo">
+								<?php if (is_home() || is_front_page()): ?>
+									<img src="<?php bloginfo('template_directory'); ?>/images/logo1.png" width="223" height="43" alt="Logo">
+									<?php else: ?>
+									<img src="<?php bloginfo('template_directory'); ?>/images/logo2.png" width="223" height="43" alt="Logo">
+								<?php endif; ?>
 							</a>
 						</span>
 					</h1>
