@@ -28,7 +28,7 @@
 						if (in_array ($post->ID, $do_not_duplicate)) continue;
 						update_post_caches($post);
 						 ?>
-					<article class="revivalist span-3">
+					<article class="revivalists span-3">
 						<?php if (get_field("headshot")): ?>
 							<img src="<?php the_field("headshot"); ?>" alt="<?php the_title(); ?>" width="220" height="147">
 							<?php else: ?>

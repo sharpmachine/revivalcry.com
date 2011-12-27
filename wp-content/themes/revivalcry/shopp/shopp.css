@@ -69,7 +69,7 @@
 #shopp .category form {
   display: inline;
   position: absolute;
-  top: -6px;
+  top: 0;
   right: 74px;
 }
 #shopp ul.products li.product div.frame { padding: 10px; }
@@ -370,4 +370,3 @@
 #shopp #receipt .order .buttons td { text-align: right; }
 #shopp #receipt .order .totals.total th { font-size: 130%; }
 #shopp #receipt .order .totals.total td { font-size: 130%; }
-#shopp .encourage-box { top: 20px; }

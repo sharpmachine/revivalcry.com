@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-		<div id="content-container" class="span-20">
+		<div id="content-container">
 			<section id="content" role="main">
 
 <?php if ( have_posts() ) : ?>
@@ -18,5 +18,4 @@
 			</section><!-- #content -->
 		</div><!-- #content-container -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>
