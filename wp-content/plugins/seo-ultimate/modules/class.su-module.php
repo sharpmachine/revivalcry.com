@@ -601,8 +601,10 @@ class SU_Module {
 	 */
 	function children_admin_pages() {
 		foreach ($this->modules as $key => $x_module) {
-			$this->modules[$key]->admin_subheader($this->modules[$key]->get_module_subtitle(), $this->plugin->key_to_hook($key));
+			echo "<div id='" . $this->plugin->key_to_hook($key) . "'>\n";
+			$this->modules[$key]->admin_subheader($this->modules[$key]->get_module_subtitle());
 			$this->modules[$key]->admin_page_contents();
+			echo "</div>\n";
 		}
 	}
 	
@@ -613,9 +615,9 @@ class SU_Module {
 	 */
 	function children_admin_pages_form() {
 		if (count($this->modules)) {
-			$this->admin_form_start();
+			$this->admin_form_start(false, false);
 			$this->children_admin_pages();
-			$this->admin_form_end();
+			$this->admin_form_end(null, false);
 		} else
 			$this->print_message('warning', sprintf(__('All the modules on this page have been disabled. You can re-enable them using the <a href="%s">Module Manager</a>.', 'seo-ultimate'), $this->get_admin_url('modules')));
 	}
@@ -880,7 +882,7 @@ class SU_Module {
 	 * @uses get_admin_url()
 	 * @uses SEO_Ultimate::plugin_dir_url
 	 * 
-	 * @param array $tabs The internationalized tab titles are the array keys, and the references to the functions that display the tab contents are the array values.
+	 * @param array $tabs Array (id => __, title => __, callback => __)
 	 * @param bool $table Whether or not the tab contents should be wrapped in a form table.
 	 */
 	function admin_page_tabs($tabs = array(), $table=false) {
@@ -1568,7 +1570,8 @@ class SU_Module {
 	 * @param bool $newtable Whether to open a new <table> element.
 	 */
 	function admin_form_group_start($title, $newtable=true) {
-		echo "<tr valign='top'>\n<th scope='row'>$title</th>\n<td><fieldset><legend class='hidden'>$title</legend>\n";
+		$class = $newtable ? ' class="su-admin-form-group"' : '';
+		echo "<tr valign='top'$class>\n<th scope='row'>$title</th>\n<td><fieldset><legend class='hidden'>$title</legend>\n";
 		if ($newtable) echo "<table>\n";
 	}
 	
@@ -1633,7 +1636,11 @@ class SU_Module {
 	 * @param array $checkboxes An array of checkboxes. (Field/setting IDs are the keys, and descriptions are the values.)
 	 * @param mixed $grouptext The text to display in a table cell to the left of the one containing the checkboxes. Optional.
 	 */
-	function checkboxes($checkboxes, $grouptext=false) {
+	function checkboxes($checkboxes, $grouptext=false, $args=array()) {
+		
+		extract(wp_parse_args($args, array(
+			  'output_tr' => true
+		)));
 		
 		//Save checkbox settings after form submission
 		if ($this->is_action('update')) {
@@ -1652,7 +1659,7 @@ class SU_Module {
 		
 		if ($grouptext)
 			$this->admin_form_group_start($grouptext, false);
-		else
+		elseif ($output_tr)
 			echo "<tr valign='top' class='su-admin-form-checkbox'>\n<td colspan='2'>\n";
 		
 		if (is_array($checkboxes)) {
@@ -1686,8 +1693,12 @@ class SU_Module {
 			}
 		}
 		
-		if ($grouptext) echo "</fieldset>";
-		echo "</td>\n</tr>\n";
+		if ($grouptext) {
+			echo "</fieldset>";
+			$this->admin_form_group_end();
+		} elseif ($output_tr) {
+			echo "</td>\n</tr>\n";
+		}
 	}
 	
 	/**
@@ -1701,8 +1712,8 @@ class SU_Module {
 	 * @param mixed $grouptext The text to display in a table cell to the left of the one containing the checkbox. Optional.
 	 * @return string The HTML that would render the checkbox.
 	 */
-	function checkbox($id, $desc, $grouptext = false) {
-		$this->checkboxes(array($id => $desc), $grouptext);
+	function checkbox($id, $desc, $grouptext = false, $args=array()) {
+		$this->checkboxes(array($id => $desc), $grouptext, $args);
 	}
 	
 	/**
@@ -1793,7 +1804,7 @@ class SU_Module {
 	 * @param array $values The keys of this array are the radio button values, and the array values are the label strings.
 	 * @param string|false $grouptext The text to display in a table cell to the left of the one containing the radio buttons. Optional.
 	 */
-	function dropdown($name, $values, $grouptext=false) {
+	function dropdown($name, $values, $grouptext=false, $text='%s') {
 		
 		//Save dropdown setting after form submission
 		if ($this->is_action('update') && isset($_POST[$name]))
@@ -1809,9 +1820,10 @@ class SU_Module {
 			register_setting($this->get_module_key(), $name);
 			
 			$name = su_esc_attr($name);
-			echo "<select name='$name' id='$name'>\n";
-			echo suhtml::option_tags($values, $this->get_setting($name));
-			echo "</select>";
+			$dropdown =   "<select name='$name' id='$name'>\n"
+						. suhtml::option_tags($values, $this->get_setting($name))
+						. "</select>";
+			printf($text, $dropdown);
 		}
 		
 		if ($grouptext) echo "</fieldset>";
@@ -2465,6 +2477,7 @@ class SU_Module {
 	 */
 	function jlsuggest_init() {
 		add_action('admin_xml_ns', array(&$this, 'jlsuggest_xml_ns'));
+		$this->plugin->queue_js ('includes', 'encoder');
 		$this->plugin->queue_js ('includes/jlsuggest', 'jlsuggest');
 		$this->plugin->queue_css('includes/jlsuggest', 'jlsuggest');
 	}
@@ -2547,6 +2560,19 @@ class SU_Module {
 			case 'author':
 				$selected_author = get_userdata($to_id);
 				$text_dest = $selected_author->user_login . '<span class="type">&nbsp;&mdash;&nbsp;'.__('Author', 'seo-ultimate').'</span>';
+				break;
+			case 'internal-link-alias':
+				$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
+				$aliases = $this->get_setting('aliases', array(), 'internal-link-aliases');
+				
+				if (isset($aliases[$to_id]['to'])) {
+					$h_alias_to = su_esc_html($aliases[$to_id]['to']);
+					$text_dest = "/$alias_dir/$h_alias_to/" . '<span class="type">&nbsp;&mdash;&nbsp;'.__('Link Mask', 'seo-ultimate').'</span>';
+				} else {
+					$to_genus = 'url';
+					$to_id = '';
+				}
+				break;
 		}
 		
 		$is_url = (('url' == $to_genus) && !$text_dest);
@@ -2578,7 +2604,7 @@ class SU_Module {
 		$html .= '<div class="jls_text_dest_text">';
 		$html .= $text_dest;
 		$html .= '</div>';
-		$html .= '<div><a href="#" onclick="javascript:return false;" class="jls_text_dest_close" title="'.__('Remove this destination', 'seo-ultimate').'">'.__('X', 'seo-ultimate').'</a></div>';
+		$html .= '<div><a href="#" onclick="javascript:return false;" class="jls_text_dest_close" title="'.__('Remove this location from this textbox', 'seo-ultimate').'">'.__('X', 'seo-ultimate').'</a></div>';
 		$html .= '</div>';
 		
 		return $html;
@@ -2612,6 +2638,17 @@ class SU_Module {
 			case 'author':
 				$to_id = (int)$to_id;
 				return get_author_posts_url($to_id); break;
+			case 'internal-link-alias':
+				$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
+				$aliases   = $this->get_setting('aliases', array(),'internal-link-aliases');
+				
+				if (isset($aliases[$to_id]['to'])) {
+					$u_alias_to = urlencode($aliases[$to_id]['to']);
+					return get_bloginfo('url') . "/$alias_dir/$u_alias_to/";
+				}
+				
+				return false;
+				break;
 		}
 		
 		return false;

@@ -89,7 +89,7 @@ h1
 
 h2
 {
-	
+	font-size: 24px;
 }
 
 h3
@@ -234,10 +234,22 @@ nav, #top-menu
 		display: none;
 		position: absolute;
 		left: 0;
+		padding-top: 10px;
 		float: left;
 		width: 130px;
 		z-index: 99999;
 		background: url(../images/dd-arrow.png) no-repeat -10px -10px;
+		
+		    :after
+    {
+    	content: '';
+	    position: absolute;
+	    border: 10px solid transparent;
+	    top: -8px;
+	    left: 10%;
+	    background: url(../images/dd-arrow.png) no-repeat -10px 0;
+	    z-index: -1;
+    }
 		
 		li
 		{
@@ -263,6 +275,10 @@ nav, #top-menu
 			{
 				content: "";
 			}
+						:visited
+			{
+				color: @rc-white;
+			}
 			
 			:hover
 			{
@@ -270,10 +286,7 @@ nav, #top-menu
 				color: @rc-black;
 			}
 			
-			:visited
-			{
-				color: @rc-white;
-			}
+
 		}
 	}
 	
@@ -493,6 +506,16 @@ a.button, input[type="submit"]
 	}
 }
 
+.paypal
+{
+	display: block;
+	width: 43px;
+	float: left;
+	margin: 0 10px 10px 0;
+	padding: 0 10px !important;
+	text-align: center;
+}
+
 input[type="submit"]
 {
 	line-height: 0;
@@ -509,9 +532,7 @@ input[type=email]
 {
 	width: 196px;
 	height: 15px;
-	padding: 5px;
 	border:  none;
-	.open-sans;
 }
 
 
@@ -587,6 +608,7 @@ input[type=email]
 			height: 130px;
 			margin-right: 20px;
 			line-height: 0;
+			text-align: center;
 			
 			.day
 			{
@@ -673,9 +695,26 @@ input[type=email]
 	}
 }
 
+/*.......................................................this giving page*/
+.note-box
+{
+	clear: both;
+	.open-sans-condensed;
+	text-transform: uppercase;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 20px;
+	margin: 0;
+	
+	img
+	{
+		position: relative;
+		top: 5px;
+	}
+}
 
 /*.......................................................the contact form*/
-#contact-form
+#contact-form, #invite-form
 {
 	.phone-number
 	{
@@ -724,22 +763,16 @@ input[type=email]
 		{
 			float: left;
 			margin: 0;
-			border: 1px solid #cbcbcb;
-			.open-sans;
 		}
 		
 		input[type=text]
 		{
 			width: 208px;
-			height: 18px;
-			padding: 5px;
 		}
 		
 		select
 		{
 			width: 220px;
-			height: 30px;
-			padding: 5px;
 		}
 		
 		textarea
@@ -788,6 +821,51 @@ span.wpcf7-not-valid-tip
 	color: red;
 }
 
+
+/*.......................................................the revivalist*/
+.revivalist
+{
+	margin-bottom: 45px;
+	height: 375px;
+	h2
+	{
+		text-transform: uppercase;
+		.open-sans-condensed;
+		margin-bottom: 10px;
+	}
+	
+	img
+	{
+		display: block;
+		margin-bottom: 10px;
+	}
+	
+	p
+	{
+		
+		a
+		{
+			display: block;
+			margin-top: 10px;
+		}
+	}
+	
+	:nth-child(4n)
+	{
+		margin-right: 0;
+	}
+}
+
+article.single-revivalist .revivalist
+{
+	height: auto;
+}
+
+#other-revivalists
+{
+	clear: both;
+	padding-top: 50px;
+}
 /*.......................................................the pagination*/
 .wp-paginate
 {
@@ -840,6 +918,30 @@ span.wpcf7-not-valid-tip
 }
 
 /*.......................................................the forms*/
+input[type=text],
+input[type=email],
+select,
+textarea
+{
+	padding: 5px;
+	border: 1px solid #CBCBCB;
+	.open-sans;
+	
+	:focus
+	{
+		border: 1px solid @rc-blue;
+	}
+}
+
+input[type=text]
+{
+	height: 18px;
+}
+
+select
+{
+	height: 30px;
+}
 
 
 /*.......................................................the comments*/
@@ -1062,3 +1164,22 @@ h3#reply-title {
 }
 
 /*.......................................................the misc*/
+.tac
+{
+	text-align: center;
+}
+
+.tar
+{
+	text-align: right;
+}
+
+.fl
+{
+	float: left;
+}
+
+.fr
+{
+	float: right;
+}

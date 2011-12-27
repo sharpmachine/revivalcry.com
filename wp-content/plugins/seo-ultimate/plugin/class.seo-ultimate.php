@@ -1747,6 +1747,36 @@ class SEO_Ultimate {
 			}
 		}
 		
+		if (!$include || in_array('internal-link-aliases', $include)) {
+			
+			$aliases = $this->get_setting('aliases', array(), 'internal-link-aliases');
+			$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
+			
+			if (is_array($aliases) && count($aliases)) {
+				
+				$header_outputted = false;
+				foreach ($aliases as $alias_id => $alias) {
+					$h_alias_to = su_esc_html($alias['to']);
+					$to_rel_url = "/$alias_dir/$h_alias_to/";
+					
+					if ((strpos($alias['from'], $_GET['q']) !== false) || (strpos($to_rel_url, $_GET['q']) !== false)) {
+						
+						if (!$header_outputted) {
+							$items[] = array('text' => __('Link Masks', 'seo-ultimate'), 'isheader' => true);
+							$header_outputted = true;
+						}
+						
+						$items[] = array(
+							  'text' => $to_rel_url
+							, 'value' => 'obj_internal-link-alias/' . $alias_id
+							, 'selectedtext' => $to_rel_url . '<span class="type"> &mdash; '.__('Link Mask', 'seo-ultimate').'</span>'
+						);
+						
+					}
+				}
+			}
+		}
+		
 		echo json_encode($items);
 		die();
 	}

@@ -252,9 +252,9 @@ jQuery(document).ready( function($) {
 							function(q) { return '<span class="' + options.matchClass + '">' + q + '</span>' }
 						);
 						html = '<li'
-							+ ' class="' + document.createTextNode(options.itemClass).data + '"'
-							+ ' su:value="' + document.createTextNode(item.value || '').data + '"'
-							+ ' su:selectedtext="' + document.createTextNode(item.selectedtext || '').data.replace(/"/g, "&quot;") + '"'
+							+ ' class="' + Encoder.htmlEncode(options.itemClass, true) + '"'
+							+ ' su:value="' + Encoder.htmlEncode(item.value || '', true) + '"'
+							+ ' su:selectedtext="' + Encoder.htmlEncode(item.selectedtext || '', true) + '"'
 							+ '>' + html + '</li>';
 					}
 					lis[lis.length] = html;

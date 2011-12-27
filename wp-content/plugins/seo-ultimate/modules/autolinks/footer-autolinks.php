@@ -125,10 +125,6 @@ class SU_FooterAutolinks extends SU_Module {
 	
 	function admin_page_contents() {
 		
-		echo "\n<p>";
-		_e('The Content Links section of Deeplink Juggernaut lets you automatically link a certain word or phrase in your post/page content to a URL you specify.', 'seo-ultimate');
-		echo "</p>\n";
-		
 		$links = $this->get_setting('footer_links', array());
 		$num_links = count($links);
 		

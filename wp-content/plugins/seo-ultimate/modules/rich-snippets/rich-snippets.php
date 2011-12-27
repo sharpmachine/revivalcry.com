@@ -72,6 +72,10 @@ class SU_RichSnippets extends SU_Module {
 							  'mf' => array('item', 'fn')
 							, 'md' => 'itemreviewed'
 							, 'rdfa' => 'itemreviewed'
+						),'hidden_tags' => array(
+							  'mf' => '<span class="item"><span class="fn"><span class="value-title" title="%s"></span></span></span>'
+							, 'md' => 'itemreviewed'
+							, 'rdfa' => 'itemreviewed'
 						)
 					)
 					, 'rating' => array(

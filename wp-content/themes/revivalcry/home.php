@@ -34,7 +34,21 @@
 				</section>
 				
 				<section class="span-8 last">
-					<iframe width="620" height="345" src="http://www.youtube.com/embed/KBZaUTj_cuY?rel=0" frameborder="0" allowfullscreen></iframe>
+								<?php query_posts("post_type=videos&posts_per_page=100"); ?>
+			
+			<?php if (have_posts()) : ?>
+			
+	<?php while (have_posts()) : the_post(); ?>
+					<iframe width="620" height="345" src="http://www.youtube.com/embed/<?php the_field('youtube_video_id'); ?>?rel=0" frameborder="0" allowfullscreen></iframe>
+						<?php endwhile; ?>
+			
+		<?php // Navigation ?>
+			
+	<?php else : ?>
+			
+		<?php // No Posts Found ?>
+			
+<?php endif; ?>
 				</section>
 				
 			</section><!-- #content -->
