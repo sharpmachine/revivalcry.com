@@ -66,3 +66,4 @@
 <h3>Product Not Found</h3>
 <p>Sorry! The product you requested is not found in our catalog!</p>
 <?php endif; ?>
+<div class="clear"><?php shopp('catalog','related-products'); ?></div>
