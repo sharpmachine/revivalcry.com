@@ -237,7 +237,7 @@ add_filter( 'wp_page_menu_args', 'twentyten_page_menu_args' );
  * @return int
  */
 function twentyten_excerpt_length( $length ) {
-	return 40;
+	return 38;
 }
 add_filter( 'excerpt_length', 'twentyten_excerpt_length' );
 

@@ -550,11 +550,6 @@ input[type=email]
 	margin-bottom: 37px;
 	background: url(../images/blue-box-edge.png) no-repeat top right;
 	
-	:hover
-		{
-			.scale;
-		}
-	
 	a
 	{
 		text-decoration: none;
@@ -602,11 +597,14 @@ input[type=email]
 /*.......................................................the events*/
 #em-wrapper
 {
+	position: relative;
+	height: 100%;
+	
 	article.event
 	{
 		height: 130px;
 		margin-bottom: 50px;
-
+		
 		.date
 		{
 			float: left;
@@ -661,50 +659,66 @@ input[type=email]
 		}
 	}
 	
-	.dont-see-dennis
+	#event-footer
 	{
-		width: 270px;
-		float: left;
-		text-transform: uppercase;
-		font-size: 16px;
-		.open-sans-condensed;
-		position: relative;
-		bottom: -65px;
-		background: url(../images/box-corner.gif) no-repeat top right @rc-blue;
+		width: 940px;
+		height: 112px;
+		position: absolute;
+		bottom: -115px;
 		
-		:hover
+		.dont-see-dennis
 		{
-			.scale;
-			bottom: -59px;
+			width: 270px;
+			float: left;
+			text-transform: uppercase;
+			font-size: 16px;
+			.open-sans-condensed;
+			background: url(../images/box-corner.gif) no-repeat top right @rc-blue;
+	
+			a
+			{
+				display: block;
+				padding: 20px 40px;
+				width: 190px;
+				color: @rc-white;
+				text-decoration: none;
+			}
 		}
 		
-		a
+		.encourage-box
 		{
-			display: block;
-			padding: 20px 40px;
-			width: 190px;
-			color: @rc-white;
-			text-decoration: none;
+			.open-sans-condensed;
+			background-color: @rc-white;
+			font-size: 16px;
+			padding: 10px;
+			text-transform: uppercase;
+			float: right;
+			margin-top: 30px;
+			
+			a
+			{
+				text-decoration: none;
+			}
 		}
 	}
 }
 
-.encourage-box
-{
-	.open-sans-condensed;
-	background-color: @rc-white;
-	font-size: 16px;
-	padding: 10px;
-	text-transform: uppercase;
-	float: right;
-	position: relative;
-	bottom: -100px;
-	
-	a
-	{
-		text-decoration: none;
-	}
-}
+		.encourage-box
+		{
+			.open-sans-condensed;
+			background-color: @rc-white;
+			font-size: 16px;
+			padding: 10px;
+			text-transform: uppercase;
+			float: right;
+			margin-top: 30px;
+			
+			a
+			{
+				text-decoration: none;
+			}
+		}
+
 
 /*.......................................................this giving page*/
 .note-box

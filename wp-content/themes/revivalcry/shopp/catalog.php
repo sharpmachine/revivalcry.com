@@ -6,7 +6,6 @@
 	<li class="items-in-cart"><a href="<?php shopp('cart','url'); ?>"><?php if (shopp('cart','hasitems')): ?><?php shopp('cart','totalitems'); ?> item(s)<?php else: ?>0 item(s)<?php endif; ?></a> in your cart</li>
 	<li class="last"><a href="<?php bloginfo('url'); ?>/store/checkout" class="checkout">&nbsp;</a></li>
 	<?php endif; ?>
-	<?php shopp('catalog','searchform'); ?>
 </ul>
 
 <?php if(shopp('category','hasproducts','load=prices,images')): ?>
@@ -17,10 +16,8 @@
 	
 	<p><?php shopp('category','subcategory-list','hierarchy=true&showall=true&class=subcategories&dropdown=1'); ?></p>
 	
-	
 	<?php shopp('catalog','category-list','dropdown=on'); ?><?php shopp('catalog','searchform'); ?>
-	<div class="alignright"><?php shopp('category','pagination','show=10'); ?></div>
-	
+	<div class="alignright shopp-pagination"><?php shopp('category','pagination','show=10'); ?></div>
 
 	<ul class="products">
 		<li class="row"><ul>

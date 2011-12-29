@@ -454,12 +454,6 @@ input[type=email] {
   margin-bottom: 37px;
   background: url(../images/blue-box-edge.png) no-repeat top right;
 }
-.feature-box:hover {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
-}
 .feature-box a { text-decoration: none; }
 .feature-box .content {
   width: 170px;
@@ -485,6 +479,10 @@ input[type=email] {
   float: left;
 }
 .no-mb { margin-bottom: 0; }
+#em-wrapper {
+  position: relative;
+  height: 100%;
+}
 #em-wrapper article.event {
   height: 130px;
   margin-bottom: 50px;
@@ -520,30 +518,37 @@ input[type=email] {
   text-transform: uppercase;
 }
 #em-wrapper article.event .details img { display: none; }
-#em-wrapper .dont-see-dennis {
+#em-wrapper #event-footer {
+  width: 940px;
+  height: 112px;
+  position: absolute;
+  bottom: -115px;
+}
+#em-wrapper #event-footer .dont-see-dennis {
   width: 270px;
   float: left;
   text-transform: uppercase;
   font-size: 16px;
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
-  position: relative;
-  bottom: -65px;
   background: url(../images/box-corner.gif) no-repeat top right #00bcd1;
 }
-#em-wrapper .dont-see-dennis:hover {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
-  bottom: -59px;
-}
-#em-wrapper .dont-see-dennis a {
+#em-wrapper #event-footer .dont-see-dennis a {
   display: block;
   padding: 20px 40px;
   width: 190px;
   color: #edebeb;
   text-decoration: none;
 }
+#em-wrapper #event-footer .encourage-box {
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  background-color: #edebeb;
+  font-size: 16px;
+  padding: 10px;
+  text-transform: uppercase;
+  float: right;
+  margin-top: 30px;
+}
+#em-wrapper #event-footer .encourage-box a { text-decoration: none; }
 .encourage-box {
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
   background-color: #edebeb;
@@ -551,8 +556,7 @@ input[type=email] {
   padding: 10px;
   text-transform: uppercase;
   float: right;
-  position: relative;
-  bottom: -100px;
+  margin-top: 30px;
 }
 .encourage-box a { text-decoration: none; }
 .note-box {

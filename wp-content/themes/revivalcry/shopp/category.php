@@ -16,10 +16,10 @@
 	<?php shopp('catalog','views','label=Views: '); ?>
 	
 	<p><?php shopp('category','subcategory-list','hierarchy=true&showall=true&class=subcategories&dropdown=1'); ?></p>
-	
+	<?php shopp('catalog','searchform'); ?>
 	<?php shopp('catalog','category-list','dropdown=on'); ?>
 	<?php shopp('storefront','search-products'); ?>
-	<div class="alignright"><?php shopp('category','pagination','show=10'); ?></div>
+	<div class="alignright shopp-pagination"><?php shopp('category','pagination','show=10'); ?></div>
 	
 
 	<ul class="products">
