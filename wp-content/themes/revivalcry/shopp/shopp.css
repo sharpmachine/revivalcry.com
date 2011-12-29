@@ -204,13 +204,17 @@
   float: right;
 }
 #shopp h1 {
-  width: 300px;
-  float: left;
+  font-size: 24px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  text-transform: none;
+  margin-bottom: 0;
 }
 #shopp h3.price {
   font-size: 48px;
+  line-height: 48px;
   font-weight: 600;
   color: #cb3333;
+  margin-bottom: 20px;
 }
 #shopp #cart { width: 100%; }
 #shopp #cart table {
@@ -390,3 +394,4 @@
   margin: 0 20px 20px 0 !important;
 }
 #shopp ul.products li.product:nth-child(6n) { margin-right: 0 !important; }
+#shopp .related-products { margin-top: 80px; }

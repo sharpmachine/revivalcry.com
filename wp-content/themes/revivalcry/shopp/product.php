@@ -10,9 +10,9 @@
 <?php if (shopp('product','found')): ?>
 
 	
-	<div class="span-8 prepend-2 last">
 
-		<div class="span-5 last">
+
+		<div class="span-5 prepend-1">
 		<h1><?php shopp('product','name'); ?></h1>
 	
 		<?php if (shopp('product','onsale')): ?>
@@ -46,24 +46,26 @@
 					<?php shopp('product','addons','mode=menu&label=true&defaults=Select an add-on&before_menu=<li>&after_menu=</li>'); ?>
 				</ul>
 			<?php endif; ?>
-	
-		<?php shopp('product','description'); ?>
-	
-		
-					
+			
 			<p><?php shopp('product','quantity','class=selectall&input=menu'); ?>
 			<?php shopp('product','addtocart'); ?></p>
+			
+		<?php shopp('product','description'); ?>
 	
 		</form>
 		</div>
-				<div class="span-3 last">
+				<div class="span-4 prepend-1 last">
 			<?php shopp('product','gallery'); ?>
 		</div>
-	</div>
+
 	<?php endif; ?>
 
 <?php else: ?>
 <h3>Product Not Found</h3>
 <p>Sorry! The product you requested is not found in our catalog!</p>
 <?php endif; ?>
-<div class="clear"><?php shopp('catalog','related-products', 'show=6'); ?></div>
+<div class="clear"></div>
+<div class="related-products">
+	<?php shopp('catalog','related-products', 'show=6'); ?>
+</div>
+	

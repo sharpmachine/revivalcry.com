@@ -364,6 +364,7 @@ footer #footer {
   margin: 0 auto;
   color: #edebeb;
 }
+footer #footer input[type="submit"] { height: 25px; }
 footer #footer h3 {
   font-size: 18px;
   color: #edebeb;
@@ -686,7 +687,7 @@ span.wpcf7-not-valid-tip {
 }
 .revivalists {
   margin-bottom: 45px;
-  height: 375px;
+  height: 360px;
 }
 .revivalists h2 {
   text-transform: uppercase;
@@ -789,6 +790,7 @@ select {
   font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
 select:focus { border: 1px solid #00bcd1; }
+input[type=submit] { height: 30px; }
 input[type=text] { height: 18px; }
 select { height: 30px; }
 form#searchform input[type=text] { margin: 0 0 20px 0; }
