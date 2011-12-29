@@ -3,7 +3,7 @@
 		<div id="content-container">
 			<section id="content" role="main">
 			<?php $ids = array(); while (have_posts()) : the_post(); ?>
-				<article class="single-revivalist">
+				<article class="single-revivalist full-width-white">
 					<div class="revivalist span-6">
 						<h2><?php the_title(); ?></h2>
 						<?php the_content(); ?>
@@ -19,6 +19,7 @@
 					<img src="<?php bloginfo('template_directory'); ?>/images/no-headshot.jpg" alt="<?php the_title(); ?>" width="300" height="200">
 				<?php endif ?>
 					</div>
+					<div class="clear"></div>
 				</article>
 			<?php $ids[]= $post->ID; endwhile; ?>
 			

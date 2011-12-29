@@ -1,3 +1,6 @@
+<div class="full-width-white">
+<h1>Checkout</h1>
+
 <form action="<?php shopp('checkout','url'); ?>" method="post" class="shopp validate" id="checkout">
 <?php shopp('checkout','cart-summary'); ?>
 
@@ -15,13 +18,9 @@
 		<?php endif; ?>
 		<li>
 			<label for="firstname">Contact Information</label><br \>
-			<span><label for="firstname">First</label><?php shopp('checkout','firstname','required=true&minlength=2&size=8&title=First Name'); ?></span>
-			<span><label for="lastname">Last</label><?php shopp('checkout','lastname','required=true&minlength=3&size=14&title=Last Name'); ?></span>
+			<span><label for="firstname">First</label><?php shopp('checkout','firstname','required=true&minlength=2&size=15&title=First Name'); ?></span>
+			<span><label for="lastname">Last</label><?php shopp('checkout','lastname','required=true&minlength=3&size=15&title=Last Name'); ?></span>
 			<span><label for="company">Company/Organization</label><?php shopp('checkout','company','size=22&title=Company/Organization'); ?></span>
-		</li>
-		<li>
-		</li>
-		<li>
 			<span><label for="phone">Phone</label><?php shopp('checkout','phone','format=phone&size=15&title=Phone'); ?></span>
 			<span><label for="email">Email</label><?php shopp('checkout','email','required=true&format=email&size=30&title=Email'); ?></span>
 		</li>
@@ -63,7 +62,8 @@
 				<?php shopp('checkout','billing-country','required=true&title=Country billing address'); ?>
 			</div>
 		<?php if (shopp('cart','needs-shipped')): ?>
-			<div class="inline"><?php shopp('checkout','same-shipping-address'); ?></div>
+			<div class="inline"><?php shopp('checkout','same-shipping-address', 'checked=off'); ?></div>
+			<br \>
 			</li>
 			<li class="half right" id="shipping-address-fields"><br \>
 				<label for="shipping-address">Shipping Address</label><br \>
@@ -112,7 +112,7 @@
 		<li class="payment">
 			<label for="billing-card">Payment Information</label><br \>
 			<span><label for="billing-card">Credit/Debit Card Number</label><?php shopp('checkout','billing-card','required=true&size=30&title=Credit/Debit Card Number'); ?></span>
-			<span><label for="billing-cardexpires-mm">MM</label<?php shopp('checkout','billing-cardexpires-mm','size=4&required=true&minlength=2&maxlength=2&title=Card\'s 2-digit expiration month'); ?> /></span>
+			<span><label for="billing-cardexpires-mm">MM</label><?php shopp('checkout','billing-cardexpires-mm','size=4&required=true&minlength=2&maxlength=2&title=Card\'s 2-digit expiration month'); ?></span>
 			<span><label for="billing-cardexpires-yy">YY</label><?php shopp('checkout','billing-cardexpires-yy','size=4&required=true&minlength=2&maxlength=2&title=Card\'s 2-digit expiration year'); ?></span>
 			<span><label for="billing-cardtype">Card Type</label><?php shopp('checkout','billing-cardtype','required=true&title=Card Type'); ?></span>
 		</li>
@@ -131,9 +131,15 @@
 		<li></li>
 		<li>
 		<div class="inline"><label for="marketing"><?php shopp('checkout','marketing','title='); ?> Yes, I would like to receive e-mail updates and special offers!</label></div>
+		<br \>
 		</li>
 	</ul>
+	
+	<p class="note-box tal"><img title="Cards" src="http://localhost/revivalcry.com/wp-content/uploads/2011/06/cards.png" alt="Cards" width="144" height="21" /> All payments are process by <img title="Paypal" src="http://localhost/revivalcry.com/wp-content/uploads/2011/06/paypal.png" alt="Paypal" width="74" height="21" />.</p>
+	<br \>
 	<p class="submit"><?php shopp('checkout','submit','value=Submit Order'); ?></p>
+	
 
 <?php endif; ?>
 </form>
+</div><!-- .full-width-white -->

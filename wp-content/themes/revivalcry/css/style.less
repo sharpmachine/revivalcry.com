@@ -4,7 +4,7 @@ menu, nav, section { display: block; }
 .screen-reader-text {position: absolute;left: -9000px;} /* Text meant only for screen readers */
 
 html, body { height: 100%; }
-html { overflow-y: scroll; } /* force scrollbar */
+html { overflow-y: scroll; overflow-x: hidden;} /* force scrollbar */
 
 
 /*.......................................................the LESS colors*/
@@ -64,6 +64,7 @@ body
 {
 	.open-sans;
 	font-size: 12px;
+	background: url(../images/bg.gif);
 }
 
 .container
@@ -77,6 +78,38 @@ body
 	height: auto !important;
 	height: 100%;
 	margin: 0 auto -235px;
+}
+
+.full-width-white
+{
+	margin-top: -65px;
+	padding: 50px 0;
+}
+
+.full-width-white
+{
+	position: relative;
+	background: #fff;
+	
+	 :before, :after 
+	 {
+	   content: "";
+	   position: absolute;
+	   background: #fff;  /* Match the background */
+	   top: 0;
+	   bottom: 0;
+	   width: 9999px;   /* some huge width */
+	}
+	
+	:before
+	{
+	   right: 100%;
+   }
+
+	:after 
+	{
+	   left: 100%;
+	}
 }
 
 h1
@@ -429,6 +462,7 @@ footer
 {
 	clear: both;
 	width: 100%;
+	position: relative;
 	.gradient;
 	
 	#footer
@@ -699,7 +733,8 @@ input[type=email]
 			padding: 10px;
 			text-transform: uppercase;
 			float: right;
-			margin-top: 30px;
+			position: relative;
+			top: 30px;
 			
 			a
 			{
@@ -717,7 +752,8 @@ input[type=email]
 			padding: 10px;
 			text-transform: uppercase;
 			float: right;
-			margin-top: 30px;
+			position: relative;
+			top: 30px;
 			
 			a
 			{
@@ -970,6 +1006,13 @@ select
 	{
 		border: 1px solid @rc-blue;
 	}
+}
+
+input[type=checkbox]
+{
+	margin-right: 5px;
+	display: inline;
+	float: none;
 }
 
 input[type=submit]
@@ -1240,15 +1283,15 @@ img.size-medium,
 img.alignleft {
 	display: inline;
 	float: left;
-	margin-right: 24px;
-	margin-top: 4px;
+	margin-right: 20px;
+	margin-top: 5px;
 }
 .alignright,
 img.alignright {
 	display: inline;
 	float: right;
-	margin-left: 24px;
-	margin-top: 4px;
+	margin-left: 20px;
+	margin-top: 5px;
 }
 .aligncenter,
 img.aligncenter {
@@ -1260,10 +1303,13 @@ img.aligncenter {
 img.alignleft,
 img.alignright,
 img.aligncenter {
-	margin-bottom: 12px;
+	margin-bottom: 20px;
 }
 
-
+img.last
+{
+	margin-right: 0;
+}
 /*.......................................................the misc*/
 .tac
 {

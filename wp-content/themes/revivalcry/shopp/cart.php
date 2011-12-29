@@ -1,3 +1,4 @@
+<div class="full-width-white">
 <ul class="cart-sum">
 	<?php if( ! is_page('checkout')): ?>
 	<li><img src="<?php bloginfo('template_directory'); ?>/images/cart.png" width="17" height="12" alt="Cart"></li>
@@ -7,10 +8,10 @@
 	<li class="last"><a href="<?php bloginfo('url'); ?>/store/checkout" class="checkout">&nbsp;</a></li>
 	<?php endif; ?>
 </ul>
-					
+
 <h1><?php the_title(); ?></h1>
 <?php if (shopp('cart','hasitems')): ?>
-	<div class="shopp-buttons">
+	<div class="shopp-buttons top">
 		<a href="<?php shopp('cart','referrer'); ?>" class="button">Continue Shopping</a>
 		<a href="<?php shopp('checkout','url'); ?>" class="button">Checkout</a>
 	</div>
@@ -28,8 +29,12 @@
 	<?php while(shopp('cart','items')): ?>
 		<tr class="cart-item">
 			
+			<!--<td class="item-thumb">
+				<?php shopp('cartitem','coverimage','size=60'); ?>
+			</td>-->
+			
 			<td class="item">
-				<?php shopp('cartitem','thumbnail'); ?>
+				<!--<div class="cart-thumbnail"><?php shopp('cartitem','thumbnail'); ?></div>-->
 				<a href="<?php shopp('cartitem','url'); ?>"><?php shopp('cartitem','name'); ?></a>
 				<?php shopp('cartitem','options'); ?>
 				<?php shopp('cartitem','addons-list'); ?>
@@ -46,7 +51,7 @@
 	<?php while(shopp('cart','promos')): ?>
 		<tr><td colspan="4" class="money"><?php shopp('cart','promo-name'); ?><strong><?php shopp('cart','promo-discount',array('before' => '&nbsp;&mdash;&nbsp;')); ?></strong></td></tr>
 	<?php endwhile; ?>
-
+	
 	<tr class="totals">
 		<td colspan="2" rowspan="5">
 			<?php if (shopp('cart','needs-shipping-estimates')): ?>
@@ -55,27 +60,27 @@
 			<?php endif; ?>
 			<?php shopp('cart','promo-code'); ?>
 		</td>
-		<th scope="row">Subtotal</th>
+		<th scope="row" class="subtotal-cart">Subtotal</th>
 		<td class="total"><?php shopp('cart','subtotal'); ?></td>
 	</tr>
 	<?php if (shopp('cart','hasdiscount')): ?>
 	<tr class="">
-		<th scope="row">Discount</th>
+		<th scope="row" class="subtotal-cart">Discount</th>
 		<td class="total">-<?php shopp('cart','discount'); ?></td>
 	</tr>
 	<?php endif; ?>
 	<?php if (shopp('cart','needs-shipped')): ?>
 	<tr class="">
-		<th scope="row"><?php shopp('cart','shipping','label=Shipping'); ?></th>
+		<th scope="row" class="subtotal-cart"><?php shopp('cart','shipping','label=Shipping'); ?></th>
 		<td class="total"><?php shopp('cart','shipping'); ?></td>
 	</tr>
 	<?php endif; ?>
 	<tr class="">
-		<th scope="row"><?php shopp('cart','tax','label=Tax'); ?></th>
+		<th scope="row" class="subtotal-cart"><?php shopp('cart','tax','label=Tax'); ?></th>
 		<td class="total"><?php shopp('cart','tax'); ?></td>
 	</tr>
-	<tr class="total">
-		<th scope="row">Total</th>
+	<tr class="total" class="subtotal-cart">
+		<th scope="row" class="subtotal-cart">Total</th>
 		<td class="total"><?php shopp('cart','total'); ?></td>
 		<td></td>
 	</tr>
@@ -97,3 +102,4 @@
 	<p><a href="<?php shopp('cart','referrer'); ?>" class="button">Continue Shopping</a></p>
 </div>
 <?php endif; ?>
+</div><!-- .full-width-white -->

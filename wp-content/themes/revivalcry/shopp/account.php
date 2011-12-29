@@ -19,8 +19,6 @@
 	<?php if(shopp('customer','profile-saved')): ?>
 	<div class="notice">Your account has been updated.</div>
 	<?php endif; ?>
-	
-	
 	<p><a href="<?php shopp('customer','url'); ?>">&laquo; Return to Account Management</a></p>
 	<ul>
 		<li>

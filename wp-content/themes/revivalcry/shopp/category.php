@@ -1,4 +1,6 @@
+
 <?php if (shopp('catalog','is-category')): ?>
+<div class="full-width-white">
 <ul class="cart-sum">
 	<?php if( ! is_page('checkout')): ?>
 	<li><img src="<?php bloginfo('template_directory'); ?>/images/cart.png" width="17" height="12" alt="Cart"></li>
@@ -63,10 +65,8 @@
 	<p>No products were found.</p>
 	<?php endif; ?>
 <?php endif; ?>
-<div class="encourage-box">
-Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe to our <a href="<?php bloginfo('url'); ?>/store/category/catalog/feed/"> Store rss feed</a> to be notified about our latest products
-</div>
 <?php endif; ?>
+</div><!-- .full-width-white -->
 <?php if (shopp('catalog','is-product')): ?>
 <?php if(shopp('category','hasproducts','load=prices,images')): ?>
 	<div class="category">
@@ -118,3 +118,7 @@ Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe 
 	<?php endif; ?>
 <?php endif; ?>
 <?php endif; ?>
+
+<div class="encourage-box">
+Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe to our <a href="<?php bloginfo('url'); ?>/store/category/catalog/feed/"> Store rss feed</a> to be notified about our latest products
+</div>

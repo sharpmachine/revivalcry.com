@@ -1,3 +1,4 @@
+<div class="full-width-white">
 <ul class="cart-sum">
 	<?php if( ! is_page('checkout')): ?>
 	<li><img src="<?php bloginfo('template_directory'); ?>/images/cart.png" width="17" height="12" alt="Cart"></li>
@@ -9,11 +10,8 @@
 </ul>
 <?php if (shopp('product','found')): ?>
 
-	
-
-
-		<div class="span-5 prepend-1">
-		<h1><?php shopp('product','name'); ?></h1>
+		<div class="span-5 prepend-2">
+		<h1 class="product-title"><?php shopp('product','name'); ?></h1>
 	
 		<?php if (shopp('product','onsale')): ?>
 			<h3 class="original price"><?php shopp('product','price'); ?></h3>
@@ -57,13 +55,15 @@
 				<div class="span-4 prepend-1 last">
 			<?php shopp('product','gallery'); ?>
 		</div>
-
+	<div class="clear"></div>
+</div><!-- .full-width-white -->
 	<?php endif; ?>
 
 <?php else: ?>
 <h3>Product Not Found</h3>
 <p>Sorry! The product you requested is not found in our catalog!</p>
 <?php endif; ?>
+	
 <div class="clear"></div>
 <div class="related-products">
 	<?php shopp('catalog','related-products', 'show=6'); ?>

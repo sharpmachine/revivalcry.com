@@ -5,7 +5,6 @@
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
   text-transform: uppercase;
 }
-#shopp .submit { text-align: right; }
 #shopp form { text-align: left; }
 #shopp form.product ul.options { list-style: none; }
 #shopp form ul { line-height: 1; }
@@ -15,12 +14,12 @@
   padding-bottom: 3px;
 }
 #shopp form ul li span label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: normal;
   padding-bottom: 8px;
 }
 #shopp form div label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: normal;
   padding-bottom: 8px;
 }
@@ -200,10 +199,15 @@
 .sideproduct { margin-top: 20px; }
 .sideproduct h3 { margin-top: 0; }
 #shopp .shopp-buttons {
-  width: 256px;
+  width: 234px;
   float: right;
 }
-#shopp h1 {
+.top {
+  position: absolute;
+  top: 54px;
+  right: 0;
+}
+#shopp h1.product-title {
   font-size: 24px;
   font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
   text-transform: none;
@@ -245,11 +249,18 @@
 #shopp #cart big a.right { float: right; }
 #shopp #cart .cart { font-family: Arial, Helvetica, sans-serif; }
 #shopp #cart .cart th.tal { text-align: left; }
+#shopp #cart .cart tr.cart-item td.item-thumb {
+  background-color: #ffffff;
+  padding: 0;
+}
+#shopp #cart .cart tr.cart-item td.item-thumb img {
+  width: 60px;
+  height: 60px;
+}
 #shopp #cart .cart tr.cart-item td {
   background-color: #f7f7f7;
   border-bottom: 15px solid #ffffff;
-  padding: 0 30px;
-  line-height: 70px;
+  padding: 20px 30px;
 }
 #shopp #cart .cart tr.cart-item td input[type=text] {
   width: 20px;
@@ -273,6 +284,7 @@
   font-weight: bold;
   text-decoration: none;
 }
+#shopp #cart .cart th.subtotal-cart { text-align: right !important; }
 #shopp #cart .cart tr.buttons input {
   float: right;
   margin-right: -10px;
@@ -287,9 +299,13 @@
 #shopp #cart .cart .total {
   font-size: 24px;
   font-weight: bold;
+  text-align: right;
+  padding-right: 30px;
+}
+#shopp #cart .cart .quantity {
+  font-weight: bold;
   text-align: center;
 }
-#shopp #cart .cart .quantity { font-weight: bold; }
 #shopp #cart .total-checkout {
   background-color: #333333;
   color: #666666;
@@ -343,6 +359,7 @@
 }
 #shopp ul.cart-sum li.items-in-cart { margin-left: 10px; }
 #shopp ul.cart-sum li.last { margin-right: 0; }
+#shopp .full-width-white ul.cart-sum { margin-top: -80px; }
 #shopp #shipping-methods { padding-left: 30px; }
 #shopp #shipping-methods li { margin-top: 5px; }
 #shopp #shipping-methods input { margin-left: -16px; }
@@ -394,4 +411,32 @@
   margin: 0 20px 20px 0 !important;
 }
 #shopp ul.products li.product:nth-child(6n) { margin-right: 0 !important; }
-#shopp .related-products { margin-top: 80px; }
+#shopp .related-products { margin-top: 55px; }
+#shopp form#checkout ul li label {
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  font-size: 24px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+#shopp form#checkout ul li span label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  text-transform: none;
+}
+#shopp form div label {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 12px !important;
+  text-transform: none !important;
+}
+#shopp form ul li div input {
+  width: 97%;
+  margin: 0 0 10px 0;
+}
+#shopp form ul li div select {
+  width: 97%;
+  margin: 0 0 10px 0;
+}
+#shopp .note-box {
+  text-align: left;
+  padding: 0;
+}

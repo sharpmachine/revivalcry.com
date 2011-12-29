@@ -4,12 +4,16 @@ article, aside, figure, footer, header, hgroup, menu, nav, section { display: bl
   left: -9000px;
 }
 html, body { height: 100%; }
-html { overflow-y: scroll; }
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 .open-sans { font-family: 'Open Sans', 'OpenSansRegular', sans-serif; }
 .open-sans-condensed { font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif; }
 body {
   font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
   font-size: 12px;
+  background: url(../images/bg.gif);
 }
 .container { padding: 0 20px; }
 .wrapper {
@@ -18,6 +22,32 @@ body {
   height: 100%;
   margin: 0 auto -235px;
 }
+.full-width-white {
+  margin-top: -65px;
+  padding: 50px 0;
+}
+.full-width-white {
+  position: relative;
+  background: #ffffff;
+}
+.full-width-white:before {
+  content: "";
+  position: absolute;
+  background: #ffffff;
+  top: 0;
+  bottom: 0;
+  width: 9999px;
+}
+.full-width-white:after {
+  content: "";
+  position: absolute;
+  background: #ffffff;
+  top: 0;
+  bottom: 0;
+  width: 9999px;
+}
+.full-width-white:before { right: 100%; }
+.full-width-white:after { left: 100%; }
 h1 {
   font-size: 30px;
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
@@ -349,6 +379,7 @@ footer, .footer-push { height: 235px; }
 footer {
   clear: both;
   width: 100%;
+  position: relative;
   background: #171717;
   background: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#171717));
   background: -webkit-linear-gradient(#333333, #171717);
@@ -547,7 +578,8 @@ input[type=email] {
   padding: 10px;
   text-transform: uppercase;
   float: right;
-  margin-top: 30px;
+  position: relative;
+  top: 30px;
 }
 #em-wrapper #event-footer .encourage-box a { text-decoration: none; }
 .encourage-box {
@@ -557,7 +589,8 @@ input[type=email] {
   padding: 10px;
   text-transform: uppercase;
   float: right;
-  margin-top: 30px;
+  position: relative;
+  top: 30px;
 }
 .encourage-box a { text-decoration: none; }
 .note-box {
@@ -790,6 +823,11 @@ select {
   font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
 select:focus { border: 1px solid #00bcd1; }
+input[type=checkbox] {
+  margin-right: 5px;
+  display: inline;
+  float: none;
+}
 input[type=submit] { height: 30px; }
 input[type=text] { height: 18px; }
 select { height: 30px; }
@@ -945,14 +983,14 @@ img.size-auto, img.size-full, img.size-large, img.size-medium {
 .alignleft, img.alignleft {
   display: inline;
   float: left;
-  margin-right: 24px;
-  margin-top: 4px;
+  margin-right: 20px;
+  margin-top: 5px;
 }
 .alignright, img.alignright {
   display: inline;
   float: right;
-  margin-left: 24px;
-  margin-top: 4px;
+  margin-left: 20px;
+  margin-top: 5px;
 }
 .aligncenter, img.aligncenter {
   clear: both;
@@ -960,7 +998,8 @@ img.size-auto, img.size-full, img.size-large, img.size-medium {
   margin-left: auto;
   margin-right: auto;
 }
-img.alignleft, img.alignright, img.aligncenter { margin-bottom: 12px; }
+img.alignleft, img.alignright, img.aligncenter { margin-bottom: 20px; }
+img.last { margin-right: 0; }
 .tac { text-align: center; }
 .tar { text-align: right; }
 .fl { float: left; }

@@ -7,7 +7,7 @@
 		
 		<footer role="contentinfo">
 			<div id="footer">
-				<section class="span-4">
+				<section class="span-4" id="mailchimp-signup">
 					<h3>Newsletter Signup.</h3>
 					<!-- Begin MailChimp Signup Form -->
 					<div id="mc_embed_signup">
