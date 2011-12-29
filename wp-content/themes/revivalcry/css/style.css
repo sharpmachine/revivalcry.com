@@ -60,6 +60,7 @@ header #banner .wt-rotator {
   margin-left: -640px;
   z-index: 1;
 }
+body.home header { background: #1d1b1b; }
 nav {
   display: block;
   float: right;
@@ -579,9 +580,10 @@ input[type=email] {
 #contact-form .rc-name { font-size: 24px; }
 #contact-form .address {
   font-size: 14px;
-  width: 310px;
+  width: 302px;
   margin: 0 auto;
 }
+#contact-form .address a { text-decoration: none; }
 #contact-form form.wpcf7-form p {
   height: 30px;
   margin-bottom: 12px;
@@ -627,9 +629,10 @@ input[type=email] {
 #invite-form .rc-name { font-size: 24px; }
 #invite-form .address {
   font-size: 14px;
-  width: 310px;
+  width: 302px;
   margin: 0 auto;
 }
+#invite-form .address a { text-decoration: none; }
 #invite-form form.wpcf7-form p {
   height: 30px;
   margin-bottom: 12px;

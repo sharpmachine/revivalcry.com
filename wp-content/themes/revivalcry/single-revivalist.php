@@ -2,16 +2,15 @@
 
 		<div id="content-container">
 			<section id="content" role="main">
-			<?php while (have_posts()) : the_post();
-					if (in_array ($post->ID, $do_not_duplicate)) continue;
-					update_post_caches($post);
-					 ?>
+			<?php $ids = array(); while (have_posts()) : the_post(); ?>
 				<article class="single-revivalist">
 					<div class="revivalist span-6">
 						<h2><?php the_title(); ?></h2>
 						<?php the_content(); ?>
 						<a href="<?php bloginfo('url'); ?>/invite" class="button">Invite</a>
-						<a href="<?php the_field("calendar_url") ?>" class="button">Calendar</a>
+						<?php if (get_field("calendar_url")): ?>
+							<a href="<?php the_field("calendar_url") ?>" class="button">Calendar</a>
+						<?php endif ?>
 					</div>
 					<div class="span-4 prepend-1 last">
 						<?php if (get_field("headshot")): ?>
@@ -21,13 +20,13 @@
 				<?php endif ?>
 					</div>
 				</article>
-			<?php endwhile; ?>
+			<?php $ids[]= $post->ID; endwhile; ?>
+			
 				<section id="other-revivalists">
-					<?php query_posts('post_type=revivalist'); ?>
-						<?php while (have_posts()) : the_post();
-						if (in_array ($post->ID, $do_not_duplicate)) continue;
-						update_post_caches($post);
-						 ?>
+					<?php query_posts("post_type=revivalist");
+						while (have_posts()) : the_post();
+						if (!in_array($post->ID, $ids)) { ?>
+				
 					<article class="revivalists span-3">
 						<?php if (get_field("headshot")): ?>
 							<img src="<?php the_field("headshot"); ?>" alt="<?php the_title(); ?>" width="220" height="147">
@@ -37,7 +36,7 @@
 						<h2><?php the_title(); ?></h2>
 						<?php the_excerpt(); ?>
 					</article>
-						 <?php endwhile; ?>
+						 <?php } endwhile; ?>
 				</section><!-- #other-revivalists -->
 			</section><!-- #content -->
 		</div><!-- #content-container -->
