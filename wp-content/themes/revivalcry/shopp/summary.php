@@ -77,7 +77,6 @@
 			<td class="total"><?php shopp('cart','total'); ?></td>
 		</tr>
 	</table>
-
 <?php if(shopp('checkout','hasdata')): ?>
 	<ul>
 	<?php while(shopp('checkout','orderdata')): ?>
