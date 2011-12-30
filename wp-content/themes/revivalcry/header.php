@@ -51,6 +51,9 @@
     <?php if (is_home() || is_front_page()): ?>
     <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/wt-rotator.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <?php endif ?>
+    <?php if (is_page('photo-gallery')): ?>
+    	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/lightbox.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <?php endif ?>
 	<!--[if lt IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 	<!-- Hashgrid - remove before moving to productions -->
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-		<div id="content-container" class="span-20">
+		<div id="content-container">
 			<section id="content" role="main">
 
 <?php
@@ -22,7 +22,7 @@
 <?php elseif ( is_year() ) : ?>
 				<?php printf( __( 'Yearly Archives: <span>%s</span>', 'twentyten' ), get_the_date( 'Y' ) ); ?>
 <?php else : ?>
-				<?php _e( 'Blog Archives', 'twentyten' ); ?>
+				<?php _e( 'Archives', 'twentyten' ); ?>
 <?php endif; ?>
 			</h1>
 
@@ -42,6 +42,4 @@
 
 			</section><!-- #content -->
 		</div><!-- #content-container -->
-
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

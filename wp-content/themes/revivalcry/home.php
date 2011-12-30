@@ -34,7 +34,7 @@
 				</section>
 				
 				<section class="span-8 last">
-								<?php query_posts("post_type=videos&posts_per_page=100"); ?>
+								<?php query_posts("post_type=videos&posts_per_page=1"); ?>
 			
 			<?php if (have_posts()) : ?>
 			
