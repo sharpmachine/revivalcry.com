@@ -441,3 +441,5 @@
   text-align: left;
   padding: 0;
 }
+#shopp span.payoption-paypal { display: none !important; }
+#shopp span.payoption-0 { display: block !important; }

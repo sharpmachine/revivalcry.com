@@ -3,7 +3,7 @@
 
 <form action="<?php shopp('checkout','url'); ?>" method="post" class="shopp validate" id="checkout">
 <?php shopp('checkout','cart-summary'); ?>
-
+<br \>
 <?php if (shopp('cart','hasitems')): ?>
 	<?php shopp('checkout','function'); ?>
 	<ul>

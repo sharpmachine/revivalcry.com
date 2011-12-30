@@ -20,10 +20,11 @@
 <table class="cart">
 	<tr>
 		<th scope="col" class="item tal">Items</th>
+		<th scope="col">&nbsp;</th>
 		<th scope="col">Item Price</th>
 		<th scope="col">QTY</th>
 		<th scope="col">Item Total</th>
-		<th scope="col">&nbsp;</th>
+		
 	</tr>
 
 	<?php while(shopp('cart','items')): ?>
@@ -40,11 +41,12 @@
 				<?php shopp('cartitem','addons-list'); ?>
 				<?php shopp('cartitem','inputs-list'); ?>
 			</td>
+			<td><?php shopp('cartitem','remove','input=button'); ?></td>
 			<td class="money"><?php shopp('cartitem','unitprice'); ?></td>
 			<td class="quantity"><?php shopp('cartitem','quantity','input=text'); ?></td>
 			
 			<td class="total"><?php shopp('cartitem','total'); ?></td>
-			<td><?php shopp('cartitem','remove','input=button'); ?></td>
+			
 		</tr>
 
 	<?php endwhile; ?>
@@ -53,7 +55,7 @@
 	<?php endwhile; ?>
 	
 	<tr class="totals">
-		<td colspan="2" rowspan="5">
+		<td colspan="3" rowspan="5">
 			<?php if (shopp('cart','needs-shipping-estimates')): ?>
 			<strong>Estimate shipping &amp; taxes for:</strong>
 			<?php shopp('cart','shipping-estimates'); ?>
@@ -85,7 +87,7 @@
 		<td></td>
 	</tr>
 				<tr class="buttons">
-			<td colspan="6"><?php shopp('cart','update-button'); ?></td>
+			<td colspan="6"><br \><?php shopp('cart','update-button'); ?></td>
 		</tr>
 </table>
 
