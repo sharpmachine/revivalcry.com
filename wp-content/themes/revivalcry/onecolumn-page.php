@@ -12,6 +12,8 @@ get_header(); ?>
 			<section id="content" role="main">
 
 			<?php get_template_part( 'loop', 'page' ); ?>
+			
+			
 
 			</section><!-- #content -->
 		</div><!-- #content-container -->

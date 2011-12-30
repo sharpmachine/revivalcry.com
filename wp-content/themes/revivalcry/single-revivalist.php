@@ -5,7 +5,7 @@
 			<?php $ids = array(); while (have_posts()) : the_post(); ?>
 				<article class="single-revivalist full-width-white">
 					<div class="revivalist span-6">
-						<h2><?php the_title(); ?></h2>
+						<h1><?php the_title(); ?></h1>
 						<?php the_content(); ?>
 						<a href="<?php bloginfo('url'); ?>/invite" class="button">Invite</a>
 						<?php if (get_field("calendar_url")): ?>
