@@ -6,6 +6,7 @@ get_header(); ?>
 
 		<div id="content-container">
 			<section id="content" role="main">
+				
 			<?php query_posts("post_type=revivalist"); ?>
 			
 			<?php if (have_posts()) : ?>
