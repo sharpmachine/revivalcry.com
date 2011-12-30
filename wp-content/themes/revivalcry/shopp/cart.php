@@ -57,7 +57,7 @@
 	<tr class="totals">
 		<td colspan="3" rowspan="5">
 			<?php if (shopp('cart','needs-shipping-estimates')): ?>
-			<strong>Estimate shipping &amp; taxes for:</strong>
+			<strong>Enter Your Zip Code:</strong>
 			<?php shopp('cart','shipping-estimates'); ?>
 			<?php endif; ?>
 			<?php shopp('cart','promo-code'); ?>

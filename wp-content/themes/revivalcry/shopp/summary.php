@@ -31,6 +31,7 @@
 		
 		<tr class="totals">
 			<td colspan="2" rowspan="5">
+
 				<?php if ((shopp('cart','has-shipping-methods'))): ?>
 				<strong>Select a shipping method:</strong>
 				
@@ -46,7 +47,10 @@
 				<?php endwhile; ?>
 				</ul>
 				</form>
-				
+				<?php else: ?>
+					<h4 style="color:#CB3333;">Oops, we have a problem : (</h4>
+					<p><strong>You need to return to your cart and enter your zip code before you can select a shipping method</strong></p>
+					<a href="<?php bloginfo('url'); ?>/store/cart" class="button">Back to Cart</a>
 				<?php endif; ?>
 			</td>
 			<th scope="row" class="subtotal-cart">Subtotal</th>
