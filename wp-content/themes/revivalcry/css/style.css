@@ -582,9 +582,42 @@ input[type=email] {
   font-size: 18px;
   margin-bottom: 0;
 }
+#em-wrapper .single-events strong { color: #1d1b1b; }
+#em-wrapper .single-events .single-event-details strong { color: #666666; }
 #em-wrapper .single-events p.event-actions { margin-top: 10px; }
 #em-wrapper .single-events p.event-actions a.button { margin-right: 5px; }
-#em-wrapper .single-events p.event-actions .black { background-color: #1d1b1b; }
+#em-wrapper .single-events p.event-actions .black { background-color: #333333; }
+#em-wrapper .single-events p.event-actions .print img {
+  position: relative;
+  top: 4px;
+}
+#em-wrapper .single-events table.em-tickets th {
+  color: #1d1b1b;
+  font-weight: bold;
+}
+#em-wrapper .single-events table.em-tickets td.em-bookings-ticket-table-price {
+  color: #cb3333;
+  font-size: 24px;
+  font-weight: bold;
+}
+#em-wrapper .single-events .em-booking-form-details { padding: 0; }
+#em-wrapper .single-events .em-booking-form-details p { margin-bottom: 40px; }
+#em-wrapper .single-events .em-booking-form-details p label {
+  width: 280px;
+  color: #666666;
+  font-size: 14px;
+  font-weight: normal;
+}
+#em-wrapper .single-events .em-booking-form-details p input[type=text] { width: 268px; }
+#em-wrapper .single-events .em-booking-form-details p span {
+  clear: both;
+  margin: 0;
+}
+#em-wrapper .single-events .em-booking-form-details p.input-group { margin-bottom: 10px; }
+#em-wrapper .single-events .note-box {
+  text-align: left;
+  padding: 0;
+}
 .encourage-box {
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
   background-color: #ffffff;

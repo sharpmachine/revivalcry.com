@@ -121,7 +121,7 @@ class SU_InternalLinkAliases extends SU_Module {
 	<td class='su-alias-to-slug'>" . $this->get_input_element('textbox', "alias_{$i}_to", $alias['to']) . "</td>
 	<td class='su-alias-to-test'>[<a href='$alias_url' target='_blank'>" . __('Test', 'seo-ultimate') . "</a>]</td>
 </tr></table>"
-				, 'alias-posts' => $this->get_jlsuggest_box("alias_{$i}_posts", $jlsuggest_value, 'types=post')
+				, 'alias-posts' => $this->get_jlsuggest_box("alias_{$i}_posts", $jlsuggest_value, 'types=posttype')
 			);
 			if ($delete_option)
 				$cells['alias-delete'] = $this->get_input_element('checkbox', "alias_{$i}_delete");

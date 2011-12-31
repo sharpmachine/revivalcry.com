@@ -12,6 +12,7 @@ html { overflow-y: scroll; overflow-x: hidden;} /* force scrollbar */
 @rc-blue: #00bcd1;
 @rc-white: #fff;
 @rc-grey: #666;
+@rc-red: #CB3333;
 @rc-hover: #28A1A1;
 
 /*.......................................................the LESS font families*/
@@ -739,6 +740,19 @@ input[type=email]
 			margin-bottom: 0;
 		}
 		
+		strong
+		{
+			color: @rc-black;
+		}
+		
+		.single-event-details
+		{
+			strong
+			{
+				color: @rc-grey;
+			}
+		}
+		
 		p.event-actions
 		{
 			margin-top: 10px;
@@ -750,8 +764,73 @@ input[type=email]
 			
 			.black
 			{
-				background-color: @rc-black;
+				background-color: #333;
 			}
+			
+			.print
+			{
+				img
+				{
+					position: relative;
+					top: 4px;
+				}
+			}
+		}
+		
+		table.em-tickets
+		{
+			th
+			{
+				color: @rc-black;
+				font-weight: bold;
+			}
+			
+			td.em-bookings-ticket-table-price
+			{
+				color: @rc-red;
+				font-size: 24px;
+				font-weight: bold;
+			}
+		}
+		
+		.em-booking-form-details
+		{
+			padding: 0;
+			
+			p
+			{
+				margin-bottom: 40px;
+				
+				label
+				{
+					width: 280px;
+					color: @rc-grey;
+					font-size: 14px;
+					font-weight: normal;
+				}
+				
+				input[type=text]
+				{
+					width: 268px;
+				}
+				
+				span
+				{
+					clear: both;
+					margin: 0;
+				}
+			}
+			
+			p.input-group
+			{
+				margin-bottom: 10px;
+			}
+		}
+		
+		.note-box
+		{
+			text-align: left;
+			padding: 0;
 		}
 	}
 }

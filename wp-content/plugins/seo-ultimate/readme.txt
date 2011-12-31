@@ -3,7 +3,7 @@ Contributors: SEO Design Solutions, JohnLamansky
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: 7.2
+Stable tag: 7.2.1
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -261,6 +261,15 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 == Changelog ==
 
+= Version 7.2.1 (December 30, 2011) =
+* Bugfix: Fixed malformed HTML that broke multiple module admin pages (bug introduced in 7.2)
+* Bugfix: Deeplink Juggernaut's "Tag Restrictions" setting now takes effect even when the excluded tag has a `<br />` or other nested tag in it
+* Bugfix: Link masks with empty alias URLs no longer appear in Deeplink Juggernaut destination dropdowns
+* Bugfix: Deeplink Juggernaut and Link Mask Generator now handle cases in which a post, term, user, or link mask is specified in the "Destination," "Link Location," or "Only on This Post" boxes and then is later deleted
+* Bugfix: Deeplink Juggernaut now handles cases when a link mask is specified in the "Destination" box and then the Link Mask Generator module is later disabled
+* Bugfix: Link masks no longer show up in the "Link Location" autocomplete dropdowns of Deeplink Juggernaut's Footer Links editor (bug introduced in 7.1)
+* Improvement: Made Deeplink Juggernaut's Footer Links editor look better on smaller screen resolutions
+
 = Version 7.2 (December 22, 2011) =
 * Feature: Added "URL Conflict Resolution" setting to Permalink Tweaker that lets you arbitrate between pages/terms when taxonomy base removal causes their URLs to conflict
 * Improvement: Cleaned up the Permalink Tweaker config interface
@@ -295,10 +304,10 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 * Bugfix: Deeplink Juggernaut now applies changes to sitewide link caps gradually instead of all at once, in order to alleviate out-of-memory errors and large processing overhead on sites with many posts
 
 = Version 6.9.4 (August 31, 2011) =
-* Bugfix: Fixed mb_strtolower errors that appeared on some PHP setups (introduced in 6.9.2)
+* Bugfix: Fixed mb_strtolower errors that appeared on some PHP setups (bug introduced in 6.9.2)
 
 = Version 6.9.3 (August 22, 2011) =
-* Bugfix: Fixed bug in Rich Snippet Creator that caused raw HTML to be outputted in posts (introduced in 6.9.2)
+* Bugfix: Fixed bug in Rich Snippet Creator that caused raw HTML to be outputted in posts (bug introduced in 6.9.2)
 * Bugfix: Added missing textdomains to some strings
 
 = Version 6.9.2 (August 20, 2011) =

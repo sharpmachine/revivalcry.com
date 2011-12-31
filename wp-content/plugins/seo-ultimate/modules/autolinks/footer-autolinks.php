@@ -192,7 +192,7 @@ class SU_FooterAutolinks extends SU_Module {
 			if (!isset($link['target']))	$link['target'] = '';
 			
 			$cells = array(
-				  'link-from' => $this->get_jlsuggest_box("footer_link_{$i}_from", $link['from'][0])
+				  'link-from' => $this->get_jlsuggest_box("footer_link_{$i}_from", $link['from'][0], 'types=posttype,taxonomy,home,author')
 				, 'link-from-match' =>
 					 $this->get_input_element('checkbox', "footer_link_{$i}_from_match_children", $link['from_match_children'] == 1, str_replace(' ', '&nbsp;', __('Match child content', 'seo-ultimate')))
 					.'<br />'

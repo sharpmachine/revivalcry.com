@@ -1671,59 +1671,63 @@ class SEO_Ultimate {
 			$items[] = array('text' => __('Blog Homepage', 'seo-ultimate'), 'value' => 'obj_home', 'selectedtext' => __('Blog Homepage', 'seo-ultimate'));
 		}
 		
-		$posttypeobjs = suwp::get_post_type_objects();
-		foreach ($posttypeobjs as $posttypeobj) {
-			
-			if ($include && !in_array('posttype_' . $posttypeobj->name, $include) && !in_array('post', $include))
-				continue;
-			
-			$stati = get_available_post_statuses($posttypeobj->name);
-			suarr::remove_value($stati, 'auto-draft');
-			$stati = implode(',', $stati);
-			
-			$posts = get_posts(array(
-				  'orderby' => 'title'
-				, 'order' => 'ASC'
-				, 'post_status' => $stati
-				, 'numberposts' => -1
-				, 'post_type' => $posttypeobj->name
-				, 'sentence' => 1
-				, 's' => $_GET['q']
-			));
-			
-			if (count($posts)) {
+		if (!$include || in_array('posttype', $include)) {
+			$posttypeobjs = suwp::get_post_type_objects();
+			foreach ($posttypeobjs as $posttypeobj) {
 				
-				$items[] = array('text' => $posttypeobj->labels->name, 'isheader' => true);
+				if ($include && !in_array('posttype_' . $posttypeobj->name, $include))
+					continue;
 				
-				foreach ($posts as $post)
-					$items[] = array(
-						  'text' => $post->post_title
-						, 'value' => 'obj_posttype_' . $posttypeobj->name . '/' . $post->ID
-						, 'selectedtext' => $post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$posttypeobj->labels->singular_name.'</span>'
-					);
+				$stati = get_available_post_statuses($posttypeobj->name);
+				suarr::remove_value($stati, 'auto-draft');
+				$stati = implode(',', $stati);
+				
+				$posts = get_posts(array(
+					  'orderby' => 'title'
+					, 'order' => 'ASC'
+					, 'post_status' => $stati
+					, 'numberposts' => -1
+					, 'post_type' => $posttypeobj->name
+					, 'sentence' => 1
+					, 's' => $_GET['q']
+				));
+				
+				if (count($posts)) {
+					
+					$items[] = array('text' => $posttypeobj->labels->name, 'isheader' => true);
+					
+					foreach ($posts as $post)
+						$items[] = array(
+							  'text' => $post->post_title
+							, 'value' => 'obj_posttype_' . $posttypeobj->name . '/' . $post->ID
+							, 'selectedtext' => $post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$posttypeobj->labels->singular_name.'</span>'
+						);
+				}
 			}
 		}
 		
-		$taxonomyobjs = suwp::get_taxonomies();
-		foreach ($taxonomyobjs as $taxonomyobj) {
-			
-			if ($include && !in_array('taxonomy_' . $posttypeobj->name, $include) && !in_array('taxonomy', $include))
-				continue;
-			
-			$terms = get_terms($taxonomyobj->name, array(
-				'search' => $_GET['q'] //NOTE: get_terms does NOT sanitize the "search" variable for SQL queries prior to WordPress 3.1.3, which is why this plugin will refuse to run on versions prior to 3.1.3
-			));
-			
-			if (count($terms)) {
+		if (!$include || in_array('taxonomy', $include)) {
+			$taxonomyobjs = suwp::get_taxonomies();
+			foreach ($taxonomyobjs as $taxonomyobj) {
 				
-				$items[] = array('text' => $taxonomyobj->labels->name, 'isheader' => true);
+				if ($include && !in_array('taxonomy_' . $posttypeobj->name, $include))
+					continue;
 				
-				foreach ($terms as $term)
-					$items[] = array(
-						  'text' => $term->name
-						, 'value' => 'obj_taxonomy_' . $taxonomyobj->name . '/' . $term->term_id
-						, 'selectedtext' => $term->name . '<span class="type"> &mdash; '.$taxonomyobj->labels->singular_name.'</span>'
-					);
+				$terms = get_terms($taxonomyobj->name, array(
+					'search' => $_GET['q'] //NOTE: get_terms does NOT sanitize the "search" variable for SQL queries prior to WordPress 3.1.3, which is why this plugin will refuse to run on versions prior to 3.1.3
+				));
+				
+				if (count($terms)) {
+					
+					$items[] = array('text' => $taxonomyobj->labels->name, 'isheader' => true);
+					
+					foreach ($terms as $term)
+						$items[] = array(
+							  'text' => $term->name
+							, 'value' => 'obj_taxonomy_' . $taxonomyobj->name . '/' . $term->term_id
+							, 'selectedtext' => $term->name . '<span class="type"> &mdash; '.$taxonomyobj->labels->singular_name.'</span>'
+						);
+				}
 			}
 		}
 		
@@ -1747,7 +1751,7 @@ class SEO_Ultimate {
 			}
 		}
 		
-		if (!$include || in_array('internal-link-aliases', $include)) {
+		if ($this->module_exists('internal-link-aliases') && (!$include || in_array('internal-link-alias', $include))) {
 			
 			$aliases = $this->get_setting('aliases', array(), 'internal-link-aliases');
 			$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
@@ -1756,22 +1760,26 @@ class SEO_Ultimate {
 				
 				$header_outputted = false;
 				foreach ($aliases as $alias_id => $alias) {
-					$h_alias_to = su_esc_html($alias['to']);
-					$to_rel_url = "/$alias_dir/$h_alias_to/";
 					
-					if ((strpos($alias['from'], $_GET['q']) !== false) || (strpos($to_rel_url, $_GET['q']) !== false)) {
+					if ($alias['to']) {
 						
-						if (!$header_outputted) {
-							$items[] = array('text' => __('Link Masks', 'seo-ultimate'), 'isheader' => true);
-							$header_outputted = true;
+						$h_alias_to = su_esc_html($alias['to']);
+						$to_rel_url = "/$alias_dir/$h_alias_to/";
+						
+						if ((strpos($alias['from'], $_GET['q']) !== false) || (strpos($to_rel_url, $_GET['q']) !== false)) {
+							
+							if (!$header_outputted) {
+								$items[] = array('text' => __('Link Masks', 'seo-ultimate'), 'isheader' => true);
+								$header_outputted = true;
+							}
+							
+							$items[] = array(
+								  'text' => $to_rel_url
+								, 'value' => 'obj_internal-link-alias/' . $alias_id
+								, 'selectedtext' => $to_rel_url . '<span class="type"> &mdash; '.__('Link Mask', 'seo-ultimate').'</span>'
+							);
+							
 						}
-						
-						$items[] = array(
-							  'text' => $to_rel_url
-							, 'value' => 'obj_internal-link-alias/' . $alias_id
-							, 'selectedtext' => $to_rel_url . '<span class="type"> &mdash; '.__('Link Mask', 'seo-ultimate').'</span>'
-						);
-						
 					}
 				}
 			}

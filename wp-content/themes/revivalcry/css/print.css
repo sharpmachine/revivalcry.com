@@ -21,7 +21,9 @@ body {
 /* Layout
 -------------------------------------------------------------- */
 
-.container {
+.container, 
+body,
+.wrapper {
   background: none;
 }
 
@@ -71,22 +73,3 @@ a:link, a:visited {
   font-weight:700;
   text-decoration: underline;
 }
-
-/* 
-	This has been the source of many questions in the past. This 
-	snippet of CSS appends the URL of each link within the text. 
-	The idea is that users printing your webpage will want to know 
-	the URLs they go to. If you want to remove this functionality, 
-	comment out this snippet and make sure to re-compress your files.
- */
-a:link:after, a:visited:after {
-  content: " (" attr(href) ")";
-  font-size: 90%;
-}
-
-/* If you're having trouble printing relative links, uncomment and customize this:
-   (note: This is valid CSS3, but it still won't go through the W3C CSS Validator) */
-
-/* a[href^="/"]:after {
-  content: " (http://www.yourdomain.com" attr(href) ") ";
-} */

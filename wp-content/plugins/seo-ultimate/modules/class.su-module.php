@@ -1460,7 +1460,7 @@ class SU_Module {
 		echo "\t<thead><tr>\n";
 		$mk = $this->get_module_key();
 		foreach ($headers as $class => $header) {
-			$class = is_numeric($class) ? '' : " class='su-$mk-$class'";
+			$class = is_numeric($class) ? '' : " class='su-$mk-$class su-$class'";
 			echo "\t\t<th scope='col'$class>$header</th>\n";
 		}
 		echo "\t</tr></thead>\n";
@@ -1695,7 +1695,7 @@ class SU_Module {
 		
 		if ($grouptext) {
 			echo "</fieldset>";
-			$this->admin_form_group_end();
+			$this->admin_form_group_end(false);
 		} elseif ($output_tr) {
 			echo "</td>\n</tr>\n";
 		}
@@ -2541,37 +2541,75 @@ class SU_Module {
 		list($to_genus, $to_type, $to_id) = $this->jlsuggest_value_explode($value);
 		
 		$text_dest = '';
+		$disabled = false;
 		
 		switch ($to_genus) {
 			
 			case 'posttype':
 				$selected_post = get_post($to_id);
-				$selected_post_type = get_post_type_object($selected_post->post_type);
-				$text_dest = $selected_post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$selected_post_type->labels->singular_name.'</span>';
+				if ($selected_post) {
+					$selected_post_type = get_post_type_object($selected_post->post_type);
+					$text_dest = $selected_post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$selected_post_type->labels->singular_name.'</span>';
+				} else {
+					$selected_post_type = get_post_type_object($to_type);
+					if ($selected_post_type)
+						$text_dest = sprintf(__('A Deleted %s', 'seo-ultimate'), $selected_post_type->labels->singular_name);
+					else
+						$text_dest = __('A Deleted Post', 'seo-ultimate');
+					$text_dest = '<span class="type">' . $text_dest . '</span>';
+					$disabled = true;
+				}
 				break;
 			case 'taxonomy':
-				$selected_taxonomy = get_taxonomy($to_type);
-				$selected_term = get_term($to_id, $selected_taxonomy->name);
-				$text_dest = $selected_term->name . '<span class="type">&nbsp;&mdash;&nbsp;'.$selected_taxonomy->labels->singular_name.'</span>';
+				if ($selected_taxonomy = get_taxonomy($to_type)) {
+					if ($selected_term = get_term($to_id, $selected_taxonomy->name)) {
+						$text_dest = $selected_term->name . '<span class="type">&nbsp;&mdash;&nbsp;'.$selected_taxonomy->labels->singular_name.'</span>';
+					} else {
+						$text_dest = sprintf(__('A Deleted %s', 'seo-ultimate'), $selected_taxonomy->labels->singular_name);
+						$text_dest = '<span class="type">' . $text_dest . '</span>';
+						$disabled = true;
+					}
+				} else {
+					$text_dest = __('A Deleted Term', 'seo-ultimate');
+					$text_dest = '<span class="type">' . $text_dest . '</span>';
+					$disabled = true;
+				}
 				break;
 			case 'home':
 				$text_dest = __('Blog Homepage', 'seo-ultimate');
 				break;
 			case 'author':
-				$selected_author = get_userdata($to_id);
-				$text_dest = $selected_author->user_login . '<span class="type">&nbsp;&mdash;&nbsp;'.__('Author', 'seo-ultimate').'</span>';
+				if (is_user_member_of_blog($to_id)) {
+					$selected_author = get_userdata($to_id);
+					$text_dest = $selected_author->user_login . '<span class="type">&nbsp;&mdash;&nbsp;'.__('Author', 'seo-ultimate').'</span>';
+				} else {
+					$text_dest = __('A Deleted User', 'seo-ultimate');
+					$text_dest = '<span class="type">' . $text_dest . '</span>';
+					$disabled = true;
+				}
 				break;
 			case 'internal-link-alias':
+			
 				$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
 				$aliases = $this->get_setting('aliases', array(), 'internal-link-aliases');
 				
 				if (isset($aliases[$to_id]['to'])) {
 					$h_alias_to = su_esc_html($aliases[$to_id]['to']);
-					$text_dest = "/$alias_dir/$h_alias_to/" . '<span class="type">&nbsp;&mdash;&nbsp;'.__('Link Mask', 'seo-ultimate').'</span>';
+					$text_dest = "/$alias_dir/$h_alias_to/" . '<span class="type">&nbsp;&mdash;&nbsp;';
+					
+					if ($this->plugin->module_exists('internal-link-aliases')) {
+						$text_dest .= __('Link Mask', 'seo-ultimate');
+					} else {
+						$text_dest .= __('Link Mask (Disabled)', 'seo-ultimate');
+						$disabled = true;
+					}
+					$text_dest .= '</span>';
 				} else {
-					$to_genus = 'url';
-					$to_id = '';
+					$text_dest = __('A Deleted Link Mask', 'seo-ultimate');
+					$text_dest = '<span class="type">' . $text_dest . '</span>';
+					$disabled = true;
 				}
+				
 				break;
 		}
 		
@@ -2592,13 +2630,14 @@ class SU_Module {
 		}
 		
 		$html .= " type='text' class='textbox regular-text jlsuggest'";
-		$html .= ' title="' . __('Type a URL or start typing the name of the item you want to link to', 'seo-ultimate') . '"';
+		$html .= ' title="' . __('Type a URL or start typing the name of an item on your site', 'seo-ultimate') . '"';
 		$html .= $is_url ? '' : ' style="display:none;" ';
 		$html .= ' />';
 		
 		//Object box
 		//(hide if URL is entered)
-		$html .= '<div class="jls_text_dest"';
+		$disabled = $disabled ? ' jlsuggest-disabled' : '';
+		$html .= "<div class='jls_text_dest$disabled'";
 		$html .= $is_url ? ' style="display:none;" ' : '';
 		$html .= '>';
 		$html .= '<div class="jls_text_dest_text">';
@@ -2627,26 +2666,38 @@ class SU_Module {
 				return $to_id; break;
 			case 'posttype':
 				$to_id = (int)$to_id;
-				$to_post = get_post($to_id);
-				if (get_post_status($to_id) != 'publish') continue;
-				return get_permalink($to_id); break;
+				switch (get_post_status($to_id)) {
+					case 'publish':
+						return get_permalink($to_id);
+					case false: //Post doesn't exist
+					default: //Post exists but isn't published
+						return false;
+				}				
+				break;
 			case 'taxonomy':
 				$to_id = (int)$to_id;
-				return get_term_link($to_id, $to_type); break;
+				$term_link = get_term_link($to_id, $to_type);
+				if ($term_link && !is_wp_error($term_link)) return $term_link;
+				return false;
+				break;
 			case 'home':
 				return suwp::get_blog_home_url(); break;
 			case 'author':
 				$to_id = (int)$to_id;
-				return get_author_posts_url($to_id); break;
+				if (is_user_member_of_blog($to_id))
+					return get_author_posts_url($to_id);
+				return false;
+				break;
 			case 'internal-link-alias':
-				$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
-				$aliases   = $this->get_setting('aliases', array(),'internal-link-aliases');
-				
-				if (isset($aliases[$to_id]['to'])) {
-					$u_alias_to = urlencode($aliases[$to_id]['to']);
-					return get_bloginfo('url') . "/$alias_dir/$u_alias_to/";
+				if ($this->plugin->module_exists('internal-link-aliases')) {
+					$alias_dir = $this->get_setting('alias_dir', 'go', 'internal-link-aliases');
+					$aliases   = $this->get_setting('aliases', array(),'internal-link-aliases');
+					
+					if (isset($aliases[$to_id]['to'])) {
+						$u_alias_to = urlencode($aliases[$to_id]['to']);
+						return get_bloginfo('url') . "/$alias_dir/$u_alias_to/";
+					}
 				}
-				
 				return false;
 				break;
 		}
