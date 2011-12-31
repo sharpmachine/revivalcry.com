@@ -13,7 +13,6 @@
 	<div class="category">
 
 	<h3><?php shopp('category','name'); ?></h3>
-	<?php shopp('catalog','views','label=Views: '); ?>
 	
 	<p><?php shopp('category','subcategory-list','hierarchy=true&showall=true&class=subcategories&dropdown=1'); ?></p>
 	

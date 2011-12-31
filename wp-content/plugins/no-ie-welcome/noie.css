@@ -1,0 +1,29 @@
+#noie {
+	border: 6px solid #ee6688; 
+	background: #e4e4e4; 
+	text-align: center; 
+	clear: both; 
+	position: relative;
+	padding: 7px 10px 0px 10px;
+	margin: 0 10px 5px 10px;
+	display: none;
+	}
+	
+#noie img {
+	border:none;
+	float:left; 
+	padding:10px 15px 0px 20px;	
+	
+}	
+	
+#noie .closebutton {
+	position: absolute; 
+	right: 0px; 
+	top: 0px; 
+	}
+
+#noiebetter{
+	clear: both; 
+	height:25px; 
+	margin-left: 400px;}
+

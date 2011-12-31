@@ -54,11 +54,10 @@
     <?php if (is_page('photo-gallery')): ?>
     	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/lightbox.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <?php endif ?>
-	<!--[if lt IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	
 	<!-- Hashgrid - remove before moving to productions -->
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">
-	<!-- Uncomment for mobile browsers-->
-	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/handheld.css" />
 	
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	
