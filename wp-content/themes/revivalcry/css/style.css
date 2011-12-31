@@ -765,7 +765,7 @@ input[type=email] {
   float: left;
   margin-right: 5px;
 }
-div.wpcf7-validation-errors, div.wpcf7-mail-sent-ng {
+div.wpcf7-validation-errors, div.wpcf7-mail-sent-ng, div.wpcf7-mail-sent-ok {
   border: none !important;
   position: relative;
   top: 8px;
