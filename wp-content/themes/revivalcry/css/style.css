@@ -571,38 +571,20 @@ input[type=email] {
   text-transform: uppercase;
 }
 #em-wrapper article.event .details img { display: none; }
-#em-wrapper #event-footer {
-  width: 940px;
-  height: 112px;
-  position: absolute;
-  bottom: -115px;
+#em-wrapper .single-events h1 {
+  font-size: 24px;
+  text-transform: none;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
 }
-#em-wrapper #event-footer .dont-see-dennis {
-  width: 270px;
-  float: left;
-  text-transform: uppercase;
-  font-size: 16px;
-  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
-  background: url(../images/box-corner.gif) no-repeat top right #00bcd1;
+#em-wrapper .single-events h2 {
+  color: #1d1b1b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  margin-bottom: 0;
 }
-#em-wrapper #event-footer .dont-see-dennis a {
-  display: block;
-  padding: 20px 40px;
-  width: 190px;
-  color: #ffffff;
-  text-decoration: none;
-}
-#em-wrapper #event-footer .encourage-box {
-  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
-  background-color: #ffffff;
-  font-size: 16px;
-  padding: 10px;
-  text-transform: uppercase;
-  float: right;
-  position: relative;
-  top: 30px;
-}
-#em-wrapper #event-footer .encourage-box a { text-decoration: none; }
+#em-wrapper .single-events p.event-actions { margin-top: 10px; }
+#em-wrapper .single-events p.event-actions a.button { margin-right: 5px; }
+#em-wrapper .single-events p.event-actions .black { background-color: #1d1b1b; }
 .encourage-box {
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
   background-color: #ffffff;
