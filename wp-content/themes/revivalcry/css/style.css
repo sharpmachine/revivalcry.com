@@ -24,7 +24,6 @@ body {
   margin: 0 auto -235px;
 }
 .full-width-white {
-  margin-top: -65px;
   padding: 50px 0;
   position: relative;
   background: #ffffff;
@@ -71,15 +70,13 @@ a:hover {
   text-decoration: none;
 }
 header {
-  margin-bottom: 65px;
   width: 100%;
   min-height: 150px;
   max-height: 460px;
   background: url(../images/bg.gif);
 }
 header #header {
-  width: 820px;
-  padding: 0 60px;
+  width: 940px;
   height: 80px;
   margin: 0 auto;
 }
@@ -103,7 +100,10 @@ header #banner .wt-rotator {
   margin-left: -640px;
   z-index: 1;
 }
-body.home header { background: #1d1b1b; }
+body.home header {
+  background: #1d1b1b;
+  margin-bottom: 65px;
+}
 nav {
   display: block;
   float: right;
@@ -343,7 +343,7 @@ body.home nav ul li.current-menu-item > a { color: #ffffff; }
   background-color: #1d1b1b;
 }
 #top-menu .menu-header {
-  width: 840px;
+  width: 960px;
   font-size: 14px;
   margin: 0 auto;
 }
@@ -554,6 +554,7 @@ input[type=email] {
 }
 #em-wrapper article.event .date .month {
   font-size: 24px;
+  color: #1d1b1b;
   text-transform: uppercase;
   height: 28px;
   line-height: 56px;
@@ -566,6 +567,7 @@ input[type=email] {
 #em-wrapper article.event .details h1 a { text-decoration: none; }
 #em-wrapper article.event .details h2 {
   font-size: 14px;
+  color: #1d1b1b;
   text-transform: uppercase;
 }
 #em-wrapper article.event .details img { display: none; }
@@ -612,6 +614,38 @@ input[type=email] {
   top: 30px;
 }
 .encourage-box a { text-decoration: none; }
+#event-footer {
+  width: 940px;
+  height: 112px;
+  margin: 0 auto;
+  margin-bottom: -65px;
+}
+#event-footer .dont-see-dennis {
+  width: 270px;
+  float: left;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  background: url(../images/box-corner.gif) no-repeat top right #00bcd1;
+}
+#event-footer .dont-see-dennis a {
+  display: block;
+  padding: 20px 40px;
+  width: 190px;
+  color: #ffffff;
+  text-decoration: none;
+}
+#event-footer .encourage-box {
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  background-color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  text-transform: uppercase;
+  float: right;
+  position: relative;
+  top: 30px;
+}
+#event-footer .encourage-box a { text-decoration: none; }
 .note-box {
   clear: both;
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;

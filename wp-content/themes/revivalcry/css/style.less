@@ -85,7 +85,6 @@ body
 
 .full-width-white
 {
-	margin-top: -65px;
 	padding: 50px 0;
 	position: relative;
 	background: #fff;
@@ -161,7 +160,6 @@ a
 /*.......................................................the header*/
 header
 {
-	margin-bottom: 65px;
 	width: 100%;
 	min-height: 150px;
 	max-height: 460px;
@@ -169,8 +167,7 @@ header
 	
 	#header
 	{
-		width: 820px;
-		padding: 0 60px;
+		width: 940px;
 		height: 80px;
 		margin: 0 auto;
 	}
@@ -210,6 +207,7 @@ header
 body.home header
 {
 	background: @rc-black;
+	margin-bottom: 65px;
 }
 
 /*.......................................................the navigation*/
@@ -393,7 +391,7 @@ body.home nav
 	
 	.menu-header
 	{
-		width: 840px;
+		width: 960px;
 		font-size: 14px;
 		margin: 0 auto;
 	}
@@ -688,6 +686,7 @@ input[type=email]
 			.month
 			{
 				font-size: 24px;
+				color: @rc-black;
 				text-transform: uppercase;
 				height: 28px;
 				line-height: 56px;
@@ -712,6 +711,7 @@ input[type=email]
 			h2
 			{
 				font-size: 14px;
+				color: @rc-black;
 				text-transform: uppercase;
 			}
 			
@@ -783,7 +783,50 @@ input[type=email]
 				text-decoration: none;
 			}
 		}
-
+		
+#event-footer
+	{
+		width: 940px;
+		height: 112px;
+		margin: 0 auto;
+		margin-bottom: -65px;
+		
+		.dont-see-dennis
+		{
+			width: 270px;
+			float: left;
+			text-transform: uppercase;
+			font-size: 16px;
+			.open-sans-condensed;
+			background: url(../images/box-corner.gif) no-repeat top right @rc-blue;
+	
+			a
+			{
+				display: block;
+				padding: 20px 40px;
+				width: 190px;
+				color: @rc-white;
+				text-decoration: none;
+			}
+		}
+		
+		.encourage-box
+		{
+			.open-sans-condensed;
+			background-color: @rc-white;
+			font-size: 16px;
+			padding: 10px;
+			text-transform: uppercase;
+			float: right;
+			position: relative;
+			top: 30px;
+			
+			a
+			{
+				text-decoration: none;
+			}
+		}
+	}
 
 /*.......................................................this giving page*/
 .note-box

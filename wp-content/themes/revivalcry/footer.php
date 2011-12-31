@@ -3,6 +3,18 @@
 		</div><!-- .container -->
 		<div class="footer-push"></div>
 		</div><!-- .wrapper -->
+		
+		<?php if (is_page("events")): ?>
+			<div id="event-footer">
+				<div class="dont-see-dennis">
+					<a href="../invite">Don’t see Dennis IN your area? Invite him to come speak at your event or church.</a>
+				</div>
+				<div class="encourage-box">
+					Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe to our <a href="rss"> Events rss feed</a> to be notified about our latest events
+				</div>
+			</div>
+		<?php endif ?>
+		
 		<div id="page-gradient"></div>
 		
 		<footer role="contentinfo">
