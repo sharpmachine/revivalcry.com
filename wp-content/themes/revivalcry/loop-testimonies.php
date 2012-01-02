@@ -22,6 +22,7 @@
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->
 				<div class="full-width-white" id="submit-testimonies">
+					<h1>Release your testimony</h1>
 					<?php comments_template( '', true ); ?>
 				</div>
 
