@@ -20,7 +20,7 @@
 		<footer role="contentinfo">
 			<div id="footer">
 				<section class="span-4" id="mailchimp-signup">
-					<h3>Newsletter Signup.</h3>
+					<h3>Newsletter signup.</h3>
 					<!-- Begin MailChimp Signup Form -->
 					<div id="mc_embed_signup">
 						<form action="http://revivalcry.us2.list-manage.com/subscribe/post?u=6d71c38ad8a27939100932ac7&amp;id=522c3a5cda" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">

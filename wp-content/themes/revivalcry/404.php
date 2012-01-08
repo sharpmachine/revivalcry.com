@@ -12,7 +12,7 @@
 					</div>
 					
 					<div class="span-4">
-						<?php wp_list_pages(); ?>
+						<?php wp_list_pages("exclude=961,821,817,815,214,770,771,772"); ?>
 					</div>
 					<div class="span-4 last">
 						<?php wp_list_categories(); ?>

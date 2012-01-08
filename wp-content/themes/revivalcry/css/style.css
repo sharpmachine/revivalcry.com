@@ -512,9 +512,7 @@ input[type=email] {
   width: 300px;
   height: 90px;
   margin-bottom: 37px;
-  background: url(../images/blue-box-edge.png) no-repeat top right;
 }
-.feature-box:hover { background: url(../images/black-box-edge.png) no-repeat top right; }
 .feature-box:hover .content { background-color: #1d1b1b; }
 .feature-box:hover .content h2 { color: #00bcd1; }
 .feature-box:hover .content span { color: #ffffff; }
@@ -523,9 +521,10 @@ input[type=email] {
   width: 170px;
   height: 50px;
   float: left;
-  padding: 20px 10px 20px 20px;
+  padding: 20px;
   background-color: #00bcd1;
   text-transform: uppercase;
+  background: url(../images/corner2.png) no-repeat bottom right #00bcd1;
 }
 .feature-box .content h2 {
   margin-bottom: 1px;
