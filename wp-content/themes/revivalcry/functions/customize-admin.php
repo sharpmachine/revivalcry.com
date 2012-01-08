@@ -33,7 +33,7 @@ add_action('admin_head', 'custom_logo');
 
 //Login Logo
 function custom_login_logo() {
-  echo '<style type="text/css">s
+  echo '<style type="text/css">
     h1 a { background-image:url('.get_bloginfo('template_directory').'/images/logo2.png) !important; height: 43px !important; }
     </style>';
 }
