@@ -26,7 +26,9 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			add_filter('em_my_bookings_booked_message',array(&$this,'em_my_bookings_booked_message'),1,2);
 			add_filter('em_my_bookings_booking_status',array(&$this,'em_my_bookings_booked_message'),1,2);
 			//Modify spaces calculations
-			add_filter('em_bookings_get_pending_spaces', array(&$this, 'em_bookings_get_pending_spaces'),1,2);
+			if ( absint(get_option('em_paypal_booking_timeout')) > 0 ){
+				add_filter('em_bookings_get_pending_spaces', array(&$this, 'em_bookings_get_pending_spaces'),1,2);
+			}
 			//set up cron
 			$timestamp = wp_next_scheduled('emp_cron_hook');
 			if( absint(get_option('em_paypal_booking_timeout')) > 0 && !$timestamp ){
@@ -47,7 +49,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	 */
 	function em_bookings_get_pending_spaces($count, $EM_Bookings){
 		foreach($EM_Bookings->bookings as $EM_Booking){
-			if($EM_Booking->status == 4){
+			if($EM_Booking->booking_status == 4){
 				$count += $EM_Booking->get_spaces();
 			}
 		}
@@ -55,7 +57,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	}
 	
 	function em_my_bookings_booked_message( $message, $EM_Booking){
-		if($EM_Booking->status == 4){
+		if($EM_Booking->booking_status == 4){
 			//user owes money!
 			$paypal_vars = $this->get_paypal_vars($EM_Booking);
 			$form = '<form action="'.$this->get_paypal_url().'" method="post">';
@@ -82,7 +84,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			'upload' => 1,
 			'currency_code' => get_option('dbem_bookings_currency', 'USD'),
 			'notify_url' =>$notify_url,
-			'custom' => $EM_Booking->id.':'.$EM_Booking->event_id
+			'custom' => $EM_Booking->booking_id.':'.$EM_Booking->event_id
 		);
 		if( !get_option('dbem_bookings_tax_auto_add') && is_numeric(get_option('dbem_bookings_tax')) && get_option('dbem_bookings_tax') > 0 ){
 			//tax only added if auto_add is disabled, since it would be added to individual ticket prices
@@ -140,16 +142,30 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			if($EM_Booking->get_price() > 0 || !$post_result){
 				$paypal_vars = array();
 				$paypal_url = '';
+				$registration = true;
 				$result = false;
 				$no_redirect = false;
 				if( $post_result ){
-					$EM_Booking->status = 4; //status 4 = paypal
-					if( !is_user_logged_in() ){
+					$EM_Booking->booking_status = 4; //status 4 = paypal
+					if( !is_user_logged_in() && !get_option('dbem_bookings_registration_disable') ){
 						//anonymous users allowed with this payment method, we'll create the user if booked.
-						$EM_Booking->person_id = 0;
-						$EM_Booking->person = new EM_Person(0);
-					}	
-					if( $EM_Event->get_bookings()->add($EM_Booking) ){
+						if( !email_exists($_REQUEST['user_email']) ){
+							$EM_Booking->person_id = 0;
+							$EM_Booking->person = new EM_Person(0);
+						}else{
+							$registration = false;
+							$EM_Booking->add_error( get_option('dbem_booking_feedback_email_exists') );
+						}
+					}elseif( !is_user_logged_in() && get_option('dbem_bookings_registration_disable') ){
+						//non-registered user mode, just make sure it's not using a registered user email
+						if( !email_exists($_REQUEST['user_email']) ){
+							$EM_Booking->person_id = get_option('dbem_bookings_registration_user');
+						}else{
+							$registration = false;
+							$EM_Booking->add_error( get_option('dbem_booking_feedback_email_exists') );
+						}
+					}
+					if( $registration && $EM_Event->get_bookings()->add($EM_Booking) ){
 						//If the user isn't logged in, we modify the user too and save here.
 						$paypal_url = $this->get_paypal_url();			
 						if( is_object($EM_Booking) && get_class($EM_Booking) == 'EM_Booking' ){			
@@ -251,7 +267,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Paypal Currency', 'em-pro') ?></th>
-			  <td><?php echo esc_html(get_option('dbem_bookings_currency','USD')); ?><br /><i><?php echo sprintf(__('Set your currency in the <a href="%s">settings</a> page.','dbem'),get_bloginfo('wpurl').'/wp-admin/admin.php?page=events-manager-options'); ?></i></td>
+			  <td><?php echo esc_html(get_option('dbem_bookings_currency','USD')); ?><br /><i><?php echo sprintf(__('Set your currency in the <a href="%s">settings</a> page.','dbem'),EM_ADMIN_URL.'&amp;page=events-manager-options'); ?></i></td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Mode', 'em-pro') ?></th>
@@ -303,7 +319,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			  <td>
 			  	<input type="checkbox" name="paypal_manual_approval" value="1" <?php echo (get_option('em_'. $this->gateway . "_manual_approval" )) ? 'checked="checked"':''; ?> /><br />
 			  	<em><?php _e('By default, when someone pays for a booking, it gets automatically approved once the payment is confirmed. If you would like to manually verify and approve bookings, tick this box.','em-pro'); ?></em><br />
-			  	<em><?php echo sprintf(__('Approvals must also be required for all bookings in your <a href="%s">settings</a> for this to work properly.','em-pro'),'?page=events-manager-options'); ?></em>
+			  	<em><?php echo sprintf(__('Approvals must also be required for all bookings in your <a href="%s">settings</a> for this to work properly.','em-pro'),EM_ADMIN_URL.'&amp;page=events-manager-options'); ?></em>
 			  </td>
 		  </tr>
 		  <tr><td colspan="2"><strong><?php _e('Success Messages','em-pro'); ?></strong></td></tr>
@@ -429,7 +445,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			$booking_id = $custom_values[0];
 			$event_id = !empty($custom_values[1]) ? $custom_values[1]:0;
 			$EM_Booking = new EM_Booking($booking_id);
-			if( !empty($EM_Booking->id) ){
+			if( !empty($EM_Booking->booking_id) ){
 				//booking exists
 				$EM_Booking->manage_override = true; //since we're overriding the booking ourselves.
 				$user_id = $EM_Booking->person_id;
@@ -449,8 +465,8 @@ class EM_Gateway_Paypal extends EM_Gateway {
 				
 						//get booking metadata
 						$user_data = array();
-						if( !get_option('dbem_bookings_registration_disable') && !empty($EM_Booking->meta['registration']) && is_array($EM_Booking->meta['registration']) ){
-							foreach($EM_Booking->meta['registration'] as $fieldid => $field){
+						if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) ){
+							foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field){
 								if( trim($field) !== '' ){
 									$user_data[$fieldid] = $field;
 								}
@@ -496,11 +512,13 @@ class EM_Gateway_Paypal extends EM_Gateway {
 									$user_id = wp_insert_user( $user_data );
 									
 									if ( is_numeric($user_id)) {
+										global $wpdb;
 										$EM_Booking->person_id = $user_id;
 										if( !empty($user_data['dbem_phone']) ){
 											update_user_meta($user_id, 'dbem_phone', $user_data['dbem_phone']);
 										}
 										update_user_option( $user_id, 'default_password_nag', true, true ); //Set up the Password change nag.
+										$wpdb->update(EM_BOOKINGS_TABLE, array('person_id'=>$user_id), array('booking_id'=>$EM_Booking->booking_id));
 										em_new_user_notification( $user_id, $user_data['user_pass'] );									
 									}else{
 										/* @var $user_id WP_Error */
@@ -509,10 +527,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 									$user_id = apply_filters('em_register_new_user',$user_id); //filter which coincides with original filter for consistency
 								}
 							}
-						}else{
-							$EM_Booking->person_id = get_option('dbem_bookings_registration_user');
 						}
-						
 						if( $_POST['mc_gross'] >= $EM_Booking->get_price(false, false, true) && (!get_option('em_'.$this->gateway.'_manual_approval', false) || !get_option('dbem_bookings_approval')) ){
 							$EM_Booking->approve();
 						}else{

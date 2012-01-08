@@ -11,7 +11,6 @@ class EM_Gateway_Offline extends EM_Gateway {
 		// If I want to override the transactions output - then I can use this action
 		//add_action('EM_gateways_transactions_' . $this->gateway, array(&$this, 'mytransactions'));
 		add_action('init',array(&$this, 'actions'),1);
-		add_action('init',array(&$this, 'ajax_actions'),20); //after ajax actions of EM are loaded
 		add_action('em_bookings_single_metabox_footer', array(&$this, 'add_payment_form'),1,1); //add payment to booking
 		add_action('em_bookings_manual_booking', array(&$this, 'add_booking_form'),1,1);
 		//status control when editing bookings
@@ -44,7 +43,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 				if( !empty($_REQUEST['transaction_total_amount']) && is_numeric($_REQUEST['transaction_total_amount']) ){
 					$this->record_transaction($EM_Booking, $_REQUEST['transaction_total_amount'], get_option('dbem_bookings_currency'), current_time('mysql'), '', 'Completed', $_REQUEST['transaction_note']);
 					$string = __('Payment has been registered.','em-pro');
-					$total = $wpdb->get_var('SELECT SUM(transaction_total_amount) FROM '.EM_TRANSACTIONS_TABLE." WHERE booking_id={$EM_Booking->id}");
+					$total = $wpdb->get_var('SELECT SUM(transaction_total_amount) FROM '.EM_TRANSACTIONS_TABLE." WHERE booking_id={$EM_Booking->booking_id}");
 					if( $total >= $EM_Booking->get_price() ){
 						$EM_Booking->approve();
 						$string .= " ". __('Booking is now fully paid and confirmed.','em-pro');
@@ -62,7 +61,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 				if( $EM_Booking->get_post() ){
 					//Assign a user to this booking
 					$EM_Booking->person = new EM_Person($_REQUEST['person_id']);
-					$EM_Booking->status = !empty($_REQUEST['booking_paid']) ? 1 : 5;
+					$EM_Booking->booking_status = !empty($_REQUEST['booking_paid']) ? 1 : 5;
 					if( $EM_Event->get_bookings()->add($EM_Booking) ){
 						$result = true;
 						if( !empty($_REQUEST['booking_paid']) ){
@@ -80,24 +79,6 @@ class EM_Gateway_Offline extends EM_Gateway {
 					$EM_Notices->add_error( $EM_Booking->get_errors() );
 				}
 			}	
-		}
-	}
-	
-	function ajax_actions(){
-		//ajax action
-		if( is_user_logged_in() ){
-			//Admin operations
-			//Specific Oject Ajax
-			if( !empty($_REQUEST['em_obj']) ){
-				switch( $_REQUEST['em_obj'] ){
-					case 'em_bookings_offline_pending_table':
-						//add some admin files just in case
-						if (!defined('DOING_AJAX')) define('DOING_AJAX',1);
-						self::get_pending();
-						exit();
-						break;
-				}
-			}
 		}
 	}
 	
@@ -137,7 +118,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 			add_filter('pre_option_dbem_bookings_anonymous',create_function('$true','return \'\';'),1,1); //Prevent register form from showing.
 		}
 		if( !$EM_Event->is_free() ){
-			$EM_Booking->status = 5; //status 5 = awaiting payment
+			$EM_Booking->booking_status = 5; //status 5 = awaiting payment
 			//add_filter('pre_option_dbem_booking_feedback',array(&$this,'pre_option_dbem_booking_feedback'),1,1); //Prevent register form from showing.
 			add_filter('pre_option_dbem_booking_feedback',create_function('$true','return \''. get_option('em_offline_booking_feedback').'\';'),1,1); //change the feedback msg
 		}
@@ -297,7 +278,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 									<input type='submit' value="<?php _e('Submit Booking','em-pro'); ?>" />
 								 	<input type='hidden' name='gateway' value='offline'/>
 								 	<input type='hidden' name='action' value='manual_booking'/>
-								 	<input type='hidden' name='event_id' value='<?php echo $EM_Event->id; ?>'/>
+								 	<input type='hidden' name='event_id' value='<?php echo $EM_Event->event_id; ?>'/>
 								 	<input type='hidden' name='_wpnonce' value='<?php echo wp_create_nonce('manual_booking'); ?>'/>
 								</div>
 							</div>
@@ -367,7 +348,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 */
 	function em_bookings_get_pending_spaces($count, $EM_Bookings){
 		foreach($EM_Bookings->bookings as $EM_Booking){
-			if($EM_Booking->status == 5){
+			if($EM_Booking->booking_status == 5){
 				$count += $EM_Booking->get_spaces();
 			}
 		}
@@ -381,7 +362,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	function get_pending(){
 		global $EM_Event, $EM_Booking, $EM_Ticket, $wpdb, $current_user;
 		
-		$action_scope = ( !empty($_REQUEST['em_obj']) && $_REQUEST['em_obj'] == 'em_bookings_offline_pending_table' );
+		$action_scope = ( !empty($_REQUEST['em_obj']) && $_REQUEST['em_obj'] == 'em_bookings_pending_table' );
 		$action = ( $action_scope && !empty($_GET ['action']) ) ? $_GET ['action']:'';
 		$order = ( $action_scope && !empty($_GET ['order']) ) ? $_GET ['order']:'ASC';
 		$limit = ( $action_scope && !empty($_GET['limit']) ) ? $_GET['limit'] : 20;//Default limit
@@ -390,56 +371,21 @@ class EM_Gateway_Offline extends EM_Gateway {
 		
 		if( is_object($EM_Event) ){
 			//We search transactions and get a list of booking IDs to load
-			$EM_Bookings = EM_Bookings::get(array('status'=>5,'event'=>$EM_Event->id));
+			$EM_Bookings = EM_Bookings::get(array('status'=>5,'event'=>$EM_Event->event_id));
 		}else{
 			$EM_Bookings = EM_Bookings::get(array('status'=>5));
 		}
 		$bookings_count = (is_array($EM_Bookings->bookings)) ? count($EM_Bookings->bookings):0;
 		?>
-		<?php if( !defined('DOING_AJAX') ): ?>
 		<h2><?php echo _e('Bookings Awaiting Payment','em-pro'); ?></h2>
-		<?php endif; ?>
-			<div class='wrap em_bookings_pending_table em_obj'>
-				<form id='bookings-filter' method='get' action='<?php bloginfo('wpurl') ?>/wp-admin/edit.php'>
-					<input type="hidden" name="em_obj" value="em_bookings_offline_pending_table" />
-					<!--
-					<ul class="subsubsub">
-						<li>
-							<a href='edit.php?post_type=post' class="current">All <span class="count">(1)</span></a> |
-						</li>
-					</ul>
-					<p class="search-box">
-						<label class="screen-reader-text" for="post-search-input"><?php _e('Search'); ?>:</label>
-						<input type="text" id="post-search-input" name="em_search" value="<?php echo (!empty($_GET['em_search'])) ? $_GET['em_search']:''; ?>" />
-						<input type="submit" value="<?php _e('Search'); ?>" class="button" />
-					</p>
-					-->
+			<div class='wrap em_bookings_payment_table em_obj'>
+				<form id='bookings-filter' method='get' action=''>
+					<input type="hidden" name="em_obj" value="em_bookings_pending_table" />
 					<?php if ( $bookings_count >= $limit ) : ?>
 					<div class='tablenav'>
-						<!--
-						<div class="alignleft actions">
-							<select name="action">
-								<option value="-1" selected="selected">
-									<?php _e('Bulk Actions'); ?>
-								</option>
-								<option value="approve">
-									<?php _e('Approve', 'dbem'); ?>
-								</option>
-								<option value="decline">
-									<?php _e('Decline', 'dbem'); ?>
-								</option>
-							</select> 
-							<input type="submit" id="post-query-submit" value="Filter" class="button-secondary" />
-						</div>
-						-->
-						<!--
-						<div class="view-switch">
-							<a href="/wp-admin/edit.php?mode=list"><img class="current" id="view-switch-list" src="http://wordpress.lan/wp-includes/images/blank.gif" width="20" height="20" title="List View" alt="List View" name="view-switch-list" /></a> <a href="/wp-admin/edit.php?mode=excerpt"><img id="view-switch-excerpt" src="http://wordpress.lan/wp-includes/images/blank.gif" width="20" height="20" title="Excerpt View" alt="Excerpt View" name="view-switch-excerpt" /></a>
-						</div>
-						-->
 						<?php 
 						if ( $bookings_count >= $limit ) {
-							$bookings_nav = em_admin_paginate( $bookings_count, $limit, $page, array('em_ajax'=>0, 'em_obj'=>'em_bookings_offline_pending_table'));
+							$bookings_nav = em_admin_paginate( $bookings_count, $limit, $page, array('em_ajax'=>0, 'em_obj'=>'em_bookings_pending_table'));
 							echo $bookings_nav;
 						}
 						?>
@@ -474,24 +420,24 @@ class EM_Gateway_Offline extends EM_Gateway {
 									$rowno++;
 									?>
 									<tr>
-										<th scope="row" class="check-column" style="padding:7px 0px 7px;"><input type='checkbox' value='<?php echo $EM_Booking->id ?>' name='bookings[]'/></th>
-										<td><a href="<?php bloginfo ( 'wpurl' )?>/wp-admin/admin.php?page=events-manager-bookings&amp;person_id=<?php echo $EM_Booking->person->ID; ?>"><?php echo $EM_Booking->person->get_name() ?></a></td>
+										<th scope="row" class="check-column" style="padding:7px 0px 7px;"><input type='checkbox' value='<?php echo $EM_Booking->booking_id ?>' name='bookings[]'/></th>
+										<td><a href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;person_id=<?php echo $EM_Booking->person->ID; ?>"><?php echo $EM_Booking->person->get_name() ?></a></td>
 										<?php if( (empty($EM_Event) || !is_object($EM_Event)) && (empty($EM_Ticket) || !is_object($EM_Ticket)) ): ?>
-										<td><a href="<?php bloginfo ( 'wpurl' )?>/wp-admin/admin.php?page=events-manager-bookings&amp;event_id=<?php echo $EM_Booking->event_id; ?>"><?php echo $EM_Booking->get_event()->name ?></a></td>
+										<td><a href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;event_id=<?php echo $EM_Booking->event_id; ?>"><?php echo $EM_Booking->get_event()->name ?></a></td>
 										<?php endif; ?>
 										<td><?php echo $EM_Booking->person->user_email ?></td>
 										<td><?php echo $EM_Booking->person->phone ?></td>
 										<td><?php echo $EM_Booking->get_spaces() ?></td>
 										<td>
 											<?php
-											$approve_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->id));
-											$reject_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_reject', 'booking_id'=>$EM_Booking->id));
-											$delete_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->id));
+											$approve_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->booking_id));
+											$reject_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_reject', 'booking_id'=>$EM_Booking->booking_id));
+											$delete_url = em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->booking_id));
 											?>
 											<a class="em-bookings-approve em-bookings-approve-offline" href="<?php echo $approve_url ?>"><?php _e('Approve','dbem'); ?></a> |
 											<a class="em-bookings-reject" href="<?php echo $reject_url ?>"><?php _e('Reject','dbem'); ?></a> |
 											<span class="trash"><a class="em-bookings-delete" href="<?php echo $delete_url ?>"><?php _e('Delete','dbem'); ?></a></span> |
-											<a class="em-bookings-edit" href="<?php bloginfo ( 'wpurl' )?>/wp-admin/admin.php?page=events-manager-bookings&amp;booking_id=<?php echo $EM_Booking->id; ?>"><?php _e('Edit/View','dbem'); ?></a>
+											<a class="em-bookings-edit" href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;booking_id=<?php echo $EM_Booking->booking_id; ?>"><?php _e('Edit/View','dbem'); ?></a>
 										</td>
 									</tr>
 									<?php
@@ -527,12 +473,12 @@ class EM_Gateway_Offline extends EM_Gateway {
 	
 	function event_booking_options_buttons(){
 		global $EM_Event;
-		?><a href="<?php bloginfo('wpurl'); ?>/wp-admin/admin.php?page=events-manager-bookings&amp;action=manual_booking&amp;event_id=<?php echo $EM_Event->id ?>" class="button add-new-h2"><?php _e('Add Booking','dbem') ?></a><?php	
+		?><a href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;action=manual_booking&amp;event_id=<?php echo $EM_Event->event_id ?>" class="button add-new-h2"><?php _e('Add Booking','dbem') ?></a><?php	
 	}
 	
 	function event_booking_options(){
 		global $EM_Event;
-		?><a href="<?php bloginfo('wpurl'); ?>/wp-admin/admin.php?page=events-manager-bookings&amp;action=manual_booking&amp;event_id=<?php echo $EM_Event->id ?>"><?php _e('add booking','dbem') ?></a><?php	
+		?><a href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;action=manual_booking&amp;event_id=<?php echo $EM_Event->event_id ?>"><?php _e('add booking','dbem') ?></a><?php	
 	}
 }
 emp_register_gateway('offline', 'EM_Gateway_Offline');

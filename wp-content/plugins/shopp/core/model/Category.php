@@ -1720,7 +1720,7 @@ class SearchResults extends SmartCategory {
 
 		// No search
 		if (empty($options['search'])) $options['search'] = __('(no search terms)','Shopp');
-		$this->name = __("Search Results for","Shopp").": {$options['search']}";
+		$this->name = __("Search Results for","Shopp").": ".esc_html($options['search']);
 
 	}
 }

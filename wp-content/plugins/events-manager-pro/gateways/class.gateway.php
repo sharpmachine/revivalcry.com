@@ -94,7 +94,7 @@ if(!class_exists('EM_Gateway')) {
 		}
 		
 		function admin_menu($plugin_pages){
-			$plugin_pages[] = add_submenu_page('events-manager', __('Payment Gateways'),__('Payment Gateways'),'activate_plugins','events-manager-gateways',array('EM_Gateway','handle_gateways_panel'));
+			$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Payment Gateways'),__('Payment Gateways'),'activate_plugins','events-manager-gateways',array('EM_Gateway','handle_gateways_panel'));
 			return $plugin_pages;
 		}
 
@@ -165,7 +165,7 @@ if(!class_exists('EM_Gateway')) {
 			<div class='wrap nosubsub'>
 				<div class="icon32" id="icon-plugins"><br></div>
 				<h2><?php echo sprintf(__('Edit &quot;%s&quot; settings','em-pro'), esc_html($this->title) ); ?></h2>
-				<form action='?page=<?php echo $page; ?>' method='post' name='gatewaysettingsform'>
+				<form action='' method='post' name='gatewaysettingsform'>
 					<input type='hidden' name='action' id='action' value='updated' />
 					<input type='hidden' name='gateway' id='gateway' value='<?php echo $this->gateway; ?>' />
 					<?php
@@ -192,10 +192,10 @@ if(!class_exists('EM_Gateway')) {
 			$table = EM_BOOKINGS_TABLE;
 			//we can determine what to search for, based on if certain variables are set.
 			if( is_object($context) && get_class($context)=="EM_Booking" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-				$conditions[] = "booking_id = ".$context->id;
+				$conditions[] = "booking_id = ".$context->booking_id;
 			}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
 				$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";	
-				$conditions[] = "event_id = ".$context->id;		
+				$conditions[] = "event_id = ".$context->event_id;		
 			}elseif( is_object($context) && get_class($context)=="EM_Person" ){
 				//FIXME peole could potentially view other's txns like this
 				$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
@@ -203,7 +203,7 @@ if(!class_exists('EM_Gateway')) {
 			}elseif( is_object($context) && get_class($context)=="EM_Ticket" && $context->can_manage('manage_bookings','manage_others_bookings') ){
 				$booking_ids = array();
 				foreach($context->get_bookings()->bookings as $EM_Booking){
-					$booking_ids[] = $EM_Booking->id;
+					$booking_ids[] = $EM_Booking->booking_id;
 				}
 				if( count($booking_ids) > 0 ){
 					$conditions[] = "booking_id IN (".implode(',', $booking_ids).")";
@@ -234,7 +234,7 @@ if(!class_exists('EM_Gateway')) {
 		function record_transaction($EM_Booking, $amount, $currency, $timestamp, $paypal_id, $status, $note) {
 			global $wpdb;
 			$data = array();
-			$data['booking_id'] = $EM_Booking->id;
+			$data['booking_id'] = $EM_Booking->booking_id;
 			$data['transaction_gateway_id'] = $paypal_id;
 			$data['transaction_timestamp'] = $timestamp;
 			$data['transaction_currency'] = $currency;
@@ -368,12 +368,12 @@ if(!class_exists('EM_Gateway')) {
 						<td>
 							<?php
 								$EM_Booking = new EM_Booking($transaction->booking_id);
-								echo '<a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=events-manager-bookings&amp;event_id='.$EM_Booking->get_event()->id.'">'.$EM_Booking->get_event()->name.'</a>';
+								echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;event_id='.$EM_Booking->get_event()->event_id.'">'.$EM_Booking->get_event()->event_name.'</a>';
 							?>
 						</td>
 						<td>
 							<?php
-								echo '<a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=events-manager-bookings&amp;person_id='.$EM_Booking->get_person()->ID.'">'.$EM_Booking->get_person()->get_name().'</a>';
+								echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;person_id='.$EM_Booking->get_person()->ID.'">'.$EM_Booking->get_person()->get_name().'</a>';
 							?>
 						</td>
 						<td class="column-date">
@@ -464,7 +464,7 @@ if(!class_exists('EM_Gateway')) {
 					$_SERVER['REQUEST_URI'] = remove_query_arg(array('message'), $_SERVER['REQUEST_URI']);
 				}
 				?>
-				<form method="get" action="?page=<?php echo esc_attr($page); ?>" id="posts-filter">
+				<form method="get" action="" id="posts-filter">
 					<input type='hidden' name='page' value='<?php echo esc_attr($page); ?>' />
 					<div class="tablenav">
 						<div class="alignleft actions">
@@ -526,15 +526,15 @@ if(!class_exists('EM_Gateway')) {
 									<tr valign="middle" class="alternate">
 										<th class="check-column" scope="row"><input type="checkbox" value="<?php echo esc_attr($key); ?>" name="gatewaycheck[]"></th>
 										<td class="column-name">
-											<strong><a title="Edit <?php echo esc_attr($gateway); ?>" href="?page=<?php echo $page; ?>&amp;action=edit&amp;gateway=<?php echo $key; ?>" class="row-title"><?php echo esc_html($gateway); ?></a></strong>
+											<strong><a title="Edit <?php echo esc_attr($gateway); ?>" href="<?php echo EM_ADMIN_URL; ?>&amp;page=<?php echo $page; ?>&amp;action=edit&amp;gateway=<?php echo $key; ?>" class="row-title"><?php echo esc_html($gateway); ?></a></strong>
 											<?php
 												$actions = array();
-												$actions['edit'] = "<span class='edit'><a href='?page=" . $page . "&amp;action=edit&amp;gateway=" . $key . "'>" . __('Settings') . "</a></span>";
+												$actions['edit'] = "<span class='edit'><a href='".EM_ADMIN_URL."&amp;page=" . $page . "&amp;action=edit&amp;gateway=" . $key . "'>" . __('Settings') . "</a></span>";
 	
 												if(array_key_exists($key, $active)) {
-													$actions['toggle'] = "<span class='edit activate'><a href='" . wp_nonce_url("?page=" . $page. "&amp;action=deactivate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Deactivate') . "</a></span>";
+													$actions['toggle'] = "<span class='edit activate'><a href='" . wp_nonce_url(EM_ADMIN_URL."&amp;page=" . $page. "&amp;action=deactivate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Deactivate') . "</a></span>";
 												} else {
-													$actions['toggle'] = "<span class='edit deactivate'><a href='" . wp_nonce_url("?page=" . $page. "&amp;action=activate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Activate') . "</a></span>";
+													$actions['toggle'] = "<span class='edit deactivate'><a href='" . wp_nonce_url(EM_ADMIN_URL."&amp;page=" . $page. "&amp;action=activate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Activate') . "</a></span>";
 												}
 											?>
 											<br><div class="row-actions"><?php echo implode(" | ", $actions); ?></div>
@@ -549,7 +549,7 @@ if(!class_exists('EM_Gateway')) {
 											?>
 										</td>
 										<td class="column-transactions">
-											<a href='?page=<?php echo $page; ?>&amp;action=transactions&amp;gateway=<?php echo $key; ?>'><?php _e('View transactions','em-pro'); ?></a>
+											<a href='<?php echo EM_ADMIN_URL; ?>&amp;page=<?php echo $page; ?>&amp;action=transactions&amp;gateway=<?php echo $key; ?>'><?php _e('View transactions','em-pro'); ?></a>
 										</td>
 								    </tr>
 									<?php
@@ -626,9 +626,9 @@ if(!class_exists('EM_Gateway')) {
 						$gateway = addslashes ( $_REQUEST ['gateway'] );		
 						check_admin_referer ( 'updated-'.$EM_Gateways[$gateway]->gateway );
 						if ($EM_Gateways[$gateway]->update ()) {
-							wp_safe_redirect ( add_query_arg ( 'msg', 1, 'admin.php?page=' . $page ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 1, EM_ADMIN_URL.'&page=' . $page ) );
 						} else {
-							wp_safe_redirect ( add_query_arg ( 'msg', 2, 'admin.php?page=' . $page ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 2, EM_ADMIN_URL.'&page=' . $page ) );
 						}			
 						break;
 				}

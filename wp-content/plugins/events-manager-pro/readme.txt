@@ -2,8 +2,8 @@
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
-Tested up to: 3.2.1
-Stable tag: 1.39
+Tested up to: 3.3.1
+Stable tag: 1.43
 
 == Description ==
 
@@ -22,13 +22,25 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 1.44 =
+* fixed booking form regexes making inputs required
+* paypal won't allow registered emails in guest mode
+* paypal bookings only considered as pending if timeout is set (paypal pending payments view coming shortly)
+
+= 1.43 =
+* important bug fix for paypal bookings
+
+= 1.42 =
+* Custom registration booking placeholder fixed
+
+= 1.41 =
+* Updated to support version 5 (required)
 
 = 1.39 =
 * fixed yahoo field name for saving into booking regsitration
 * fixed page navigation for pending payments
 * fixed checklist booking saving bug
 * paypal IPN soft fail introduced, to reduce alternante payment software 404s
-
 
 = 1.38 =
 * fixed minor php warning

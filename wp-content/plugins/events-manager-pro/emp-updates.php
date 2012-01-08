@@ -11,15 +11,20 @@ class EM_Updates {
 		add_filter('plugins_api', array('EM_Updates','info'), 10, 3);
 		//echo "<pre>"; print_r(get_option('_site_transient_update_plugins')); echo "</pre>";
 		if( is_admin() ){
-			add_action('em_options_page_footer', array('EM_Updates','admin_options')); 	
-			add_action('admin_notices', array('EM_Updates','admin_notices'));
+			if( is_multisite() ){
+				add_action('network_admin_notices', array('EM_Updates','admin_notices'));
+				add_action('em_ms_options_page_footer', array('EM_Updates','admin_options'));
+			}else{
+				add_action('admin_notices', array('EM_Updates','admin_notices'));		
+				add_action('em_options_page_footer', array('EM_Updates','admin_options'));		
+			}
 			add_action('admin_init', array('EM_Updates','admin_options_save')); //before normal options are saved  	 		
 		}
 	}
 	
 	function admin_notices(){
 		if( is_super_admin() ){
-			if( !self::check_api_key() && !empty($_REQUEST['page']) && 'events-manager-options' == $_REQUEST['page'] ){
+			if( !self::check_api_key() && !empty($_REQUEST['page']) && ('events-manager-options' == $_REQUEST['page']) && !self::check_api_key(true) ){
 				?>
 				<div id="message" class="updated">
 					<p><?php echo sprintf(__('To access automatic updates, you must update your <a href="%s">Membership Key</a> for Events Mananager Pro <a href="#pro-api">here</a>. Only admins see this message.','em-pro'), 'http://wp-events-plugin.com/wp-admin/profile.php'); ?></p>
@@ -71,7 +76,7 @@ class EM_Updates {
 					<?php
 					em_options_input_text ( __( 'Pro Member Key', 'dbem' ), 'dbem_pro_api_key', sprintf( __("Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>.", 'dbem'), 'http://wp-events-plugin.com/wp-admin/profile.php' ));
 					?>
-					<?php if( !self::check_api_key() ):?>
+					<?php if( !self::check_api_key() && get_option('dbem_pro_api_key') != '' ):?>
 						<?php
 						$response = get_site_transient('dbem_pro_api_key_check');
 						if( $api ){

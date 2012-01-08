@@ -2,24 +2,24 @@
 /*
 Plugin Name: Events Manager Pro
 Plugin URI: http://wp-events-plugin.com
-Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful! 
+Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 1.39
+Version: 1.44
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 1.38);
-define('EM_MIN_VERSION', 4.213);
+define('EMP_VERSION', 1.4);
+define('EM_MIN_VERSION', 5.0);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
-	
+
 	/**
 	 * em_pro_data option
 	 * @var array
 	 */
 	var $data;
-		
+
 	/**
 	 * Class initialization
 	 */
@@ -32,10 +32,10 @@ class EM_Pro {
 			$prefix = $wpdb->base_prefix;
 		}else{
 			$prefix = $wpdb->prefix;
-		}		
+		}
 		define('EM_TRANSACTIONS_TABLE', $prefix.'em_transactions'); //TABLE NAME
 	}
-	
+
 	/**
 	 * Actions to take upon initial action hook
 	 */
@@ -45,17 +45,17 @@ class EM_Pro {
 			$old_version = get_option('em_pro_version');
 			if( EMP_VERSION > $old_version || $old_version == '' ){
 				require_once(WP_PLUGIN_DIR.'/events-manager-pro/emp-install.php');
-				emp_install();	
+				emp_install();
 			}
 		}
 		//check that EM is installed
 		if(!defined('EM_VERSION')){
 			add_action('admin_notices',array(&$this,'em_install_warning'));
-			add_action('network_admin_notices',array(&$this,'em_install_warning'));			
+			add_action('network_admin_notices',array(&$this,'em_install_warning'));
 		}elseif( EM_MIN_VERSION > EM_VERSION ){
-			//check that EM is up to date	
+			//check that EM is up to date
 			add_action('admin_notices',array(&$this,'em_version_warning'));
-			add_action('network_admin_notices',array(&$this,'em_version_warning'));			
+			add_action('network_admin_notices',array(&$this,'em_version_warning'));
 		}
 		//include gateways
 		include_once('gateways/class.gateway.php');
@@ -65,9 +65,9 @@ class EM_Pro {
 		include_once('emp-bookings-form.php');
 		add_action('wp_head', array(&$this,'wp_head'));
 	}
-	
+
 	/**
-	 * For now we'll just add style and js here 
+	 * For now we'll just add style and js here
 	 */
 	function wp_head(){
 		?>
@@ -78,11 +78,11 @@ class EM_Pro {
 		</style>
 		<?php
 	}
-	
+
 	function em_install_warning(){
 		?>
-		<div class="error"><p><?php _e('Please make sure you install Events Manager as well. You can search and install this plugin from your plugin installer or download it <a href="http://wordpress.org/extend/plugins/events-manager/">here</a>.','em-pro'); ?> <em><?php _e('Only admins see this message.','em-pro'); ?></em></p></div> 
-		<?php	
+		<div class="error"><p><?php _e('Please make sure you install Events Manager as well. You can search and install this plugin from your plugin installer or download it <a href="http://wordpress.org/extend/plugins/events-manager/">here</a>.','em-pro'); ?> <em><?php _e('Only admins see this message.','em-pro'); ?></em></p></div>
+		<?php
 	}
 
 	function em_version_warning(){
@@ -90,10 +90,10 @@ class EM_Pro {
 		<div class="error"><p><?php _e('Please make sure you have the <a href="http://wordpress.org/extend/plugins/events-manager/">latest version</a> of Events Manager installed, as this may prevent Pro from functioning properly.','em-pro'); ?> <em><?php _e('Only admins see this message.','em-pro'); ?></em></p></div>
 		<?php
 	}
-	
+
 }
 //Add translation
-load_plugin_textdomain('em-pro', false, dirname( plugin_basename( __FILE__ ) ).'/langs'); 
+load_plugin_textdomain('em-pro', false, dirname( plugin_basename( __FILE__ ) ).'/langs');
 
 //Include admin file if needed
 if(is_admin()){
@@ -109,7 +109,7 @@ function emp_activate() {
 register_activation_hook( __FILE__,'emp_activate');
 
 // Start plugin
-global $EM_Pro; 
+global $EM_Pro;
 $EM_Pro = new EM_Pro();
 
 //cron functions - ran here since functions aren't loaded, scheduling done by gateways and other modules

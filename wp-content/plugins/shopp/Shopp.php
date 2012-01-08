@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Shopp
-Version: 1.1.9
+Version: 1.1.9.1
 Description: Bolt-on ecommerce solution for WordPress
 Plugin URI: http://shopplugin.net
 Author: Ingenesis Limited
@@ -26,8 +26,8 @@ Author URI: http://ingenesis.net
 
 */
 
-define('SHOPP_VERSION','1.1.9');
-define('SHOPP_REVISION','$Rev: 1980 $');
+define('SHOPP_VERSION','1.1.9.1');
+define('SHOPP_REVISION','$Rev: 2811 $');
 define('SHOPP_GATEWAY_USERAGENT','WordPress Shopp Plugin/'.SHOPP_VERSION);
 define('SHOPP_HOME','https://shopplugin.net/');
 define('SHOPP_CUSTOMERS','http://customers.shopplugin.net/');
