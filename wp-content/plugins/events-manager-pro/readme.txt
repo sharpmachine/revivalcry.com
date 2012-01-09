@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
 Tested up to: 3.3.1
-Stable tag: 1.43
+Stable tag: 1.44
 
 == Description ==
 
@@ -22,6 +22,11 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 1.45 =
+* fixed booking form placeholders
+* #_CUSTOMBOOKING now works for #_CUSTOMBOOKINGREG files
+* html not escaped with slashes in custom booking gateway feedback messages
+
 = 1.44 =
 * fixed booking form regexes making inputs required
 * paypal won't allow registered emails in guest mode

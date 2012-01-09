@@ -461,7 +461,7 @@ class EM_Booking_Form {
 	 * @return string
 	 */
 	function placeholders($replace, $EM_Booking, $full_result){
-		if( empty($replace) ){
+		if( empty($replace) || $replace == $full_result ){
 			$user = $EM_Booking->get_person();
 			$booking_form_fields = get_option('em_booking_form_fields');
 			if( $full_result == '#_BOOKINGFORMCUSTOMREG{user_name}' ){
@@ -478,16 +478,18 @@ class EM_Booking_Form {
 				}
 			}else{
 				foreach($booking_form_fields as $field){
-					if( $full_result == '#_BOOKINGFORMCUSTOM{'.$field['booking_form_fieldid'].'}'){
-						$replace = $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']];
-						break;
-					}elseif( $full_result == '#_BOOKINGFORMCUSTOMREG{'.$field['booking_form_fieldid'].'}' ){
-						if( !is_user_logged_in() ){
-							$replace = $EM_Booking->booking_meta['registration'][$field['booking_form_fieldid']];
-						}else{
+					if( $full_result == '#_BOOKINGFORMCUSTOM{'.$field['booking_form_fieldid'].'}' || $full_result == '#_BOOKINGFORMCUSTOMREG{'.$field['booking_form_fieldid'].'}'){
+						$replace = '';
+						if( !empty($user->$field['booking_form_fieldid']) ){
+							//user profile is freshest, using this
 							$replace = $user->$field['booking_form_fieldid'];
+						}elseif( !empty($EM_Booking->booking_meta['registration'][$field['booking_form_fieldid']]) ){
+							//reg fields only exist as reg fields
+							$replace = $EM_Booking->booking_meta['registration'][$field['booking_form_fieldid']];
+						}elseif( !empty($EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']]) ){
+							//match for custom field value
+							$replace = $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']];
 						}
-						break;
 					}
 				}
 			}

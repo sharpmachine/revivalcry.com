@@ -331,7 +331,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 			$this->gateway . "_booking_feedback" => $_REQUEST[ 'offline_booking_feedback' ]
 		);
 		foreach($gateway_options as $key=>$option){
-			update_option('em_'.$key, $option);
+			update_option('em_'.$key, stripslashes($option));
 		}
 		//default action is to return true
 		return true;

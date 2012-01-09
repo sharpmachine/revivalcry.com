@@ -360,7 +360,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 				$this->gateway . "_return" => $_REQUEST[ 'paypal_return' ]
 			);
 			foreach($gateway_options as $key=>$option){
-				update_option('em_'.$key, $option);
+				update_option('em_'.$key, stripslashes($option));
 			}
 		}
 		//default action is to return true
