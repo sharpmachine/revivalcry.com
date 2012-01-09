@@ -45,7 +45,7 @@ function em_content($page_content) {
 					}else{
 						//Intercept search request, if defined
 						$args['scope'] = get_option('dbem_events_page_scope');
-						if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'search_events' && get_option('dbem_events_page_search') ){
+						if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'search_events' ){
 							$args = EM_Events::get_post_search($args + $_REQUEST);
 						}
 						em_locate_template('templates/events-list.php', true, array('args'=>$args));
@@ -84,9 +84,8 @@ function em_content($page_content) {
 			if(get_option('dbem_credits')){
 				$content .= '<p style="color:#999; font-size:11px;">Powered by <a href="http://wp-events-plugin.com" style="color:#999;" target="_blank">Events Manager</a></p>';
 			}
-			//TODO FILTER - filter em page content before display
-			return apply_filters('em_content', '<div id="em-wrapper">'.$content.'</div>');
 		}
+		return apply_filters('em_content', '<div id="em-wrapper">'.$content.'</div>');
 	}
 	return $page_content;
 }
