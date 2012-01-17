@@ -3,8 +3,8 @@ Contributors: Bueltge
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6069955
 Tags: quicktag, editor, tinymce, add buttons, button, buttons, visual editor
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 2.0.2
+Tested up to: 3.3.1
+Stable tag: 2.0.3
 
 This plugin make it easy, Quicktags add to the html - and visual-editor.
 
@@ -12,6 +12,23 @@ This plugin make it easy, Quicktags add to the html - and visual-editor.
 This plugin make it easy, Quicktags add to the html - and visual-editor.. It is possible to ex- and import your Quicktags.
 
 WP-AddQuicktag for WordPress is in originally by [Roel Meurders](http://roel.meurders.nl/ "Roel Meurders"). The versions of the Repo to AddQuicktag are newer versions, completly rewrite with version 2.0.0 and more functionalities.
+
+The plugin add the quicktag on default to post types `post` and `page`. If you will also the plugin for other post types you can use a filter; see the follow example or an example plugin in the [Gist 1595155](https://gist.github.com/1595155).
+
+	// add custom function to filter hook 'addquicktag_post_types'
+	add_filter( 'addquicktag_post_types', 'my_addquicktag_post_types' );
+	/**
+	 * Return array $post_types with custom post types
+	 * 
+	 * @param   $post_type Array
+	 * @return  $post_type Array
+	 */
+	function my_addquicktag_post_types( $post_types ) {
+		
+		$post_types[] = 'my_custom_post_type';
+		
+		return $post_types;
+	}
 
 **More Plugins**
 
@@ -24,7 +41,7 @@ You may also be interested in WordPress tips and tricks at [WP Engineer](http://
 
 == Installation ==
 = Requirements =
-* WordPress version 3.0 and later (tested at 3.3 and 3.2.1)
+* WordPress version 3.0 and later (tested at 3.3 (nightly build) and 3.2.1)
 
 = Installation =
 1. Unpack the download-package
@@ -48,8 +65,9 @@ If you will use this plugin with an older version of WordPress, please use an ol
 = Acknowledgements =
 **Thanks to**
 
-* German Translation by [myself](http://bueltge.de) ;)
+* German translation by [myself](http://bueltge.de) ;)
 * French translation by [Jean-Michel MEYER](http://www.li-an.fr/blog)
+* French translation by [Jean-Michel MEYER (dit Li-An)](http://www.li-an.fr/blog)
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6069955 "Paypal Donate link") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
@@ -59,6 +77,10 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
+= 2.0.3 =
+* Add Filter 'addquicktag_post_types' for use the plugin also on custom post types
+* Update readme and add an example for this filter; also an Gist for use faster
+
 = 2.0.2 =
 * change hook for include styles and scriptes for compatibility in WP 3.4
 

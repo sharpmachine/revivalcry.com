@@ -5,7 +5,7 @@
  * Text Domain: addquicktag
  * Domain Path: /languages
  * Description: Allows you to easily add custom Quicktags to the html- and visual-editor.
- * Version:	    2.0.2
+ * Version:	    2.0.3
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de
  * License:     GPLv3
@@ -45,8 +45,8 @@ class Add_Quicktag {
 	static private $option_string      = 'rmnlQuicktagSettings';
 	
 	static private $admin_pages_for_js = array( 'post.php', 'post-new.php', );
-	
-	static private $admin_ids_for_js   = array( 'post', 'page' );
+	// use filter 'addquicktag_post_types' for add custom post_types
+	static private $post_types_for_js   = array( 'post', 'page' );
 	
 	static private $plugin;
 	
@@ -86,7 +86,13 @@ class Add_Quicktag {
 	public function print_scripts() {
 		global $current_screen;
 		
-		if ( isset( $current_screen -> id ) && ! in_array( $current_screen -> id, self :: $admin_ids_for_js ) )
+		if ( isset( $current_screen -> post_type ) && 
+			 ! in_array( 
+				$current_screen -> post_type, 
+				// filter for custom post types
+				apply_filters( 'addquicktag_post_types', self :: $post_types_for_js )
+			 )
+			)
 			return;
 		
 		if ( is_multisite() && is_plugin_active_for_network( $this -> get_plugin_string() ) )
