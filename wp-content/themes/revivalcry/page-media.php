@@ -9,7 +9,7 @@ get_header(); ?>
 			<div class="span-4 prepend-1 video-landing">
 				<a href="<?php bloginfo('url'); ?>/media/videos"><img src="<?php bloginfo('template_directory'); ?>/images/videos.jpg" width="300" height="200" alt="Photo Gallery"></a>
 				<h1><a href="<?php bloginfo('url'); ?>/media/videos">Videos</a></h1>
-				<h2>Kick back and watch our videos</h2>
+				<h2>New teachings by Dennis Reanier</h2>
 				<a href="<?php bloginfo('url'); ?>/media/videos" class="button">See More</a>
 			</div>
 			
