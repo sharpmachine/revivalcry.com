@@ -50,7 +50,7 @@
 
 			<div id="site-info">
 				&copy;<?php echo date ('Y'); ?>
-				<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"> <?php bloginfo( 'name' ); ?> Ministries.</a> 406-924-6477 | 
+				<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"> <?php bloginfo( 'name' ); ?> Ministries.</a> 406-522-7107 | 
 				<a href="<?php bloginfo('url'); ?>/privacy-policy">Privacy Policy</a>.   
 				<a href="<?php bloginfo('url'); ?>/terms-conditions">Terms &amp; Conditions</a>.
 				<?php if (is_page("store")): ?>
