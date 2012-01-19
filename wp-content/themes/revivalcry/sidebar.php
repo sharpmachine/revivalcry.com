@@ -1,4 +1,4 @@
-		<section id="sidebar" class="span-4 last">
+		<section id="sidebar" class="span-3 prepend-1 last">
 			<div id="primary" class="widget-area" role="complementary">
 				<ul class="xoxo">
 	
