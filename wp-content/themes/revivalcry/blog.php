@@ -4,7 +4,7 @@
 */
 get_header(); ?>
 
-		<div id="content-container" class="span-7 prepend-1 last">
+		<div id="content-container" class="span-7 prepend-1">
 			<section id="content" role="main">
 
 			<?php get_template_part( 'loop', 'blog' ); ?>

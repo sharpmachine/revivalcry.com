@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-		<div id="content-container" class="span-20">
+		<div id="content-container" class="span-7 prepend-1">
 			<section id="content" role="main">
 
 			<?php
