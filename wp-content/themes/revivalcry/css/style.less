@@ -1358,7 +1358,7 @@ img.last
 }
 
 /*.......................................................the blog*/
-.post
+.post, .videos, .page, .revivalist
 {
 	margin-bottom: 60px;
 	
@@ -1479,6 +1479,68 @@ img.last
 	}
 }
 
+h1.page-title
+{
+	margin-bottom: 50px;
+}
+
+.single-blog-post .post
+{
+	margin-bottom: 0;
+}
+
+.search
+{
+	.post-author, 
+	p.comment-count
+	{
+		display: none;
+	}
+}
+
+/*.......................................................the sidebar*/
+#sidebar
+{
+	.widget-area ul 
+	{
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		
+		li.widget-container
+		{
+			margin-bottom: 25px;
+		}
+		
+		h3.widget-title
+		{
+			.open-sans-condensed;
+			text-transform: uppercase;
+			font-size: 24px;
+			margin-bottom: 25px;
+		}
+		
+		.widget-area select 
+		{
+			max-width: 100%;
+		}
+		
+		.widget_search #s 
+		{
+			width: 135px;
+		}
+		
+		.widget_search label 
+		{
+			display: none;
+		}
+	
+		li#popular-posts
+		{
+			clear: both;
+		}
+	}
+}
 /*.......................................................the misc*/
 .tac
 {

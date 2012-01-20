@@ -1015,6 +1015,174 @@ img.last { margin-right: 0; }
   color: #cbcbcb;
 }
 .post .entry-utility a { color: #cbcbcb; }
+.videos { margin-bottom: 60px; }
+.videos .post-date {
+  width: 70px;
+  height: 70px;
+  color: #00bcd1;
+  font-size: 48px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #ffffff;
+  position: relative;
+  top: 30px;
+  left: 12px;
+  margin-top: -60px;
+}
+.videos h1.entry-title {
+  font-size: 24px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  text-transform: none;
+}
+.videos h2.entry-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.videos h2.entry-title a {
+  color: #666666;
+  text-decoration: none;
+}
+.videos h2 { font-size: 1.5em; }
+.videos .post-author { margin-bottom: 10px; }
+.videos .post-author a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-size: 14px;
+}
+.videos .posted-on-date {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  margin-bottom: 10px;
+}
+.videos p.comment-count {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: -5px 0 10px 0;
+}
+.videos p.comment-count a { text-decoration: none; }
+.videos .entry-utility {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  color: #cbcbcb;
+}
+.videos .entry-utility a { color: #cbcbcb; }
+.page { margin-bottom: 60px; }
+.page .post-date {
+  width: 70px;
+  height: 70px;
+  color: #00bcd1;
+  font-size: 48px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #ffffff;
+  position: relative;
+  top: 30px;
+  left: 12px;
+  margin-top: -60px;
+}
+.page h1.entry-title {
+  font-size: 24px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  text-transform: none;
+}
+.page h2.entry-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.page h2.entry-title a {
+  color: #666666;
+  text-decoration: none;
+}
+.page h2 { font-size: 1.5em; }
+.page .post-author { margin-bottom: 10px; }
+.page .post-author a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-size: 14px;
+}
+.page .posted-on-date {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  margin-bottom: 10px;
+}
+.page p.comment-count {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: -5px 0 10px 0;
+}
+.page p.comment-count a { text-decoration: none; }
+.page .entry-utility {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  color: #cbcbcb;
+}
+.page .entry-utility a { color: #cbcbcb; }
+.revivalist { margin-bottom: 60px; }
+.revivalist .post-date {
+  width: 70px;
+  height: 70px;
+  color: #00bcd1;
+  font-size: 48px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #ffffff;
+  position: relative;
+  top: 30px;
+  left: 12px;
+  margin-top: -60px;
+}
+.revivalist h1.entry-title {
+  font-size: 24px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  text-transform: none;
+}
+.revivalist h2.entry-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.revivalist h2.entry-title a {
+  color: #666666;
+  text-decoration: none;
+}
+.revivalist h2 { font-size: 1.5em; }
+.revivalist .post-author { margin-bottom: 10px; }
+.revivalist .post-author a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-size: 14px;
+}
+.revivalist .posted-on-date {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  margin-bottom: 10px;
+}
+.revivalist p.comment-count {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: -5px 0 10px 0;
+}
+.revivalist p.comment-count a { text-decoration: none; }
+.revivalist .entry-utility {
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  font-weight: 600;
+  color: #cbcbcb;
+}
+.revivalist .entry-utility a { color: #cbcbcb; }
 #entry-author-info {
   clear: both;
   overflow: hidden;
@@ -1032,6 +1200,26 @@ img.last { margin-right: 0; }
 }
 #entry-author-info #author-description h2 { font-size: 16px; }
 #entry-author-info #author-link { margin-top: 10px; }
+h1.page-title { margin-bottom: 50px; }
+.single-blog-post .post { margin-bottom: 0; }
+.search .post-author { display: none; }
+.search p.comment-count { display: none; }
+#sidebar .widget-area ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#sidebar .widget-area ul li.widget-container { margin-bottom: 25px; }
+#sidebar .widget-area ul h3.widget-title {
+  font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
+  text-transform: uppercase;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+#sidebar .widget-area ul .widget-area select { max-width: 100%; }
+#sidebar .widget-area ul .widget_search #s { width: 135px; }
+#sidebar .widget-area ul .widget_search label { display: none; }
+#sidebar .widget-area ul li#popular-posts { clear: both; }
 .tac { text-align: center; }
 .tar { text-align: right; }
 .fl { float: left; }
