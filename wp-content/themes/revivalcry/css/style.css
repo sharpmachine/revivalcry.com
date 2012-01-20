@@ -977,11 +977,20 @@ img.last { margin-right: 0; }
   left: 12px;
   margin-top: -60px;
 }
-.post h2.entry-title { margin-bottom: 0; }
+.post h1.entry-title {
+  font-size: 24px;
+  font-family: 'Open Sans', 'OpenSansRegular', sans-serif;
+  text-transform: none;
+}
+.post h2.entry-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
 .post h2.entry-title a {
   color: #666666;
   text-decoration: none;
 }
+.post h2 { font-size: 1.5em; }
 .post .post-author { margin-bottom: 10px; }
 .post .post-author a {
   text-decoration: none;
@@ -1006,6 +1015,23 @@ img.last { margin-right: 0; }
   color: #cbcbcb;
 }
 .post .entry-utility a { color: #cbcbcb; }
+#entry-author-info {
+  clear: both;
+  overflow: hidden;
+  margin: 40px 0;
+}
+#entry-author-info #author-avatar {
+  float: left;
+  height: 60px;
+  margin: 0 -104px 0 0;
+  padding: 6px 0;
+}
+#entry-author-info #author-description {
+  float: left;
+  margin: 0 0 0 80px;
+}
+#entry-author-info #author-description h2 { font-size: 16px; }
+#entry-author-info #author-link { margin-top: 10px; }
 .tac { text-align: center; }
 .tar { text-align: right; }
 .fl { float: left; }

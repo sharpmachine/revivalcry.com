@@ -27,12 +27,11 @@
 						<?php } ?>
 					</a>
 				</div>
-				<div class="span-5 last">
+				<div class="span-6 last">
 					<h1 class="entry-title"><?php the_title(); ?></h1>
 
-					<div class="entry-meta">
-						<?php twentyten_posted_on(); ?>
-					</div><!-- .entry-meta -->
+					<div class="post-author"><?php the_author_posts_link(); ?></div>
+					<p class="posted-on-date">Posted on <?php the_time('F j, Y'); ?></p>
 
 					<div class="entry-content">
 						<?php the_content(); ?>
