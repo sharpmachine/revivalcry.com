@@ -959,7 +959,10 @@ img.last { margin-right: 0; }
   top: 50px;
 }
 .videos-container span a { font-weight: bold; }
-.post { margin-bottom: 60px; }
+.post {
+  margin-bottom: 60px;
+  height: 100%;
+}
 .post .post-date {
   width: 70px;
   height: 70px;
@@ -1015,7 +1018,10 @@ img.last { margin-right: 0; }
   color: #cbcbcb;
 }
 .post .entry-utility a { color: #cbcbcb; }
-.videos { margin-bottom: 60px; }
+.videos {
+  margin-bottom: 60px;
+  height: 100%;
+}
 .videos .post-date {
   width: 70px;
   height: 70px;
@@ -1071,7 +1077,10 @@ img.last { margin-right: 0; }
   color: #cbcbcb;
 }
 .videos .entry-utility a { color: #cbcbcb; }
-.page { margin-bottom: 60px; }
+.page {
+  margin-bottom: 60px;
+  height: 100%;
+}
 .page .post-date {
   width: 70px;
   height: 70px;
@@ -1127,7 +1136,10 @@ img.last { margin-right: 0; }
   color: #cbcbcb;
 }
 .page .entry-utility a { color: #cbcbcb; }
-.revivalist { margin-bottom: 60px; }
+.revivalist {
+  margin-bottom: 60px;
+  height: 100%;
+}
 .revivalist .post-date {
   width: 70px;
   height: 70px;
