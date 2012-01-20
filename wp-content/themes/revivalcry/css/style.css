@@ -810,21 +810,21 @@ article.single-revivalist .revivalist { height: auto; }
   list-style: none;
 }
 .wp-paginate a {
-  background: #dddddd;
-  border: 1px solid #cccccc;
-  color: #666666;
+  background: #00bcd1;
+  color: #1d1b1b;
+  font-weight: bold;
   margin-right: 4px;
   padding: 3px 6px;
   text-align: center;
   text-decoration: none;
 }
 .wp-paginate a:hover {
-  background: #cccccc;
-  color: #888888;
+  background: #1d1b1b;
+  color: #ffffff;
 }
 .wp-paginate a:active {
-  background: #cccccc;
-  color: #888888;
+  background: #1d1b1b;
+  color: #ffffff;
 }
 .wp-paginate .title {
   color: #555555;
@@ -835,9 +835,9 @@ article.single-revivalist .revivalist { height: auto; }
   margin-right: 4px;
 }
 .wp-paginate .current {
-  color: #ffffff;
-  background: #5f87ae;
-  border: 1px solid #89adcf;
+  font-weight: bold;
+  color: #00bcd1;
+  background: #1d1b1b;
   margin-right: 4px;
   padding: 3px 6px;
 }
