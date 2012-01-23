@@ -19,18 +19,12 @@ if(!class_exists('EM_Gateway')) {
 			add_filter('EM_gateways_list', array(&$this, 'gateways_list'));
 			add_filter('EM_active_gateways', array(&$this, 'active_gateways'));
 			add_filter('em_booking_form_js', array(&$this,'booking_form_js'),1,2); //JS Replacement, so we can handle the ajax return differently
-			//Add options and tables to EM admin pages
-			if( current_user_can('manage_others_bookings') ){
-				add_action('em_bookings_dashboard', array(&$this, 'transactions'),10,1);
-				add_action('em_bookings_ticket_footer', array(&$this, 'transactions'),10,1);
-				add_action('em_bookings_single_footer', array(&$this, 'transactions'),10,1);
-				add_action('em_bookings_person_footer', array(&$this, 'transactions'),10,1);
-				add_action('em_bookings_event_footer', array(&$this, 'transactions'),10,1);
-				//add_action('em_options_page_footer', array(&$this, 'settings'));
-			}
 		}
 		
-		function init(){			
+		function init(){
+			//WP_Query/Rewrite
+			add_filter('rewrite_rules_array',array('EM_Gateway','rewrite_rules_array'));
+			add_filter('query_vars',array('EM_Gateway','query_vars'));			
 			//Menus
 			add_action('em_create_events_submenu',array('EM_Gateway', 'admin_menu'),1,1);
 			add_action('admin_init', array('EM_Gateway', 'handle_payment_gateways'),1,1);
@@ -38,8 +32,40 @@ if(!class_exists('EM_Gateway')) {
 			//Booking interception
 			add_filter('em_booking_add', array('EM_Gateway', 'em_booking_add'), 1, 2);
 			// Payment return
-			add_action('pre_get_posts', array('EM_Gateway', 'handle_payment_gateways'), 1 );
+			add_action('parse_query', array('EM_Gateway', 'handle_payment_gateways'), 1 ); //just in case
+			add_action('wp_ajax_em_payment', array('EM_Gateway', 'handle_payment_gateways'), 1 );
 			add_filter('em_booking_form_buttons', array('EM_Gateway','booking_form_buttons'),1,2); //Replace button with PP image
+		}	
+		
+		/**
+		 * Adding a new rule, shouldn't be necessary anymore, but for backwards compatability
+		 * @param array $rules
+		 * @return array
+		 */
+		function rewrite_rules_array($rules){
+			//get the slug of the event page
+			$events_page_id = get_option ( 'dbem_events_page' );
+			$events_page = get_post($events_page_id);
+			$em_rules = array();
+			if( is_object($events_page) ){
+				$events_slug = preg_replace('/\/$/', '', str_replace( trailingslashit(home_url()), '', get_permalink($events_page_id)) );
+				$events_slug = ( !empty($events_slug) ) ? trailingslashit($events_slug) : $events_slug;		
+				$em_rules[$events_slug.'payments/(.+)$'] = 'index.php?pagename='.$events_slug.'&em_payment_gateway=$matches[1]'; //single event booking form with slug
+			}else{
+				$events_slug = EM_POST_TYPE_EVENT_SLUG;
+				$em_rules[$events_slug.'/payments/(.+)$'] = 'index.php?post_type='.EM_POST_TYPE_EVENT.'&em_payment_gateway=$matches[1]'; //single event booking form with slug
+			}
+			return $em_rules + $rules;
+		}
+		
+		/**
+		 * Add the queryvars to WP_Query
+		 * @param array $vars
+		 * @return array
+		 */
+		function query_vars($vars){
+			array_push($vars, 'em_payment_gateway');
+		    return $vars;
 		}
 		
 		function em_booking_add($EM_Event,$EM_Booking){
@@ -87,8 +113,9 @@ if(!class_exists('EM_Gateway')) {
 		}
 
 		function handle_payment_gateways($wp_query) {
-			if( !empty($wp_query->query_vars['payment_gateway'])) {
-				do_action( 'em_handle_payment_return_' . $wp_query->query_vars['payment_gateway']);
+			if( !empty($_REQUEST['em_payment_gateway']) || get_query_var('em_payment_gateway') != '' ) {
+				$action = !empty($_REQUEST['em_payment_gateway']) ? $_REQUEST['em_payment_gateway'] : get_query_var('em_payment_gateway');
+				do_action( 'em_handle_payment_return_' . $action);
 				exit();
 			}
 		}
@@ -185,52 +212,6 @@ if(!class_exists('EM_Gateway')) {
 			return true;
 		}
 
-		function get_transactions($type, $startat, $num, $context=false) {
-			global $wpdb;
-			$join = '';
-			$conditions = array();
-			$table = EM_BOOKINGS_TABLE;
-			//we can determine what to search for, based on if certain variables are set.
-			if( is_object($context) && get_class($context)=="EM_Booking" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-				$conditions[] = "booking_id = ".$context->booking_id;
-			}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-				$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";	
-				$conditions[] = "event_id = ".$context->event_id;		
-			}elseif( is_object($context) && get_class($context)=="EM_Person" ){
-				//FIXME peole could potentially view other's txns like this
-				$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
-				$conditions[] = "person_id = ".$context->ID;			
-			}elseif( is_object($context) && get_class($context)=="EM_Ticket" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-				$booking_ids = array();
-				foreach($context->get_bookings()->bookings as $EM_Booking){
-					$booking_ids[] = $EM_Booking->booking_id;
-				}
-				if( count($booking_ids) > 0 ){
-					$conditions[] = "booking_id IN (".implode(',', $booking_ids).")";
-				}else{
-					return new stdClass();
-				}			
-			}
-			if( is_multisite() && !is_main_blog() ){ //if not main blog, we show only blog specific booking info
-				global $blog_id;
-				$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
-				$conditions[] = "booking_id IN (SELECT booking_id FROM $table, ".EM_EVENTS_TABLE." e WHERE e.blog_id=".$blog_id.")";
-			}
-			$scope_conditions = array(
-				'past' => "transaction_status NOT IN ('Pending', 'Future')",
-				'pending' => "transaction_status IN ('Pending')",
-				'future' => "transaction_status IN ('Future')"
-			);
-			foreach( $scope_conditions as $count_type => $condition){
-				$count_conditions = $conditions;
-				$count_conditions[] = $condition;
-				$this->transaction_count[$count_type] = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$this->transactions_table} $join WHERE ".implode(' AND ', $count_conditions)." AND transaction_gateway = %s", $this->gateway)) ; 
-			}
-			$conditions[] = $scope_conditions[$type];
-			$sql = $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->transactions_table} $join WHERE ".implode(' AND ', $conditions)." AND transaction_gateway = %s ORDER BY transaction_id DESC  LIMIT %d, %d", $this->gateway, $startat, $num );
-			return $wpdb->get_results( $sql );
-		}
-
 		function record_transaction($EM_Booking, $amount, $currency, $timestamp, $paypal_id, $status, $note) {
 			global $wpdb;
 			$data = array();
@@ -261,174 +242,6 @@ if(!class_exists('EM_Gateway')) {
 			return $wpdb->get_var( "SELECT FOUND_ROWS();" );
 		}
 
-		function transactions( $context = false ) {
-			global $page, $action, $type, $wp_query;
-			if( function_exists('wp_reset_vars') ){ wp_reset_vars( array('type') ); }
-			if(empty($type)) $type = 'past';
-			ob_start();
-			if(has_action('em_gateway_transactions_' . $this->gateway)) {
-				do_action('em_gateway_transactions_' . $this->gateway, $type);
-			} else {
-				$this->mytransactions($type, $context);
-			}
-			$transactions = ob_get_clean(); //so we have event counts and avoid doing it twice.
-			?>
-				<div class="icon32" id="icon-plugins"><br></div>
-				<h2><?php echo sprintf(__('%s Transactions','dbem'), esc_html($this->title)); ?></h2>
-			<?php
-			echo $transactions;
-		}
-
-		function mytransactions($type = 'past', $context=false) {
-
-			if(empty($_GET['paged'])) {
-				$paged = 1;
-			} else {
-				$paged = ((int) $_GET['paged']);
-			}
-
-			$startat = ($paged - 1) * 20;
-
-			$transactions = $this->get_transactions($type, $startat, 20, $context);
-			$total = $this->get_total();
-
-			$columns = array();
-
-			$columns['event'] = __('Event','em-pro');
-			$columns['user'] = __('User','em-pro');
-			$columns['date'] = __('Date','em-pro');
-			$columns['amount'] = __('Amount','em-pro');
-			$columns['transid'] = __('Transaction id','em-pro');
-			$columns['status'] = __('Status','em-pro');
-			$columns['note'] = __('Notes','em-pro');
-
-			$trans_navigation = paginate_links( array(
-				'base' => add_query_arg( 'paged', '%#%' ),
-				'format' => '',
-				'total' => ceil($total / 20),
-				'current' => $paged
-			));
-			?>
-				<div class="tablenav">
-					<ul class="subsubsub">
-						<li><a href="<?php echo add_query_arg('type', 'past'); ?>" class="rbutton <?php if($type == 'past') echo 'current'; ?>"><?php echo  __('Recent transactions', 'em-pro') . " ({$this->transaction_count['past']})"; ?></a> | </li>
-						<li><a href="<?php echo add_query_arg('type', 'pending'); ?>" class="rbutton <?php if($type == 'pending') echo 'current'; ?>"><?php echo  __('Pending transactions', 'em-pro') . " ({$this->transaction_count['pending']})"; ?></a></li>
-						<?php if( $this->transaction_count['future'] > 0 ): ?>
-						<li> | <a href="<?php echo add_query_arg('type', 'future'); ?>" class="rbutton <?php if($type == 'future') echo 'current'; ?>"><?php echo  __('Future transactions', 'em-pro') . " ({$this->transaction_count['future']})"; ?></a></li>
-						<?php endif; ?>
-					</ul>
-					<?php if ( $trans_navigation ) : ?>
-					<div class='tablenav-pages'><?php echo $trans_navigation ?></div>	
-					<?php endif; ?>
-				</div>
-
-
-				<table cellspacing="0" class="widefat">
-					<thead>
-					<tr>
-					<?php
-						foreach($columns as $key => $col) {
-							?>
-							<th style="" class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
-							<?php
-						}
-					?>
-					</tr>
-					</thead>
-
-					<tfoot>
-					<tr>
-						<?php
-							reset($columns);
-							foreach($columns as $key => $col) {
-								?>
-								<th style="" class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
-								<?php
-							}
-						?>
-					</tr>
-					</tfoot>
-
-					<tbody>
-						<?php
-							echo $this->print_transactions($transactions);
-						?>
-
-					</tbody>
-				</table>
-			<?php
-		}
-		
-		function print_transactions($transactions, $columns=7){
-			ob_start();
-			if($transactions) {
-				foreach($transactions as $key => $transaction) {
-					?>
-					<tr valign="middle" class="alternate">
-						<td>
-							<?php
-								$EM_Booking = new EM_Booking($transaction->booking_id);
-								echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;event_id='.$EM_Booking->get_event()->event_id.'">'.$EM_Booking->get_event()->event_name.'</a>';
-							?>
-						</td>
-						<td>
-							<?php
-								echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;person_id='.$EM_Booking->get_person()->ID.'">'.$EM_Booking->get_person()->get_name().'</a>';
-							?>
-						</td>
-						<td class="column-date">
-							<?php
-								echo mysql2date("d-m-Y", $transaction->transaction_timestamp);
-							?>
-						</td>
-						<td class="column-amount">
-							<?php
-								$amount = $transaction->transaction_total_amount;
-								echo $transaction->transaction_currency;
-								echo "&nbsp;" . number_format($amount, 2, '.', ',');
-							?>
-						</td>
-						<td class="column-transid">
-							<?php
-								if(!empty($transaction->transaction_gateway_id)) {
-									echo $transaction->transaction_gateway_id;
-								} else {
-									echo __('None yet','em-pro');
-								}
-							?>
-						</td>
-						<td class="column-transid">
-							<?php
-								if(!empty($transaction->transaction_status)) {
-									echo $transaction->transaction_status;
-								} else {
-									echo __('None yet','em-pro');
-								}
-							?>
-						</td>
-						<td class="column-transid">
-							<?php
-								if(!empty($transaction->transaction_note)) {
-									echo esc_html($transaction->transaction_note);
-								} else {
-									echo __('None','em-pro');
-								}
-							?>
-						</td>
-				    </tr>
-					<?php
-				}
-			} else {
-				$columncount = count($columns);
-				?>
-				<tr valign="middle" class="alternate" >
-					<td colspan="<?php echo $columncount; ?>" scope="row"><?php _e('No Transactions','em-pro'); ?></td>
-			    </tr>
-				<?php
-			}
-			return ob_get_clean();
-		}
-
 		function handle_gateways_panel() {
 			global $action, $page, $EM_Gateways, $EM_Pro;
 			wp_reset_vars( array('action', 'page') );
@@ -441,7 +254,8 @@ if(!class_exists('EM_Gateway')) {
 					break;
 				case 'transactions':
 					if(isset($EM_Gateways[addslashes($_GET['gateway'])])) {
-						$EM_Gateways[addslashes($_GET['gateway'])]->transactions();
+						global $EM_Gateways_Table;
+						$EM_Gateways_Table->output();
 					}
 					return; // so we don't show the list below
 					break;
@@ -637,6 +451,323 @@ if(!class_exists('EM_Gateway')) {
 	}
 }
 EM_Gateway::init();
+
+
+class EM_Gateways_Table{
+	var $limit = 20;
+	var $total_transactions = 0;
+	
+	function __construct(){
+		$this->order = ( !empty($_REQUEST ['order']) ) ? $_REQUEST ['order']:'ASC';
+		$this->orderby = ( !empty($_REQUEST ['order']) ) ? $_REQUEST ['order']:'booking_name';
+		$this->limit = ( !empty($_REQUEST['limit']) ) ? $_REQUEST['limit'] : 20;//Default limit
+		$this->page = ( !empty($_REQUEST['pno']) ) ? $_REQUEST['pno']:1;
+		$this->gateway = !empty($_REQUEST['gateway']) ? $_REQUEST['gateway']:false;
+		//Add options and tables to EM admin pages
+		if( current_user_can('manage_others_bookings') ){
+			add_action('em_bookings_dashboard', array(&$this, 'output'),10,1);
+			add_action('em_bookings_ticket_footer', array(&$this, 'output'),10,1);
+			add_action('em_bookings_single_footer', array(&$this, 'output'),10,1);
+			add_action('em_bookings_person_footer', array(&$this, 'output'),10,1);
+			add_action('em_bookings_event_footer', array(&$this, 'output'),10,1);
+		}
+		add_action('wp_ajax_em_transactions_table', array(&$this, 'ajax'),10,1);
+	}
+	
+	function ajax(){
+		if( wp_verify_nonce($_REQUEST['_wpnonce'],'em_transactions_table') ){
+			//Get the context
+			global $EM_Event, $EM_Booking, $EM_Ticket, $EM_Person;
+			em_load_event();
+			$context = false;
+			if( !empty($_REQUEST['booking_id']) && is_object($EM_Booking) && $EM_Booking->can_manage('manage_bookings','manage_others_bookings') ){
+				$context = $EM_Booking;
+			}elseif( !empty($_REQUEST['event_id']) && is_object($EM_Event) && $EM_Event->can_manage('manage_bookings','manage_others_bookings') ){
+				$context = $EM_Event;
+			}elseif( !empty($_REQUEST['person_id']) && is_object($EM_Person) && current_user_can('manage_bookings') ){
+				$context = $EM_Person;
+			}elseif( !empty($_REQUEST['ticket_id']) && is_object($EM_Ticket) && $EM_Ticket->can_manage('manage_bookings','manage_others_bookings') ){
+				$context = $EM_Ticket;
+			}			
+			echo $this->mytransactions($context);
+			exit;
+		}
+	}
+	
+	function output( $context = false ) {
+		global $page, $action, $wp_query;
+		?>
+		<div class="wrap">
+		<div class="icon32" id="icon-bookings"><br></div>
+		<h2><?php echo __('Transactions','dbem'); ?></h2>
+		<?php $this->mytransactions($context); ?>
+		<script type="text/javascript">
+			jQuery(document).ready( function($){
+				//Pagination link clicks
+				$('#em-transactions-table .tablenav-pages a').live('click', function(){
+					var el = $(this);
+					var form = el.parents('#em-transactions-table form.transactions-filter');
+					//get page no from url, change page, submit form
+					var match = el.attr('href').match(/#[0-9]+/);
+					if( match != null && match.length > 0){
+						var pno = match[0].replace('#','');
+						form.find('input[name=pno]').val(pno);
+					}else{
+						form.find('input[name=pno]').val(1);
+					}
+					form.trigger('submit');
+					return false;
+				});
+				//Widgets and filter submissions
+				$('#em-transactions-table form.transactions-filter').live('submit', function(e){
+					var el = $(this);			
+					el.parents('#em-transactions-table').find('.table-wrap').first().append('<div id="em-loading" />');
+					$.get( EM.ajaxurl, el.serializeArray(), function(data){
+						el.parents('#em-transactions-table').first().replaceWith(data);
+					});
+					return false;
+				});
+			});
+		</script>
+		</div>
+		<?php
+	}
+
+	function mytransactions($context=false) {
+		global $EM_Person;
+		$transactions = $this->get_transactions($context);
+		$total = $this->total_transactions;
+
+		$columns = array();
+
+		$columns['event'] = __('Event','em-pro');
+		$columns['user'] = __('User','em-pro');
+		$columns['date'] = __('Date','em-pro');
+		$columns['amount'] = __('Amount','em-pro');
+		$columns['transid'] = __('Transaction id','em-pro');
+		$columns['gateway'] = __('Gateway','em-pro');
+		$columns['status'] = __('Status','em-pro');
+		$columns['note'] = __('Notes','em-pro');
+
+		$trans_navigation = paginate_links( array(
+			'base' => add_query_arg( 'paged', '%#%' ),
+			'format' => '',
+			'total' => ceil($total / 20),
+			'current' => $this->page
+		));
+		?>
+		<div id="em-transactions-table" class="em_obj">
+		<form id="em-transactions-table-form" class="transactions-filter" action="" method="post">
+			<?php if( is_object($context) && get_class($context)=="EM_Event" ): ?>
+			<input type="hidden" name="event_id" value='<?php echo $context->event_id ?>' />
+			<?php elseif( is_object($context) && get_class($context)=="EM_Person" ): ?>
+			<input type="hidden" name="person_id" value='<?php echo $context->person_id ?>' />
+			<?php endif; ?>
+			<input type="hidden" name="pno" value='<?php echo $this->page ?>' />
+			<input type="hidden" name="order" value='<?php echo $this->order ?>' />
+			<input type="hidden" name="orderby" value='<?php echo $this->orderby ?>' />
+			<input type="hidden" name="_wpnonce" value="<?php echo ( !empty($_REQUEST['_wpnonce']) ) ? $_REQUEST['_wpnonce']:wp_create_nonce('em_transactions_table'); ?>" />
+			<input type="hidden" name="action" value="em_transactions_table" />
+			
+			<div class="tablenav">
+				<div class="alignleft actions">
+					<select name="limit">
+						<option value="<?php echo $this->limit ?>"><?php echo sprintf(__('%s Rows','dbem'),$this->limit); ?></option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<select name="gateway">
+						<option value="">All</option>
+						<?php
+						global $EM_Gateways;
+						foreach ( $EM_Gateways as $EM_Gateway ) {
+							?><option value='<?php echo $EM_Gateway->gateway ?>' <?php if($EM_Gateway->gateway == $this->gateway) echo "selected='selected'"; ?>><?php echo $EM_Gateway->title ?></option><?php
+						}
+						?>
+					</select>
+					<input id="post-query-submit" class="button-secondary" type="submit" value="<?php _e ( 'Filter' )?>" />
+					<?php if( is_object($context) && get_class($context)=="EM_Event" ): ?>
+					<?php _e('Displaying Event','dbem'); ?> : <?php echo $context->event_name; ?>
+					<?php elseif( is_object($context) && get_class($context)=="EM_Person" ): ?>
+					<?php _e('Displaying User','dbem'); echo ' : '.$context->get_name(); ?>
+					<?php endif; ?>
+				</div>
+				<?php 
+				if ( $this->total_transactions >= $this->limit ) {
+					echo em_admin_paginate( $this->total_transactions, $this->limit, $this->page, array(),'#%#%','#');
+				}
+				?>
+			</div>
+
+			<div class="table-wrap">
+			<table cellspacing="0" class="widefat">
+				<thead>
+				<tr>
+				<?php
+					foreach($columns as $key => $col) {
+						?>
+						<th style="" class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
+						<?php
+					}
+				?>
+				</tr>
+				</thead>
+
+				<tfoot>
+				<tr>
+					<?php
+						reset($columns);
+						foreach($columns as $key => $col) {
+							?>
+							<th style="" class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
+							<?php
+						}
+					?>
+				</tr>
+				</tfoot>
+
+				<tbody>
+					<?php
+						echo $this->print_transactions($transactions);
+					?>
+
+				</tbody>
+			</table>
+			</div>
+		</form>
+		</div>
+		<?php
+	}
+	
+	function print_transactions($transactions, $columns=7){
+		ob_start();
+		if($transactions) {
+			foreach($transactions as $key => $transaction) {
+				?>
+				<tr valign="middle" class="alternate">
+					<td>
+						<?php
+							$EM_Booking = new EM_Booking($transaction->booking_id);
+							echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;event_id='.$EM_Booking->get_event()->event_id.'">'.$EM_Booking->get_event()->event_name.'</a>';
+						?>
+					</td>
+					<td>
+						<?php
+							echo '<a href="'.EM_ADMIN_URL.'&amp;page=events-manager-bookings&amp;person_id='.$EM_Booking->get_person()->ID.'">'.$EM_Booking->get_person()->get_name().'</a>';
+						?>
+					</td>
+					<td class="column-date">
+						<?php
+							echo mysql2date("d-m-Y", $transaction->transaction_timestamp);
+						?>
+					</td>
+					<td class="column-amount">
+						<?php
+							$amount = $transaction->transaction_total_amount;
+							echo $transaction->transaction_currency;
+							echo "&nbsp;" . number_format($amount, 2, '.', ',');
+						?>
+					</td>
+					<td class="column-transid">
+						<?php
+							if(!empty($transaction->transaction_gateway_id)) {
+								echo $transaction->transaction_gateway_id;
+							} else {
+								echo __('None yet','em-pro');
+							}
+						?>
+					</td>
+					<td class="column-transid">
+						<?php
+							if(!empty($transaction->transaction_gateway)) {
+								echo $transaction->transaction_gateway;
+							} else {
+								echo __('None yet','em-pro');
+							}
+						?>
+					</td>
+					<td class="column-transid">
+						<?php
+							if(!empty($transaction->transaction_status)) {
+								echo $transaction->transaction_status;
+							} else {
+								echo __('None yet','em-pro');
+							}
+						?>
+					</td>
+					<td class="column-transid">
+						<?php
+							if(!empty($transaction->transaction_note)) {
+								echo esc_html($transaction->transaction_note);
+							} else {
+								echo __('None','em-pro');
+							}
+						?>
+					</td>
+			    </tr>
+				<?php
+			}
+		} else {
+			$columncount = count($columns);
+			?>
+			<tr valign="middle" class="alternate" >
+				<td colspan="<?php echo $columncount; ?>" scope="row"><?php _e('No Transactions','em-pro'); ?></td>
+		    </tr>
+			<?php
+		}
+		return ob_get_clean();
+	}
+	
+	function get_transactions($context=false) {
+		global $wpdb;
+		$join = '';
+		$conditions = array();
+		$table = EM_BOOKINGS_TABLE;
+		//we can determine what to search for, based on if certain variables are set.
+		if( is_object($context) && get_class($context)=="EM_Booking" && $context->can_manage('manage_bookings','manage_others_bookings') ){
+			$conditions[] = "booking_id = ".$context->booking_id;
+		}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
+			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";	
+			$conditions[] = "event_id = ".$context->event_id;		
+		}elseif( is_object($context) && get_class($context)=="EM_Person" ){
+			//FIXME peole could potentially view other's txns like this
+			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
+			$conditions[] = "person_id = ".$context->ID;			
+		}elseif( is_object($context) && get_class($context)=="EM_Ticket" && $context->can_manage('manage_bookings','manage_others_bookings') ){
+			$booking_ids = array();
+			foreach($context->get_bookings()->bookings as $EM_Booking){
+				$booking_ids[] = $EM_Booking->booking_id;
+			}
+			if( count($booking_ids) > 0 ){
+				$conditions[] = "booking_id IN (".implode(',', $booking_ids).")";
+			}else{
+				return new stdClass();
+			}			
+		}
+		if( is_multisite() && !is_main_blog() ){ //if not main blog, we show only blog specific booking info
+			global $blog_id;
+			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
+			$conditions[] = "booking_id IN (SELECT booking_id FROM $table, ".EM_EVENTS_TABLE." e WHERE e.blog_id=".$blog_id.")";
+		}
+		//filter by gateway
+		if( !empty($this->gateway) ){
+			$conditions[] = $wpdb->prepare('transaction_gateway = %s',$this->gateway);
+		}
+		//build conditions string
+		$condition = (!empty($conditions)) ? "WHERE ".implode(' AND ', $conditions):'';
+		$offset = ( $this->page > 1 ) ? ($this->page-1)*$this->limit : 0;		
+		$sql = $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS * FROM ".EM_TRANSACTIONS_TABLE." $join $condition ORDER BY transaction_id DESC  LIMIT %d, %d", $offset, $this->limit );
+		$return = $wpdb->get_results( $sql );
+		$this->total_transactions = $wpdb->get_var( "SELECT FOUND_ROWS();" );
+		return $return;
+	}	
+}
+global $EM_Gateways_Table;
+$EM_Gateways_Table = new EM_Gateways_Table();
+
 function emp_register_gateway($gateway, $class) {
 	global $EM_Gateways;
 	if(!is_array($EM_Gateways)) {

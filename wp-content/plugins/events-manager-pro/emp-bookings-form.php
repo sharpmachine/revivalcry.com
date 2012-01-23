@@ -17,7 +17,6 @@ class EM_Booking_Form {
 		//Menu/admin page
 		add_action('em_create_events_submenu',array('EM_Booking_Form', 'admin_menu'),1,1);
 		if( get_option('em_booking_form_custom') ){
-			if( !function_exists('recaptcha_get_html') ) { include_once('includes/lib/recaptchalib.php'); }
 			//Add options and tables to EM admin pages
 			//add_action('em_bookings_ticket_footer', array('EM_Booking_Form', 'ticket_meta_box'),1,1); //specific ticket booking info
 			add_action('em_bookings_single_custom', array('EM_Booking_Form', 'em_bookings_single_custom'),1,1); //show booking form and ticket summary
@@ -85,8 +84,9 @@ class EM_Booking_Form {
 		return apply_filters('emp_booking_form_output',$return, $booking_form_fields);
 	}
 	
-	function output_field($field){
+	function output_field($field, $post=true){
 		ob_start();
+		$default = ($post && !empty($_REQUEST[$field['booking_form_fieldid']])) ? $_REQUEST[$field['booking_form_fieldid']]:'';
 		switch($field['booking_form_type']){
 			case 'name':
 			case 'email': //depreciated
@@ -94,7 +94,7 @@ class EM_Booking_Form {
 					?>
 					<p>
 						<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label> 
-						<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"  />
+						<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input" value="<?php echo $default; ?>"  />
 					</p>
 					<?php
 				}
@@ -103,7 +103,7 @@ class EM_Booking_Form {
 				?>
 				<p>
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label> 
-					<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"  />
+					<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input" value="<?php echo $default; ?>"  />
 				</p>
 				<?php
 				break;	
@@ -111,7 +111,7 @@ class EM_Booking_Form {
 				?>
 				<p>
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label> 
-					<textarea name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"></textarea>
+					<textarea name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"><?php echo $default; ?></textarea>
 				</p>
 				<?php
 				break;
@@ -120,19 +120,20 @@ class EM_Booking_Form {
 				<p class="input-group">
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label>
 					<span> 
-						<input type="checkbox" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" value="1"  />
+						<input type="checkbox" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" value="1" <?php if($value == $default) echo 'checked="checked"'; ?> />
 					</span>
 				</p>
 				<?php
 				break;
 			case 'checkboxes':
+				if(!is_array($default)) $default = array();
 				$values = explode("\r\n",$field['booking_form_options_selection_values']);
 				?>
 				<p class="input-group">
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label>
 					<span> 
 						<?php foreach($values as $value): $value = trim($value); ?>
-						<input type="checkbox" name="<?php echo $field['booking_form_fieldid'] ?>[]" class="<?php echo $field['booking_form_fieldid'] ?>" value="<?php echo esc_attr($value) ?>" /> <?php echo $value ?><br />
+						<input type="checkbox" name="<?php echo $field['booking_form_fieldid'] ?>[]" class="<?php echo $field['booking_form_fieldid'] ?>" value="<?php echo esc_attr($value) ?>" <?php if(in_array($value, $default)) echo 'checked="checked"'; ?> /> <?php echo $value ?><br />
 						<?php endforeach; ?>
 					</span>
 				</p>
@@ -145,7 +146,7 @@ class EM_Booking_Form {
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label>
 					<span> 
 						<?php foreach($values as $value): $value = trim($value); ?>
-						<input type="radio" name="<?php echo $field['booking_form_fieldid'] ?>" class="<?php echo $field['booking_form_fieldid'] ?>" value="<?php echo esc_attr($value) ?>" /> <?php echo $value ?><br />
+						<input type="radio" name="<?php echo $field['booking_form_fieldid'] ?>" class="<?php echo $field['booking_form_fieldid'] ?>" value="<?php echo esc_attr($value) ?>" <?php if($value == $default) echo 'checked="checked"'; ?> /> <?php echo $value ?><br />
 						<?php endforeach; ?>
 					</span>
 				</p>
@@ -155,11 +156,12 @@ class EM_Booking_Form {
 			case 'multiselect':
 				$values = explode("\r\n",$field['booking_form_options_select_values']);
 				$multi = $field['booking_form_type'] == 'multiselect';
+				if($multi && !is_array($default)) $default = array();
 				?>
 				<p class="input-group">
 					<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label>
 					<span> 
-						<select name="<?php echo $field['booking_form_fieldid'] ?>" class="<?php echo $field['booking_form_fieldid'] ?>" <?php echo ($multi) ? 'multiple':''; ?>>
+						<select name="<?php echo $field['booking_form_fieldid'] ?><?php echo ($multi) ? '[]':''; ?>" class="<?php echo $field['booking_form_fieldid'] ?>" <?php echo ($multi) ? 'multiple':''; ?>>
 						<?php 
 							//calculate default value to be checked
 							if( !$field['booking_form_options_select_default'] ){
@@ -170,7 +172,7 @@ class EM_Booking_Form {
 							$count = 0;
 						?>
 						<?php foreach($values as $value): $value = trim($value); $count++; ?>
-							<option <?php echo ($count == 1 && $field['booking_form_options_select_default'])?'selecte="selected"':''; ?>>
+							<option <?php echo (($count == 1 && $field['booking_form_options_select_default']) || ($multi && in_array($value, $default)) || ($value == $default) )?'selecte="selected"':''; ?>>
 								<?php echo esc_html($value) ?>
 							</option>
 						<?php endforeach; ?>
@@ -180,6 +182,7 @@ class EM_Booking_Form {
 				<?php
 				break;
 			case 'captcha':
+				if( !function_exists('recaptcha_get_html') ) { include_once('includes/lib/recaptchalib.php'); }
 				if( function_exists('recaptcha_get_html') && !is_user_logged_in() ){
 					?>
 					<p class="input-group">
@@ -206,7 +209,7 @@ class EM_Booking_Form {
 					?>
 					<p>
 						<label for='<?php echo $field['booking_form_fieldid'] ?>'><?php echo $field['booking_form_label'] ?></label> 
-						<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"  />
+						<input type="text" name="<?php echo $field['booking_form_fieldid'] ?>" id="<?php echo $field['booking_form_fieldid'] ?>" class="input"  value="<?php echo $default; ?>" />
 					</p>
 					<?php
 				}
@@ -305,7 +308,7 @@ class EM_Booking_Form {
 	 * @param EM_Object $EM_Object
 	 */
 	function validate_field( $field, $value, $EM_Object ){
-		$value = trim($value);
+		$value = (is_array($value)) ? $value:trim($value);
 		$result = true;
 		$err = sprintf(get_option('em_booking_form_error_required'), $field['booking_form_label']);	
 		switch($field['booking_form_type']){
@@ -387,12 +390,13 @@ class EM_Booking_Form {
 			case 'checkboxes':
 				$values = explode("\r\n",$field['booking_form_options_selection_values']);
 				array_walk($values,'trim');
+				if( !is_array($value) ) $value = array();
 				//in-values
-				if( (empty($value) || (is_array($value) && count(array_diff($value, $values)) == 0)) && $field['booking_form_required'] ){
+				if( (empty($value) && $field['booking_form_required']) || count(array_diff($value, $values)) > 0 ){
 					$this_err = (!empty($field['booking_form_options_selection_error'])) ? $field['booking_form_options_selection_error']:$err;
 					$EM_Object->add_error($this_err);
 					$result = false;
-				}				
+				}
 				break;
 			case 'radio':
 				$values = explode("\r\n",$field['booking_form_options_selection_values']);
@@ -407,8 +411,9 @@ class EM_Booking_Form {
 			case 'multiselect':
 				$values = explode("\r\n",$field['booking_form_options_select_values']);
 				array_walk($values,'trim');
+				if( !is_array($value) ) $value = array();
 				//in_values
-				if( (empty($value) || (is_array($value) && count(array_diff($value, $values)) == 0)) && $field['booking_form_required'] ){
+				if( (empty($value) && $field['booking_form_required']) || count(array_diff($value, $values)) > 0 ){
 					$this_err = (!empty($field['booking_form_options_select_error'])) ? $field['booking_form_options_select_error']:$err;
 					$EM_Object->add_error($this_err);
 					$result = false;
@@ -425,7 +430,8 @@ class EM_Booking_Form {
 				}				
 				break;
 			case 'captcha':
-				if( !is_user_logged_in() ){
+				if( !function_exists('recaptcha_check_answer') ) { include_once('includes/lib/recaptchalib.php'); }
+				if( function_exists('recaptcha_check_answer') && !is_user_logged_in() ){
 					$resp = recaptcha_check_answer($field['booking_form_options_captcha_key_priv'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
 					$result = $resp->is_valid;
 					if(!$result){
@@ -488,7 +494,11 @@ class EM_Booking_Form {
 							$replace = $EM_Booking->booking_meta['registration'][$field['booking_form_fieldid']];
 						}elseif( !empty($EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']]) ){
 							//match for custom field value
-							$replace = $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']];
+							if(!is_array($EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']])){
+								$replace = $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']];
+							}else{
+								$replace = implode(', ', $EM_Booking->booking_meta['booking'][$field['booking_form_fieldid']]);
+							}
 						}
 					}
 				}

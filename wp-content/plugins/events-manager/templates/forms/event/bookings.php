@@ -71,7 +71,7 @@ $localised_date_format = em_get_date_format();
 									<?php 
 									if( $EM_Ticket->get_spaces() ){
 										echo $EM_Ticket->get_spaces();
-										echo ($EM_Ticket->ticket_spaces_limit) ? '':'*';
+										echo (!empty($EM_Ticket->ticket_spaces_limit)) ? '':'*';
 									}else{
 										echo '-';
 									} 

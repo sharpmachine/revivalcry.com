@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
 Tested up to: 3.3.1
-Stable tag: 1.44
+Stable tag: 1.51
 
 == Description ==
 
@@ -22,9 +22,18 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 1.5 =
+* paypal now pre-registers user before redirecting if applicable (more stable, more possibilities)
+* added #_BOOKINGTXNID to booking placeholders for paypal transaction ID
+* fixed placeholders for custom form fields
+* html now accepted in booking form feedback in gateways
+* small usability improvements to manual booking form
+* transactions tabled now unified to reduce clutter
+* paypal return url modified to use a static file (wp-admin/admin-ajax.php) and the previous url as a fallback
+
 = 1.45 =
 * fixed booking form placeholders
-* #_CUSTOMBOOKING now works for #_CUSTOMBOOKINGREG files
+* #_CUSTOMBOOKING now works for #_CUSTOMBOOKINGREG fields
 * html not escaped with slashes in custom booking gateway feedback messages
 
 = 1.44 =

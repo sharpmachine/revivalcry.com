@@ -5,12 +5,12 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 1.45
+Version: 1.51
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 1.45);
-define('EM_MIN_VERSION', 5.04);
+define('EMP_VERSION', 1.5);
+define('EM_MIN_VERSION', 5.05);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
