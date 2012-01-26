@@ -29,7 +29,7 @@
 	<body>
 		
 		<div id="logo">
-			<img src="http://www.revivalcry.com/wp-content/themes/revivalcry/images/logo.png" width="335" height="52" alt="Logo">
+			<img src="http://www.revivalcry.com/wp-content/themes/revivalcry/images/logo1.png" width="223" height="43" alt="Logo">
 			<p>We are currently undergoing routine maintenance.  Please check back soon.</p>
 		</div>
 		
