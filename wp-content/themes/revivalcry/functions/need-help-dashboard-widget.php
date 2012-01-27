@@ -22,12 +22,12 @@ function help_dashboard_widget_function() {
 		
 		<ul style="width:40%;float:left;min-width:153px;">
 			<li style="color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;">Videos Specific To Your Site:</li>
-			<li><a href="#" target="_blank">Site Overview</a></li>
-			<li><a href="#" target="_blank">Mananing Banners</a></li>
-			<li><a href="#" target="_blank">Managing Revivalists</a></li>
-			<li><a href="#" target="_blank">Managing Videos</a></li>
-			<li><a href="#" target="_blank">Managing Events</a></li>
-			<li><a href="#" target="_blank">Managing Store</a></li>
+			<li><a href="http://youtu.be/cEbBpaGPkww" target="_blank">Site Overview</a></li>
+			<li><a href="http://youtu.be/yOTH7Xga9DM" target="_blank">Managing Banners</a></li>
+			<li><a href="http://youtu.be/DkqithyJ6PM" target="_blank">Managing Revivalists</a></li>
+			<li><a href="http://youtu.be/kqf7wyXs2to" target="_blank">Managing Videos</a></li>
+			<li><a href="http://youtu.be/F9xoX6eV-A0" target="_blank">Managing Events</a></li>
+			<li><a href="http://youtu.be/vAsKjVM2Gl8" target="_blank">Managing Store</a></li>
 			<li><a href="http://www.youtube.com/watch?v=IE_10_nwe0c" target="_blank">SEO Ultimate Tutorial</a></li>
 		</ul>
 		
