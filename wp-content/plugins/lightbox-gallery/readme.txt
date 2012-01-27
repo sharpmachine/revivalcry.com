@@ -4,7 +4,7 @@ Donate link: http://wpgogo.com/development/lightbox-gallery.html
 Tags: lightbox, gallery, image, images, album, photo, photos, picture, pictures, jQuery, Highslide
 Requires at least: 2.5
 Tested up to: 3.3.1
-Stable tag: 0.6.6
+Stable tag: 0.6.7
 
 This plugin changes the view of galleries to the lightbox.
 
@@ -39,6 +39,7 @@ Localization
 * Polish (pl_PL) - Otmar
 * Romanian (ro_RO) - [Anunturi Jibo](http://www.jibo.ro/)
 * Russian (ru_RU) - [Fat Cow](http://www.fatcow.com/)
+* Swedish (sv_SE) - [Anders Martensson](http://nemrod.se/)
 * Turkish (tr_TR) - [Hakan Demiray](http://www.dmry.net/)
 * Ukrainian (uk_UA) - [Vitalij Lew](http://wpp.pp.ua/)
 * Simplified Chinese (zh_CN) - [leonanu](http://www.inanu.net/)
@@ -124,6 +125,10 @@ If you would like not to show the navigation, set `0`. The default is `1`.
 [gallery num="10" pagenavi="0"]
 
 == Changelog ==
+
+= 0.6.7 =
+* Swedish (sv_SE) - Anders Martensson
+* Bugfix: button images of sub directory WordPress.
 
 = 0.6.6 =
 * Option to add rel=&quot;lightbox&quot; automatically in the post insert.

@@ -4,7 +4,7 @@ Plugin Name: Lightbox Gallery
 Plugin URI: http://wpgogo.com/development/lightbox-gallery.html
 Description: Changes to the lightbox view in galleries.
 Author: Hiroaki Miyashita
-Version: 0.6.6
+Version: 0.6.7
 Author URI: http://wpgogo.com/
 */
 
@@ -171,7 +171,9 @@ function lightbox_gallery_wp_print_scripts() {
 function lightbox_gallery_print_path_header() {
 	$options = get_option('lightbox_gallery_data');
 	if ( $options['global_settings']['lightbox_gallery_script_loading_point'] == 'footer' ) return;
-	if ( get_option('home') != get_option('siteurl') ) :
+	$path = parse_url(get_option('siteurl'));
+	$url = $path['scheme'].'://'.$path['host'];
+	if ( get_option('home') != get_option('siteurl') || ($url != get_option('siteurl') && !is_multisite()) ) :
 		echo '<script type="text/javascript">'."\n";
 		echo '// <![CDATA['."\n";
 		if ( $options['global_settings']['lightbox_gallery_loading_type'] == 'highslide' ) :
@@ -187,7 +189,9 @@ function lightbox_gallery_print_path_header() {
 function lightbox_gallery_print_path_footer() {
 	$options = get_option('lightbox_gallery_data');
 	if ( $options['global_settings']['lightbox_gallery_script_loading_point'] != 'footer' ) return;
-	if ( get_option('home') != get_option('siteurl') ) :
+	$path = parse_url(get_option('siteurl'));
+	$url = $path['scheme'].'://'.$path['host'];
+	if ( get_option('home') != get_option('siteurl') || ($url != get_option('siteurl') && !is_multisite()) ) :
 		echo '<script type="text/javascript">'."\n";
 		echo '// <![CDATA['."\n";
 		if ( $options['global_settings']['lightbox_gallery_loading_type'] == 'highslide' ) :
