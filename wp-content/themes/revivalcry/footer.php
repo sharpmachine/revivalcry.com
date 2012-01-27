@@ -10,7 +10,7 @@
 					<a href="<?php bloginfo('url'); ?>/invite">Don’t see Dennis IN your area? Invite him to come speak at your event or church.</a>
 				</div>
 				<div class="encourage-box">
-					Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe to our <a href="<?php bloginfo('url'); ?>/events/rss"> Events rss feed</a> to be notified about our latest events
+					Sign up for our <a href="#footer" class="scroll-to">newsletter</a> or subscribe to our <a href="<?php bloginfo('url'); ?>/events/rss/" type="application/rss+xml"> Events rss feed</a> to be notified about our latest events
 				</div>
 			</div>
 		<?php endif ?>

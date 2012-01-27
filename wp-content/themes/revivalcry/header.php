@@ -62,7 +62,7 @@
 	<!--[if lte IE 8]>
 		<script src="<?php bloginfo('template_directory'); ?>/js/selectivizr-min.js"></script>
 	<![endif]--> 
-	<link rel="alternate" type="application/rss+xml" title="Revival Cry &raquo; Events Feed" href="<?php bloginfo('url'); ?>/events/rss" />
+	<link rel="self" type="application/rss+xml" title="Revival Cry &raquo; Events Feed" href="<?php bloginfo('url'); ?>/events/rss" />
 
 <?php
 	if ( is_singular() && get_option( 'thread_comments' ) )
