@@ -3,6 +3,10 @@ wp-config.php
 /wp-content/themes/revivalcry/js/hashgrid.js
 /wp-content/themes/revivalcry/css/hashgrid.css
 /wp-content/themes/revivalcry/included
+/wp-content/uploads/
+/wp-content/uploads/_wpremote_backups/
+/wp-content/w3tc/
+/wp-content/backup-db/
 .htaccess
 sitemap.xml
 sitemap.xml.gz
