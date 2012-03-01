@@ -3,8 +3,8 @@ Contributors: JR SEO
 Donate link: http://www.jrseoservices.com
 Tags: widget, widgets, post, posts, blog, page, pages, plugin, plugins, sidebar
 Requires at least: 2.0.2
-Tested up to: 3.2.2
-Stable tag: 1.0.2
+Tested up to: 3.3.1
+Stable tag: 1.0.3
 
 This plugin allows you to show your most popular posts as a widget on your blog!
 
@@ -30,6 +30,10 @@ It's very simple to configure too - Just change the settings and the plugin will
 It stores the user details every time a post is viewed, the totals are incremented so it will show the posts with the most hits in the widget.
 
 == Changelog ==
+
+= 1.0.3 =
+* Changed MySQL table for larger sites needing more
+* NoFollowed internal links for people concerned about PR
 
 = 1.0.2 =
 * Stripslashes on title

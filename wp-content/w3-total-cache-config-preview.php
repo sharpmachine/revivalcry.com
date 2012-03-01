@@ -505,7 +505,7 @@ return array(
 	'config.path' => '',
 	'widget.latest.enabled' => false,
 	'widget.latest.items' => 3,
-	'widget.pagespeed.enabled' => true,
+	'widget.pagespeed.enabled' => false,
 	'widget.pagespeed.key' => '',
 	'notes.wp_content_perms' => false,
 	'notes.php_is_old' => true,

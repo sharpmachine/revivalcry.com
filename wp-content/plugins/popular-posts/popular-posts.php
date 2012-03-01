@@ -3,7 +3,7 @@
 Plugin Name: Popular Posts
 Plugin URI: http://plugins.jrseoservices.com/popular-posts-plugin
 Description: Allows you to show your most popular posts as a widget on your blog.
-Version: 1.0.2
+Version: 1.0.3
 Author: JR SEO
 Author URI: http://www.jrseoservices.com
 */
@@ -44,8 +44,8 @@ function PopularPosts_install () {
    if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
       
       $sql = "CREATE TABLE " . $table_name . " (
-	  id mediumint(20) NOT NULL,
-	  hits mediumint(50) NOT NULL,
+	  id mediumint(30) NOT NULL,
+	  hits mediumint(55) NOT NULL,
 	  UNIQUE KEY id (id)
 	);";
 
@@ -228,13 +228,13 @@ $permalink=get_permalink($row->id);
 $hits=$row->hits;
 $mylatestnum ++;
 
-echo "<li>".$mylatestnum.". <a href='".$permalink."'>".$title."</a></li>";
+echo "<li>".$mylatestnum.". <a href='".$permalink."' rel='nofollow'>".$title."</a></li>";
 }
 echo "</ul>";
 
 if ($supportplugin=="Yes" || $supportplugin=="") {
 if (get_option("popularposts_wp_saved")=="") {
-$echome="<p style='font-size:x-small'>Popular Posts Plugin made by <a href='http://www.rockemmusic.com'>Blackstar</a>.</p>";
+$echome="<p style='font-size:x-small'>Popular Posts Plugin made by <a href='http://www.frostwire-p2p-download.com'>FrostWire</a>.</p>";
 update_option("popularposts_wp_saved", $echome);
 echo $echome;
 } else {
