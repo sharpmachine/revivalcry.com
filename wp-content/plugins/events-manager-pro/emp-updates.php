@@ -59,9 +59,13 @@ class EM_Updates {
 				//update the option here
 				update_site_option('dbem_pro_api_key', $_REQUEST['dbem_pro_api_key']);
 				//save api key either way
-				self::check_api_key(true);
+				if( self::check_api_key(true) ){
+					//force recheck of plugin updates, to refresh dl links
+					delete_transient('site_transient_update_plugins');
+					delete_site_transient('site_transient_update_plugins');
+				}
 			}
-		}   
+		}
 	}
 	
 	function admin_options(){
@@ -70,11 +74,11 @@ class EM_Updates {
 		?>
 			<a name="pro-api"></a>
 			<div  class="postbox " >
-			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Pro Membership Key', 'dbem' ); ?> </span></h3>
+			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Pro Membership Key', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table' <?php echo ( $api ) ? 'style="background-color:#ffece8;"':'' ?>>
 					<?php
-					em_options_input_text ( __( 'Pro Member Key', 'dbem' ), 'dbem_pro_api_key', sprintf( __("Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>.", 'dbem'), 'http://wp-events-plugin.com/wp-admin/profile.php' ));
+					em_options_input_text ( __( 'Pro Member Key', 'em-pro' ), 'dbem_pro_api_key', sprintf( __("Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>.", 'em-pro'), 'http://wp-events-plugin.com/wp-admin/profile.php' ));
 					?>
 					<?php if( !self::check_api_key() && get_option('dbem_pro_api_key') != '' ):?>
 						<?php
@@ -91,7 +95,7 @@ class EM_Updates {
 						}
 						?>
 					<?php endif; ?>
-					<?php em_options_radio_binary ( __( 'Try Development Mode?', 'dbem' ), 'dbem_pro_dev_updates', __( 'Select yes if you would like to check for the latest development version of the pro plugin rather than stable updates. <strong>Warning:</strong> Development versions are not always fully tested before release, use wisely!','dbem' ) ); ?>
+					<?php em_options_radio_binary ( __( 'Try Development Mode?', 'em-pro' ), 'dbem_pro_dev_updates', __( 'Select yes if you would like to check for the latest development version of the pro plugin rather than stable updates. <strong>Warning:</strong> Development versions are not always fully tested before release, use wisely!','em-pro' ) ); ?>
 				</table>
 			</div> <!-- . inside -->
 			</div> <!-- .postbox -->

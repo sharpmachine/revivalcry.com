@@ -2,9 +2,9 @@
 /*
 Plugin Name: Lightbox Gallery
 Plugin URI: http://wpgogo.com/development/lightbox-gallery.html
-Description: Changes to the lightbox view in galleries.
+Description: The Lightbox Gallery plugin changes the view of galleries to the lightbox.
 Author: Hiroaki Miyashita
-Version: 0.6.7
+Version: 0.6.8
 Author URI: http://wpgogo.com/
 */
 
@@ -151,7 +151,7 @@ function lightbox_gallery_wp_print_scripts() {
 	
 	if ( !is_admin() && $flag ) :
 		wp_enqueue_script( 'jquery' );
-		if ( $options['global_settings']['lightbox_gallery_loading_type'] == 'highslide' ) :
+		if ( $options['global_settings']['lightbox_gallery_loading_type'] == 'highslide' && file_exists(ABSPATH . '/' . PLUGINDIR . '/' . $plugin_dir . '/js/highslide.js') ) :
 			wp_enqueue_script( 'highslide', '/' . PLUGINDIR . '/' . $plugin_dir . '/js/highslide.js', false, '', $in_footer );
 		else :
 			wp_enqueue_script( 'dimensions', '/' . PLUGINDIR . '/' . $plugin_dir . '/js/jquery.dimensions.js', array('jquery'), '', $in_footer );
@@ -276,9 +276,20 @@ function lightbox_gallery_admin() {
 	if ( !isset($options['global_settings']['lightbox_gallery_loading_type']) ) $options['global_settings']['lightbox_gallery_loading_type'] = 'lightbox';
 ?>
 <p><label for="lightbox_gallery_loading_type"><?php _e('Choose the gallery loading type', 'lightbox-gallery'); ?></label>:<br />
-<input type="radio" name="lightbox_gallery_loading_type" id="lightbox_gallery_loading_type" value="lightbox"<?php checked('lightbox', $options['global_settings']['lightbox_gallery_loading_type']); ?> /> <?php _e('Lightbox', 'lightbox-gallery'); ?><br />
-<input type="radio" name="lightbox_gallery_loading_type" id="lightbox_gallery_loading_type" value="highslide"<?php checked('highslide', $options['global_settings']['lightbox_gallery_loading_type']); ?> /> <?php _e('Highslide JS', 'lightbox-gallery'); ?><br />
-<?php echo sprintf(__('Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author\'s permission to use Highslide JS on commercial websites. <a href="%s" target="_blank">Please look at the author\'s website.</a>', 'lightbox-gallery'), 'http://highslide.com/'); ?></p>
+<input type="radio" name="lightbox_gallery_loading_type" id="lightbox_gallery_loading_type" value="lightbox"<?php checked('lightbox', $options['global_settings']['lightbox_gallery_loading_type']); ?> /> <?php _e('Lightbox', 'lightbox-gallery'); ?>
+<?php
+	if ( file_exists(ABSPATH . '/' . PLUGINDIR . '/' . $plugin_dir . '/js/highslide.js') ) :
+?>
+<br /><input type="radio" name="lightbox_gallery_loading_type" id="lightbox_gallery_loading_type" value="highslide"<?php checked('highslide', $options['global_settings']['lightbox_gallery_loading_type']); ?> /> <?php _e('Highslide JS', 'lightbox-gallery'); ?><br />
+<?php echo sprintf(__('Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author\'s permission to use Highslide JS on commercial websites. <a href="%s" target="_blank">Please look at the author\'s website.</a>', 'lightbox-gallery'), 'http://highslide.com/'); ?>
+<?php
+	else :
+?>
+<br /><?php echo sprintf(__('You can change the lightbox view to the highslide. Just <a href="%s" target="_blank">download</a> the highslide script and put `highslide.js` into `/lightbox-gallery/js/` and `graphics` directory into `/lightbox-gallery/`.', 'lightbox-gallery'), 'http://highslide.com/'); ?>
+<?php
+	endif;
+?>
+</p>
 </td></tr>
 <tr><td>
 <p><label for="lightbox_gallery_categories"><?php _e('In case that you would like to use the lightbox in certain categories (comma-deliminated)', 'lightbox-gallery'); ?>:<br />
