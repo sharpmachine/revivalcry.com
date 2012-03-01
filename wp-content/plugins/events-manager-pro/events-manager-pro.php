@@ -5,12 +5,12 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 1.51
+Version: 2.0.2
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 1.5);
-define('EM_MIN_VERSION', 5.05);
+define('EMP_VERSION', 2.0);
+define('EM_MIN_VERSION', 5.071);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
@@ -28,18 +28,29 @@ class EM_Pro {
 		//Set when to run the plugin : after EM is loaded.
 		add_action( 'plugins_loaded', array(&$this,'init') );
 		//Define some tables
-		if( get_site_option('dbem_ms_global_table') ){
+		if( defined('EM_MS_GLOBAL') ){
 			$prefix = $wpdb->base_prefix;
 		}else{
 			$prefix = $wpdb->prefix;
 		}
 		define('EM_TRANSACTIONS_TABLE', $prefix.'em_transactions'); //TABLE NAME
+		define('EM_COUPONS_TABLE', $prefix.'em_coupons'); //TABLE NAME
 	}
 
 	/**
 	 * Actions to take upon initial action hook
 	 */
 	function init(){
+		//check that EM is installed
+		if(!defined('EM_VERSION')){
+			add_action('admin_notices',array(&$this,'em_install_warning'));
+			add_action('network_admin_notices',array(&$this,'em_install_warning'));
+			return false; //don't load EMP further
+		}elseif( EM_MIN_VERSION > EM_VERSION ){
+			//check that EM is up to date
+			add_action('admin_notices',array(&$this,'em_version_warning'));
+			add_action('network_admin_notices',array(&$this,'em_version_warning'));
+		}
 		//Upgrade/Install Routine
 		if( is_admin() && current_user_can('activate_plugins') ){
 			$old_version = get_option('em_pro_version');
@@ -48,26 +59,19 @@ class EM_Pro {
 				emp_install();
 			}
 		}
-		//check that EM is installed
-		if(!defined('EM_VERSION')){
-			add_action('admin_notices',array(&$this,'em_install_warning'));
-			add_action('network_admin_notices',array(&$this,'em_install_warning'));
-		}elseif( EM_MIN_VERSION > EM_VERSION ){
-			//check that EM is up to date
-			add_action('admin_notices',array(&$this,'em_version_warning'));
-			add_action('network_admin_notices',array(&$this,'em_version_warning'));
+		//Add extra styling
+		if( get_option('dbem_disable_css') ){
+			add_filter('init', '');
 		}
-		//include gateways
-		include_once('gateways/class.gateway.php');
-		include_once('gateways/gateway.paypal.php');
-		include_once('gateways/gateway.offline.php');
-		//booking form customization
-		include_once('emp-bookings-form.php');
+		//add-ons
+		include('add-ons/gateways.php');
+		include('add-ons/bookings-form.php');
+		include('add-ons/coupons.php');
 		add_action('wp_head', array(&$this,'wp_head'));
 	}
 
 	/**
-	 * For now we'll just add style and js here
+	 * For now we'll just add style and js here, since it's so minimal
 	 */
 	function wp_head(){
 		?>

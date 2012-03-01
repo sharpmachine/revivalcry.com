@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
 Tested up to: 3.3.1
-Stable tag: 1.51
+Stable tag: 2.0.2
 
 == Description ==
 
@@ -22,6 +22,31 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.0.2 =
+* added html filtering for ticket names sent to paypal
+* fixed offline manual partial payemnt formats bug
+* added some translatable strings
+* membership key entry will force recheck of plugin updates
+* fixed captcha includes breaking form submissions
+* added classes to custom booking form html
+* added cancel url to PayPal gateway
+* fixed Authorize.net gateway creating wp accounts when CC info is bad
+
+= 2.0 =
+* fixed checkboxes defaulting to selected
+* rewritten gateway API, add custom gatways much faster and efficiently
+* added Authorize.net AIM Gateway
+* added coupons feature Coupons
+* restructured files
+* various minor bug fixes
+* updated Russian translation
+* prevented from loading EMP if EM isn't activated
+
+= 1.51 =
+* fixed offline custom message not working
+* fixed paypal ticket descriptions and special characters (using UTF-8)
+* fixed view transactions blank page from gateways page
+
 = 1.5 =
 * paypal now pre-registers user before redirecting if applicable (more stable, more possibilities)
 * added #_BOOKINGTXNID to booking placeholders for paypal transaction ID

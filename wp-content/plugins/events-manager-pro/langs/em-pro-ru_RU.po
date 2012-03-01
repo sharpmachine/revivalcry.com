@@ -1,766 +1,821 @@
+#@ em-pro
 msgid ""
 msgstr ""
-"Project-Id-Version: events-manager-pro\n"
+"Project-Id-Version: Events Manager Pro v1.321\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-01 21:40+0300\n"
-"PO-Revision-Date: 2011-07-01 22:52+0300\n"
-"Last-Translator: aa <aa@domain.com>\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-02-13 16:02+0100\n"
+"Last-Translator: Marcus Sykes <noreply@wp-events-plugin.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: \n"
-"X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Poedit-SearchPath-0: D:/tr/events-manager-pro\n"
-"X-Textdomain-Support: yes"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: gateways/class.gateway.php:97
-#@ default
-msgid "Payment Gateways"
-msgstr "Платежные шлюзы"
+# @ dbem
+#: emp-bookings-form.php:316
+msgid "The email address isn&#8217;t correct."
+msgstr "Неправильный email-адрес."
 
-#: gateways/class.gateway.php:277
-#, php-format
-#@ dbem
-msgid "%s Transactions"
-msgstr "%s Сделки"
+# @ dbem
+#: emp-bookings-form.php:335
+msgid "This username is invalid because it uses illegal characters. Please enter a valid username."
+msgstr "В имени пользователя использованы недопустимые символы. Пожалуйста, введите имя пользователя, соответствующее требованиям."
 
-#: gateways/class.gateway.php:297
-#@ em-pro
-msgid "Event"
-msgstr "Событие"
+# @ default
+#: emp-bookings-form.php:338
+msgid "This username is already registered, please choose another one."
+msgstr "Пользователь с таким именем уже существует, пожалуйста, выберите другое."
 
-#: gateways/class.gateway.php:298
-#: gateways/gateway.offline.php:242
-#@ em-pro
-#@ dbem
-msgid "User"
-msgstr "Пользователь"
+# @ dbem
+#: emp-bookings-form.php:474
+#: emp-bookings-form.php:546
+msgid "Yes"
+msgstr "Да"
 
-#: gateways/class.gateway.php:299
-#@ em-pro
-msgid "Date"
-msgstr "Дата"
+# @ dbem
+#: emp-bookings-form.php:474
+#: emp-bookings-form.php:546
+msgid "No"
+msgstr "Нет"
 
-#: gateways/class.gateway.php:300
-#: gateways/gateway.offline.php:138
-#@ em-pro
-msgid "Amount"
-msgstr "Количество"
+# @ default
+# @ em-pro
+#: emp-bookings-form.php:483
+#: emp-bookings-form.php:640
+msgid "Booking Form Editor"
+msgstr "Редактор формы заказа"
 
-#: gateways/class.gateway.php:301
-#@ em-pro
-msgid "Transaction id"
-msgstr "Идентификатор транзакции"
+# @ em-pro
+#: emp-bookings-form.php:618
+msgid "You must include a name and email field type for booking forms to work. These are used to create the user account and aren't shown to logged in users."
+msgstr "Вы должны заполнить поля ввода имени и email-адреса, чтобы ваши формы заказов билета работали. Они используются, чтобы создать учетную запись пользователя, и другие зарегистрированные пользователи их не видят."
 
-#: gateways/class.gateway.php:302
-#@ em-pro
-msgid "Status"
-msgstr "Статус"
+# @ em-pro
+#: emp-bookings-form.php:625
+msgid "Changes Saved"
+msgstr "Изменения сохранены"
 
-#: gateways/class.gateway.php:303
-#@ em-pro
-msgid "Notes"
-msgstr "Примечания"
+# @ em-pro
+#: emp-bookings-form.php:647
+msgid "On this page you can override the default booking form and add your own custom fields."
+msgstr "На этой странице вы можете изменить форму заказа билетов, используемую по умолчанию, и добавить свои поля."
 
-#: gateways/class.gateway.php:314
-#@ em-pro
-msgid "Recent transactions"
-msgstr "Недавние сделки"
+# @ em-pro
+#: emp-bookings-form.php:676
+msgid "Booking Form - General Information"
+msgstr "Форма заказа билетов - Общая информация"
 
-#: gateways/class.gateway.php:315
-#@ em-pro
-msgid "Pending transactions"
-msgstr "В ожидании сделок"
+# @ em-pro
+#: emp-bookings-form.php:679
+msgid "You can customize the fields shown in your booking forms below. "
+msgstr "Вы можете настроить поля, отображаемые в формах заказа, представленных ниже."
 
-#: gateways/class.gateway.php:317
-#@ em-pro
-msgid "Future transactions"
-msgstr "Будущие операции"
+# @ em-pro
+#: emp-bookings-form.php:680
+msgid "It is required that you have at least an email and name field so guest users can register. Registration fields are only shown to guest visitors. Not doing so may result in unexpected behaviour."
+msgstr "Вам необходимо ввести хотя бы  имя и email, чтобы гости могли регистрироваться. Поля для регистрации доступны только для гостей. Если вы этого не сделаете, это может привести к неправильной работе."
 
-#: gateways/class.gateway.php:396
-#: gateways/class.gateway.php:405
-#@ em-pro
-msgid "None yet"
-msgstr "Пока нет"
+# @ em-pro
+#: emp-bookings-form.php:681
+msgid "<strong>Important:</strong> When editing this form, to make sure your old booking information is displayed, make sure new field ids correspond with the old ones."
+msgstr "<strong>Важно:</strong> Чтобы уже имеющаяся информация отображалась после редактирования этой формы, убедитесь, чтобы значеия id новых полей соотвествовали старым."
 
-#: gateways/class.gateway.php:414
-#@ em-pro
-msgid "None"
-msgstr "Ни один"
+# @ default
+#: emp-bookings-form.php:686
+msgid "DO NOT change these values if you want to keep your field settings associated with previous booking fields."
+msgstr "НЕ МЕНЯЙТЕ эти значения, если хотите сохранить связь настроек полей с существвующими полями заказа."
 
-#: gateways/class.gateway.php:425
-#@ em-pro
-msgid "No Transactions"
-msgstr "Нет Сделки"
+# @ em-pro
+#: emp-bookings-form.php:698
+msgid "Select Type"
+msgstr "Выберите тип"
 
-#: gateways/class.gateway.php:455
-#@ default
-msgid "Gateway updated."
-msgstr "Шлюз обновляется."
+# @ em-pro
+#: emp-bookings-form.php:699
+msgid "Customizable Fields"
+msgstr "Настраиваемые поля"
 
-#: gateways/class.gateway.php:456
-#@ default
-msgid "Gateway not updated."
-msgstr "Шлюз не обновляется."
+# @ em-pro
+#: emp-bookings-form.php:709
+msgid "Registration Fields"
+msgstr "Поля для регистрации"
 
-#: gateways/class.gateway.php:457
-#@ default
-msgid "Gateway activated."
-msgstr "Шлюз активирован."
+# @ em-pro
+#: emp-bookings-form.php:721
+msgid "remove"
+msgstr "удалить"
 
-#: gateways/class.gateway.php:458
-#@ default
-msgid "Gateway not activated."
-msgstr "Шлюз не активирована."
+# @ em-pro
+#: emp-bookings-form.php:721
+#: emp-bookings-form.php:1040
+#: emp-bookings-form.php:1043
+#: emp-bookings-form.php:1103
+msgid "options"
+msgstr "настройки"
 
-#: gateways/class.gateway.php:459
-#@ default
-msgid "Gateway deactivated."
-msgstr "Шлюз отключена."
-
-#: gateways/class.gateway.php:460
-#@ default
-msgid "Gateway not deactivated."
-msgstr "Шлюз не отключается."
-
-#: gateways/class.gateway.php:461
-#@ default
-msgid "Gateway activation toggled."
-msgstr "Шлюз активации переключаться."
-
-#: gateways/class.gateway.php:465
-#@ em-pro
-msgid "Edit Gateways"
-msgstr "Изменить шлюзы"
-
-#: gateways/class.gateway.php:477
-#: gateways/class.gateway.php:576
-#: gateways/gateway.offline.php:366
-#@ default
-msgid "Bulk Actions"
-msgstr "Массовые действия"
-
-#: gateways/class.gateway.php:478
-#: gateways/class.gateway.php:577
-#@ default
-msgid "Toggle activation"
-msgstr "Переключить активации"
-
-#: gateways/class.gateway.php:480
-#@ default
-msgid "Apply"
-msgstr "Применять"
-
-#: gateways/class.gateway.php:489
-#@ em-pro
-msgid "Gateway Name"
-msgstr "Имя Шлюза"
-
-#: gateways/class.gateway.php:490
-#: gateways/class.gateway.php:550
-#@ em-pro
-msgid "Active"
-msgstr "Активный"
-
-#: gateways/class.gateway.php:491
-#@ em-pro
-msgid "Transactions"
-msgstr "Сделки"
-
-#: gateways/class.gateway.php:537
-#@ default
-msgid "Settings"
+# @ em-pro
+#: emp-bookings-form.php:726
+#: emp-bookings-form.php:758
+msgid "Options"
 msgstr "Настройки"
 
-#: gateways/class.gateway.php:540
-#@ default
-msgid "Deactivate"
-msgstr "Дезактивировать"
+# @ em-pro
+#: emp-bookings-form.php:729
+#: emp-bookings-form.php:761
+msgid "Available options, one per line."
+msgstr "Доступные настройки, по одной в строке."
 
-#: gateways/class.gateway.php:542
-#@ default
-msgid "Activate"
-msgstr "Активировать"
+# @ em-pro
+#: emp-bookings-form.php:733
+msgid "Use Default?"
+msgstr "Использовать настройки по умолчанию?"
 
-#: gateways/class.gateway.php:552
-#@ em-pro
-msgid "Inactive"
-msgstr "Неактивный"
+# @ em-pro
+#: emp-bookings-form.php:737
+msgid "If checked, the first value above will be used."
+msgstr "Если этот пункт отмечен, то будет использоваться первое значение из вышеуказанных."
 
-#: gateways/class.gateway.php:557
-#@ em-pro
-msgid "View transactions"
-msgstr "Просмотр операций"
+# @ em-pro
+#: emp-bookings-form.php:741
+msgid "Default Text"
+msgstr "Текст по умолчанию"
 
-#: gateways/class.gateway.php:566
-#@ em-pro
-msgid "No Payment gateways where found for this install."
-msgstr "Нет Платежные шлюзы, где найти для этой установки."
+# @ em-pro
+#: emp-bookings-form.php:743
+msgid "Select ..."
+msgstr "Выберите ..."
 
-#: gateways/gateway.offline.php:42
-#@ em-pro
-msgid "Payment has been registered."
-msgstr "Оплата была зарегистрирована."
+# @ em-pro
+#: emp-bookings-form.php:744
+msgid "Shown when a default value isn't selected, selected by default."
+msgstr "Отображается, когда значение по умолчанию не выбрано, выбирается по умолчанию."
 
-#: gateways/gateway.offline.php:46
-#@ em-pro
-msgid "Booking is now fully paid and confirmed."
-msgstr "Забронировать номер в настоящее время полностью оплачены и подтверждены."
+# @ em-pro
+#: emp-bookings-form.php:748
+#: emp-bookings-form.php:765
+#: emp-bookings-form.php:782
+#: emp-bookings-form.php:799
+#: emp-bookings-form.php:816
+#: emp-bookings-form.php:844
+msgid "Error Message"
+msgstr "Сообщение об ошибке"
 
-#: gateways/gateway.offline.php:89
-#: gateways/gateway.offline.php:91
-#@ em-pro
-msgid "Pay Offline"
-msgstr "Обратите Offline"
+# @ em-pro
+#: emp-bookings-form.php:751
+#: emp-bookings-form.php:768
+msgid "This error will show if a value isn't chosen."
+msgstr "Эта ошибка означает, что значение не выбрано."
 
-#: gateways/gateway.offline.php:130
-#: gateways/gateway.offline.php:153
-#@ dbem
-msgid "Add Offline Payment"
-msgstr "Добавить Offline Оплата"
+# @ em-pro
+#: emp-bookings-form.php:775
+msgid "Checked by default?"
+msgstr "Отмечено по умолчанию?"
 
-#: gateways/gateway.offline.php:144
-#@ em-pro
-msgid "Comments"
-msgstr "Комментарии"
+# @ em-pro
+#: emp-bookings-form.php:785
+msgid "This error will show if this box is not checked."
+msgstr "Эта ошибка значит, что пункт не был отмечен."
 
-#: gateways/gateway.offline.php:177
-#@ dbem
-msgid "Bookings are closed for this event."
-msgstr "Бронирование закрыты для этого события."
+# @ em-pro
+#: emp-bookings-form.php:792
+#: emp-bookings-form.php:809
+msgid "Regex"
+msgstr "Регулярное выражение"
 
-#: gateways/gateway.offline.php:189
-#@ dbem
-msgid "Ticket Type"
-msgstr "Запрос Вид"
+# @ em-pro
+#: emp-bookings-form.php:795
+#: emp-bookings-form.php:812
+msgid "By adding a regex expression, you can limit the possible values a user can input, for example the following only allows numbers: "
+msgstr "Добавив регулярное выражение, вы можете ограничить значения, которые будет вводить пользователь. Например, следующее позволяет вводить только цифры:"
 
-#: gateways/gateway.offline.php:191
-#@ dbem
-msgid "Price"
-msgstr "Цена"
+# @ em-pro
+#: emp-bookings-form.php:802
+#: emp-bookings-form.php:819
+msgid "If the regex above does not match this error will be displayed."
+msgstr "Эта ошибка означает, что указанное выше регулярное выражение не подходит."
 
-#: gateways/gateway.offline.php:193
-#: gateways/gateway.offline.php:227
-#@ dbem
-msgid "Spaces"
-msgstr "Пространства"
+# @ em-pro
+#: emp-bookings-form.php:830
+msgid "Private Key"
+msgstr "Приватный ключ"
 
-#: gateways/gateway.offline.php:210
-#: gateways/gateway.offline.php:233
-#@ dbem
-msgid "N/A"
-msgstr "N / A"
+# @ em-pro
+#: emp-bookings-form.php:833
+#: emp-bookings-form.php:840
+#, php-format
+msgid "Required, get your keys <a href=\"%s\">here</a>"
+msgstr "Необходимо получить ваши ключ <a href=\"%s\">здесь</a>"
 
-#: gateways/gateway.offline.php:245
-#@ dbem
-msgid "Select User"
-msgstr "Выбор пользователя"
+# @ em-pro
+#: emp-bookings-form.php:837
+msgid "Public Key"
+msgstr "Публичный ключ"
 
-#: gateways/gateway.offline.php:249
-#@ dbem
-msgid "Already Paid?"
-msgstr "Уже заплатили?"
+# @ em-pro
+#: emp-bookings-form.php:847
+msgid "This error will show if the captcha is not correct."
+msgstr "Эта ошибка означает, что введена неправильная captcha."
 
-#: emp-install.php:54
-#: gateways/gateway.offline.php:256
-#@ dbem
+# @ em-pro
+#: emp-bookings-form.php:856
+msgid "Add booking field"
+msgstr "Добавить поле заказа"
+
+# @ em-pro
+#: emp-bookings-form.php:864
+msgid "Disabling this option reverts your booking form with limited functionality as in the free version."
+msgstr "Отключение этой настройки вернет вашу форму заказа билетов к ограниченному функционалу как в бесплатной версии."
+
+# @ em-pro
+#: emp-bookings-form.php:1010
+msgid "Save Forms"
+msgstr "Сохранить формы"
+
+# @ em-pro
+#: emp-bookings-form.php:1083
+msgid "hide options"
+msgstr "скрыть настройки"
+
+# @ em-pro
+#: emp-install.php:75
+#, php-format
+msgid "Please fill in the field: %s"
+msgstr "Пожалуйста, заполните поле: %s"
+
+# @ dbem
+#: emp-install.php:77
+msgid "Name"
+msgstr "Имя"
+
+# @ dbem
+#: emp-install.php:78
+#: emp-install.php:88
+msgid "Email"
+msgstr "Email"
+
+# @ dbem
+#: emp-install.php:79
+msgid "Phone"
+msgstr "Телефон"
+
+# @ dbem
+#: emp-install.php:80
+#: gateways/gateway.offline.php:267
 msgid "Comment"
 msgstr "Комментарий"
 
-#: gateways/gateway.offline.php:263
-#@ em-pro
+# @ em-pro
+#: emp-updates.php:31
+#, php-format
+msgid "Dev Mode active: Just a friendly reminder that you have added %s to your wp-config.php file. Only admins see this message, and it will go away when you remove that line."
+msgstr "Режим разработки: просто напоминание, что вы добавили в %s  файл wp-config.php Только администраторы видят это сообщение и оно пропадет, как только вы уберете эту строку."
+
+# @ dbem
+#: emp-updates.php:67
+msgid "Click to toggle"
+msgstr "Щелкните, чтобы переключить"
+
+# @ dbem
+#: emp-updates.php:67
+msgid "Pro Membership Key"
+msgstr "Pro Membership Key"
+
+# @ dbem
+#: emp-updates.php:71
+msgid "Pro Member Key"
+msgstr "Pro Member Key"
+
+# @ dbem
+#: emp-updates.php:71
+#, php-format
+msgid "Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>."
+msgstr "Введите ваш Pro Member Key, чтобы получать автоматические обнвления. Вы можете получить ключ <a href=\"%s\">здесь</a>."
+
+# @ default
+#: gateways/class.gateway.php:97
+msgid "Payment Gateways"
+msgstr "Платежные шлюзы"
+
+# @ em-pro
+#: gateways/class.gateway.php:167
+#, php-format
+msgid "Edit &quot;%s&quot; settings"
+msgstr "Редактировать настройки  &quot;%s&quot;"
+
+# @ default
+#: gateways/class.gateway.php:176
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+# @ dbem
+#: gateways/class.gateway.php:277
+#, php-format
+msgid "%s Transactions"
+msgstr "%s транзакций"
+
+# @ em-pro
+#: gateways/class.gateway.php:297
+msgid "Event"
+msgstr "Семинар"
+
+# @ em-pro
+# @ dbem
+#: gateways/class.gateway.php:298
+#: gateways/gateway.offline.php:253
+msgid "User"
+msgstr "Пользователь"
+
+# @ em-pro
+#: gateways/class.gateway.php:299
+msgid "Date"
+msgstr "Дата"
+
+# @ em-pro
+#: gateways/class.gateway.php:300
+#: gateways/gateway.offline.php:149
+msgid "Amount"
+msgstr "Количество"
+
+# @ em-pro
+#: gateways/class.gateway.php:301
+msgid "Transaction id"
+msgstr "Id транзакции"
+
+# @ em-pro
+#: gateways/class.gateway.php:302
+msgid "Status"
+msgstr "Статус"
+
+# @ em-pro
+#: gateways/class.gateway.php:303
+msgid "Notes"
+msgstr "Примечание"
+
+# @ em-pro
+#: gateways/class.gateway.php:314
+msgid "Recent transactions"
+msgstr "Последние транзакции"
+
+# @ em-pro
+#: gateways/class.gateway.php:315
+msgid "Pending transactions"
+msgstr "Приостановленные транзакции"
+
+# @ em-pro
+#: gateways/class.gateway.php:317
+msgid "Future transactions"
+msgstr "Готовящиеся транзакции"
+
+# @ em-pro
+#: gateways/class.gateway.php:396
+#: gateways/class.gateway.php:405
+msgid "None yet"
+msgstr "Еще нет"
+
+# @ em-pro
+#: gateways/class.gateway.php:414
+msgid "None"
+msgstr "Нет"
+
+# @ em-pro
+#: gateways/class.gateway.php:425
+msgid "No Transactions"
+msgstr "Нет транзакций"
+
+# @ default
+#: gateways/class.gateway.php:450
+msgid "Gateway updated."
+msgstr "Шлюз обновлен."
+
+# @ default
+#: gateways/class.gateway.php:451
+msgid "Gateway not updated."
+msgstr "Шлюз не обновлен."
+
+# @ default
+#: gateways/class.gateway.php:452
+msgid "Gateway activated."
+msgstr "Шлюз активирован."
+
+# @ default
+#: gateways/class.gateway.php:453
+msgid "Gateway not activated."
+msgstr "Шлюз не активирован"
+
+# @ default
+#: gateways/class.gateway.php:454
+msgid "Gateway deactivated."
+msgstr "Шлюз отключен."
+
+# @ default
+#: gateways/class.gateway.php:455
+msgid "Gateway not deactivated."
+msgstr "Шлюз не отключен."
+
+# @ default
+#: gateways/class.gateway.php:456
+msgid "Gateway activation toggled."
+msgstr "Активация шлюза переключена."
+
+# @ em-pro
+#: gateways/class.gateway.php:460
+msgid "Edit Gateways"
+msgstr "Изменить шлюзы"
+
+# @ default
+#: gateways/class.gateway.php:472
+#: gateways/class.gateway.php:571
+#: gateways/gateway.offline.php:385
+msgid "Bulk Actions"
+msgstr "Групповые операции"
+
+# @ default
+#: gateways/class.gateway.php:473
+#: gateways/class.gateway.php:572
+msgid "Toggle activation"
+msgstr "Переключить режим активации"
+
+# @ default
+#: gateways/class.gateway.php:475
+msgid "Apply"
+msgstr "Применить"
+
+# @ em-pro
+#: gateways/class.gateway.php:484
+msgid "Gateway Name"
+msgstr "Название шлюза"
+
+# @ em-pro
+#: gateways/class.gateway.php:485
+#: gateways/class.gateway.php:545
+msgid "Active"
+msgstr "Активно"
+
+# @ em-pro
+#: gateways/class.gateway.php:486
+msgid "Transactions"
+msgstr "Транзакции"
+
+# @ default
+#: gateways/class.gateway.php:532
+msgid "Settings"
+msgstr "Настройки"
+
+# @ default
+#: gateways/class.gateway.php:535
+msgid "Deactivate"
+msgstr "Отключить"
+
+# @ default
+#: gateways/class.gateway.php:537
+msgid "Activate"
+msgstr "Активировать"
+
+# @ em-pro
+#: gateways/class.gateway.php:547
+msgid "Inactive"
+msgstr "Неактивно"
+
+# @ em-pro
+#: gateways/class.gateway.php:552
+msgid "View transactions"
+msgstr "Показать транзакции"
+
+# @ em-pro
+#: gateways/class.gateway.php:561
+msgid "No Payment gateways where found for this install."
+msgstr "Платежные шлюзы для данной установки не обнаружены."
+
+# @ em-pro
+#: gateways/gateway.offline.php:43
+msgid "Payment has been registered."
+msgstr "Платеж был зарегистрирован."
+
+# @ em-pro
+#: gateways/gateway.offline.php:47
+msgid "Booking is now fully paid and confirmed."
+msgstr "Заказ билетов теперь полностью оплачен и подтвержден."
+
+# @ em-pro
+#: gateways/gateway.offline.php:90
+#: gateways/gateway.offline.php:92
+msgid "Pay Offline"
+msgstr "Офлайновый платеж"
+
+# @ dbem
+#: gateways/gateway.offline.php:141
+#: gateways/gateway.offline.php:164
+msgid "Add Offline Payment"
+msgstr "Добавить офлайновый платеж"
+
+# @ em-pro
+#: gateways/gateway.offline.php:155
+msgid "Comments"
+msgstr "Комментарии"
+
+# @ em-pro
+#: gateways/gateway.offline.php:185
+#, php-format
+msgid "Add Booking For &quot;%s&quot;"
+msgstr "Добавить заказ билетов на &quot;%s&quot;"
+
+# @ dbem
+#: gateways/gateway.offline.php:188
+msgid "Bookings are closed for this event."
+msgstr "Прием билетов на этот семинар закрыт"
+
+# @ dbem
+#: gateways/gateway.offline.php:200
+msgid "Ticket Type"
+msgstr "Тип билета"
+
+# @ dbem
+#: gateways/gateway.offline.php:202
+msgid "Price"
+msgstr "Цена"
+
+# @ dbem
+#: gateways/gateway.offline.php:204
+#: gateways/gateway.offline.php:238
+msgid "Spaces"
+msgstr "Места"
+
+# @ dbem
+#: gateways/gateway.offline.php:221
+#: gateways/gateway.offline.php:244
+msgid "N/A"
+msgstr "Недоступно"
+
+# @ dbem
+#: gateways/gateway.offline.php:256
+msgid "Select User"
+msgstr "Выберите пользователя"
+
+# @ dbem
+#: gateways/gateway.offline.php:260
+msgid "Already Paid?"
+msgstr "Уже оплачено?"
+
+# @ em-pro
+#: gateways/gateway.offline.php:274
 msgid "Submit Booking"
-msgstr "Отправить заказ"
+msgstr "Подтвердить заказ"
 
-#: gateways/gateway.offline.php:272
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:283
 msgid "No more tickets available at this time."
-msgstr "Нет больше билетов на данный момент."
+msgstr "В данный момент нет билетов."
 
-#: gateways/gateway.offline.php:287
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.offline.php:298
 msgid "Button Image"
 msgstr "Изображение кнопки"
 
-#: gateways/gateway.offline.php:297
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.offline.php:301
+msgid "If you enter an image URL, this will be used instead of a button."
+msgstr "Если вы введете веб-адрес изображения, то оно будет отображаться вместо кнопки."
+
+# @ em-pro
+#: gateways/gateway.offline.php:305
+msgid "Button Text"
+msgstr "Текст кнопки"
+
+# @ em-pro
+#: gateways/gateway.offline.php:308
 msgid "Change the default button text."
 msgstr "Изменить текст кнопки по умолчанию."
 
-#: gateways/gateway.offline.php:344
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.offline.php:363
 msgid "Bookings Awaiting Payment"
-msgstr "Бронирование ожидают оплаты"
+msgstr "Заказы, ожидающие оплаты"
 
-#: gateways/gateway.offline.php:355
-#: gateways/gateway.offline.php:357
-#@ default
+# @ default
+#: gateways/gateway.offline.php:374
+#: gateways/gateway.offline.php:376
 msgid "Search"
 msgstr "Поиск"
 
-#: gateways/gateway.offline.php:369
-#: gateways/gateway.offline.php:434
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:388
+#: gateways/gateway.offline.php:453
 msgid "Approve"
-msgstr "Одобрять"
+msgstr "Подтвердить"
 
-#: gateways/gateway.offline.php:372
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:391
 msgid "Decline"
-msgstr "Снижение"
+msgstr "Отклонить"
 
-#: gateways/gateway.offline.php:435
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:454
 msgid "Reject"
-msgstr "Отвергать"
+msgstr "Отказать"
 
-#: gateways/gateway.offline.php:436
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:455
 msgid "Delete"
-msgstr "Удалять"
+msgstr "Удалить"
 
-#: gateways/gateway.offline.php:437
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:456
 msgid "Edit/View"
-msgstr "Редактировать / Посмотреть"
+msgstr "Редактировать/Смотреть"
 
-#: gateways/gateway.offline.php:441
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:469
 msgid "Be aware that by approving a booking awaiting payment, a full payment transaction will be registered against this booking, meaning that it will be considered as paid."
-msgstr "Знайте, что, утвердив бронирования ожидают оплаты, полный платежных операций будет зарегистрирован против этой регистрации, а это означает, что она будет рассматриваться как оплачивается."
+msgstr "Будьте острожны, подтвердив заказ, ожидающий оплаты, вы зарегистрируете транзацию проведения платежа напротив этого заказа, что значит, что он будет считаться оплаченным."
 
-#: gateways/gateway.offline.php:459
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:477
 msgid "No pending bookings."
-msgstr "Нет отложенных заказов."
+msgstr "Нет приостановленных заказов."
 
-#: gateways/gateway.offline.php:474
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:492
 msgid "Add Booking"
 msgstr "Добавить заказ"
 
-#: gateways/gateway.offline.php:479
-#@ dbem
+# @ dbem
+#: gateways/gateway.offline.php:497
 msgid "add booking"
-msgstr "добавить бронирования"
+msgstr "добавить заказ"
 
-#: gateways/gateway.paypal.php:132
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:38
+msgid "Resume Payment"
+msgstr "Возобновить платеж"
+
+# @ em-pro
+#: emp-install.php:82
+msgid "Please wait whilst you are redirected to PayPal to proceed with payment."
+msgstr "Пожалуйста, подождите, идет перенаправление на Paypal для выполнения платежа."
+
+# @ em-pro
+#: gateways/gateway.paypal.php:137
 msgid "You must enable javascript in order for you to place a booking."
-msgstr "Необходимо включить JavaScript для того, чтобы Вам разместить заказ."
+msgstr "Вы должны включит Javascript, чтобы разместить заказ."
 
-#: gateways/gateway.paypal.php:157
-#@ em-pro
-msgid "Pay with Paypal"
-msgstr "Оплатить с помощью Paypal"
-
-#: gateways/gateway.paypal.php:158
-#@ dbem
-msgid "Javascript is required in order to make bookings with Paypal. Please enable this in your browser settings."
-msgstr "Javascript требуется для того, чтобы сделать заказ с Paypal. Пожалуйста, включите это в настройках браузера."
-
+# @ em-pro
 #: gateways/gateway.paypal.php:166
-#@ dbem
+msgid "Pay with Paypal"
+msgstr "Оплатить через Paypal"
+
+# @ dbem
+#: gateways/gateway.paypal.php:167
+msgid "Javascript is required in order to make bookings with Paypal. Please enable this in your browser settings."
+msgstr "Чтобы сделать заказ с помощью Paypal, требуется работающий javascript. Пожалуйста, убедитесь, что он включен в настройках вашего браузера."
+
+# @ dbem
+#: gateways/gateway.paypal.php:175
 msgid "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a seperate email containing account details to access your booking information on this site. You may log into your account at www.paypal.com to view details of this transaction."
-msgstr "Спасибо за ваш платеж. Ваша сделка была завершена, и квитанцию ​​за покупку был отправлен к вам вместе с отдельной письмо, содержащее реквизиты для доступа к информации бронирования на этом сайте. Вы можете войти в свой аккаунт на www.paypal.com, чтобы посмотреть детали этой сделки."
+msgstr "Спасибо за ваш платеж. Ваша транзакция была завершена и квитанция платежа была выслана на ваш email, наряду с отдельным письмом, содержащим данные вашей учетной записи, позволяющей посмотреть информацию о вашем заказе на этом сайте. Вы можете войти под своей учетной записью на www.paypal.com, чтобы узнать детали этой транзакции."
 
-#: gateways/gateway.paypal.php:177
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:186
 msgid "PayPal Email"
-msgstr "PayPal Email"
+msgstr "Email в PayPal"
 
-#: gateways/gateway.paypal.php:183
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:192
 msgid "PayPal Site"
-msgstr "PayPal сайта"
+msgstr "Сайт PayPal"
 
-#: gateways/gateway.paypal.php:203
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:212
 msgid "Paypal Currency"
-msgstr "Paypal валют"
+msgstr "Валюта в PayPal"
 
-#: gateways/gateway.paypal.php:204
+# @ dbem
+#: gateways/gateway.paypal.php:213
 #, php-format
-#@ dbem
 msgid "Set your currency in the <a href=\"%s\">settings</a> page."
-msgstr "Выберите валюту в <a href=\"%s\">настройках</a> страницы."
+msgstr "Установите вашу валюту на странице <a href=\"%s\">настроек</a>."
 
-#: gateways/gateway.paypal.php:207
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:216
 msgid "PayPal Mode"
-msgstr "PayPal режим"
+msgstr "Режим PayPal"
 
-#: gateways/gateway.paypal.php:210
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:219
 msgid "Live Site"
-msgstr "Живая сайта"
+msgstr "Сайт"
 
-#: gateways/gateway.paypal.php:211
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:220
 msgid "Test Mode (Sandbox)"
-msgstr "Тестовый режим (Sandbox)"
+msgstr "Режим тестирования (Песочница)"
 
-#: gateways/gateway.paypal.php:217
-#@ em-pro
-msgid "Subscription button"
-msgstr "Подписка кнопку"
-
-#: gateways/gateway.paypal.php:223
-#@ em-pro
-msgid "PayPal Page Logo"
-msgstr "PayPal Логотип страницу"
-
+# @ em-pro
 #: gateways/gateway.paypal.php:226
-#@ em-pro
+msgid "Subscription button"
+msgstr "Кнопка подписки"
+
+# @ em-pro
+#: gateways/gateway.paypal.php:232
+msgid "PayPal Page Logo"
+msgstr "Логотип страницы PayPal"
+
+# @ em-pro
+#: gateways/gateway.paypal.php:235
 msgid "Add your logo to the PayPal payment page. It's highly recommended you link to a https:// address."
-msgstr "Добавить свой логотип на страницу оплаты PayPal. Это рекомендуется Вы даете ссылку на https:// адрес."
+msgstr "Добавьте свой логотип на страницу платежа Paypal. Рекомендуется пользоваться ссылкой на https:// адрес."
 
-#: gateways/gateway.paypal.php:230
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:239
 msgid "Border Color"
-msgstr "Цвет границы"
+msgstr "Цвет рамки"
 
-#: gateways/gateway.paypal.php:233
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:242
 msgid "Provide a hex value color to change the color from the default blue to another color (e.g. #CCAAAA)."
-msgstr "Обеспечить шестнадцатеричный значение цвета, чтобы изменить цвет по умолчанию синий цвет на другой (например, # CCAAAA)."
+msgstr "Введите шестнадцатеричное значение цвета, чтобы изменить используемый по умолчанию голубой на новый цвет (например, #CCAAAA)."
 
-#: gateways/gateway.paypal.php:237
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:246
 msgid "Manually approve completed transactions?"
-msgstr "Вручную утвердить совершенных сделок?"
+msgstr "Подтвердить вручную выполненные транзакции?"
 
-#: gateways/gateway.paypal.php:240
-#@ em-pro
+# @ em-pro
+#: gateways/gateway.paypal.php:249
 msgid "By default, when someone pays for a booking, it gets automatically approved once the payment is confirmed. If you would like to manually verify and approve bookings, tick this box."
-msgstr "По умолчанию, когда кто-то платит за бронирование, он получает автоматически утверждены раз оплаты подтверждается. Если вы хотите, чтобы вручную проверить и утвердить заказ, поставьте галочку."
+msgstr "По умолчанию, когда кто-то оплачивает заказ, он  получает подтверждение автоматически после завершения платежа. Если вы хотите проверять и подтверждать заказы вручную, поставьте отметку в этом пукте."
 
-#: emp-bookings-form.php:316
-#@ dbem
-msgid "The email address isn&#8217;t correct."
-msgstr ""
+# @ dbem
+#: emp-install.php:83
+#: emp-install.php:84
+msgid "Booking successful."
+msgstr "Заказ выполнен успешно."
 
-#: emp-bookings-form.php:335
-#@ dbem
-msgid "This username is invalid because it uses illegal characters. Please enter a valid username."
-msgstr ""
-
-#: emp-bookings-form.php:338
-#@ default
-msgid "This username is already registered, please choose another one."
-msgstr ""
-
-#: emp-bookings-form.php:474
-#: emp-bookings-form.php:543
-#@ dbem
-msgid "Yes"
-msgstr ""
-
-#: emp-bookings-form.php:474
-#: emp-bookings-form.php:543
-#@ dbem
-msgid "No"
-msgstr ""
-
-#: emp-bookings-form.php:483
-#: emp-bookings-form.php:637
-#@ default
-#@ em-pro
-msgid "Booking Form Editor"
-msgstr ""
-
-#: emp-bookings-form.php:615
-#@ em-pro
-msgid "You must include a name and email field type for booking forms to work. These are used to create the user account and aren't shown to logged in users."
-msgstr ""
-
-#: emp-bookings-form.php:622
-#@ em-pro
-msgid "Changes Saved"
-msgstr ""
-
-#: emp-bookings-form.php:644
-#@ em-pro
-msgid "On this page you can override the default booking form and add your own custom fields."
-msgstr ""
-
-#: emp-bookings-form.php:673
-#@ em-pro
-msgid "Booking Form - General Information"
-msgstr ""
-
-#: emp-bookings-form.php:676
-#@ em-pro
-msgid "You can customize the fields shown in your booking forms below. "
-msgstr ""
-
-#: emp-bookings-form.php:677
-#@ em-pro
-msgid "It is required that you have at least an email and name field so guest users can register. Registration fields are only shown to guest visitors. Not doing so may result in unexpected behaviour."
-msgstr ""
-
-#: emp-bookings-form.php:678
-#@ em-pro
-msgid "<strong>Important:</strong> When editing this form, to make sure your old booking information is displayed, make sure new field ids correspond with the old ones."
-msgstr ""
-
-#: emp-bookings-form.php:683
-#@ default
-msgid "DO NOT change these values if you want to keep your field settings associated with previous booking fields."
-msgstr ""
-
-#: emp-bookings-form.php:695
-#@ em-pro
-msgid "Select Type"
-msgstr ""
-
-#: emp-bookings-form.php:696
-#@ em-pro
-msgid "Customizable Fields"
-msgstr ""
-
-#: emp-bookings-form.php:706
-#@ em-pro
-msgid "Registration Fields"
-msgstr ""
-
-#: emp-bookings-form.php:718
-#@ em-pro
-msgid "remove"
-msgstr ""
-
-#: emp-bookings-form.php:718
-#: emp-bookings-form.php:1037
-#: emp-bookings-form.php:1040
-#: emp-bookings-form.php:1100
-#@ em-pro
-msgid "options"
-msgstr ""
-
-#: emp-bookings-form.php:723
-#: emp-bookings-form.php:755
-#@ em-pro
-msgid "Options"
-msgstr ""
-
-#: emp-bookings-form.php:726
-#: emp-bookings-form.php:758
-#@ em-pro
-msgid "Available options, one per line."
-msgstr ""
-
-#: emp-bookings-form.php:730
-#@ em-pro
-msgid "Use Default?"
-msgstr ""
-
-#: emp-bookings-form.php:734
-#@ em-pro
-msgid "If checked, the first value above will be used."
-msgstr ""
-
-#: emp-bookings-form.php:738
-#@ em-pro
-msgid "Default Text"
-msgstr ""
-
-#: emp-bookings-form.php:740
-#@ em-pro
-msgid "Select ..."
-msgstr ""
-
-#: emp-bookings-form.php:741
-#@ em-pro
-msgid "Shown when a default value isn't selected, selected by default."
-msgstr ""
-
-#: emp-bookings-form.php:745
-#: emp-bookings-form.php:762
-#: emp-bookings-form.php:779
-#: emp-bookings-form.php:796
-#: emp-bookings-form.php:813
-#: emp-bookings-form.php:841
-#@ em-pro
-msgid "Error Message"
-msgstr ""
-
-#: emp-bookings-form.php:748
-#: emp-bookings-form.php:765
-#@ em-pro
-msgid "This error will show if a value isn't chosen."
-msgstr ""
-
-#: emp-bookings-form.php:772
-#@ em-pro
-msgid "Checked by default?"
-msgstr ""
-
-#: emp-bookings-form.php:782
-#@ em-pro
-msgid "This error will show if this box is not checked."
-msgstr ""
-
-#: emp-bookings-form.php:789
-#: emp-bookings-form.php:806
-#@ em-pro
-msgid "Regex"
-msgstr ""
-
-#: emp-bookings-form.php:792
-#: emp-bookings-form.php:809
-#@ em-pro
-msgid "By adding a regex expression, you can limit the possible values a user can input, for example the following only allows numbers: "
-msgstr ""
-
-#: emp-bookings-form.php:799
-#: emp-bookings-form.php:816
-#@ em-pro
-msgid "If the regex above does not match this error will be displayed."
-msgstr ""
-
-#: emp-bookings-form.php:827
-#@ em-pro
-msgid "Private Key"
-msgstr ""
-
-#: emp-bookings-form.php:830
-#: emp-bookings-form.php:837
-#, php-format
-#@ em-pro
-msgid "Required, get your keys <a href=\"%s\">here</a>"
-msgstr ""
-
-#: emp-bookings-form.php:834
-#@ em-pro
-msgid "Public Key"
-msgstr ""
-
-#: emp-bookings-form.php:844
-#@ em-pro
-msgid "This error will show if the captcha is not correct."
-msgstr ""
-
-#: emp-bookings-form.php:853
-#@ em-pro
-msgid "Add booking field"
-msgstr ""
-
-#: emp-bookings-form.php:861
-#@ em-pro
-msgid "Disabling this option reverts your booking form with limited functionality as in the free version."
-msgstr ""
-
-#: emp-bookings-form.php:1007
-#@ em-pro
-msgid "Save Forms"
-msgstr ""
-
-#: emp-bookings-form.php:1080
-#@ em-pro
-msgid "hide options"
-msgstr ""
-
-#: emp-install.php:49
-#, php-format
-#@ em-pro
-msgid "Please fill in the field: %s"
-msgstr ""
-
-#: emp-install.php:51
-#@ dbem
-msgid "Name"
-msgstr ""
-
-#: emp-install.php:52
-#: emp-install.php:59
-#@ dbem
-msgid "Email"
-msgstr ""
-
-#: emp-install.php:53
-#@ dbem
-msgid "Phone"
-msgstr ""
-
+# @ em-pro
 #: emp-updates.php:24
 #, php-format
-#@ em-pro
-msgid "Pease update your <a href=\"%s\">Membership Key</a> for Events Mananager Pro <a href=\"%s\">here</a> to dismiss this message."
-msgstr ""
+msgid "To access automatic updates, you must update your <a href=\"%s\">Membership Key</a> for Events Mananager Pro <a href=\"#pro-api\">here</a>. Only admins see this message."
+msgstr "Чтобы получать автоматические обноовления, вы должны обновить ваш <a href=\"%s\">Membership Key</a> для Events Mananager Pro <a href=\"#pro-api\">здесь</a>. Только администраторы видят это сообщение."
 
-#: emp-updates.php:31
+# @ em-pro
+#: events-manager-pro.php:78
+msgid "Please make sure you install Events Manager as well. You can search and install this plugin from your plugin installer or download it <a href=\"http://wordpress.org/extend/plugins/events-manager/\">here</a>."
+msgstr "Пожалуйста, убедитесь, что у вас также установлен Events Manager. Вы можете найти и установить его с помощью установщика плагинов или скачать его <a href=\"http://wordpress.org/extend/plugins/events-manager/\">здесь</a>."
+
+# @ em-pro
+#: gateways/gateway.offline.php:312
+#: gateways/gateway.paypal.php:255
+msgid "Success Message"
+msgstr "Сообщение об успешном выполнении операции"
+
+# @ em-pro
+#: gateways/gateway.offline.php:315
+msgid "The message that is shown to a user when a booking with offline payments is successful."
+msgstr "Сообщение, которое выдается пользователю, если заказ с офлайновым платежом выполнен успешно."
+
+# @ em-pro
+#: gateways/gateway.paypal.php:253
+msgid "Success Messages"
+msgstr "Сообщения об успешном выполнении операции"
+
+# @ em-pro
+#: gateways/gateway.paypal.php:258
+msgid "The message that is shown to a user when a booking is successful whilst being redirected to PayPal for payment."
+msgstr "Сообщение, которое выдается пользователю, если заказ выполнен успешно, пока он перенапраляется на сайт PayPal для оплаты."
+
+# @ em-pro
+#: gateways/gateway.paypal.php:262
+msgid "Success Free Message"
+msgstr "Сообщение об успешном выполнении операции с бесплатным билетом"
+
+# @ em-pro
+#: gateways/gateway.paypal.php:265
+msgid "If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected to PayPal."
+msgstr "В некоторых случаях, если наряду с платными билетами, вы допускаете и бесплатные (например, оплата при входе), будет показано это сообщение и пользователь не будет перенаправлен на сайт PayPal."
+
+# @ em-pro
+#: emp-updates.php:38
+msgid "Dev Mode active: Just a friendly reminder that you are updating to development versions. Only admins see this message, and it will go away when you disable this <a href=\"#pro-api\">here</a> in your settings."
+msgstr "Режим разработки: просто напоминаем, что идет обновление до версий разработчиков. Это сообщение может видеть только администратор и его можно отключить <a href=\"#pro-api\">здесь</a>  у себя в настройках."
+
+# @ dbem
+#: emp-updates.php:88
+msgid "Try Development Mode?"
+msgstr "Перейти в Режим разработки?"
+
+# @ dbem
+#: emp-updates.php:88
+msgid "Select yes if you would like to check for the latest development version rather than stable updates. <strong>Warning:</strong> Development versions are not always fully tested before release, use wisely!"
+msgstr "Выберите \"Да\", если хотите проверять наличие последних версий разработчиков, а не стабильных обновлений. <strong>Внимание:</strong> Версия разработчиков не всегда прошла полное тестирование перед релизом, используйте осторожно!"
+
+# @ em-pro
+#: gateways/gateway.paypal.php:250
 #, php-format
-#@ em-pro
-msgid "Dev Mode active: Just a friendly reminder that you have added %s to your wp-config.php file. Only admins see this message, and it will go away when you remove that line."
-msgstr ""
-
-#: emp-updates.php:60
-#@ dbem
-msgid "Click to toggle"
-msgstr ""
-
-#: emp-updates.php:60
-#@ dbem
-msgid "Pro Membership Key"
-msgstr ""
-
-#: emp-updates.php:64
-#@ dbem
-msgid "Pro Member Key"
-msgstr ""
-
-#: emp-updates.php:64
-#, php-format
-#@ dbem
-msgid "Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>."
-msgstr ""
-
-#: emp-updates.php:82
-#, php-format
-#@ em-pro
-msgid "Note that you can add %s to your wp-config.php file to access the latest development version with automatic downloads."
-msgstr ""
-
-#: gateways/class.gateway.php:167
-#, php-format
-#@ em-pro
-msgid "Edit &quot;%s&quot; settings"
-msgstr ""
-
-#: gateways/class.gateway.php:176
-#@ default
-msgid "Save Changes"
-msgstr ""
-
-#: gateways/gateway.offline.php:174
-#, php-format
-#@ em-pro
-msgid "Add Booking For &quot;%s&quot;"
-msgstr ""
-
-#: gateways/gateway.offline.php:290
-#@ em-pro
-msgid "If you enter an image URL, this will be used instead of a button."
-msgstr ""
-
-#: gateways/gateway.offline.php:294
-#@ em-pro
-msgid "Button Text"
-msgstr ""
-
-#: gateways/gateway.paypal.php:39
-#@ em-pro
-msgid "Resume Payment"
-msgstr ""
-
-#: gateways/gateway.paypal.php:112
-#@ em-pro
-msgid "Please wait whilst you are redirected to PayPal to proceed with payment."
-msgstr ""
+msgid "Approvals must also be required for all bookings in your <a href=\"%s\">settings</a> for this to work properly."
+msgstr "Также в <a href=\"%s\">настрйках</a> должны быть включены требования подтверждения всех заказов, чтобы  все работало правильно."
 
