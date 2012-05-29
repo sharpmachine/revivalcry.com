@@ -28,7 +28,7 @@ class EM_Categories extends EM_Object implements Iterator{
 		if( is_object($data) && get_class($data) == "EM_Event" && !empty($data->post_id) ){ //Creates a blank categories object if needed
 			$this->event_id = $data->event_id;
 			$this->post_id = $data->post_id;
-			if( EM_MS_GLOBAL && !is_main_site() ){
+			if( EM_MS_GLOBAL && !is_main_site($data->blog_id) ){
 				$cat_ids = $wpdb->get_col('SELECT meta_value FROM '.EM_META_TABLE." WHERE object_id='{$this->event_id}' AND meta_key='event-category'");
 				foreach($cat_ids as $cat_id){
 					$this->categories[$cat_id] = new EM_Category($cat_id);
@@ -58,6 +58,7 @@ class EM_Categories extends EM_Object implements Iterator{
 	
 	function get_post(){
 		$this->ms_global_switch();
+		$this->categories = array();
 		if(!empty($_POST['event_categories']) && $this->array_is_numeric($_POST['event_categories'])){
 			foreach( $_POST['event_categories'] as $term ){
 				$this->categories[$term] = new EM_Category($term);
@@ -73,7 +74,7 @@ class EM_Categories extends EM_Object implements Iterator{
 			/* @var $EM_Category EM_Category */
 			if( !empty($EM_Category->slug) ) $term_slugs[] = $EM_Category->slug; //save of category will soft-fail if slug is empty
 		}
-		if( count($term_slugs) == 0 && get_option('dbem_default_category') ){
+		if( count($term_slugs) == 0 && get_option('dbem_default_category') > 0 ){
 			$default_term = get_term_by('id',get_option('dbem_default_category'), EM_TAXONOMY_CATEGORY);
 			if($default_term) $term_slugs[] = $default_term->slug;
 		}

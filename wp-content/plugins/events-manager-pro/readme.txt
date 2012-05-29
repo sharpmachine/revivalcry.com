@@ -2,8 +2,8 @@
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: 2.0.2
+Tested up to: 3.3.2
+Stable tag: 2.1.4
 
 == Description ==
 
@@ -22,6 +22,52 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.1.4 =
+* fixed authorize.net conflicts if SDK already loaded by another plugin
+* added failed email message to offline bookings that go through
+* improved fallback for javascript booking form failures (particularly paypal)
+* added input class to text fields in booking form for coupons and gateways
+* fixed manual booking link issues
+* fixed authorize.net "invalid line 1" errors due to long ticket names
+* fixed email regex settings not working (requires a resave of form settings)
+* manual bookings accept partial payments
+* fixed invalid coupons still allowing bookings to go through
+
+= 2.1.3 =
+* added gateway transaction id to booking collumns
+* fixed form editor validation problems
+
+= 2.1.2 =
+* allowed form labels to accept HTML
+* fixed paypal resume payment button
+* fixed paypal payment status text
+* modified coupon calculation to add tax after discount, if tax is added seperately
+* made paypal bookings editable even if pending
+* fixed various form editor bugs
+* fixed email problems with paypal confirmations
+* manual bookings now accept coupons and anonymous registrations, as well as custom payment amounts
+* added more html css classes to booking form
+* made update notices more user-friendly if pro-api-key isn't valid
+
+= 2.1.1 =
+* fixed coupon pagination problem
+* fixed captcha failures due to duplicated checks
+* fixed user fields and Array being shown for multi-option fields
+* removed dev version checking (moving to free) and add one-off dev version check
+* reverted to using .delegate() instead of jQuery 1.7+ .on() listener for compatibility
+
+= 2.1 =
+* offline payment confirmation window can be properly cancelled (bugfix)
+* membership key options now showing properly in MS mode
+* added custom user fields
+* added custom booking forms per event
+* detached booking form editor into a re-usable class for user fields and future custom forms
+
+= 2.0.4 =
+* fixed pro member key issue in MultiSite
+* coupons saving properly in MS Global Tables mode.
+* added coupon count and history
+
 = 2.0.2 =
 * added html filtering for ticket names sent to paypal
 * fixed offline manual partial payemnt formats bug

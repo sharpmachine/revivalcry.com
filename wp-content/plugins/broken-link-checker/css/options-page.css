@@ -1,3 +1,7 @@
+/*
+Sidebar
+*/
+
 #blc-sidebar {
 	clear: right; 
 	float: right; 
@@ -16,14 +20,36 @@
 	margin-right: 267px; 
 }
 
-#donate {
+#advertising {
 	border-color: green !important;
 	border-width: 2px;
 }
 
-#donate h3 {
+#advertising h3 {
 	color: green;
 }
+
+#advertising .inside {
+	text-align: left;
+}
+
+.ws-ame-ad-copy {
+	font-size: 1.2em;
+	font-style: italic;
+}
+.ws-ame-ad-link {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#themefuse-ad .inside,
+#managewp-ad .inside
+{
+	padding: 2px 0 0 0;
+	margin: 0;
+	text-align: center;
+}
+
 
 
 #link_checker_options .form-table th {

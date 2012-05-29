@@ -24,6 +24,7 @@ $('#em-booking-form').submit( function(e){
 				$('<div class="em-booking-message-success em-booking-message">'+response.message+'</div>').insertBefore('#em-booking-form');
 				$('#em-booking-form').hide();
 				$('.em-booking-login').hide();
+				$(document).trigger('em_booking_success', [response]);
 			}else{
 				if( response.errors != null ){
 					if( $.isArray(response.errors) && response.errors.length > 0 ){
@@ -39,11 +40,12 @@ $('#em-booking-form').submit( function(e){
 					$('<div class="em-booking-message-error em-booking-message">'+response.message+'</div>').insertBefore('#em-booking-form');
 				}
 			}
+		    $('html, body').animate({ scrollTop: $("#em-booking").first().offset().top - 50 }); //sends user back to top of form
 			//run extra actions after showing the message here
 			if( response.gateway != null ){
 				$(document).trigger('em_booking_gateway_add_'+response.gateway, [response]);
 			}
-			if(response.result && typeof Recaptcha != 'undefined'){
+			if( !response.result && typeof Recaptcha != 'undefined'){
 				Recaptcha.reload();
 			}
 		},

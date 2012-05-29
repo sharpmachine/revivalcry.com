@@ -1,6 +1,5 @@
 <?php
 global $EM_Event, $post;
-$localised_date_format = em_get_date_format();
 ?>
 <div id="event-rsvp-box">
 	<input id="event-rsvp" name='event_rsvp' value='1' type='checkbox' <?php echo ($EM_Event->event_rsvp) ? 'checked="checked"' : ''; ?> />
@@ -63,8 +62,8 @@ $localised_date_format = em_get_date_format();
 								<span class="ticket_max"><?php echo ( !empty($EM_Ticket->ticket_max) ) ? $EM_Ticket->ticket_max:'-'; ?></span>
 							</td>
 							<td class="ticket-time">
-								<span class="ticket_start"><?php echo ( !empty($EM_Ticket->ticket_start) ) ? date($localised_date_format, $EM_Ticket->start_timestamp):''; ?></span> -
-								<span class="ticket_end"><?php echo ( !empty($EM_Ticket->ticket_end) ) ? date($localised_date_format, $EM_Ticket->end_timestamp):''; ?></span>
+								<span class="ticket_start"><?php echo ( !empty($EM_Ticket->ticket_start) ) ? date(get_option('dbem_date_format'), $EM_Ticket->start_timestamp):''; ?></span> -
+								<span class="ticket_end"><?php echo ( !empty($EM_Ticket->ticket_end) ) ? date(get_option('dbem_date_format'), $EM_Ticket->end_timestamp):''; ?></span>
 							</td>
 							<td class="ticket-qty">
 								<span class="ticket_available_spaces"><?php echo $EM_Ticket->get_available_spaces(); ?></span>/
@@ -115,6 +114,12 @@ $localised_date_format = em_get_date_format();
 			<label><strong><?php _e('Total Spaces','dbem'); ?></strong></label>
 			<input type="text" name="event_spaces" value="<?php echo $EM_Event->event_spaces; ?>" /><br />
 			<em><?php _e('Individual tickets with remaining spaces will not be available if total booking spaces reach this limit. Leave blank for no limit.','dbem'); ?></em>
+		</p>
+		<p>
+			<label><strong><?php _e('Booking Cut-Off Date','dbem'); ?></strong></label>
+			<input id="em-bookings-date-loc" type="text" />
+			<input id="em-bookings-date" type="hidden" name="event_rsvp_date" value="<?php echo $EM_Event->event_rsvp_date; ?>" /><br />
+			<em><?php _e('This is the definite date after which bookings will be closed for this event, regardless of individual ticket settings above. Default value will be the event start date.','dbem'); ?></em>
 		</p>
 	<?php } ?>
 	<?php do_action('em_events_admin_bookings_footer', $EM_Event); ?>

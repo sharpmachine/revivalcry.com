@@ -13,43 +13,50 @@ class Jetpack_Subscriptions {
 	 * @static
 	 */
 	function &init() {
-		static $instance = array();
+		static $instance = false;
 
 		if ( !$instance ) {
-			$instance[0] =& new Jetpack_Subscriptions;
+			$instance = new Jetpack_Subscriptions;
 		}
 
-		return $instance[0];
+		return $instance;
 	}
 
 	function Jetpack_Subscriptions() {
 		$this->jetpack = Jetpack::init();
 
-		add_filter( 'jetpack_xmlrpc_methods', array( &$this, 'xmlrpc_methods' ) );
+		add_filter( 'jetpack_xmlrpc_methods', array( $this, 'xmlrpc_methods' ) );
 
+		// @todo remove sync from subscriptions and move elsewhere...
+		
 		// Handle Posts
-		add_action( 'transition_post_status', array( &$this, 'transition_post_status' ), 10, 3 );
-		add_action( 'trashed_post', array( &$this, 'delete_post' ) );
-		add_action( 'delete_post', array( &$this, 'delete_post' ) );
+		add_action( 'transition_post_status', array( $this, 'transition_post_status' ), 10, 3 );
+		add_action( 'trashed_post', array( $this, 'delete_post' ) );
+		add_action( 'delete_post', array( $this, 'delete_post' ) );
+		
+		// Handle Taxonomy
+		add_action( 'created_term', array( $this, 'save_taxonomy'), 10, 3);
+		add_action( 'edited_term',  array( $this, 'save_taxonomy'), 10, 3 );
+		add_action( 'delete_term',  array( $this, 'delete_taxonomy'),   10, 3 );
 
 		// Handle Comments
-		add_action( 'wp_insert_comment', array( &$this, 'save_comment' ), 10, 2 );
-		add_action( 'transition_comment_status', array( &$this, 'transition_comment_status' ), 10, 3 );
-		add_action( 'trashed_comment', array( &$this, 'delete_comment' ) );
-		add_action( 'delete_comment', array( &$this, 'delete_comment' ) );
+		add_action( 'wp_insert_comment', array( $this, 'save_comment' ), 10, 2 );
+		add_action( 'transition_comment_status', array( $this, 'transition_comment_status' ), 10, 3 );
+		add_action( 'trashed_comment', array( $this, 'delete_comment' ) );
+		add_action( 'delete_comment', array( $this, 'delete_comment' ) );
 
 		// Set up the subscription widget.
-		add_action( 'widgets_init', array( &$this, 'widget_init' ) );
+		add_action( 'widgets_init', array( $this, 'widget_init' ) );
 
 		// Catch subscription widget submits
 		if ( isset( $_REQUEST['jetpack_subscriptions_widget'] ) )
-			add_action( 'template_redirect', array( &$this, 'widget_submit' ) );
+			add_action( 'template_redirect', array( $this, 'widget_submit' ) );
 
 		// Set up the comment subscription checkboxes
-		add_action( 'comment_form', array( &$this, 'comment_subscribe_init' ) );
+		add_action( 'comment_form', array( $this, 'comment_subscribe_init' ) );
 
 		// Catch comment posts and check for subscriptions.
-		add_action( 'comment_post', array( &$this, 'comment_subscribe_submit' ), 50, 2 );
+		add_action( 'comment_post', array( $this, 'comment_subscribe_submit' ), 50, 2 );
 	}
 
 	function post_is_public( $the_post ) {
@@ -80,7 +87,20 @@ class Jetpack_Subscriptions {
 			$this->jetpack->sync->post( $the_post->ID );
 		}
 	}
+	
+	function save_taxonomy( $term, $tt_id, $taxonomy = null ) {
+		if ( is_null( $taxonomy ) )
+			return;
 
+		$tax = get_term_by( 'id', $term, $taxonomy );
+		$this->jetpack->sync->taxonomy( $tax->slug, true, $taxonomy );
+	}
+
+	function delete_taxonomy( $term, $tt_id, $taxonomy ) {
+		$tags = get_terms( $taxonomy, array( 'hide_empty' => 0 ) ); // since we can't figure out what the slug is... we will do an array comparison on the remote site and remove old taxonomy...
+		$this->jetpack->sync->delete_taxonomy( $tags, $taxonomy );
+	}
+	
 	function delete_post( $id ) {
 		$the_post = get_post( $id );
 		if ( 'post' == $the_post->post_type || 'page' == $the_post->post_type )
@@ -122,7 +142,7 @@ class Jetpack_Subscriptions {
 	 */
 	function xmlrpc_methods( $methods ) {
 		return array_merge( $methods, array(
-			'jetpack.subscriptions.subscribe' => array( &$this, 'subscribe' ),
+			'jetpack.subscriptions.subscribe' => array( $this, 'subscribe' ),
 		) );
 	}
 
@@ -161,7 +181,7 @@ class Jetpack_Subscriptions {
 
 		if ( !$async ) {
 			Jetpack::load_xml_rpc_client();
-			$xml =& new Jetpack_IXR_ClientMulticall();
+			$xml = new Jetpack_IXR_ClientMulticall();
 		}
 
 		foreach( (array) $post_ids as $post_id ) {
@@ -200,25 +220,25 @@ class Jetpack_Subscriptions {
 			}
 
 			if ( !is_array( $response[0] ) || empty( $response[0]['status'] ) ) {
-				$r[] =& new Jetpack_Error( 'unknown' );
+				$r[] = new Jetpack_Error( 'unknown' );
 				continue;
 			}
 
 			switch ( $response[0]['status'] ) {
 			case 'error' :
-				$r[] =& new Jetpack_Error( 'not_subscribed' );
+				$r[] = new Jetpack_Error( 'not_subscribed' );
 				continue 2;
 			case 'disabled' :
-				$r[] =& new Jetpack_Error( 'disabled' );
+				$r[] = new Jetpack_Error( 'disabled' );
 				continue 2;
 			case 'active' :
-				$r[] =& new Jetpack_Error( 'active' );
+				$r[] = new Jetpack_Error( 'active' );
 				continue 2;
 			case 'pending' :
 				$r[] = true;
 				continue 2;
 			default :
-				$r[] =& new Jetpack_Error( 'unknown_status', (string) $response[0]['status'] );
+				$r[] = new Jetpack_Error( 'unknown_status', (string) $response[0]['status'] );
 				continue 2;
 			}
 		}
@@ -421,8 +441,8 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 		if ( isset( $_GET['subscribe'] ) && 'success' == $_GET['subscribe'] ) {
 			?>
 
-			<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding-left: 5px; padding-right: 5px; margin-bottom: 10px;">
-				<?php _e( 'An email was just sent to confirm your subscription. Please find the email now and click activate to start subscribing.', 'jetpack' ); ?>
+			<div class="success">
+				<p><?php _e( 'An email was just sent to confirm your subscription. Please find the email now and click activate to start subscribing.', 'jetpack' ); ?></p>
 			</div>
 
 			<?php
@@ -495,7 +515,7 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 		if ( FALSE === $subs_count || 'failed' == $subs_count['status'] ) {
 			Jetpack:: load_xml_rpc_client();
 
-			$xml =& new Jetpack_IXR_Client( array(
+			$xml = new Jetpack_IXR_Client( array(
 				'user_id' => $GLOBALS['current_user']->ID
 			) );
 

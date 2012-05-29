@@ -53,9 +53,6 @@
     <?php endif ?>
 	<!--[if lte IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 	
-	<!-- Hashgrid - remove before moving to productions -->
-	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">
-	
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	
 	<script src="<?php bloginfo('template_directory'); ?>/js/modernizr-1.7.min.js"></script>

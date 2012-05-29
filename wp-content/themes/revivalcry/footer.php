@@ -63,7 +63,5 @@
   <!-- scripts concatenated and minified via ant build script-->
 	<script src="<?php bloginfo ('template_directory'); ?>/js/plugins.js"></script>
 	<script src="<?php bloginfo ('template_directory'); ?>/js/script.js"></script>
-	<!-- Remove this before deploying to production -->
-	<script src="<?php bloginfo ('template_directory'); ?>/js/hashgrid.js" type="text/javascript"></script>
 	</body>
 </html>

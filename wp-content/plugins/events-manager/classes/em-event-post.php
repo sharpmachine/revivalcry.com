@@ -30,7 +30,7 @@ class EM_Event_Post {
 	 */
 	function single_template($template){
 		global $post;
-		if( $post->post_type == EM_POST_TYPE_EVENT ){
+		if( !locate_template('single-'.EM_POST_TYPE_EVENT.'.php') && $post->post_type == EM_POST_TYPE_EVENT ){
 			$template = locate_template(array('page.php','index.php'),false);
 		}
 		return $template;
@@ -47,13 +47,8 @@ class EM_Event_Post {
 			}else{
 				if( get_option('dbem_cp_events_formats') && !post_password_required() ){
 					$EM_Event = em_get_event($post);
-					//general defaults
-					$args = array(				
-						'owner' => false,
-						'pagination' => 1
-					);
 					ob_start();
-					em_locate_template('templates/event-single.php',true, array('args'=>$args));
+					em_locate_template('templates/event-single.php',true);
 					$content = ob_get_clean();
 				}
 			}

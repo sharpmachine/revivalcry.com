@@ -3,7 +3,7 @@
 
 // To add the photo icon over the photos in the gallery
  jQuery(document).ready(function(){
-	 jQuery('.gallery-item a img').after('<span class="photo-icon"><img src="http://alpha.revivalcry.com/wp-content/themes/revivalcry/images/photo-icon.png" width="50" height="50" alt="Photo"></span>')
+	 jQuery('.gallery-item a img').after('<span class="photo-icon"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/photo-icon.png" width="50" height="50" alt="Photo"></span>')
 });
 
 /* Tooltipsy - for top menu */

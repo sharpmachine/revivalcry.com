@@ -3,6 +3,20 @@ class EM_Event_Posts_Admin{
 	function init(){
 		global $pagenow;
 		if( $pagenow == 'edit.php' && !empty($_REQUEST['post_type']) && $_REQUEST['post_type'] == EM_POST_TYPE_EVENT ){ //only needed for events list
+			if( !empty($_REQUEST['category_id']) && is_numeric($_REQUEST['category_id']) ){
+				$term = get_term_by('id', $_REQUEST['category_id'], EM_TAXONOMY_CATEGORY);
+				if( !empty($term->slug) ){
+					$_REQUEST['category_id'] = $term->slug;
+				}
+			}
+			//hide some cols by default:
+			$screen = 'edit-'.EM_POST_TYPE_EVENT;
+			$hidden = get_user_option( 'manage' . $screen . 'columnshidden' );
+			if( !$hidden ){
+				$hidden = array('event-id');
+				update_user_option(get_current_user_id(), "manage{$screen}columnshidden", $hidden, true);
+			}
+			//deal with actions
 			$row_action_type = is_post_type_hierarchical( EM_POST_TYPE_EVENT ) ? 'page_row_actions' : 'post_row_actions';
 			add_filter($row_action_type, array('EM_Event_Posts_Admin','row_actions'),10,2);
 			add_action('admin_head', array('EM_Event_Posts_Admin','admin_head'));
@@ -60,16 +74,11 @@ class EM_Event_Posts_Admin{
 			<?php
 			if( get_option('dbem_categories_enabled') ){
 				//Categories
-	            $terms = get_terms(EM_TAXONOMY_CATEGORY);	
-	            // output html for taxonomy dropdown filter
-	            echo '<select name="'.EM_TAXONOMY_CATEGORY.'" id="'.EM_TAXONOMY_CATEGORY.'" class="postform">';
-	            echo '<option value="">'.__('View all categories').'&nbsp;</option>';
-	            foreach ($terms as $term) {
-	                // output each select option line, check against the last $_GET to show the current option selected
-	                $selected = (!empty($_GET[EM_TAXONOMY_CATEGORY]) && $_GET[EM_TAXONOMY_CATEGORY] == $term->slug) ? 'selected="selected"':'';
-	                echo '<option value="'. $term->slug.'" '.$selected.'>'.$term->name.'</option>';
-	            }
-	            echo "</select>";
+	            $selected = !empty($_GET['category_id']) ? $_GET['category_id'] : 0;
+				wp_dropdown_categories(array( 'hide_empty' => 1, 'name' => 'category_id',
+                              'hierarchical' => true, 'id' => EM_TAXONOMY_CATEGORY,
+                              'taxonomy' => EM_TAXONOMY_CATEGORY, 'selected' => $selected,
+                              'show_option_all' => __('View all categories')));
 			}
             if( !empty($_REQUEST['author']) ){
             	?>
@@ -88,12 +97,19 @@ class EM_Event_Posts_Admin{
 	}
 	
 	function columns_add($columns) {
+		if( array_key_exists('cb', $columns) ){
+			$cb = $columns['cb'];
+	    	unset($columns['cb']);
+	    	$id_array = array('cb'=>$cb, 'event-id' => sprintf(__('%s ID','dbem'),__('Event','dbem')));
+		}else{
+	    	$id_array = array('event-id' => sprintf(__('%s ID','dbem'),__('Event','dbem')));
+		}
 	    unset($columns['comments']);
 	    unset($columns['date']);
 	    unset($columns['author']);
-	    $columns = array_merge($columns, array(
-	    	'location' => __('Location'),
-	    	'date-time' => __('Date and Time'),
+	    $columns = array_merge($id_array, $columns, array(
+	    	'location' => __('Location','dbem'),
+	    	'date-time' => __('Date and Time','dbem'),
 	    	'author' => __('Owner','dbem'),
 	    	'extra' => ''
 	    ));
@@ -108,6 +124,9 @@ class EM_Event_Posts_Admin{
 		$EM_Event = em_get_event($post, 'post_id');
 		/* @var $post EM_Event */
 		switch ( $column ) {
+			case 'event-id':
+				echo $EM_Event->event_id;
+				break;
 			case 'location':
 				//get meta value to see if post has location, otherwise
 				$EM_Location = $EM_Event->get_location();
@@ -133,7 +152,7 @@ class EM_Event_Posts_Admin{
 			case 'extra':
 				if( get_option('dbem_rsvp_enabled') == 1 && !empty($EM_Event->event_rsvp) && $EM_Event->can_manage('manage_bookings','manage_others_bookings')){
 					?>
-					<a href="<?php echo EM_ADMIN_URL; ?>&amp;page=events-manager-bookings&amp;event_id=<?php echo $EM_Event->event_id ?>"><?php echo __("Bookings",'dbem'); ?></a> &ndash;
+					<a href="<?php echo $EM_Event->get_bookings_url(); ?>"><?php echo __("Bookings",'dbem'); ?></a> &ndash;
 					<?php _e("Booked",'dbem'); ?>: <?php echo $EM_Event->get_bookings()->get_booked_spaces()."/".$EM_Event->get_spaces(); ?>
 					<?php if( get_option('dbem_bookings_approval') == 1 ): ?>
 						| <?php _e("Pending",'dbem') ?>: <?php echo $EM_Event->get_bookings()->get_pending_spaces(); ?>
@@ -174,6 +193,14 @@ class EM_Event_Recurring_Posts_Admin{
 	function init(){
 		global $pagenow;
 		if( $pagenow == 'edit.php' && !empty($_REQUEST['post_type']) && $_REQUEST['post_type'] == 'event-recurring' ){
+			//hide some cols by default:
+			$screen = 'edit-'.EM_POST_TYPE_EVENT;
+			$hidden = get_user_option( 'manage' . $screen . 'columnshidden' );
+			if( !$hidden ){
+				$hidden = array('event-id');
+				update_user_option(get_current_user_id(), "manage{$screen}columnshidden", $hidden, true);
+			}
+			//notices			
 			add_action('admin_notices',array('EM_Event_Recurring_Posts_Admin','admin_notices'));
 			add_action('admin_head', array('EM_Event_Recurring_Posts_Admin','admin_head'));
 			//collumns
@@ -207,10 +234,17 @@ class EM_Event_Recurring_Posts_Admin{
 	}
 	
 	function columns_add($columns) {
+		if( array_key_exists('cb', $columns) ){
+			$cb = $columns['cb'];
+	    	unset($columns['cb']);
+	    	$id_array = array('cb'=>$cb, 'event-id' => sprintf(__('%s ID','dbem'),__('Event','dbem')));
+		}else{
+	    	$id_array = array('event-id' => sprintf(__('%s ID','dbem'),__('Event','dbem')));
+		}
 	    unset($columns['comments']);
 	    unset($columns['date']);
 	    unset($columns['author']);
-	    return array_merge($columns, array(
+	    return array_merge($id_array, $columns, array(
 	    	'location' => __('Location'),
 	    	'date-time' => __('Date and Time'),
 	    	'author' => __('Owner','dbem'),
@@ -224,6 +258,9 @@ class EM_Event_Recurring_Posts_Admin{
 			$post = $EM_Event = em_get_event($post);
 			/* @var $post EM_Event */
 			switch ( $column ) {
+				case 'event-id':
+					echo $EM_Event->event_id;
+					break;
 				case 'location':
 					//get meta value to see if post has location, otherwise
 					$EM_Location = $EM_Event->get_location();

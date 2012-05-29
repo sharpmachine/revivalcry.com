@@ -349,7 +349,11 @@ class EM_Location extends EM_Object {
 			$location_array = $this->to_array(true);
 			if( $this->post_status == 'private' ) $location_array['location_private'] = 1;
 			unset($location_array['location_id']);
-			$loc_truly_exists = $wpdb->get_var('SELECT location_id FROM '.EM_LOCATIONS_TABLE." WHERE location_id={$this->location_id}") == $this->location_id;
+			if( !empty($this->location_id) ){
+				$loc_truly_exists = $wpdb->get_var('SELECT post_id FROM '.EM_LOCATIONS_TABLE." WHERE location_id={$this->location_id}") == $this->post_id;
+			}else{
+				$loc_truly_exists = false;
+			}
 			if( empty($this->location_id) || !$loc_truly_exists ){
 				$this->previous_status = 0; //for sure this was previously status 0
 				if ( !$wpdb->insert(EM_LOCATIONS_TABLE, $location_array) ){
@@ -557,6 +561,7 @@ class EM_Location extends EM_Object {
 			$location_string = str_replace($result, $attString ,$location_string );
 		}
 	 	preg_match_all("/(#@?_?[A-Za-z0-9]+)({([a-zA-Z0-9,]+)})?/", $format, $placeholders);
+	 	$replaces = array();
 		foreach($placeholders[1] as $key => $result) {
 			$replace = '';
 			$full_result = $placeholders[0][$key];
@@ -568,6 +573,7 @@ class EM_Location extends EM_Object {
 					$replace = $this->location_id;
 					break;
 				case '#_NAME': //Depreciated
+				case '#_LOCATION': //Depreciated
 				case '#_LOCATIONNAME':
 					$replace = $this->location_name;
 					break;
@@ -637,6 +643,13 @@ class EM_Location extends EM_Object {
 							}else{
 								$image_size = explode(',', $placeholders[3][$key]);
 								if( $this->array_is_numeric($image_size) && count($image_size) > 1 ){
+									global $blog_id;
+									if ( is_multisite() && $blog_id > 0) {
+										$imageParts = explode('/blogs.dir/', $image_url);
+										if (isset($imageParts[1])) {
+											$image_url = network_site_url('/wp-content/blogs.dir/'. $blog_id. '/' . $imageParts[1]);
+										}
+									}
 									$replace = "<img src='".esc_url(em_get_thumbnail_url($image_url, $image_size[0], $image_size[1]))."' alt='".esc_attr($this->location_name)."'/>";
 								}else{
 									$replace = "<img src='".$image_url."' alt='".esc_attr($this->location_name)."'/>";
@@ -692,11 +705,14 @@ class EM_Location extends EM_Object {
 					$replace = $full_result;
 					break;
 			}
-			$replace = apply_filters('em_location_output_placeholder', $replace, $this, $full_result, $target);
-			$location_string = str_replace($full_result, $replace , $location_string );
+			$replaces[$key] = apply_filters('em_location_output_placeholder', $replace, $this, $full_result, $target);
 		}
-		$name_filter = ($target == "html") ? 'dbem_general':'dbem_general_rss'; //TODO remove dbem_ filters
-		$location_string = str_replace('#_LOCATION', apply_filters($name_filter, $this->location_name) , $location_string ); //Depreciated
+		//sort out replacements of placeholders here so that e.g. #_X won't overwrite #_XY by mistake
+		krsort($replaces);
+		foreach($replaces as $key => $value){
+			$full_result = $placeholders[0][$key];
+			$location_string = str_replace($full_result, $value , $location_string );
+		}
 		return apply_filters('em_location_output', $location_string, $this, $format, $target);	
 	}
 	
