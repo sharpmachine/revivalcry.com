@@ -841,6 +841,26 @@ article.single-revivalist .revivalist { height: auto; }
   margin-right: 4px;
   padding: 3px 6px;
 }
+a.page-numbers {
+	background: #00BCD1; 
+	color: #1D1B1B; 
+	font-weight: bold;
+	margin-right: 4px; 
+	padding: 3px 6px;
+	text-align: center; 
+	text-decoration: none;
+}
+a.page-numbers:hover {
+	background: #1D1B1B; 
+	color: #fff;
+}
+.current {
+	font-weight: bold;
+	color: #00BCD1; 
+	background: #1D1B1B; 
+	margin-right: 4px; 
+	padding: 3px 6px;
+}
 input[type="text"] {
   margin: 0;
   padding: 5px;
