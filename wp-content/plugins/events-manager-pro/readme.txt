@@ -2,8 +2,8 @@
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
-Tested up to: 3.3.2
-Stable tag: 2.1.4
+Tested up to: 3.4
+Stable tag: 2.1.5
 
 == Description ==
 
@@ -22,6 +22,18 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.1.5 =
+* fixed manual bookings not allowing admins booked to that event with double bookings disabled
+* added missing error message on manual booking form admin-side validation
+* fixed offline status not being editable if de-activated yet making a manual booking
+* added classes to coupon code and authorize booking form elements
+* fixed manual bookings bug for another user without a payment
+* set status to pending rather than cancelled for re-review if partial refunds are made
+* transactions now get deleted with bookings
+* added manual delete transaction
+* fix for multiple booking forms on one page
+* further improvement to loading of a.net SDK to avoid plugin conflicts
+
 = 2.1.4 =
 * fixed authorize.net conflicts if SDK already loaded by another plugin
 * added failed email message to offline bookings that go through

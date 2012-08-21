@@ -12,6 +12,7 @@ class EM_Calendar extends EM_Object {
 		$calendar_array = array();
 		$calendar_array['cells'] = array();
 	 	
+		$original_args = $args;
 		$args = self::get_default_search($args);
 		$full = $args['full']; //For ZDE, don't delete pls
 		$month = $args['month']; 
@@ -142,7 +143,8 @@ class EM_Calendar extends EM_Object {
 	   
 		$days_initials_array = array();
 		foreach($weekdays as $weekday) {
-			$days_initials_array[] = self::translate_and_trim($weekday);
+		    $day_initials_length = !empty($args['full']) ? get_option('dbem_full_calendar_initials_length',3):get_option('dbem_small_calendar_initials_length',1);
+			$days_initials_array[] = self::translate_and_trim($weekday, $day_initials_length);
 		} 
 		
 		$calendar_array['links'] = array( 'previous_url'=>$previous_url, 'next_url'=>$next_url);
@@ -232,7 +234,7 @@ class EM_Calendar extends EM_Object {
 			}
 		}
 		//generate a link argument string containing event search only
-		$day_link_args = self::get_link_args( EM_Events::get_post_search($args, true) );
+		$day_link_args = self::get_link_args( array_intersect_key($original_args, EM_Events::get_post_search($args, true) ));
 		foreach($eventful_days as $day_key => $events) {
 			if( array_key_exists($day_key, $calendar_array['cells']) ){
 				//Get link title for this date
@@ -309,11 +311,14 @@ class EM_Calendar extends EM_Object {
 	}
 	 
 	function translate_and_trim($string, $length = 1) {
-		if(function_exists('mb_substr')){ //fix for diacritic calendar names
-			return mb_substr(__($string), 0, $length);
-		}else{ 
-    		return substr(__($string), 0, $length); 
-    	}
+	    if( $length > 0 ){
+			if(function_exists('mb_substr')){ //fix for diacritic calendar names
+			    return mb_substr(__($string,'dbem'), 0, $length, 'UTF-8');
+			}else{ 
+	    		return substr(__($string,'dbem'), 0, $length); 
+	    	}
+	    }
+	    return __($string,'dbem');
 	}  
 	
 	/**

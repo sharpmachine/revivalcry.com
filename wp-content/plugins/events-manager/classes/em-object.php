@@ -214,12 +214,20 @@ class EM_Object {
 				}
 			}else{
 				//date range
+				if( get_option('dbem_events_current_are_past') ){
+					$conditions['scope'] = "( event_start_date BETWEEN CAST('$date_start' AS DATE) AND CAST('$date_end' AS DATE) )";
+				}else{
+					$conditions['scope'] = "( event_start_date <= CAST('$date_end' AS DATE) AND event_end_date >= CAST('$date_start' AS DATE) )";
+				}
 				//$conditions['scope'] = " ( ( event_start_date <= CAST('$date_end' AS DATE) AND event_end_date >= CAST('$date_start' AS DATE) ) OR (event_start_date BETWEEN CAST('$date_start' AS DATE) AND CAST('$date_end' AS DATE)) OR (event_end_date BETWEEN CAST('$date_start' AS DATE) AND CAST('$date_end' AS DATE)) )";
-				$conditions['scope'] = "( (event_start_date BETWEEN CAST('$date_start' AS DATE) AND CAST('$date_end' AS DATE)) OR (event_end_date BETWEEN CAST('$date_start' AS DATE) AND CAST('$date_end' AS DATE)) )";
 			}
 		} elseif ( preg_match ( "/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $scope ) ) {
 			//Scope can also be a specific date. However, if 'day', 'month', or 'year' are set, that will take precedence
-			$conditions['scope'] = " ( event_start_date = CAST('$scope' AS DATE) OR ( event_start_date <= CAST('$scope' AS DATE) AND event_end_date >= CAST('$scope' AS DATE) ) )";
+			if( get_option('dbem_events_current_are_past') ){
+				$conditions['scope'] = "event_start_date = CAST('$scope' AS DATE)";
+			}else{
+				$conditions['scope'] = " ( event_start_date = CAST('$scope' AS DATE) OR ( event_start_date <= CAST('$scope' AS DATE) AND event_end_date >= CAST('$scope' AS DATE) ) )";
+			}
 		} else {
 			if ($scope == "past"){
 				if( get_option('dbem_events_current_are_past') ){
@@ -864,9 +872,9 @@ class EM_Object {
 			$return = array();
 			foreach($this->fields as $fieldName => $fieldArray){
 				if($inverted_array){
-					$return[$fieldName] = $fieldName;
+					$return[$fieldArray['name']] = $fieldName;
 				}else{
-					$return[$fieldName] = $fieldName;
+					$return[$fieldName] = $fieldArray['name'];
 				}
 			}
 			return apply_filters('em_object_get_fields', $return, $this, $inverted_array);
@@ -1097,7 +1105,13 @@ class EM_Object {
 			//legacy image finder, annoying, but must be done
 			if( empty($image_url) ){
 				$type = $this->get_image_type();
-				$id = ( get_class($this) == "EM_Event" && $this->is_recurrence() ) ? $this->recurrence_id:$this->event_id; //quick fix for recurrences
+				if( get_class($this) == "EM_Event" ){
+					$id = ( $this->is_recurrence() ) ? $this->recurrence_id:$this->event_id; //quick fix for recurrences
+				}elseif( get_class($this) == "EM_Location" ){
+				    $id = $this->location_id;
+				}else{
+				    $id = $this->id;
+				}
 				if( $type ){
 				  	foreach($this->mime_types as $mime_type) {
 						$file_name = $this->get_image_type(true)."-{$id}.$mime_type";

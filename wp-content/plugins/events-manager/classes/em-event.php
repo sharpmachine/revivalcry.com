@@ -51,6 +51,7 @@ class EM_Event extends EM_Object{
 	var $post_content;
 	var $event_rsvp;
 	var $event_rsvp_date;
+	var $event_rsvp_time = "00:00:00";
 	var $event_spaces;
 	var $location_id;
 	var $recurrence_id;
@@ -92,7 +93,8 @@ class EM_Event extends EM_Object{
 		'event_end_date' => array( 'name'=>'end_date', 'type'=>'%s', 'null'=>true ),
 		'post_content' => array( 'name'=>'notes', 'type'=>'%s', 'null'=>true ),
 		'event_rsvp' => array( 'name'=>'rsvp', 'type'=>'%d', 'null'=>true ), //has a default, so can be null/excluded
-		'event_rsvp_date' => array( 'name'=>'event_rsvp_date', 'type'=>'%s', 'null'=>true ),
+		'event_rsvp_date' => array( 'name'=>'rsvp_date', 'type'=>'%s', 'null'=>true ),
+		'event_rsvp_time' => array( 'name'=>'rsvp_time', 'type'=>'%s', 'null'=>true ),
 		'event_spaces' => array( 'name'=>'spaces', 'type'=>'%d', 'null'=>true),
 		'location_id' => array( 'name'=>'location_id', 'type'=>'%d', 'null'=>true ),
 		'recurrence_id' => array( 'name'=>'recurrence_id', 'type'=>'%d', 'null'=>true ),
@@ -124,6 +126,11 @@ class EM_Event extends EM_Object{
 	 * @var int
 	 */
 	var $end;
+	/**
+	 * Timestamp for booking cut-off date/time
+	 * @var int
+	 */
+	var $rsvp_end;
 	/**
 	 * Created on timestamp, taken from DB, converted to TS
 	 * @var int
@@ -284,6 +291,9 @@ class EM_Event extends EM_Object{
 				//Start/End times should be available as timestamp
 				$this->start = strtotime($this->event_start_date." ".$this->event_start_time);
 				$this->end = strtotime($this->event_end_date." ".$this->event_end_time);
+				if( !empty($this->event_rsvp_date ) ){
+				    $this->rsvp_end = strtotime($this->event_rsvp_date." ".$this->event_rsvp_time); 
+				}
 				//quick compatability fix in case _event_id isn't loaded or somehow got erased in post meta
 				if( empty($this->event_id) && !$this->is_recurring() ){
 					global $wpdb;
@@ -322,16 +332,16 @@ class EM_Event extends EM_Object{
 	function get_post($validate = true){	
 		global $allowedposttags;
 		//we need to get the post/event name and content.... that's it.
-		$this->post_content = !empty($_POST['content']) ? wp_kses($_POST['content'], $allowedposttags):'';
-		$this->event_name = !empty($_POST['event_name']) ? wp_kses($_POST['event_name'], array()):'';
+		$this->post_content = !empty($_POST['content']) ? wp_kses( stripslashes($_POST['content']), $allowedposttags):'';
+		$this->event_name = !empty($_POST['event_name']) ? wp_kses_data( stripslashes($_POST['event_name']) ):'';
 		$this->post_type = ($this->is_recurring() || !empty($_POST['recurring'])) ? 'event-recurring':EM_POST_TYPE_EVENT;
 		//don't forget categories!
 		$this->get_categories()->get_post();
 		//anonymous submissions and guest basic info
 		if( !is_user_logged_in() && get_option('dbem_events_anonymous_submissions') && empty($this->event_id) ){
 			$this->event_owner_anonymous = 1;
-			$this->event_owner_name = !empty($_REQUEST['event_owner_name']) ? $_REQUEST['event_owner_name']:'';
-			$this->event_owner_email = !empty($_REQUEST['event_owner_email']) ? $_REQUEST['event_owner_email']:'';
+			$this->event_owner_name = !empty($_POST['event_owner_name']) ? stripslashes($_POST['event_owner_name']):'';
+			$this->event_owner_email = !empty($_POST['event_owner_email']) ? $_POST['event_owner_email']:'';
 		}
 		//get the rest and validate (optional)
 		$this->get_post_meta(false);
@@ -349,7 +359,7 @@ class EM_Event extends EM_Object{
 		$this->event_start_date = ( !empty($_POST['event_start_date']) ) ? $_POST['event_start_date'] : '';
 		$this->event_end_date = ( !empty($_POST['event_end_date']) ) ? $_POST['event_end_date'] : $this->event_start_date;
 		//check if this is recurring or not
-		if( !empty($_REQUEST['recurring']) ){
+		if( !empty($_POST['recurring']) ){
 			$this->recurrence = 1;
 			$this->post_type = 'event-recurring';
 		}
@@ -368,7 +378,7 @@ class EM_Event extends EM_Object{
 		$this->event_all_day = ( !empty($_POST['event_all_day']) ) ? 1 : 0;
 		if( !$this->event_all_day ){
 			$match = array();
-			foreach( array('event_start_time','event_end_time') as $timeName ){
+			foreach( array('event_start_time','event_end_time', 'event_rsvp_time') as $timeName ){
 				if( !empty($_POST[$timeName]) && preg_match ( '/^([01]\d|2[0-3]):([0-5]\d) ?(AM|PM)?$/', $_POST[$timeName], $match ) ){
 					if( !empty($match[3]) && $match[3] == 'PM' && $match[1] != 12 ){
 						$match[1] = 12+$match[1];
@@ -387,13 +397,16 @@ class EM_Event extends EM_Object{
 		$this->start = strtotime($this->event_start_date." ".$this->event_start_time);
 		$this->end = strtotime($this->event_end_date." ".$this->event_end_time);
 		//Bookings
-		if( !empty($_REQUEST['event_rsvp']) && $_REQUEST['event_rsvp'] ){
+		if( !empty($_POST['event_rsvp']) && $_POST['event_rsvp'] ){
 			$this->get_bookings()->get_tickets()->get_post();
 			$this->event_rsvp = 1;
-			$this->event_rsvp_date = ( !empty($_REQUEST['event_rsvp_date']) ) ? $_REQUEST['event_rsvp_date'] : $this->event_start_date;
-			$this->event_spaces = (!empty($_REQUEST['event_spaces'])) ? absint($_REQUEST['event_spaces']):0;
+			//RSVP cuttoff TIME is set up above where start/end times are as well 
+			$this->event_rsvp_date = ( isset($_POST['event_rsvp_date']) ) ? $_POST['event_rsvp_date'] : $this->event_start_date;
+			if( empty($this->event_rsvp_date) ){ $this->event_rsvp_time = '00:00:00'; }
+			$this->event_spaces = ( isset($_POST['event_spaces']) ) ? absint($_POST['event_spaces']):0;
 		}else{
 			$this->event_rsvp = 0;
+			$this->event_rsvp_time = '00:00:00';
 		}
 		//Sort out event attributes - note that custom post meta now also gets inserted here automatically (and is overwritten by these attributes)
 		if(get_option('dbem_attributes_enabled')){
@@ -426,15 +439,15 @@ class EM_Event extends EM_Object{
 		//Recurrence data
 		if( $this->is_recurring() ){
 			$this->recurrence = 1; //just in case
-			$this->recurrence_freq = ( !empty($_REQUEST['recurrence_freq']) && in_array($_REQUEST['recurrence_freq'], array('daily','weekly','monthly','yearly')) ) ? $_REQUEST['recurrence_freq']:'daily';
-			if( !empty($_REQUEST['recurrence_bydays']) && $this->recurrence_freq == 'weekly' && self::array_is_numeric($_REQUEST['recurrence_bydays']) ){
-				$this->recurrence_byday = implode( ",", $_REQUEST['recurrence_bydays'] );
-			}elseif( !empty($_REQUEST['recurrence_byday']) && $this->recurrence_freq == 'monthly' ){
-				$this->recurrence_byday = $_REQUEST['recurrence_byday'];
+			$this->recurrence_freq = ( !empty($_POST['recurrence_freq']) && in_array($_POST['recurrence_freq'], array('daily','weekly','monthly','yearly')) ) ? $_POST['recurrence_freq']:'daily';
+			if( !empty($_POST['recurrence_bydays']) && $this->recurrence_freq == 'weekly' && self::array_is_numeric($_POST['recurrence_bydays']) ){
+				$this->recurrence_byday = implode( ",", $_POST['recurrence_bydays'] );
+			}elseif( !empty($_POST['recurrence_byday']) && $this->recurrence_freq == 'monthly' ){
+				$this->recurrence_byday = $_POST['recurrence_byday'];
 			}
-			$this->recurrence_interval = ( !empty($_REQUEST['recurrence_interval']) && is_numeric($_REQUEST['recurrence_interval']) ) ? $_REQUEST['recurrence_interval']:1;
-			$this->recurrence_byweekno = ( !empty($_REQUEST['recurrence_byweekno']) ) ? $_REQUEST['recurrence_byweekno']:'';
-			$this->recurrence_days = ( !empty($_REQUEST['recurrence_days']) && is_numeric($_REQUEST['recurrence_days']) ) ? (int) $_REQUEST['recurrence_days']:0;
+			$this->recurrence_interval = ( !empty($_POST['recurrence_interval']) && is_numeric($_POST['recurrence_interval']) ) ? $_POST['recurrence_interval']:1;
+			$this->recurrence_byweekno = ( !empty($_POST['recurrence_byweekno']) ) ? $_POST['recurrence_byweekno']:'';
+			$this->recurrence_days = ( !empty($_POST['recurrence_days']) && is_numeric($_POST['recurrence_days']) ) ? (int) $_POST['recurrence_days']:0;
 		}
 		//categories in MS GLobal
 		if(EM_MS_GLOBAL && !is_main_site()){
@@ -483,8 +496,13 @@ class EM_Event extends EM_Object{
 			if( !empty($missing_fields['event_end_date']) ) { unset($missing_fields['event_end_date']); }
 			$this->add_error(__('Dates must have correct formatting. Please use the date picker provided.','dbem'));
 		}
-		if( $this->event_rsvp && !$this->get_bookings()->get_tickets()->validate() ){
-			$this->add_error($this->get_bookings()->get_tickets()->get_errors());
+		if( $this->event_rsvp ){
+		    if( !$this->get_bookings()->get_tickets()->validate() ){
+		        $this->add_error($this->get_bookings()->get_tickets()->get_errors());
+		    }
+		    if( !empty($this->event_rsvp_date) && !preg_match('/\d{4}-\d{2}-\d{2}/', $this->event_rsvp_date) ){
+				$this->add_error(__('Dates must have correct formatting. Please use the date picker provided.','dbem'));
+		    }
 		}
 		if( get_option('dbem_locations_enabled') && empty($this->location_id) ){ //location ids don't need validating as we're not saving a location
 			if( get_option('dbem_require_location',true) || $this->location_id !== 0 ){
@@ -726,6 +744,11 @@ class EM_Event extends EM_Object{
 				}
 				$EM_Event->get_bookings(true); //refresh booking tickets
 				$EM_Event->feedback_message = sprintf(__("%s successfully duplicated.", 'dbem'), __('Event','dbem'));
+			 	//featured images
+			 	$featured_image = get_post_meta( $this->post_id, '_thumbnail_id', true );
+			 	if( !empty($featured_image) ){
+			 		$wpdb->query('INSERT INTO '.$wpdb->postmeta." (post_id, meta_key, meta_value) VALUES ({$EM_Event->post_id}, '_thumbnail_id', {$featured_image})");
+			 	}
 				return apply_filters('em_event_duplicate', $EM_Event, $this);
 			}
 		}
@@ -805,29 +828,6 @@ class EM_Event extends EM_Object{
 			$result = $wpdb->query( $wpdb->prepare("DELETE FROM ".EM_TICKETS_TABLE." WHERE event_id=%d", $this->event_id) );
 		}
 		return apply_filters('em_event_delete_tickets', $result, $this);
-	}
-	
-	/**
-	 * Publish Events
-	 * @return bool
-	 */
-	function send_approval_notification(){
-		if( (!$this->is_recurring() && !user_can($this->event_owner, 'publish_events')) || ($this->is_recurring() && !user_can($this->event_owner, 'publish_recurring_events')) ){
-			//only send email to users that can't publish events themselves and that were previously unpublished
-			if( !$this->previous_status && $this->is_published() ){
-				//email
-				if( $this->event_owner == "" ) return true;	
-				$subject = $this->output(get_option('dbem_event_approved_email_subject'), 'email'); 
-				$body = $this->output(get_option('dbem_event_approved_email_body'), 'email');
-							
-				//Send to the person booking
-				if( !$this->email_send( $subject, $body, $this->get_contact()->user_email) ){
-					return false;
-				}
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	/**
@@ -1005,7 +1005,7 @@ class EM_Event extends EM_Object{
 	}
 	
 	function get_bookings_url(){
-		if( get_option('dbem_edit_bookings_page') && !is_admin() ){
+		if( get_option('dbem_edit_bookings_page') && (!is_admin() || !empty($_REQUEST['is_public'])) ){
 			$my_bookings_page = get_permalink(get_option('dbem_edit_bookings_page'));
 			$bookings_link = em_add_get_params($my_bookings_page, array('event_id'=>$this->event_id), false);
 		}else{
@@ -1020,7 +1020,7 @@ class EM_Event extends EM_Object{
 	
 	function get_permalink(){
 		if( EM_MS_GLOBAL ){
-			if( get_site_option('dbem_ms_global_events_links') && !empty($this->blog_id) && is_main_site() && $this->blog_id != get_current_blog_id() ){
+			if( get_site_option('dbem_ms_global_events_links') && !empty($this->blog_id) && $this->blog_id != get_current_blog_id() ){
 				//linking directly to the blog
 				$event_link = get_blog_permalink( $this->blog_id, $this->post_id);
 			}elseif( !empty($this->blog_id) && is_main_site() && $this->blog_id != get_current_blog_id() ){
@@ -1135,7 +1135,7 @@ class EM_Event extends EM_Object{
 						$show_condition = ( $this->get_image_url() == '' );
 					}elseif ($condition == 'has_time'){
 						//are the booking times different and not an all-day event
-						$show_condition = ( $this->start != $this->end && !$this->event_all_day );
+						$show_condition = ( $this->event_start_time != $this->event_end_time && !$this->event_all_day );
 					}elseif ($condition == 'no_time'){
 						//are the booking times exactly the same and it's not an all-day event.
 						$show_condition = ( $this->event_start_time == $this->event_end_time && !$this->event_all_day );
@@ -1166,6 +1166,18 @@ class EM_Event extends EM_Object{
 					}elseif ($condition == 'is_future'){
 						//if event is upcoming
 						$show_condition = $this->start > current_time('timestamp');
+					}elseif ( preg_match('/^has_category_([a-zA-Z0-9_\-]+)$/', $condition, $category_match)){
+					    //event is in this category
+					    $show_condition = has_term($category_match[1], EM_TAXONOMY_CATEGORY, $this->post_id);
+					}elseif ( preg_match('/^no_category_([a-zA-Z0-9_\-]+)$/', $condition, $category_match)){
+					    //event is NOT in this category
+					    $show_condition = !has_term($category_match[1], EM_TAXONOMY_CATEGORY, $this->post_id);
+					}elseif ( preg_match('/^has_tag_([a-zA-Z0-9_\-]+)$/', $condition, $tag_match)){
+					    //event has this tag
+					    $show_condition = has_term($tag_match[1], EM_TAXONOMY_TAG, $this->post_id);
+					}elseif ( preg_match('/^no_tag_([a-zA-Z0-9_\-]+)$/', $condition, $tag_match)){
+					   //event doesn't have this tag
+					    $show_condition = !has_term($tag_match[1], EM_TAXONOMY_TAG, $this->post_id);
 					}
 					$show_condition = apply_filters('em_event_output_show_condition', $show_condition, $condition, $conditionals[0][$key], $this);
 					if($show_condition){
@@ -1326,7 +1338,7 @@ class EM_Event extends EM_Object{
 					}
 					break;
 				case '#_BOOKINGBUTTON':
-					if( get_option('dbem_rsvp_enabled')){
+					if( get_option('dbem_rsvp_enabled') && $this->event_rsvp ){
 						ob_start();
 						$template = em_locate_template('placeholders/bookingbutton.php', true, array('EM_Event'=>$this));
 						$replace = ob_get_clean();
@@ -1526,13 +1538,12 @@ class EM_Event extends EM_Object{
 					$replace = $full_result;
 					break;
 			}
-			$replaces[$key] = apply_filters('em_event_output_placeholder', $replace, $this, $full_result, $target);
+			$replaces[$full_result] = apply_filters('em_event_output_placeholder', $replace, $this, $full_result, $target);
 		}
-		//sort out replacements of placeholders here so that e.g. #_X won't overwrite #_XY by mistake
+		//sort out replacements so that during replacements shorter placeholders don't overwrite longer varieties.
 		krsort($replaces);
-		foreach($replaces as $key => $value){
-			$full_result = $placeholders[0][$key];
-			$event_string = str_replace($full_result, $value , $event_string );
+		foreach($replaces as $full_result => $replacement){
+			$event_string = str_replace($full_result, $replacement , $event_string );
 		}
 		//Time placeholders
 		foreach($placeholders[1] as $result) {
@@ -1692,9 +1703,10 @@ class EM_Event extends EM_Object{
 			$matching_days = $this->get_recurrence_days(); //Get days where events recur
 			if( count($matching_days) > 0 ){
 				//first save event post data
+				$recurring_date_format = apply_filters('em_event_save_events_format', 'Y-m-d');
 				foreach( $matching_days as $day ) {
 					//rewrite post fields if needed
-					$post_fields['post_name'] = $event['event_slug'] = $meta_fields['_event_slug'] = $post_name.'-'.date("Y-m-d", $day);
+					$post_fields['post_name'] = $event['event_slug'] = $meta_fields['_event_slug'] = $post_name.'-'.date($recurring_date_format, $day);
 					//adjust certain meta information
 					$event['event_start_date'] = $meta_fields['_event_start_date'] = date("Y-m-d", $day);
 					$meta_fields['_start_ts'] = $day;
@@ -1801,9 +1813,9 @@ class EM_Event extends EM_Object{
 		 		$this->add_error('You have not defined a date range long enough to create a recurrence.','dbem');
 		 		$result = false;
 		 	}
-		 	return apply_filters('em_event_save_events', !in_array(false, $event_saves) && $result !== false, $this, $event_ids);
+		 	return apply_filters('em_event_save_events', !in_array(false, $event_saves) && $result !== false, $this, $event_ids, $post_ids);
 		}
-		return apply_filters('em_event_save_events', false, $this, $event_ids);
+		return apply_filters('em_event_save_events', false, $this, $event_ids, $post_ids);
 	}
 	
 	/**
@@ -1859,18 +1871,12 @@ class EM_Event extends EM_Object{
 				$start_of_week = get_option('start_of_week'); //Start of week depends on WordPress
 				//first, get the start of this week as timestamp
 				$event_start_day = date('w', $start_date);
-				$offset = 0;
-				if( $event_start_day > $start_of_week ){
-					$offset = $event_start_day - $start_of_week; //x days backwards
-				}elseif( $event_start_day < $start_of_week ){
-					$offset = $start_of_week;
-				}
-				$start_week_date = $start_date - ( ($event_start_day - $start_of_week) * $aDay );
 				//then get the timestamps of weekdays during this first week, regardless if within event range
 				$start_weekday_dates = array(); //Days in week 1 where there would events, regardless of event date range
 				for($i = 0; $i < 7; $i++){
-					$weekday_date = $start_week_date+($aDay*$i); //the date of the weekday we're currently checking
+					$weekday_date = $start_date+($aDay*$i); //the date of the weekday we're currently checking
 					$weekday_day = date('w',$weekday_date); //the day of the week we're checking, taking into account wp start of week setting
+
 					if( in_array( $weekday_day, $weekdays) ){
 						$start_weekday_dates[] = $weekday_date; //it's in our starting week day, so add it
 					}
@@ -1924,15 +1930,15 @@ class EM_Event extends EM_Object{
 				//If yearly, it's simple. Get start date, add interval timestamps to that and create matching day for each interval until end date.
 				$month = date('m', $this->start);
 				$day = date('d',$this->start);
-				$year = date('Y',$this->start); 
+				$year = date('Y',$this->start);
 				$end_year = date('Y',$this->end); 
 				if( @mktime(0,0,0,$day,$month,$end_year) < $this->end ) $end_year--;
 				while( $year <= $end_year ){
-					$matching_days[] = mktime(0,0,0,$day,$month,$year);
+					$matching_days[] = mktime(0,0,0,$month,$day,$year);
 					$year++;
 				}			
 				break;
-		}	
+		}
 		sort($matching_days);
 		return apply_filters('em_events_get_recurrence_days', $matching_days, $this);
 	}
@@ -2025,7 +2031,8 @@ class EM_Event extends EM_Object{
  * @param string $target
  * @return mixed
  */
-function em_event_output_placeholder($result,$event,$placeholder,$target='html'){	
+function em_event_output_placeholder($result,$event,$placeholder,$target='html'){
+	if( $target == 'raw' ) return $result;
 	if( ($placeholder == "#_EXCERPT" || $placeholder == "#_LOCATIONEXCERPT") && $target == 'html' ){
 		$result = apply_filters('dbem_notes_excerpt', $result);
 	}elseif( $placeholder == '#_CONTACTEMAIL' && $target == 'html' ){
@@ -2038,15 +2045,19 @@ function em_event_output_placeholder($result,$event,$placeholder,$target='html')
 			$result = apply_filters('dbem_notes_map', $result);
 		}elseif($target == 'ical'){
 			$result = apply_filters('dbem_notes_ical', $result);
-		}else{
+		}elseif ($target == "email"){    
+			$result = apply_filters('dbem_notes_email', $result); 
+	  	}else{ //html
 			$result = apply_filters('dbem_notes', $result);
 		}
-	}elseif( in_array($placeholder, array("#_NAME",'#_ADDRESS','#_LOCATION','#_TOWN')) ){
+	}elseif( in_array($placeholder, array("#_NAME",'#_LOCATION','#_TOWN','#_ADDRESS','#_LOCATIONNAME',"#_EVENTNAME","#_LOCATIONNAME")) ){
 		if ($target == "rss"){    
 			$result = apply_filters('dbem_general_rss', $result);
 	  	}elseif ($target == "ical"){    
 			$result = apply_filters('dbem_general_ical', $result); 
-	  	}else{
+	  	}elseif ($target == "email"){    
+			$result = apply_filters('dbem_general_email', $result); 
+	  	}else{ //html
 			$result = apply_filters('dbem_general', $result); 
 	  	}				
 	}
@@ -2060,7 +2071,7 @@ add_filter('em_location_output_placeholder','em_event_output_placeholder',1,4);
 add_filter('dbem_general', 'wptexturize');
 add_filter('dbem_general', 'convert_chars');
 add_filter('dbem_general', 'trim');
-// filters for the notes field  (corresponding to those of  "the _content")
+// filters for the notes field in html (corresponding to those of  "the _content")
 add_filter('dbem_notes', 'wptexturize');
 add_filter('dbem_notes', 'convert_smilies');
 add_filter('dbem_notes', 'convert_chars');
@@ -2068,7 +2079,26 @@ add_filter('dbem_notes', 'wpautop');
 add_filter('dbem_notes', 'prepend_attachment');
 // RSS content filter
 add_filter('dbem_notes_rss', 'convert_chars', 8);
+add_filter('dbem_general_rss', 'esc_html', 8);
 // Notes map filters
 add_filter('dbem_notes_map', 'convert_chars', 8);
 add_filter('dbem_notes_map', 'js_escape');
+
+/**
+ * This function replaces the default gallery shortcode, so it can check if this is a recurring event recurrence and pass on the parent post id as the default post. 
+ * @param array $attr
+ */
+function em_event_gallery_override( $attr = array() ){
+	global $post;
+	if( $post->post_type == EM_POST_TYPE_EVENT && empty($attr['id']) ){
+		//no id specified, so check if it's recurring and override id with recurrence template post id
+		$EM_Event = em_get_event($post->ID, 'post_id');
+		if( $EM_Event->is_recurrence() ){
+			$attr['id'] = $EM_Event->get_event_recurrence()->post_id;
+		}
+	}
+	return gallery_shortcode($attr);
+}
+remove_shortcode('gallery');
+add_shortcode('gallery', 'em_event_gallery_override');
 ?>

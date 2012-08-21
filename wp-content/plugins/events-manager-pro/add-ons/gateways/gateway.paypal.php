@@ -307,7 +307,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			$booking_id = $custom_values[0];
 			$event_id = !empty($custom_values[1]) ? $custom_values[1]:0;
 			$EM_Booking = new EM_Booking($booking_id);
-			if( !empty($EM_Booking->booking_id) ){
+			if( !empty($EM_Booking->booking_id) && count($custom_values) == 2 ){
 				//booking exists
 				$EM_Booking->manage_override = true; //since we're overriding the booking ourselves.
 				$user_id = $EM_Booking->person_id;
@@ -315,8 +315,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 				// process PayPal response
 				switch ($_POST['payment_status']) {
 					case 'Partially-Refunded':
-						break;
-	
+						break;	
 					case 'In-Progress':
 						break;
 	
@@ -335,7 +334,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 							}
 						}
 						if( $_POST['mc_gross'] >= $EM_Booking->get_price(false, false, true) && (!get_option('em_'.$this->gateway.'_manual_approval', false) || !get_option('dbem_bookings_approval')) ){
-							$EM_Booking->approve();
+							$EM_Booking->approve(true, true); //approve and ignore spaces
 						}else{
 							//TODO do something if pp payment not enough
 							$EM_Booking->set_status(0); //Set back to normal "pending"
@@ -358,8 +357,11 @@ class EM_Gateway_Paypal extends EM_Gateway {
 						// case: refund
 						$note = 'Last transaction has been reversed. Reason: Payment has been refunded';
 						$this->record_transaction($EM_Booking, $amount, $currency, $timestamp, $_POST['txn_id'], $_POST['payment_status'], $note);
-	
-						$EM_Booking->cancel();
+						if( $EM_Booking->get_price() >= $amount ){
+							$EM_Booking->cancel();
+						}else{
+							$EM_Booking->set_status(0); //Set back to normal "pending"
+						}
 						do_action('em_payment_refunded', $EM_Booking, $this);
 						break;
 	

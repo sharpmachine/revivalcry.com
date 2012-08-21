@@ -186,11 +186,11 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 	function booking_form(){
 		echo get_option('em_'.$this->gateway.'_form');
 		?>
-        <p>
+        <p class="em-bookings-form-gateway-cardno">
           <label><?php  _e('Credit Card Number','em-pro'); ?></label>
           <input type="text" size="15" name="x_card_num" value="" class="input" />
         </p>
-        <p>
+        <p class="em-bookings-form-gateway-expiry">
           <label><?php  _e('Expiry Date','em-pro'); ?></label>
           <select name="x_exp_date_month" >
           	<?php 
@@ -209,7 +209,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
           	?>
           </select>
         </p>
-        <p>
+        <p class="em-bookings-form-ccv">
           <label><?php  _e('CCV','em-pro'); ?></label>
           <input type="text" size="4" name="x_card_code" value="" class="input" />
         </p>

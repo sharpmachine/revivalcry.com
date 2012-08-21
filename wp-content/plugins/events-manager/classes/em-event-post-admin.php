@@ -90,8 +90,6 @@ class EM_Event_Post_Admin{
 					//if this is just published, we need to email the user about the publication, or send to pending mode again for review
 					if( (!$EM_Event->is_recurring() && !current_user_can('publish_events')) || ($EM_Event->is_recurring() && !current_user_can('publish_recurring_events')) ){
 						if( $EM_Event->is_published() ){ $EM_Event->set_status(0, true); } //no publishing and editing... security threat
-					}else{
-						$EM_Event->send_approval_notification();
 					}
 					apply_filters('em_event_save', true, $EM_Event);
 				}
@@ -108,9 +106,6 @@ class EM_Event_Post_Admin{
 					//if this is just published, we need to email the user about the publication, or send to pending mode again for review
 					if( (!$EM_Event->is_recurring() && !current_user_can('publish_events')) || ($EM_Event->is_recurring() && !current_user_can('publish_recurring_events')) ){
 						if( $EM_Event->is_published() ){ $EM_Event->set_status(0, true); } //no publishing and editing... security threat
-					}else{
-						$EM_Event->previous_status = $EM_Event->get_previous_status(); //save previous status into object before approving
-						$EM_Event->send_approval_notification();
 					}
 					//now update the db
 					$wpdb->query("UPDATE ".EM_EVENTS_TABLE." SET event_name='{$EM_Event->event_name}', event_slug='{$EM_Event->event_slug}', event_status={$event_status}, event_private={$EM_Event->event_private} WHERE event_id='{$EM_Event->event_id}'");
@@ -229,9 +224,7 @@ class EM_Event_Post_Admin{
 
 	function meta_box_bookings(){
 		em_locate_template('forms/event/bookings.php', true);
-		if( !get_option('dbem_bookings_tickets_single') ){
-			add_action('admin_footer',array('EM_Event_Post_Admin','meta_box_bookings_overlay'));
-		}
+		add_action('admin_footer',array('EM_Event_Post_Admin','meta_box_bookings_overlay'));
 	}
 	
 	function meta_box_bookings_overlay(){
@@ -369,14 +362,8 @@ class EM_Event_Recurring_Post_Admin{
 		if(get_option('dbem_rsvp_enabled')){
 			add_meta_box('em-event-bookings', __('Bookings/Registration','dbem'), array('EM_Event_Post_Admin','meta_box_bookings'),'event-recurring', 'normal','high');
 		}
-		if( empty($EM_Event->event_id) && function_exists('groups_get_user_groups') ){
-			add_meta_box('em-event-group', __('Group Ownership','dbem'), array('EM_Event_Post_Admin','meta_box_group'),'event-recurring', 'side','low');
-		}
 		if( get_option('dbem_attributes_enabled') ){
 			add_meta_box('em-event-attributes', __('Attributes','dbem'), array('EM_Event_Post_Admin','meta_box_attributes'),'event-recurring', 'normal','default');
-		}
-		if( (empty($EM_Event->event_id) || !empty($EM_Event->group_id)) && function_exists('groups_get_user_groups') ){
-			add_meta_box('em-event-group', __('Group Ownership','dbem'), array('EM_Event_Post_Admin','meta_box_group'),'event-recurring', 'side','low');
 		}
 		if( EM_MS_GLOBAL && !is_main_site() && get_option('dbem_categories_enabled') ){
 			add_meta_box('em-event-categories', __('Site Categories','dbem'), array('EM_Event_Post_Admin','meta_box_ms_categories'),'event-recurring', 'side','low');

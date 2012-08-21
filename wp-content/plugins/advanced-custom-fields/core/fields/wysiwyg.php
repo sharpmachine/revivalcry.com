@@ -20,48 +20,10 @@ class acf_Wysiwyg extends acf_Field
     	$this->name = 'wysiwyg';
 		$this->title = __("Wysiwyg Editor",'acf');
 		
-		add_filter( 'acf_head-input', array( $this, 'acf_head') );
-		add_filter( 'wp_default_editor', array($this, 'my_default_editor') );
+		add_action( 'acf_head-input', array( $this, 'acf_head') );
 
    	}
    	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_print_scripts / admin_print_styles
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_print_scripts()
-	{
-		wp_enqueue_script(array(
-		
-			'jquery',
-			'jquery-ui-core',
-			'jquery-ui-tabs',
-
-			// wysiwyg
-			'editor',
-			'thickbox',
-			'media-upload',
-			'word-count',
-			'post',
-			'editor-functions',
-			'tiny_mce',
-						
-		));
-	}
-	
-	function admin_print_styles()
-	{
-  		wp_enqueue_style(array(
-  			'editor-buttons',
-			'thickbox',		
-		));
-	}
 	
 	
    	/*--------------------------------------------------------------------------------------
@@ -76,39 +38,20 @@ class acf_Wysiwyg extends acf_Field
 	
    	function acf_head()
    	{
-   		if ( ! class_exists('_WP_Editors' ) )
-	        require_once( ABSPATH . WPINC . '/class-wp-editor.php' );
-	
-	    $editor_id = 'acf_settings';
-	    $set = array(
-	        'teeny' => false,
-	        'tinymce' =>  true,
-	        'quicktags' => true
-	    );
-	
-	    $set = _WP_Editors::parse_settings($editor_id, $set);
-	    _WP_Editors::editor_settings($editor_id, $set);
-	    
+   		add_action( 'admin_footer', array( $this, 'admin_footer') );
    	}
    	
    	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	my_default_editor
-	*	- this temporarily fixes a bug which causes the editors to break when the html tab 
-	*	is activeon page load
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.6
-	*	@updated 3.0.6
-	* 
-	*-------------------------------------------------------------------------------------*/
-   	
-   	function my_default_editor()
+   	function admin_footer()
    	{
-    	return 'tinymce'; // html or tinymce
-    }
-   		
+	   	?>
+	   	<div style="display:none;">
+	   	<?php wp_editor( '', 'acf_settings' ); ?>
+	   	</div>
+	   	<?php
+   	}
+   	
+
 	
 	/*--------------------------------------------------------------------------------------
 	*
@@ -123,8 +66,13 @@ class acf_Wysiwyg extends acf_Field
 	function create_options($key, $field)
 	{	
 		// vars
-		$field['toolbar'] = isset($field['toolbar']) ? $field['toolbar'] : 'full';
-		$field['media_upload'] = isset($field['media_upload']) ? $field['media_upload'] : 'yes';
+		$defaults = array(
+			'toolbar'		=>	'full',
+			'media_upload' 	=>	'yes',
+			'the_content' 	=>	'yes',
+		);
+		
+		$field = array_merge($defaults, $field);
 		
 		?>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -165,6 +113,27 @@ class acf_Wysiwyg extends acf_Field
 				?>
 			</td>
 		</tr>
+		<tr class="field_option field_option_<?php echo $this->name; ?>">
+			<td class="label">
+				<label><?php _e("Run filter \"the_content\"?",'acf'); ?></label>
+				<p class="description"><?php _e("Enable this filter to use shortcodes within the WYSIWYG field",'acf'); ?></p>
+				<p class="description"><?php _e("Disable this filter if you encounter recursive template problems with plugins / themes",'acf'); ?></p>
+			</td>
+			<td>
+				<?php 
+				$this->parent->create_field(array(
+					'type'	=>	'radio',
+					'name'	=>	'fields['.$key.'][the_content]',
+					'value'	=>	$field['the_content'],
+					'layout'	=>	'horizontal',
+					'choices' => array(
+						'yes'	=>	__("Yes",'acf'),
+						'no'	=>	__("No",'acf'),
+					)
+				));
+				?>
+			</td>
+		</tr>
 		<?php
 	}
 	
@@ -182,8 +151,11 @@ class acf_Wysiwyg extends acf_Field
 	function create_field($field)
 	{
 		// vars
-		$field['toolbar'] = isset($field['toolbar']) ? $field['toolbar'] : 'full';
-		$field['media_upload'] = isset($field['media_upload']) ? $field['media_upload'] : 'yes';
+		$defaults = array(
+			'toolbar'		=>	'full',
+			'media_upload' 	=>	'yes',
+		);
+		$field = array_merge($defaults, $field);
 		
 		$id = 'wysiwyg-' . $field['name'];
 		
@@ -227,9 +199,23 @@ class acf_Wysiwyg extends acf_Field
 	function get_value_for_api($post_id, $field)
 	{
 		// vars
+		$defaults = array(
+			'the_content' 	=>	'yes',
+		);
+		$field = array_merge($defaults, $field);
 		$value = parent::get_value($post_id, $field);
 		
-		$value = apply_filters('the_content',$value); 
+		
+		// filter
+		if( $field['the_content'] == 'yes' )
+		{
+			$value = apply_filters('the_content',$value); 
+		}
+		else
+		{
+			$value = wpautop( $value );
+		}
+
 		
 		return $value;
 	}

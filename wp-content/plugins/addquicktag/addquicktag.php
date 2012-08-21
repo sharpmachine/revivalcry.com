@@ -5,13 +5,13 @@
  * Text Domain: addquicktag
  * Domain Path: /languages
  * Description: Allows you to easily add custom Quicktags to the html- and visual-editor.
- * Version:	    2.0.3
+ * Version:     2.2.1
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de
  * License:     GPLv3
- */
-
-/**
+ * 
+ * 
+ * 
 License:
 ==============================================================================
 Copyright 2011 Frank Bültge  (email : frank@bueltge.de)
@@ -33,23 +33,35 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Requirements:
 ==============================================================================
 This plugin requires WordPress >= 3.3 and tested with PHP Interpreter >= 5.3
-*/
-
-/**
  * 
+ * 
+ *
+ * Add Quicktag Plugin class
+ * 
+ * @since   2.0.0
  */
 class Add_Quicktag {
 	
 	static private $classobj;
 	
 	static private $option_string      = 'rmnlQuicktagSettings';
-	
-	static private $admin_pages_for_js = array( 'post.php', 'post-new.php', );
+	// use filter 'addquicktag_pages' for add custom pages
+	static private $admin_pages_for_js = array(
+		'post.php', 'post-new.php', 'comment.php', 'edit-comments.php'
+	);
 	// use filter 'addquicktag_post_types' for add custom post_types
-	static private $post_types_for_js   = array( 'post', 'page' );
+	static private $post_types_for_js  = array(
+		'post', 'page', 'comment', 'edit-comments'
+	);
 	
 	static private $plugin;
 	
+	/**
+	 * Constructor, init the functions inside WP
+	 *
+	 * @since   2.0.0
+	 * @return  void
+	 */
 	function __construct() {
 		
 		if ( ! is_admin() )
@@ -65,55 +77,87 @@ class Add_Quicktag {
 		
 		// load translation files
 		add_action( 'admin_init', array( $this, 'localize_plugin' ) );
-		// Include settings
-		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-settings.php';
-		
-		// Include solution for TinyMCe
-		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-tinymce.php';
-		// print json in head
-		add_action( 'admin_enqueue_scripts', array( $this, 'print_scripts' ) );
-		// inlcude scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts') );
+		// on init register post type for addquicktag and print js
+		add_action( 'init', array( $this, 'on_admin_init' ) );
 		
 	}
 	
+	
+	/**
+	 * Include other files and print JS
+	 * 
+	 * @since   07/16/2012
+	 * @return  void
+	 */
+	public function on_admin_init() {
+		
+		if ( ! is_admin() )
+			return NULL;
+		
+		// Include settings
+		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-settings.php';
+		// Include solution for TinyMCE
+		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-tinymce.php';
+		
+		foreach ( $this->get_admin_pages_for_js() as $page ) {
+			add_action( 'admin_print_scripts-' . $page, array( $this, 'print_scripts' ) );
+			add_action( 'admin_print_scripts-' . $page, array( $this, 'admin_enqueue_scripts') );
+		}
+	}
+	
+	/**
+	 * Uninstall data in options table, if the plugin was uninstall via backend
+	 *
+	 * @since   2.0.0
+	 * @return  void
+	 */
 	public function uninstall() {
 		
 		delete_option( self :: $option_string );
 		delete_site_option( self :: $option_string );
 	}
 	
+	/**
+	 * Print json data in head
+	 *
+	 * @since   2.0.0
+	 * @return  void
+	 */
 	public function print_scripts() {
 		global $current_screen;
 		
-		if ( isset( $current_screen -> post_type ) && 
+		if ( isset( $current_screen->id ) && 
 			 ! in_array( 
-				$current_screen -> post_type, 
-				// filter for custom post types
-				apply_filters( 'addquicktag_post_types', self :: $post_types_for_js )
+				$current_screen->id,
+				$this->get_post_types_for_js()
 			 )
 			)
-			return;
-		
+			return NULL;
+			
 		if ( is_multisite() && is_plugin_active_for_network( $this -> get_plugin_string() ) )
 			$options = get_site_option( self :: $option_string );
 		else
 			$options = get_option( self :: $option_string );
 		
 		if ( ! $options )
-			return;
+			return NULL;
 		
 		if ( 1 < count($options['buttons']) ) {
 			// sort array by order value
 			$tmp = array();
 			foreach( $options['buttons'] as $order ) {
-				$tmp[] = $order['order'];
+				if ( isset( $order['order'] ) )
+					$tmp[] = $order['order'];
+				else
+					$tmp[] = 0;
 			}
 			array_multisort( $tmp, SORT_ASC, $options['buttons'] );
 		}
 		?>
 		<script type="text/javascript">
-			var addquicktag_tags = <?php echo json_encode( $options ); ?>;
+			var addquicktag_tags = <?php echo json_encode( $options ); ?>,
+				addquicktag_post_type = <?php echo json_encode( $current_screen->id ); ?>,
+				addquicktag_pt_for_js = <?php echo json_encode( $this->get_post_types_for_js() ); ?>;
 		</script>
 		<?php
 	}
@@ -127,9 +171,15 @@ class Add_Quicktag {
 	 * @return  void
 	 */
 	public function admin_enqueue_scripts( $where ) {
+		global $current_screen;
 		
-		if ( ! in_array( $where, self :: $admin_pages_for_js ) )
-			return;
+		if ( isset( $current_screen->id ) && 
+			 ! in_array( 
+				$current_screen->id,
+				$this->get_post_types_for_js()
+			 )
+			)
+			return NULL;
 		
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
 		
@@ -203,9 +253,39 @@ class Add_Quicktag {
 		return $plugin_value;
 	}
 	
+	/**
+	 * Return string of plugin
+	 * 
+	 * @since   2.0.0
+	 * @return  string
+	 */
 	public function get_plugin_string() {
 		
-		return self :: $plugin;
+		return self::$plugin;
+	}
+	
+	/**
+	 * Retrun allowed post types for include scripts
+	 * 
+	 * @since   2.1.1
+	 * @access  public
+	 * @return  Array
+	 */
+	public function get_post_types_for_js() {
+		
+		return apply_filters( 'addquicktag_post_types', self::$post_types_for_js );
+	}
+	
+	/**
+	 * Retrun allowed post types for include scripts
+	 * 
+	 * @since   2.1.1
+	 * @access  public
+	 * @return  Array
+	 */
+	public function get_admin_pages_for_js() {
+		
+		return apply_filters( 'addquicktag_pages', self::$admin_pages_for_js );
 	}
 	
 	/**
@@ -217,9 +297,15 @@ class Add_Quicktag {
 	 */
 	public function get_textdomain() {
 		
-		return self :: get_plugin_data( 'TextDomain' );
+		return self::get_plugin_data( 'TextDomain' );
 	}
 	
+	/**
+	 * Return string for options
+	 *
+	 * @since   2.0.0
+	 * @retrun  string
+	 */
 	public function get_option_string() {
 		
 		return self :: $option_string;

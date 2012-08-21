@@ -3,8 +3,10 @@ Contributors: takayukister
 Donate link: http://contactform7.com/donate/
 Tags: contact, form, contact form, feedback, email, ajax, captcha, akismet, multilingual
 Requires at least: 3.2
-Tested up to: 3.3.1
-Stable tag: 3.1.2
+Tested up to: 3.4.1
+Stable tag: 3.2.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Just another contact form plugin. Simple but flexible.
 
@@ -12,11 +14,9 @@ Just another contact form plugin. Simple but flexible.
 
 Contact Form 7 can manage multiple contact forms, plus you can customize the form and the mail contents flexibly with simple markup. The form supports Ajax-powered submitting, CAPTCHA, Akismet spam filtering and so on.
 
-= Plugin's Official Site =
-
-Contact Form 7 ([http://contactform7.com](http://contactform7.com/))
-
-* [Docs](http://contactform7.com/docs/) - [FAQ](http://contactform7.com/faq/) - [Support](http://contactform7.com/support/)
+* [Docs](http://contactform7.com/docs/)
+* [FAQ](http://contactform7.com/faq/)
+* [Support](http://contactform7.com/support/)
 
 = Contact Form 7 Needs Your Support =
 
@@ -30,6 +30,7 @@ It is hard to continue development and support for this plugin without contribut
 * Armenian (hy_AM) - [Emmanuelle Traduction](http://www.translatonline.com/)
 * Azerbaijani (az_AZ) - [Zaur Bayramov](http://bloglayaq.com/)
 * Bangla (bn_BD) - [SM Mehdi Akram](http://www.shamokaldarpon.com/)
+* Basque (Euskara; eu) - [karrikas](http://blog.karrikas.com/)
 * Belarusian (be_BY) - [Igor Dubilei](http://www.iflexion.com/)
 * Bosnian (bs) - [Vedran](http://www.seorabbit.com/)
 * Brazilian Portuguese (pt_BR) - [Leonardo Pinheiro](http://www.eletrikabarbarella.com.br/), [Henrique Vianna](http://henriquevianna.com/), [Caciano Gabriel Batista](http://www.gn10.com.br/), [Gervásio Antônio](http://twitter.com/gervasioantonio)
@@ -38,7 +39,7 @@ It is hard to continue development and support for this plugin without contribut
 * Chinese, Simplified (zh_CN) - [Soz](http://www.webtoolol.com/), [Keefe Dunn](http://dengkefu.com/)
 * Chinese, Traditional (zh_TW) - [James Wu](http://jameswublog.com)
 * Croatian (hr) - [tolingo Translation Services](http://www.tolingo.com)
-* Czech (cs_CZ) - Korry, [Radovan Fiser](http://algymsa.cz/), [Tomas Vesely](http://www.mcmotylek.cz/)
+* Czech (cs_CZ) - Korry, [Radovan Fiser](http://algymsa.cz/), [Tomas Vesely](http://www.mcmotylek.cz/), [Pavel Bilek](http://chcistranky.eu/zdarma/)
 * Danish (da_DK) - [Jens Griebel](http://www.kompas-it.dk/), [Georg S. Adamsen](http://wordpress.blogos.dk/)
 * Dutch (nl_NL) - [Chris Devriese](http://www.100it.be/), [Martin Hein](http://www.split-a-pixel.nl/), [Rene](http://wpwebshop.com/)
 * Esperanto (eo_EO) - Arkadiusz Zychewicz
@@ -64,7 +65,7 @@ It is hard to continue development and support for this plugin without contribut
 * Maltese (mt_MT) - [Ajoft Technologies](http://www.ajoft.com/)
 * Norwegian (nb_NO) - Kjetil M. Bergem, [aanvik.net](http://www.aanvik.net), [Peter Holme](http://holme.se/nettsteder/)
 * Persian (Farsi; fa_IR) - [Mohammad Musavi](http://www.musavis.com/), [Mohsen Firoozmandan](http://www.rankbazar.com/)
-* Polish (pl_PL) - [Zbigniew Czernik](http://zibik.jogger.pl/), [Daniel Fruzynski](http://www.poradnik-webmastera.com), [RafalDesign](http://www.rafaldesign.pl/)
+* Polish (pl_PL) - [Zbigniew Czernik](http://zibik.jogger.pl/), [Daniel Fruzynski](http://www.poradnik-webmastera.com), [RafalDesign](http://www.rafaldesign.pl/), [Bartosz Arendt](http://digitalfactory.pl/)
 * Portuguese (pt_PT) - [Hugo Baeta](http://hugobaeta.com), [Pedro Nave](http://pedronave.com/)
 * Russian (ru_RU) - Dmitry Volotovich, [kg69design](http://kg69design.com/), [Denis Voituk](http://artprima.cz/)
 * Romanian (ro_RO) - [Stas Sushkov](http://stas.nerd.ro/), [Anunturi Jibo](http://www.jibo.ro/), [Marius Olar](http://webdudes.ro/)
@@ -102,8 +103,7 @@ Do you have questions or issues with Contact Form 7? Use these support channels 
 
 1. [Docs](http://contactform7.com/docs/)
 1. [FAQ](http://contactform7.com/faq/)
-1. [Support Forum](http://wordpress.org/tags/contact-form-7?forum_id=10)
-1. [WordPress HelpCenter](http://wphelpcenter.com/)
+1. [Support Forum](http://wordpress.org/support/plugin/contact-form-7)
 
 [Support](http://contactform7.com/support/)
 
@@ -113,37 +113,29 @@ Do you have questions or issues with Contact Form 7? Use these support channels 
 
 == Changelog ==
 
-= 3.1.2 =
+= 3.2.1 =
 
-* Auto-generate .htaccess file in the CAPTCHA’s temporary folder to hide answer files in it.
-* Make sure all fields given by form-tags are in the posted_data property.
-* Fix the RTL style sheet for admin pages.
-* Bug fixed: names of uploaded files don’t appear in mail body.
-* The jQuery Form Plugin (jquery.form.js) has been updated to 3.08.
-* Translations for German, Hungarian, Slovene, and Lithuanian have been updated.
+* Fixed: Error for use of array_key_exists function with invalid first argument.
+* Fixed: Adding unnecessary rewrite rules.
+* Fixed: "Screen Options" doesn't appear on each contact form edit screen.
+* Change the comment_type value sent to Akismet from 'contactform7' to 'contact-form' following their blog post.
+* Introduce wpcf7_add_meta_boxes function and action with the same name. This makes it easier to add custom meta boxes to the edit screen.
+* Pass meta informations of each form submission (e.g. client's IP address) to Flamingo.
+* The jQuery Form Plugin (jquery.form.js) has been updated to 3.14 and compressed with YUI compressor.
+* Translation for Basque has been created.
+* Translations for German, Italian, and Polish have been updated.
 
-= 3.1.1 =
+= 3.2 =
 
-* Introduce wpcf7_verify_nonce() and wpcf7_create_nonce() for front-end use. This fixes the wrong nonce issue on cached pages.
-* Preserve new line characters in form shortcode contents to bypass auto-p filter.
-* Use [\r\n\t ] instead of [\s] in regex to prevent issues of checkbox/radio options containing some UTF-8 characters are dropped.
-* Bug fixed: tag generator menu is incorrectly shown on WordPress 3.2.x.
-* The jQuery Form Plugin (jquery.form.js) has been updated to 2.96.
-* Translations for Latvian, Hebrew, German, and Japanese have been updated.
-
-= 3.1 =
-
-* Offer nonce verification for contact forms.
-* Add several options to retrieve logged-in user info as default value of field.
-* Introduce wpcf7_validate filter for validation independent from specific form tag type.
-* Search contact form by title when failed to find by ID.
-* Include all $_POST variables into $cf->posted_data and make them referable from mail.
-* Add watermark option to captchar (CAPTCHA-response) field.
-* Introduce wpcf7_ajax_loader() function and wpcf7_ajax_loader filter.
-* Introduce wpcf7_akismet_comment_check filter.
-* Introduce menu icons created by Takao Honda.
-* Translation for Azeri has been created.
-* Translations for Italian, Russian, Arabic, Danish, Persian, Romanian, and Portuguese have been updated.
+* Enhanced admin panel. Introduced list table view for contact forms.
+* Moved the Contact menu to the upper position (just below the Comments).
+* Show alert message when Jetpack contact form is active.
+* Introduced Flamingo module.
+* Made capabilities more customizable.
+* wpcf7_admin_url() is deprecated. Use admin_url() or menu_page_url() instead.
+* Changed the default defined value of constants WPCF7_PLUGIN_DIR and WPCF7_PLUGIN_URL.
+* The jQuery Form Plugin (jquery.form.js) has been updated to 3.09 and compressed with YUI compressor.
+* Translations for Latvian, Swedish, and Czech have been updated.
 
 == Upgrade Notice ==
 

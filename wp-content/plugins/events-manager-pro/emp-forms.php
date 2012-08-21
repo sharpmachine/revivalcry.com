@@ -202,7 +202,7 @@ class EM_Form extends EM_Object {
 				}
 				break;
 		}	
-		return ob_get_clean();	
+		return apply_filters('emp_forms_output_field', ob_get_clean(), $this);	
 	}
 	
 	function output_field_input($field, $post=true){
@@ -301,7 +301,7 @@ class EM_Form extends EM_Object {
 				}
 				break;
 		}	
-		return ob_get_clean();
+		return apply_filters('emp_forms_output_field_input', ob_get_clean(), $this);	
 	}
 	
 	/**

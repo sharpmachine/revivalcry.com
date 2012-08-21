@@ -630,6 +630,13 @@ input[type=email] {
   text-align: left;
   padding: 0;
 }
+#em-wrapper select.children_amount {
+	display: block;
+	clear: both;
+}
+#em-wrapper input.em-booking-submit {
+	margin-top: 10px;
+}
 .encourage-box {
   font-family: 'Open Sans Condensed', 'OpenSansCondensedLight', sans-serif;
   background-color: #ffffff;

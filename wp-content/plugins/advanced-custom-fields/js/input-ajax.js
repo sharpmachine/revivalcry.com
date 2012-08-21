@@ -44,7 +44,20 @@
 			post_format		:	false,
 			taxonomy		:	false
 		};
-	
+		
+		
+		// MPML
+		if( $('#icl-als-first').exists() )
+		{
+			var href = $('#icl-als-first').children('a').attr('href'),
+				regex = new RegExp( "lang=([^&#]*)" ),
+				results = regex.exec( href );
+			
+			// lang
+			acf.data.lang = results[1];
+			
+		}
+		
 	});
 	
 	
@@ -57,8 +70,7 @@
 	
 	function update_fields()
 	{
-		
-		//console.log('update_fields');
+
 		$.ajax({
 			url: ajaxurl,
 			data: acf.data,
@@ -163,20 +175,7 @@
 		update_fields();
 	    
 	});
-	
-	$('#taxonomy-category input[type="checkbox"]').live('change', function(){
-		
-		acf.data.post_category = ['0'];
-		
-		$('#categorychecklist :checked').each(function(){
-			acf.data.post_category.push($(this).val())
-		});
-		
-		//console.log(data.post_category);
-		update_fields();
-		
-	});	
-	
+
 	
 	$('#post-formats-select input[type="radio"]').live('change', function(){
 		
@@ -185,18 +184,24 @@
 		
 	});	
 	
-	// taxonomy
-	$('div[id*="taxonomy-"] input[type="checkbox"]').live('change', function(){
+	
+	// taxonomy / category
+	$('.categorychecklist input[type="checkbox"]').live('change', function(){
 		
-		// ignore categories
-		if($(this).closest('#taxonomy-category').exists()) return false;
 		
-		acf.data.taxonomy = ['0'];
+		// vars
+		var values = ['0'];
 		
-		$(this).closest('ul').find('input[type="checkbox"]:checked').each(function(){
-			acf.data.taxonomy.push($(this).val())
+		
+		$('.categorychecklist input[type="checkbox"]:checked').each(function(){
+			values.push($(this).val());
 		});
+
 		
+		acf.data.post_category = values;
+		acf.data.taxonomy = values;
+
+
 		update_fields();
 		
 	});	

@@ -184,9 +184,10 @@ class EM_Location extends EM_Object {
 	 * @return boolean
 	 */
 	function get_post($validate = true){
+	    global $allowedtags;
 		do_action('em_location_get_post_pre', $this);
-		$this->location_name = ( !empty($_POST['location_name']) ) ? wp_kses($_POST['location_name'], array()):'';
-		$this->post_content = ( !empty($_POST['content']) ) ? wp_kses($_POST['content'], array()):'';
+		$this->location_name = ( !empty($_POST['location_name']) ) ? wp_kses_data( stripslashes($_POST['location_name'])):'';
+		$this->post_content = ( !empty($_POST['content']) ) ? wp_kses( stripslashes($_POST['content']), $allowedtags):'';
 		$this->get_post_meta(false);
 		$result = $validate ? $this->validate():true; //validate both post and meta, otherwise return true
 		$this->compat_keys();
@@ -200,12 +201,12 @@ class EM_Location extends EM_Object {
 	function get_post_meta($validate = true){
 		//We are getting the values via POST or GET
 		do_action('em_location_get_post_meta_pre', $this);
-		$this->location_address = ( !empty($_POST['location_address']) ) ? wp_kses($_POST['location_address'], array()):'';
-		$this->location_town = ( !empty($_POST['location_town']) ) ? wp_kses($_POST['location_town'], array()):'';
-		$this->location_state = ( !empty($_POST['location_state']) ) ? wp_kses($_POST['location_state'], array()):'';
-		$this->location_postcode = ( !empty($_POST['location_postcode']) ) ? wp_kses($_POST['location_postcode'], array()):'';
-		$this->location_region = ( !empty($_POST['location_region']) ) ? wp_kses($_POST['location_region'], array()):'';
-		$this->location_country = ( !empty($_POST['location_country']) ) ? wp_kses($_POST['location_country'], array()):'';
+		$this->location_address = ( !empty($_POST['location_address']) ) ? wp_kses(stripslashes($_POST['location_address']), array()):'';
+		$this->location_town = ( !empty($_POST['location_town']) ) ? wp_kses(stripslashes($_POST['location_town']), array()):'';
+		$this->location_state = ( !empty($_POST['location_state']) ) ? wp_kses(stripslashes($_POST['location_state']), array()):'';
+		$this->location_postcode = ( !empty($_POST['location_postcode']) ) ? wp_kses(stripslashes($_POST['location_postcode']), array()):'';
+		$this->location_region = ( !empty($_POST['location_region']) ) ? wp_kses(stripslashes($_POST['location_region']), array()):'';
+		$this->location_country = ( !empty($_POST['location_country']) ) ? wp_kses(stripslashes($_POST['location_country']), array()):'';
 		$this->location_latitude = ( !empty($_POST['location_latitude']) && is_numeric($_POST['location_latitude']) ) ? $_POST['location_latitude']:'';
 		$this->location_longitude = ( !empty($_POST['location_longitude']) && is_numeric($_POST['location_longitude']) ) ? $_POST['location_longitude']:'';
 		//Set Blog ID
@@ -538,13 +539,32 @@ class EM_Location extends EM_Object {
 	
 	function output($format, $target="html") {
 		$location_string = $format;
-		preg_match_all('/\{([a-zA-Z0-9_]+)\}([^{]+)\{\/[a-zA-Z0-9_]+\}/', $format, $conditionals);
-		if( count($conditionals[0]) > 0 ){
-			//Check if the language we want exists, if not we take the first language there
-			foreach($conditionals[1] as $key => $condition){
-				$format = str_replace($conditionals[0][$key], apply_filters('em_location_output_condition', '', $conditionals[0][$key], $condition, $this), $format);
+	 	//First let's do some conditional placeholder removals
+	 	for ($i = 0 ; $i < get_option('dbem_conditional_recursions',1); $i++){ //you can add nested recursions by modifying this setting in your wp_options table
+			preg_match_all('/\{([a-zA-Z0-9_]+)\}(.+?)\{\/\1\}/s', $location_string, $conditionals);
+			if( count($conditionals[0]) > 0 ){
+				//Check if the language we want exists, if not we take the first language there
+				foreach($conditionals[1] as $key => $condition){
+					$show_condition = false;
+					if ($condition == 'has_loc_image'){
+						//does this event have an image?
+						$show_condition = ( $this->get_image_url() != '' );
+					}elseif ($condition == 'no_loc_image'){
+						//does this event have an image?
+						$show_condition = ( $this->get_image_url() == '' );
+					}
+					$show_condition = apply_filters('em_location_output_show_condition', $show_condition, $condition, $conditionals[0][$key], $this); 
+					if($show_condition){
+						//calculate lengths to delete placeholders
+						$placeholder_length = strlen($condition)+2;
+						$replacement = substr($conditionals[0][$key], $placeholder_length, strlen($conditionals[0][$key])-($placeholder_length *2 +1));
+					}else{
+						$replacement = '';
+					}
+					$location_string = str_replace($conditionals[0][$key], apply_filters('em_location_output_condition', $replacement, $condition, $conditionals[0][$key], $this), $location_string);
+				}
 			}
-		}
+	 	}
 		//This is for the custom attributes
 		preg_match_all('/#_LATT\{([^}]+)\}(\{([^}]+)\})?/', $format, $results);
 		foreach($results[0] as $resultKey => $result) {
@@ -675,6 +695,7 @@ class EM_Location extends EM_Object {
 				case '#_LOCATIONNEXTEVENTS':
 				case '#_ALLEVENTS': //Depreciated
 				case '#_LOCATIONALLEVENTS':
+					//TODO: add limit to lists of events
 					//convert depreciated placeholders for compatability
 					$result = ($result == '#_PASTEVENTS') ? '#_LOCATIONPASTEVENTS':$result; 
 					$result = ($result == '#_NEXTEVENTS') ? '#_LOCATIONNEXTEVENTS':$result;
@@ -705,13 +726,12 @@ class EM_Location extends EM_Object {
 					$replace = $full_result;
 					break;
 			}
-			$replaces[$key] = apply_filters('em_location_output_placeholder', $replace, $this, $full_result, $target);
+			$replaces[$full_result] = apply_filters('em_location_output_placeholder', $replace, $this, $full_result, $target);
 		}
-		//sort out replacements of placeholders here so that e.g. #_X won't overwrite #_XY by mistake
+		//sort out replacements so that during replacements shorter placeholders don't overwrite longer varieties.
 		krsort($replaces);
-		foreach($replaces as $key => $value){
-			$full_result = $placeholders[0][$key];
-			$location_string = str_replace($full_result, $value , $location_string );
+		foreach($replaces as $full_result => $replacement){
+			$location_string = str_replace($full_result, $replacement , $location_string );
 		}
 		return apply_filters('em_location_output', $location_string, $this, $format, $target);	
 	}

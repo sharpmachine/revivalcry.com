@@ -154,8 +154,8 @@ class EM_Locations extends EM_Object implements Iterator {
 			//Pagination (if needed/requested)
 			if( !empty($args['pagination']) && !empty($limit) && $locations_count >= $limit ){
 				//Show the pagination links (unless there's less than 10 events
-				$page_link_template = preg_replace('/(&|\?)page=\d+/i','',$_SERVER['REQUEST_URI']);
-				$page_link_template = em_add_get_params($page_link_template, array('page'=>'%PAGE%'), false); //don't html encode, so em_paginate does its thing
+				$page_link_template = preg_replace('/(&|\?)pno=\d+/i','',$_SERVER['REQUEST_URI']);
+				$page_link_template = em_add_get_params($page_link_template, array('pno'=>'%PAGE%'), false); //don't html encode, so em_paginate does its thing
 				$output .= apply_filters('em_events_output_pagination', em_paginate( $page_link_template, $locations_count, $limit, $page), $page_link_template, $locations_count, $limit, $page);
 			}
 		} else {
@@ -203,7 +203,7 @@ class EM_Locations extends EM_Object implements Iterator {
 			$conditions['owner'] = 'location_owner='.get_current_user_id();
 		}
 		//blog id in events table
-		if( EM_MS_GLOBAL && !empty($args['blog']) ){
+		if( EM_MS_GLOBAL && !empty($args['blog']) && is_numeric($args['blog']) ){
 			if( is_main_site($args['blog']) ){
 				$conditions['blog'] = "($locations_table.blog_id={$args['blog']} OR $locations_table.blog_id IS NULL)";
 			}else{
@@ -262,11 +262,8 @@ class EM_Locations extends EM_Object implements Iterator {
 			'post_id' => false
 		);
 		if(EM_MS_GLOBAL){
-			global $bp;
-			if( !is_main_site() && !array_key_exists('blog', $array) ){
-				$array['blog'] = get_current_blog_id();
-			}elseif( array_key_exists('blog', $array) ) {
-				$array['blog'] = $array['blog'];
+			if( empty($array['blog']) && is_main_site() && get_site_option('dbem_ms_global_locations') ){
+			    $array['blog'] = false;
 			}
 		}
 		$array['eventful'] = ( !empty($array['eventful']) && $array['eventful'] == true );

@@ -21,6 +21,18 @@ class EM_Event_Post {
 			add_filter('the_category',array('EM_Event_Post','the_category'),10,3);
 		}
 		add_action('parse_query', array('EM_Event_Post','parse_query'));
+		add_action('publish_future_post',array('EM_Event_Post','publish_future_post'),10,1);
+	}
+	
+	function publish_future_post($post_id){
+		global $wpdb, $EM_Event, $EM_Location, $EM_Notices;
+		$post_type = get_post_type($post_id);
+		$is_post_type = $post_type == EM_POST_TYPE_EVENT || $post_type == 'event-recurring';
+		$saving_status = !in_array(get_post_status($post_id), array('trash','auto-draft')) && !defined('DOING_AUTOSAVE');
+		if(!defined('UNTRASHING_'.$post_id) && $is_post_type && $saving_status ){
+		    $EM_Event = em_get_event($post_id, 'post_id');
+		    $EM_Event->set_status(1);
+		}
 	}
 	
 	/**
@@ -130,6 +142,12 @@ class EM_Event_Post {
 			if( !empty($wp_query->query_vars['s']) && !get_option('dbem_cp_events_search_results') ){
 				$wp_query->query_vars['post_type'] = array_diff( get_post_types(array('exclude_from_search' => false)), array(EM_POST_TYPE_EVENT));
 			}
+		}else{
+		    if( !empty($wp_query->query_vars[EM_TAXONOMY_CATEGORY]) && is_numeric($wp_query->query_vars[EM_TAXONOMY_CATEGORY]) ){
+		        //sorts out filtering admin-side as it searches by id
+		        $term = get_term_by('id', $wp_query->query_vars[EM_TAXONOMY_CATEGORY], EM_TAXONOMY_CATEGORY);
+		        $wp_query->query_vars[EM_TAXONOMY_CATEGORY] = ( $term !== false && !is_wp_error($term) )? $term->name:0;
+		    }
 		}
 		//Scoping
 		if( !empty($wp_query->query_vars['post_type']) && ($wp_query->query_vars['post_type'] == EM_POST_TYPE_EVENT || $wp_query->query_vars['post_type'] == 'event-recurring') && (empty($wp_query->query_vars['post_status']) || !in_array($wp_query->query_vars['post_status'],array('trash','pending','draft'))) ) {

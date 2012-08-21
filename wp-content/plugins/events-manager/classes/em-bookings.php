@@ -189,18 +189,24 @@ class EM_Bookings extends EM_Object implements Iterator{
 		return apply_filters('em_bookings_ticket_exists',false, false,$this);
 	}
 	
+	function has_space(){
+		return count($this->get_available_tickets()->tickets) > 0;
+	}
+	
+	function has_open_time(){
+	    $return = false;
+	    $EM_Event = $this->get_event();
+	    if(!empty($EM_Event->event_rsvp_date) && $EM_Event->rsvp_end > current_time('timestamp')){
+	    	$return = true;
+	    }elseif( empty($EM_Event->event_rsvp_date) && $EM_Event->start > current_time('timestamp') ){
+	    	$return = true;
+	    }
+	    return $return;
+	}
+	
 	function is_open(){
 		//TODO extend booking options
-		$return = false;
-		$EM_Event = $this->get_event();
-		if( !empty($EM_Event->event_rsvp_date) && strtotime($EM_Event->event_rsvp_date) > current_time('timestamp') ){
-			$return = true;
-		}elseif( $EM_Event->start > current_time('timestamp') ){
-			$return = true;
-		}
-		if( count($this->get_available_tickets()->tickets) == 0){
-			$return = false;
-		}
+		$return = $this->has_open_time() && $this->has_space();
 		return apply_filters('em_bookings_is_open', $return, $this);
 	}
 	
@@ -443,7 +449,7 @@ class EM_Bookings extends EM_Object implements Iterator{
 		}
 		if( is_numeric($user_id) && $user_id > 0 ){
 			foreach ($this->bookings as $EM_Booking){
-				if( $EM_Booking->person->ID == $user_id && $EM_Booking->booking_status != 3 ){
+				if( $EM_Booking->person->ID == $user_id && !in_array($EM_Booking->booking_status, array(2,3)) ){
 					return apply_filters('em_bookings_has_booking', $EM_Booking, $this);
 				}
 			}	

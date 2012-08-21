@@ -161,29 +161,52 @@ class acf_Field
 	
 	function get_value($post_id, $field)
 	{
-		$value = "";
+		$value = false;
 		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
 		if( is_numeric($post_id) )
 		{
-			$value = get_post_meta( $post_id, $field['name'], true );
+			$value = get_post_meta( $post_id, $field['name'], false );
 			
-			// return default if possible
-		 	if($value == "" && isset($field['default_value']))
+			// value is an array, check and assign the real value / default value
+			if( empty($value) )
+			{
+				if( isset($field['default_value']) )
+				{
+					$value = $field['default_value'];
+				}
+				else
+				{
+					$value = false;
+				}
+		 	}
+		 	else
 		 	{
-		 		$value = $field['default_value'];
+			 	$value = $value[0];
 		 	}
 		}
 		else
 		{
-			$value = get_option( $post_id . '_' . $field['name'], "" );
-			
-			// return default if possible
-			if( $value == "" && isset($field['default_value']) )
+			$value = get_option( $post_id . '_' . $field['name'], null );
+
+			if( is_null($value) )
 			{
-				$value = $field['default_value'];
-			}
+				if( isset($field['default_value']) )
+				{
+					$value = $field['default_value'];
+				}
+				else
+				{
+					$value = false;
+				}
+		 	}
+
 		}
+		
+		
+		// if value was duplicated, it may now be a serialized string!
+		$value = maybe_unserialize($value);
+
 		
 		return $value;
 	}
@@ -203,38 +226,6 @@ class acf_Field
 		return $this->get_value($post_id, $field);
 	}
 	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	format_value_for_input
-	*	- 
-	*
-	*	@author Elliot Condon
-	*	@since 2.2.0
-	* 
-	*-------------------------------------------------------------------------------------
-	
-	function format_value_for_input($value, $field)
-	{
-		return $value;
-	}
-	*/
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	format_value_for_api
-	*	- 
-	*
-	*	@author Elliot Condon
-	*	@since 2.2.0
-	* 
-	*-------------------------------------------------------------------------------------
-	
-	function format_value_for_api($value, $field)
-	{
-		return $value;
-	}
-	*/
 }
 
 ?>
