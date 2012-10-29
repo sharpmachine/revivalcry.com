@@ -85,7 +85,8 @@ class EM_Bookings_Table{
 			'booking_status'=>__('Status','dbem'),
 			'booking_date'=>__('Booking Date','dbem'),
 			'booking_price'=>__('Total','dbem'),
-			'booking_id'=>__('Booking ID','dbem')
+			'booking_id'=>__('Booking ID','dbem'),
+			'booking_comment'=>__('Booking Comment','dbem')
 		), $this);
 		$this->cols_tickets_template = apply_filters('em_bookings_table_cols_tickets_template', array(
 			'ticket_name'=>__('Ticket Name','dbem'),
@@ -288,6 +289,7 @@ class EM_Bookings_Table{
 					<p><?php _e('Split bookings by ticket type','dbem')?> <input type="checkbox" name="show_tickets" value="1" />
 					<a href="#" title="<?php _e('If your events have multiple tickets, enabling this will show a seperate row for each ticket within a booking.'); ?>">?</a>
 				<?php endif; ?>
+				<?php do_action('em_bookings_table_export_options'); ?>
 				<div id="em-bookings-table-settings-form-cols">
 					<p><strong><?php _e('Collumns to export','dbem')?></strong></p>
 					<ul id="em-bookings-export-cols-active" class="em-bookings-cols-sortable">
@@ -356,7 +358,7 @@ class EM_Bookings_Table{
 				<?php if( $EM_Person !== false ): ?>
 				<input type="hidden" name="person_id" value='<?php echo $EM_Person->ID; ?>' />
 				<?php endif; ?>
-				<input type="hidden" name="is_public" value="<?php echo is_admin() ? 1:0; ?>" />
+				<input type="hidden" name="is_public" value="<?php echo is_admin() ? 0:1; ?>" />
 				<input type="hidden" name="pno" value='<?php echo $this->page ?>' />
 				<input type="hidden" name="order" value='<?php echo $this->order ?>' />
 				<input type="hidden" name="orderby" value='<?php echo $this->orderby ?>' />
@@ -490,7 +492,7 @@ class EM_Bookings_Table{
 				$headers[$col] = $this->cols_template[$col];
 			}
 		}
-		return $headers;
+		return apply_filters('em_bookings_table_get_headers', $headers, $csv, $this);
 	}
 	
 	function get_table(){
@@ -560,6 +562,8 @@ class EM_Bookings_Table{
 				$cols[] = $EM_Ticket->get_price(true);
 			}elseif( $col == 'ticket_id' && $this->show_tickets && !empty($EM_Ticket) ){
 				$cols[] = $EM_Ticket->ticket_id;
+			}elseif( $col == 'booking_comment' ){
+				$cols[] = $EM_Booking->booking_comment;
 			}else{
 				$val = apply_filters('em_bookings_table_rows_col_'.$col, '', $EM_Booking, $this, $csv);
 				$cols[] = apply_filters('em_bookings_table_rows_col', $val, $col, $EM_Booking, $this, $csv);
