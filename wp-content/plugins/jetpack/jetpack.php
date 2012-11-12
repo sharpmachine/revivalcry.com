@@ -5,7 +5,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/jetpack/
  * Description: Bring the power of the WordPress.com cloud to your self-hosted WordPress. Jetpack enables you to connect your blog to a WordPress.com account to use the powerful features normally only available to WordPress.com users.
  * Author: Automattic
- * Version: 1.9.1
+ * Version: 1.9.2
  * Author URI: http://jetpack.me
  * License: GPL2+
  * Text Domain: jetpack
@@ -17,7 +17,7 @@ define( 'JETPACK__API_VERSION', 1 );
 define( 'JETPACK__MINIMUM_WP_VERSION', '3.2' );
 defined( 'JETPACK_CLIENT__AUTH_LOCATION' ) or define( 'JETPACK_CLIENT__AUTH_LOCATION', 'header' );
 defined( 'JETPACK_CLIENT__HTTPS' ) or define( 'JETPACK_CLIENT__HTTPS', 'AUTO' );
-define( 'JETPACK__VERSION', '1.9.1' );
+define( 'JETPACK__VERSION', '1.9.2' );
 define( 'JETPACK__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'JETPACK__GLOTPRESS_LOCALES_PATH' ) or define( 'JETPACK__GLOTPRESS_LOCALES_PATH', JETPACK__PLUGIN_DIR . 'locales.php' );
 
@@ -163,18 +163,6 @@ class Jetpack {
 					trigger_error( sprintf( 'Jetpack::plugin_upgrade found no user_id in user_token "%s"', $user_token ), E_USER_WARNING );
 				}
 			}
-		}
-
-		$version = Jetpack::get_option( 'version' );
-		if ( $version ) {
-			list( $version ) = explode( ':', $version );
-		}
-		if ( $version == JETPACK__VERSION ) {
-			return;
-		}
-
-		if ( version_compare( $version, '1.9', '<' ) && version_compare( '1.9-something', JETPACK__VERSION, '<' ) ) {
-			add_action( 'jetpack_modules_loaded', array( $this->sync, 'sync_all_registered_options' ), 1000 );
 		}
 	}
 
@@ -599,6 +587,10 @@ class Jetpack {
 
 			$reactivate_modules[] = $active_module;
 			Jetpack::deactivate_module( $active_module );
+		}
+
+		if ( version_compare( $jetpack_version, '1.9.2', '<' ) && version_compare( '1.9-something', JETPACK__VERSION, '<' ) ) {
+			add_action( 'jetpack_activate_default_modules', array( $this->sync, 'sync_all_registered_options' ), 1000 );
 		}
 
 		Jetpack::update_options( array(
