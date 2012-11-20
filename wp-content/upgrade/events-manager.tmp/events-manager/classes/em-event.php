@@ -1563,8 +1563,8 @@ class EM_Event extends EM_Object{
 						$gcal_url_description = wp_kses_data($matches[0]);
 					}
 					$gcal_url_length = strlen($gcal_url) - 9;
-					if( strlen($gcal_url_description) + $gcal_url_length > 1450 ){
-						$gcal_url_description = substr($gcal_url_description, 0, 1480 - $gcal_url_length - 3 ).'...';
+					if( strlen($gcal_url_description) + $gcal_url_length > 1350 ){
+						$gcal_url_description = substr($gcal_url_description, 0, 1380 - $gcal_url_length - 3 ).'...';
 					}
 					$gcal_url = str_replace('post_content', urlencode($gcal_url_description), $gcal_url);
 					//get the final url
@@ -1747,7 +1747,7 @@ class EM_Event extends EM_Object{
 				$recurring_date_format = apply_filters('em_event_save_events_format', 'Y-m-d');
 				foreach( $matching_days as $day ) {
 					//rewrite post fields if needed
-					$post_fields['post_name'] = $event['event_slug'] = $meta_fields['_event_slug'] = $post_name.'-'.date($recurring_date_format, $day);
+					$post_fields['post_name'] = $event['event_slug'] = $meta_fields['_event_slug'] = apply_filters('em_event_save_events_slug', $post_name.'-'.date($recurring_date_format, $day), $post_fields, $day, $matching_days, $this);
 					//adjust certain meta information
 					$event['event_start_date'] = $meta_fields['_event_start_date'] = date("Y-m-d", $day);
 					$meta_fields['_start_ts'] = strtotime($event['event_start_date'].' '.$event['event_start_time']);

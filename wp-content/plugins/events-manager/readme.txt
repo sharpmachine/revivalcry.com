@@ -4,7 +4,7 @@ Donate link: http://wp-events-plugin.com
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
 Tested up to: 3.4.1
-Stable tag: 5.2.8
+Stable tag: 5.2.9
 
 Fully featured event registration management including recurring events, locations management, calendar, Google map integration, booking management
 
@@ -98,6 +98,30 @@ See our [FAQ](http://wp-events-plugin.com/documentation/faq/) page, which is upd
 6. Manage attendees with various booking reports
 
 == Changelog ==
+= 5.2.9 =
+* added spaces to comma seperators of location on locations admin table
+* improved user deletion hook, bookings now get deleted along with user
+* replaced depreciated placeholders in default widget values
+* added booking form anchor to action url
+* updated POT file and Swedish
+* added Japanese, kudos to Kenta Sakamoto
+* fixed minimum ticket space value not allowing 0 spaces even if ticket not required
+* added em_event_save_events_slug filter
+* added $EM_Event to all do_action parameters on templates/placeholders/bookingform.php
+* changed #_MAP to #_LOCATIONMAP on installation defaults
+* wrapped bookings dashboard sections into divs with class names
+* fixed formatting links/texts in settings page tips
+* added em_options_booking_form_options action and save button on settings page > bookings > booking form options
+* fixed use of global $wp_query when passed within parse_query action - thx Scott @ Pods framework plugin
+* added wp_dropdown_pages instead of manual page select generation
+* fixed useage of outdated user_firstname/user_lastname property for EM_Person::get_name()
+* improved ticket minimum calculation (takes into account if ticket is only ticket in event, therefore required)
+* fixed EM_Tickets and EM_Tickets_Bookings not storing ticket/ticket_bookings array key by ticket id
+* locations list format header and footer now install ul by default, if blank no wrapped ul is used (which previously contained an 'a' outside an li)
+* small fix to em_content_categories_args, now applied to EM_Categories::get() and EM_Categories::output() in templates/categories-list.php
+* shortened gcal link some more to prevent some (rare) "404 url too long" errors
+* added login redirection to same page in login link of my bookings page
+
 = 5.2.8 =
 * fixed js bug arsing from 5.2.7 js 'fix' for datepickers
 * fixed categories not showing up on single category pages
