@@ -2,8 +2,8 @@
 
 /*
 Plugin Name: WP Remote
-Description: Manage your WordPress site with <a href="https://wpremote.com/">WP Remote</a>. Deactivate to clear your API Key.
-Version: 2.3.1
+Description: Manage your WordPress site with <a href="https://wpremote.com/">WP Remote</a>. <strong>Deactivate to clear your API Key.</strong>
+Version: 2.4.5
 Author: Human Made Limited
 Author URI: http://hmn.md/
 */
@@ -28,6 +28,9 @@ Author URI: http://hmn.md/
 define( 'WPRP_PLUGIN_SLUG', 'wpremote' );
 define( 'WPRP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
+if ( ! defined( 'WPR_API_URL' ) )
+	define( 'WPR_API_URL', 'https://wpremote.com/api/json/' );
+
 // Don't activate on anything less than PHP 5.2.4
 if ( version_compare( phpversion(), '5.2.4', '<' ) ) {
 
@@ -39,11 +42,44 @@ if ( version_compare( phpversion(), '5.2.4', '<' ) ) {
 
 }
 
-require_once( WPRP_PLUGIN_PATH  .'/wprp.admin.php' );
+require_once( WPRP_PLUGIN_PATH . '/wprp.admin.php' );
+require_once( WPRP_PLUGIN_PATH . '/wprp.compatability.php' );
 
 // Backups require 3.1
-if ( version_compare( get_bloginfo( 'version' ), '3.1', '>=' ) && ! class_exists( 'WPR_HM_Backup' ) )
-	require( WPRP_PLUGIN_PATH . '/hm-backup/hm-backup.php' );
+if ( version_compare( get_bloginfo( 'version' ), '3.1', '>=' ) ) {
+
+	// deactivate backupwordpress
+	if ( defined( 'HMBKP_PLUGIN_PATH' ) ) {
+
+		$plugin_file = dirname( plugin_dir_path( HMBKP_PLUGIN_PATH ) ) . 'plugin.php';
+
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		deactivate_plugins( array( 'backupwordpress/plugin.php' ), true );
+
+		function wprp_backupwordpress_deactivated_notice() {
+
+			echo '<div class="updated fade"><p><strong>The BackUpWordPress Plugin has been de-activated</strong> The WP Remote Plugin includes BackUpWordPress.</p></div>';
+
+		}
+		add_action( 'admin_notices', 'wprp_backupwordpress_deactivated_notice' );
+
+	} else {
+
+		define( 'HMBKP_PLUGIN_PATH', trailingslashit( WPRP_PLUGIN_PATH ) . 'backupwordpress' );
+		define( 'HMBKP_PLUGIN_URL', trailingslashit( plugins_url( WPRP_PLUGIN_SLUG ) ) . 'backupwordpress' );
+
+		require( WPRP_PLUGIN_PATH . '/backupwordpress/plugin.php' );
+
+		require_once( WPRP_PLUGIN_PATH . '/wprp.backups.php' );
+
+	}
+
+	// unhook default schedules from being created
+	remove_action( 'admin_init', 'hmbkp_setup_default_schedules' );
+	remove_filter( 'all_plugins', 'hmbkp_plugin_row', 10 );
+	remove_filter( 'plugin_action_links', 'hmbkp_plugin_action_link', 10, 2 );
+
+}
 
 // Don't include when doing a core update
 if ( empty( $_GET['action'] ) || $_GET['action'] != 'do-core-upgrade' ) :
@@ -96,7 +132,7 @@ if ( empty( $_GET['action'] ) || $_GET['action'] != 'do-core-upgrade' ) :
 
 	}
 
-		class WPRP_Core_Upgrader_Skin extends WP_Upgrader_Skin {
+	class WPRP_Core_Upgrader_Skin extends WP_Upgrader_Skin {
 
 		var $feedback;
 		var $error;
@@ -131,7 +167,6 @@ function wprp_catch_api_call() {
 	if ( empty( $_GET['wpr_api_key'] ) || ! urldecode( $_GET['wpr_api_key'] ) || ! isset( $_GET['actions'] ) )
 		return;
 
-	require_once( WPRP_PLUGIN_PATH . '/wprp.backups.php' );
 	require_once( WPRP_PLUGIN_PATH . '/wprp.plugins.php' );
 	require_once( WPRP_PLUGIN_PATH . '/wprp.themes.php' );
 
@@ -141,6 +176,44 @@ function wprp_catch_api_call() {
 
 }
 add_action( 'init', 'wprp_catch_api_call', 1 );
+
+function wprp_plugin_update_check() {
+
+	$plugin_data = get_plugin_data( __FILE__ );
+
+	// define the plugin version
+	define( 'WPRP_VERSION', $plugin_data['Version'] );
+
+	// Fire the update action
+	if ( WPRP_VERSION !== get_option( 'wprp_plugin_version' ) )
+		wprp_update();
+
+}
+add_action( 'admin_init', 'wprp_plugin_update_check' );
+
+/**
+ * Run any update code and update the current version in the db
+ *
+ * @access public
+ * @return void
+ */
+function wprp_update() {
+
+	/**
+	 * Remove the old _wpremote_backups directory
+	 */
+	$uploads_dir = wp_upload_dir();
+
+	$old_wpremote_dir = trailingslashit( $uploads_dir['basedir'] ) . '_wpremote_backups';
+
+	if ( file_exists( $old_wpremote_dir ) && function_exists( 'hmbkp_rmdirtree' ) )
+		hmbkp_rmdirtree( $old_wpremote_dir );
+
+	// Update the version stored in the db
+	if ( get_option( 'wprp_plugin_version' ) !== WPRP_VERSION )
+		update_option( 'wprp_plugin_version', WPRP_VERSION );
+
+}
 
 function _wprp_upgrade_core()  {
 
@@ -213,3 +286,12 @@ function _wpr_set_filesystem_credentials( $credentials ) {
 	return $_credentials;
 }
 add_filter( 'request_filesystem_credentials', '_wpr_set_filesystem_credentials' );
+
+// we need the calculate filesize to work on no priv too
+add_action( 'wp_ajax_nopriv_wprp_calculate_backup_size', 'wprp_ajax_calculate_backup_size' );
+
+function wprp_ajax_calculate_backup_size() {
+	require_once( WPRP_PLUGIN_PATH . '/wprp.backups.php' );
+	WPRP_Backups::getInstance()->calculateEstimatedSize();
+	exit;
+}

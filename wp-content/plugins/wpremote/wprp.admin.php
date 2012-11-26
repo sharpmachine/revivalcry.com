@@ -30,7 +30,7 @@ function wprp_add_api_key_admin_notice() { ?>
 
 				<input style="margin: -4px 5px; vertical-align: text-bottom; line-height: 13px; font-size: 12px;" type="text" class="code regular-text" id="wpr_api_key" name="wpr_api_key" />
 
-				<input style="vertical-align: text-bottom; margin: -3px 0; line-height: 12px;" type="submit" value="Save API Key" class="button-primary" />
+				<input style="margin: -6px 0 -3px; line-height: 12px; height: 12px;" type="submit" value="Save API Key" class="button-primary" />
 
 			</p>
 
@@ -79,3 +79,25 @@ function wprp_deactivate() {
 // Plugin activation and deactivation
 add_action( 'activate_' . WPRP_PLUGIN_SLUG . '/plugin.php', 'wprp_deactivate' );
 add_action( 'deactivate_' . WPRP_PLUGIN_SLUG . '/plugin.php', 'wprp_deactivate' );
+
+/**
+ * Remove the BackUpWordPress menu from the Tools menu
+ * 
+ */
+function wprp_remove_backupwordpress_from_admin_menu() {
+
+	global $submenu;
+
+	// only remove BackUpWordPress if they didn't have it installed
+	$plugins = get_plugins();
+
+	$has_backupwordpress = false;
+
+	foreach ( $plugins as $plugin_info )
+		if ( $plugin_info['Name'] == 'BackUpWordPress')
+			$has_backupwordpress = true;
+
+	if ( ! $has_backupwordpress &&  isset( $submenu['tools.php'][16] ) && $submenu['tools.php'][16][2] === 'backupwordpress' )
+		unset( $submenu['tools.php'][16] );
+}
+add_action( 'admin_menu', 'wprp_remove_backupwordpress_from_admin_menu', 11 );

@@ -38,9 +38,12 @@ $fields[] = array(
 
 
 // get name of all fields for use in field type drop down
-foreach( $this->parent->fields as $field )
+foreach($this->parent->fields as $f)
 {
-	$fields_names[$field->name] = $field->title;
+	if( $f->name )
+	{
+		$fields_names[$f->name] = $f->title;
+	}
 }
 
 ?>
@@ -50,7 +53,7 @@ foreach( $this->parent->fields as $field )
 	<script type="text/javascript">
 	acf.text.move_to_trash = "<?php _e("Move to trash. Are you sure?",'acf'); ?>";
 	acf.text.checked = "<?php _e("checked",'acf'); ?>";
-	acf.text.conditional_no_fields = "<?php _e('No "toggle" fields avilable','acf'); ?>";
+	acf.text.conditional_no_fields = "<?php _e('No toggle fields available','acf'); ?>";
 	</script>
 	<input type="hidden" name="acf_save_post" value="field_group" />
 </div>

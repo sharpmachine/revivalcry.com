@@ -13,7 +13,7 @@ $actions = explode( ',', $_GET['actions'] );
 $actions = array_flip( $actions );
 
 // Disable error_reporting so they don't break the json request
-error_reporting( 0 );
+//error_reporting( 0 );
 
 // Log in as admin
 wp_set_current_user( 1 );
@@ -100,7 +100,9 @@ foreach( $actions as $action => $value ) {
 		case 'delete_backup' :
 		case 'supports_backups' :
 		case 'get_backup' :
-
+		case 'add_backup_schedule' :
+		case 'remove_backup_schedule' :
+		case 'get_backup_schedules' :
 			$actions[$action] = _wprp_backups_api_call( $action );
 
 		break;
