@@ -49,15 +49,21 @@ tfoot p { margin: 0; font-weight: normal; }
 
 .hmbkp-schedule-sentence { margin: 0; font-size: 16px; font-weight: lighter; margin: 30px 0 10px; clear: both; margin-left: 10px; }
 .hmbkp-schedule-sentence::before { content: "\2714"; margin-right: 10px; width: 16px; height: 47px; display: block; float: left; }
+.hmbkp-schedule-sentence.hmbkp-error::before { content: "\2718"; }
 .hmbkp-schedule-sentence.hmbkp-running::before { background-image: url('wpspin_light.gif'); background-repeat: no-repeat; margin-right: 10px; content: " "; }
-.hmbkp-schedule-sentence .hmbkp-status { display: block; font-size: 12px; color: #666; margin: 2px 0 0 26px; }
+.hmbkp-schedule-sentence .hmbkp-status { display: none; font-size: 12px; color: #666; margin: 2px 0 0 26px; }
+.hmbkp-schedule-sentence.hmbkp-running .hmbkp-status { display: block; }
+.hmbkp-schedule-sentence.hmbkp-running .hmbkp-schedule-actions { display: none; }
 .hmbkp-schedule-sentence [title] { border-bottom: 1px dotted #CCC; cursor: help; }
+
+.subsubsub li.hmbkp-running a { background-image: url('wpspin_light.gif'); background-repeat: no-repeat; padding-left: 20px; vertical-align: middle; }
+.subsubsub li.hmbkp-running a.current { padding: 0; background-image: none; }
 
 .hmbkp-schedule-sentence .hmbkp-schedule-actions { visibility: visible; }
 .hmbkp-schedule-actions { font-size: 12px; font-weight: normal; margin: 0 0 0 26px; }
 
-button.hmbkp-ajax-loading { padding-left: 20px; }
-button.hmbkp-ajax-loading::before { background-image: url('wpspin_light.gif'); background-repeat: no-repeat; background-position: 1px -1px; margin-left: -20px; display: inline-block; width: 16px; height: 16px; content: " "; vertical-align: middle; padding-right: 3px; }
+.hmbkp-ajax-loading, button.hmbkp-ajax-loading { padding-left: 20px; }
+.hmbkp-ajax-loading::before { background-image: url('wpspin_light.gif'); background-repeat: no-repeat; background-position: 1px -1px; margin-left: -20px; display: inline-block; width: 16px; height: 16px; content: " "; vertical-align: middle; padding-right: 3px; }
 
 button { height: 14px; }
 
@@ -79,3 +85,5 @@ table.widefat tbody td { padding: 8px 7px; }
 .hmbkp-edit-schedule-excludes-form td a, .hmbkp-edit-schedule-excludes-form td span.reason { float: right; }
 .hmbkp-edit-schedule-excludes-form td span.reason { color: #CCC; }
 input[type="datetime-local"] { border-radius: 3px; border-width: 1px; border-style: solid; box-sizing: border-box; border-color: #DFDFDF; background-color: white; }
+
+pre { background-color: #eee; padding: 10px; white-space: normal; }

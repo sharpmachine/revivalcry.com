@@ -94,7 +94,7 @@ class HMBKP_Scheduled_Backup extends HM_Backup {
 		$this->set_path( hmbkp_path() );
 
 		// Set the archive filename to site name + schedule slug + date
-		$this->set_archive_filename( implode( '-', array( get_bloginfo( 'name' ), $this->get_id(), $this->get_type(), date( 'Y-m-d-H-i-s', current_time( 'timestamp' ) ) ) ) . '.zip' );
+		$this->set_archive_filename( implode( '-', array( sanitize_title( str_ireplace( array( 'http://', 'https://', 'www' ), '', home_url() ) ), $this->get_id(), $this->get_type(), date( 'Y-m-d-H-i-s', current_time( 'timestamp' ) ) ) ) . '.zip' );
 
 		// Setup the schedule if it isn't set or TODO if it's changed
 		if ( ( ! $this->get_next_occurrence() && in_array( $this->get_reoccurrence(), array_keys( wp_get_schedules() ) ) ) || ( date( get_option( 'time_format' ), strtotime( HMBKP_SCHEDULE_TIME ) - ( get_option( 'gmt_offset' ) * 3600 ) ) !== date( get_option( 'time_format' ), $this->get_next_occurrence() ) ) )
@@ -310,7 +310,7 @@ class HMBKP_Scheduled_Backup extends HM_Backup {
 				        continue;
 
 				    // Excludes
-				    if ( $excludes && preg_match( '(' . $excludes . ')', str_ireplace( trailingslashit( $this->get_root() ), '', $this->conform_dir( $file->getPathname() ) ) ) )
+				    if ( $excludes && preg_match( '(' . $excludes . ')', str_ireplace( trailingslashit( $this->get_root() ), '', HM_Backup::conform_dir( $file->getPathname() ) ) ) )
 				        continue;
 
 				    $filesize += (float) $file->getSize();
@@ -386,12 +386,7 @@ class HMBKP_Scheduled_Backup extends HM_Backup {
 	 * @return void
 	 */
 	public function set_schedule_start_time( $timestamp ) {
-
-		if ( (string) (int) $timestamp !== (string) $timestamp )
-			throw new Exception( 'Argument 1 for ' . __METHOD__ . ' must be a valid UNIX timestamp' );
-
 		$this->schedule_start_time = $timestamp;
-
 	}
 
 	/**
@@ -514,7 +509,7 @@ class HMBKP_Scheduled_Backup extends HM_Backup {
 	public function run() {
 
 		// Mark the backup as started
-		$this->set_status( __( 'Backup started', 'hmbkp' ) );
+		$this->set_status( __( 'Starting Backup', 'hmbkp' ) );
 
 		$this->backup();
 
@@ -582,19 +577,33 @@ class HMBKP_Scheduled_Backup extends HM_Backup {
 
 		switch ( $action ) :
 
-			case 'hmbkp_archive_started' :
+	    	case 'hmbkp_mysqldump_started' :
 
-	    		$this->set_status( __( 'Creating zip archive', 'hmbkp' ) );
+	    		$this->set_status( sprintf( __( 'Dumping Database %s', 'hmbkp' ), '(<code>' . $this->get_mysqldump_method() . '</code>)' ) );
 
 	    	break;
 
-	    	case 'hmbkp_mysqldump_started' :
+	    	case 'hmbkp_mysqldump_verify_started' :
 
-	    		$this->set_status( __( 'Dumping database', 'hmbkp' ) );
+	    		$this->set_status( sprintf( __( 'Verifying Database Dump %s', 'hmbkp' ), '(<code>' . $this->get_mysqldump_method() . '</code>)' ) );
+
+	    	break;
+
+			case 'hmbkp_archive_started' :
+
+	    		$this->set_status( sprintf( __( 'Creating zip archive %s', 'hmbkp' ), '(<code>' . $this->get_archive_method() . '</code>)' ) );
+
+	    	break;
+
+	    	case 'hmbkp_archive_verify_started' :
+
+	    		$this->set_status( sprintf( __( 'Verifying Zip Archive %s', 'hmbkp' ), '(<code>' . $this->get_archive_method() . '</code>)' ) );
 
 	    	break;
 
 	    	case 'hmbkp_backup_complete' :
+
+	    		$this->set_status( __( 'Finishing Backup', 'hmbkp' ) );
 
 				if ( $this->get_errors() ) {
 

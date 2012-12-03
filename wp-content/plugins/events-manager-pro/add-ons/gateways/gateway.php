@@ -64,9 +64,10 @@ class EM_Gateway {
 			}
 		}
 		if( $this->count_pending_spaces ){
-			//Modify spaces calculations, required even if active, due to previously made bookings whilst this may have been active
+			//Modify spaces calculations, required even if inactive, due to previously made bookings whilst this may have been active
 			add_filter('em_bookings_get_pending_spaces', array(&$this, 'em_bookings_get_pending_spaces'),1,2);
 			add_filter('em_ticket_get_pending_spaces', array(&$this, 'em_ticket_get_pending_spaces'),1,2);
+			add_filter('em_booking_is_reserved', array(&$this, 'em_booking_is_reserved'),1,2);
 		}
 	}
 
@@ -178,9 +179,12 @@ class EM_Gateway {
 		return $message;
 	}
 	
-	//Space Counting
-
-
+	/*
+	 * --------------------------------------------------
+	 * PENDING SPACE COUNTING - if $this->count_pending_spaces is true, depending on the gateway, bookings with this gateway status are considered pending and reserved
+	 * --------------------------------------------------
+	 */
+	
 	/**
 	 * Modifies pending spaces calculations to include paypal bookings, but only if PayPal bookings are set to time-out (i.e. they'll get deleted after x minutes), therefore can be considered as 'pending' and can be reserved temporarily.
 	 * @param integer $count
@@ -194,6 +198,19 @@ class EM_Gateway {
 			}
 		}
 		return $count;
+	}
+	
+	/**
+	 * Changes EM_Booking::is_reserved() return value to true. Only called if $this->count_pending_spaces is set to true.
+	 * @param boolean $result
+	 * @param EM_Booking $EM_Booking
+	 * @return boolean
+	 */
+	function em_booking_is_reserved( $result, $EM_Booking ){
+		if($EM_Booking->booking_status == $this->status && $this->uses_gateway($EM_Booking) && get_option('dbem_bookings_approval_reserved')){
+			return true;
+		}
+		return $result;
 	}
 	
 	/**
@@ -370,7 +387,7 @@ class EM_Gateway {
 					  <td>
 					  	<input type="text" name="<?php echo $this->gateway; ?>_option_name" value="<?php esc_html_e(get_option('em_'. $this->gateway . "_option_name" )); ?>"/><br />
 					  	<em><?php 
-					  		echo sprintf(_('Only if you have not enabled quick pay buttons in your <a href="%s">gateway settings</a>.'),$gateway_link).' '.
+					  		echo sprintf(__('Only if you have not enabled quick pay buttons in your <a href="%s">gateway settings</a>.', 'em-pro'),$gateway_link).' '.
 					  		__('The user will see this as the text option when choosing a payment method.','em-pro'); 
 					  	?></em>
 					  </td>
@@ -380,7 +397,7 @@ class EM_Gateway {
 					  <td>
 					  	<textarea name="<?php echo $this->gateway; ?>_form"><?php esc_html_e(get_option('em_'. $this->gateway . "_form" )); ?></textarea><br />
 					  	<em><?php 
-					  		echo sprintf(_('Only if you have not enabled quick pay buttons in your <a href="%s">gateway settings</a>.'),$gateway_link).
+					  		echo sprintf(__('Only if you have not enabled quick pay buttons in your <a href="%s">gateway settings</a>.','em-pro'),$gateway_link).
 							' '.__('If a user chooses to pay with this gateway, or it is selected by default, this message will be shown just below the selection.', 'em-pro'); 
 					  	?></em>
 					  </td>
@@ -397,7 +414,7 @@ class EM_Gateway {
 					  <th scope="row"><?php _e('Payment Button', 'em-pro') ?></th>
 					  <td>
 					  	<input type="text" name="<?php echo $this->gateway ?>_button" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_button", 'http://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' )); ?>" style='width: 40em;' /><br />
-					  	<em><?php echo sprintf(__('Choose the button text. To use an image instead, enter the full url starting with %s or %s.', 'dbem' ), '<code>http://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif</code>','<code>https://...</code>'); ?></em>
+					  	<em><?php echo sprintf(__('Choose the button text. To use an image instead, enter the full url starting with %s or %s.', 'em-pro' ), '<code>http://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif</code>','<code>https://...</code>'); ?></em>
 					  </td>
 				  </tr>
 				</tbody>

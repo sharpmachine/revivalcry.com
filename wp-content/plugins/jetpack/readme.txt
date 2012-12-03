@@ -3,7 +3,7 @@ Contributors: automattic, apeatling, beaulebens, hugobaeta, Joen, mdawaffe, andy
 Tags: WordPress.com, statistics, stats, views, tweets, twitter, widget, gravatar, hovercards, profile, equations, latex, math, maths, youtube, shortcode, archives, audio, blip, bliptv, dailymotion, digg, flickr, googlevideo, google, googlemaps, kyte, kytetv, livevideo, redlasso, rockyou, rss, scribd, slide, slideshare, soundcloud, vimeo, shortlinks, wp.me, subscriptions, notifications, notes, json, api, rest
 Requires at least: 3.2
 Tested up to: 3.4.2
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 Supercharge your WordPress site with powerful features previously only available to WordPress.com users.
 
@@ -88,6 +88,9 @@ Use [shortcodes](http://support.wordpress.com/shortcodes/) to embed your media. 
 8. Mobile Theme
 
 == Changelog ==
+
+= 2.0.2 =
+* Bug Fix: Remove an erroneous PHP short open tag with the full tag to correct fatal errors under certain PHP configurations.
 
 = 2.0.1 =
 * Enhancement: Photon: Support for the [Lazy Load](http://wordpress.org/extend/plugins/lazy-load/) plugin.

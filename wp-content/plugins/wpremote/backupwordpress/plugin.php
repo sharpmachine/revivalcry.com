@@ -29,6 +29,8 @@ if ( ! defined( 'HMBKP_PLUGIN_URL' ) )
 if ( ! defined( 'HMBKP_ADMIN_URL' ) )
 	define( 'HMBKP_ADMIN_URL', add_query_arg( 'page', HMBKP_PLUGIN_SLUG, admin_url( 'tools.php' ) ) );
 
+define( 'HMBKP_SECURE_KEY', md5( ABSPATH . time() ) );
+
 if ( ! defined( 'HMBKP_REQUIRED_WP_VERSION' ) )
 	define( 'HMBKP_REQUIRED_WP_VERSION', '3.3.3' );
 
@@ -87,6 +89,9 @@ require_once( HMBKP_PLUGIN_PATH . '/classes/email.php' );
 if ( defined( 'WP_CLI' ) && WP_CLI )
 	include( HMBKP_PLUGIN_PATH . '/classes/wp-cli.php' );
 
+// Handle any advanced option changes
+hmbkp_constant_changes();
+
 // Set the tmp directory to the backup path
 if ( ! defined( 'PCLZIP_TEMPORARY_DIR' ) )
 	define( 'PCLZIP_TEMPORARY_DIR', trailingslashit( hmbkp_path() ) );
@@ -107,7 +112,7 @@ function hmbkp_init() {
 	$plugin_data = get_plugin_data( __FILE__ );
 
 	// define the plugin version
-	define( 'HMBKP_VERSION', '2.0.6' );
+	define( 'HMBKP_VERSION', $plugin_data['Version'] );
 
 	// Load translations
 	load_plugin_textdomain( 'hmbkp', false, HMBKP_PLUGIN_SLUG . '/languages/' );
@@ -119,8 +124,8 @@ function hmbkp_init() {
 	// Load admin css and js
 	if ( isset( $_GET['page'] ) && $_GET['page'] == HMBKP_PLUGIN_SLUG ) {
 
-		wp_enqueue_script( 'hmbkp_fancybox', HMBKP_PLUGIN_URL . '/assets/fancyBox/source/jquery.fancybox.js', array( 'jquery' ), HMBKP_VERSION );
-		wp_enqueue_script( 'hmbkp', HMBKP_PLUGIN_URL . '/assets/hmbkp.js', array( 'jquery-ui-tabs', 'jquery-ui-widget', 'hmbkp_fancybox' ), HMBKP_VERSION );
+		wp_enqueue_script( 'hmbkp-fancybox', HMBKP_PLUGIN_URL . '/assets/fancyBox/source/jquery.fancybox.js', array( 'jquery' ), sanitize_title( HMBKP_VERSION ) );
+		wp_enqueue_script( 'hmbkp', HMBKP_PLUGIN_URL . '/assets/hmbkp.js', array( 'jquery-ui-tabs', 'jquery-ui-widget', 'hmbkp-fancybox' ), sanitize_title( HMBKP_VERSION ) );
 
 		wp_localize_script( 'hmbkp', 'objectL10n', array(
 			'update'				=> __( 'Update', 'hmbkp' ),
@@ -135,9 +140,6 @@ function hmbkp_init() {
 		wp_enqueue_style( 'hmbkp', HMBKP_PLUGIN_URL . '/assets/hmbkp.css', false, HMBKP_VERSION );
 
 	}
-
-	// Handle any advanced option changes
-	hmbkp_constant_changes();
 
 }
 add_action( 'admin_init', 'hmbkp_init' );

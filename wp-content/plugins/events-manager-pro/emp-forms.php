@@ -735,7 +735,7 @@ class EM_Form extends EM_Object {
 				<div class="booking-custom-head">
 					<div class='bc-col-sort bc-col'>&nbsp;</div>
 					<div class='bc-col-label bc-col'><?php _e('Label','em-pro'); ?></div>
-					<div class='bc-col-id bc-col'><?php _e('Field ID','em-pro'); ?><a title="<?php _e('DO NOT change these values if you want to keep your field settings associated with previous booking fields.'); ?>">?</a></div>
+					<div class='bc-col-id bc-col'><?php _e('Field ID','em-pro'); ?><a title="<?php _e('DO NOT change these values if you want to keep your field settings associated with previous booking fields.','em-pro'); ?>">?</a></div>
 					<div class='bc-col-type bc-col'><?php _e('Type','em-pro'); ?></div>
 					<div class='bc-col-required bc-col'><?php _e('Required','em-pro'); ?></div>
 				</div>
@@ -879,7 +879,7 @@ class EM_Form extends EM_Object {
 									</div>
 								</div>
 								<div class="bct-field">
-									<div class="bct-label"><?php _e('Seperator','em-pro'); ?></div>
+									<div class="bct-label"><?php _e('Separator','em-pro'); ?></div>
 									<div class="bct-input">
 										<input type="text" name="options_date_range_seperator[]" <?php self::input_default('options_date_range_seperator',$field_values); ?> />
 										<em><?php _e('This text will appear between the two date fields if this is a date range.','em-pro'); ?></em>
@@ -945,7 +945,7 @@ class EM_Form extends EM_Object {
 									</div>
 								</div>
 								<div class="bct-field">
-									<div class="bct-label"><?php _e('Seperator','em-pro'); ?></div>
+									<div class="bct-label"><?php _e('Separator','em-pro'); ?></div>
 									<div class="bct-input">
 										<input type="text" name="options_time_range_seperator[]" <?php self::input_default('options_time_range_seperator',$field_values); ?> />
 										<em><?php _e('This text will appear between the two date fields if this is a date range.','em-pro'); ?></em>

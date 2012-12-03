@@ -28,9 +28,9 @@ function wprp_add_api_key_admin_notice() { ?>
 
 				<strong>WP Remote is almost ready</strong>, <label style="vertical-align: baseline;" for="wpr_api_key">enter your API Key to continue</label>
 
-				<input style="margin: -4px 5px; vertical-align: text-bottom; line-height: 13px; font-size: 12px;" type="text" class="code regular-text" id="wpr_api_key" name="wpr_api_key" />
+				<input type="text" style="margin-left: 5px; margin-right: 5px; " class="code regular-text" id="wpr_api_key" name="wpr_api_key" />
 
-				<input style="margin: -6px 0 -3px; line-height: 12px; height: 12px;" type="submit" value="Save API Key" class="button-primary" />
+				<input type="submit" value="Save API Key" class="button-primary" />
 
 			</p>
 
@@ -82,22 +82,24 @@ add_action( 'deactivate_' . WPRP_PLUGIN_SLUG . '/plugin.php', 'wprp_deactivate' 
 
 /**
  * Remove the BackUpWordPress menu from the Tools menu
- * 
+ *
  */
 function wprp_remove_backupwordpress_from_admin_menu() {
 
 	global $submenu;
 
-	// only remove BackUpWordPress if they didn't have it installed
-	$plugins = get_plugins();
+	// Only remove BackUpWordPress if there aren't any schedules
+	$additional_schedules = false;
 
-	$has_backupwordpress = false;
+	$schedules = new HMBKP_Schedules;
 
-	foreach ( $plugins as $plugin_info )
-		if ( $plugin_info['Name'] == 'BackUpWordPress')
-			$has_backupwordpress = true;
+	$schedules = $schedules->get_schedules();
 
-	if ( ! $has_backupwordpress &&  isset( $submenu['tools.php'][16] ) && $submenu['tools.php'][16][2] === 'backupwordpress' )
+	foreach ( $schedules as $schedule )
+		if ( strpos( $schedule->get_id(), 'wpremote' ) === false )
+			$additional_schedules = true;
+
+	if ( ! $additional_schedules && isset( $submenu['tools.php'][16] ) && $submenu['tools.php'][16][2] === 'backupwordpress' )
 		unset( $submenu['tools.php'][16] );
 }
 add_action( 'admin_menu', 'wprp_remove_backupwordpress_from_admin_menu', 11 );

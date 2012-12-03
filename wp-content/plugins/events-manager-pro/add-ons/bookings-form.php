@@ -391,7 +391,7 @@ class EM_Booking_Form {
 		<p><strong><?php _e('Booking Form','dbem'); ?> </strong></p>
 		<p><em><?php _e('You can choose to use a custom booking form, or leave as is to use the default booking form.','em-pro'); ?></em></p>
 		<div>	
-			<?php _e('Selected Booking Form','dbem'); ?> :
+			<?php _e('Selected Booking Form','em-pro'); ?> :
 			<select name="custom_booking_form" onchange="this.parentNode.submit()">
 				<option value="0">[ <?php _e('Default','em-pro'); ?> ]</option>
 				<?php foreach( self::get_forms_names() as $form_key => $form_name_option ): ?>

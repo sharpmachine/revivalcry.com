@@ -391,7 +391,7 @@ class EM_Gateways {
 							$columncount = count($columns) + 1;
 							?>
 							<tr valign="middle" class="alternate" >
-								<td colspan="<?php echo $columncount; ?>" scope="row"><?php _e('No Payment gateways where found for this install.','em-pro'); ?></td>
+								<td colspan="<?php echo $columncount; ?>" scope="row"><?php _e('No Payment gateways were found for this install.','em-pro'); ?></td>
 						    </tr>
 							<?php
 						}
@@ -546,8 +546,8 @@ class EM_Gateways {
 								<p><?php _e('After creating user fields above, you should link them up in here so some gateways can make use of them when processing payments.', 'em-pro' ); ?></p>
 								<form action="#gateway_customer_fields" method="post">
 									<table class="form-table">
-										<tr><td><?php _e('Name (first/last)','em-pro'); ?></td><td><em><?php _e('Generated accordingly from user first/last name or full name field. If a name field isn\'t provided in your booking form, the username will be used instead.')?></em></td></tr>
-										<tr><td><?php _e('Email','em-pro'); ?></td><td><em><?php _e('Uses the WordPress account email associated with the user.')?></em></td></tr>
+										<tr><td><?php _e('Name (first/last)','em-pro'); ?></td><td><em><?php _e('Generated accordingly from user first/last name or full name field. If a name field isn\'t provided in your booking form, the username will be used instead.','em-pro')?></em></td></tr>
+										<tr><td><?php _e('Email','em-pro'); ?></td><td><em><?php _e('Uses the WordPress account email associated with the user.', 'em-pro')?></em></td></tr>
 										<?php foreach( self::$customer_fields as $field_key => $field_val ): ?>
 										<tr>
 											<td><?php echo $field_val; ?></td>
@@ -566,7 +566,7 @@ class EM_Gateways {
 										<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('gateway_customer_fields_'.get_current_user_id()); ?>">
 										<input type="hidden" name="form_action" value="form_fields">
 										<input type="hidden" name="form_name" value="gateway_customer_fields" />
-										<input type="submit" name="events_update" value="Save Form »" class="button-primary">
+										<input type="submit" name="events_update" value="<?php _e('Save Form','em-pro'); ?>" class="button-primary">
 									</p>
 								</form>
 							</div>

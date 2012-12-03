@@ -3,7 +3,7 @@ Contributors: humanmade, joehoyle, mattheu, tcrsavage, willmot
 Tags: wpremote, remote administration, multiple wordpress
 Requires at least: 2.9
 Tested up to: 3.5
-Stable tag: 2.4.5
+Stable tag: 2.4.11
 
 WP Remote is a free web app that enables you to easily manage all of your WordPress powered sites from one place.
 
@@ -31,15 +31,41 @@ You can email us at support@wpremote.com for support.
 
 == Changelog ==
 
-#### 2.4.1 - 2.4.3
+#### 2.4.10 + 2.4.11
+
+* Plugin release shenaningans.
+
+#### 2.4.9
+
+* Pull in latest BackUpWordPress which fixes a possible Fatal error caused by `url_shorten` being called outside the admin.
+
+#### 2.4.8
+
+* Pull in latest BackUpWordPress which fixes a possible Fatal error caused by misc.php being included to early.
+
+#### 2.4.7
+
+* Update to BackUpWordPress 2.1
+* Fix an issue that could cause backups to be run when they shouldn't have.
+* Only hide the backups menu item if the site doesn't have any non wpremote schedules.
+* Hide all BackUpWordPress admin notices.
+* Fix the button styles for the save API Key button in WordPress 3.5
+* Fix a possible warning in the WP_Filesystem integration, props @tillkruess (github).
+* Support for updating the Pagelines premium theme, props @tillkruess (github)
+
+#### 2.4.6
+
+* Support for updating the BackupBuddy premium plugin, props @tillkruess (github)
+
+#### 2.4.1 - 2.4.5
 
 * Minor bug fixes
 
 #### 2.4
 
 * Backups are now powered by BackUpWordPress.
-* We now detect the popular security plugins that can affect WP Remote and show a message with a link to how to resolve the common issues.
 * The BackUpWordPress Plugin can no longer be run alongside WP Remote.
+* Show a message if a security plugin is active which could affect WP Remote.
 * Emphasise that you can deactivate the plugin to clear your API key.
 
 #### 2.3.1

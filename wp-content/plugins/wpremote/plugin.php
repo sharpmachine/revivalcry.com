@@ -3,7 +3,7 @@
 /*
 Plugin Name: WP Remote
 Description: Manage your WordPress site with <a href="https://wpremote.com/">WP Remote</a>. <strong>Deactivate to clear your API Key.</strong>
-Version: 2.4.5
+Version: 2.4.11
 Author: Human Made Limited
 Author URI: http://hmn.md/
 */
@@ -78,6 +78,8 @@ if ( version_compare( get_bloginfo( 'version' ), '3.1', '>=' ) ) {
 	remove_action( 'admin_init', 'hmbkp_setup_default_schedules' );
 	remove_filter( 'all_plugins', 'hmbkp_plugin_row', 10 );
 	remove_filter( 'plugin_action_links', 'hmbkp_plugin_action_link', 10, 2 );
+	remove_action( 'admin_head', 'hmbkp_admin_notices' );
+
 
 }
 
@@ -260,7 +262,7 @@ function _wprp_upgrade_core()  {
 function _wpr_check_filesystem_access() {
 
 	ob_start();
-	$success = request_filesystem_credentials();
+	$success = request_filesystem_credentials( '' );
 	ob_end_clean();
 
 	return (bool) $success;

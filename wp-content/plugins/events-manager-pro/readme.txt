@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
 Tested up to: 3.4.2
-Stable tag: 2.2.4.1
+Stable tag: 2.2.5
 
 == Description ==
 
@@ -22,6 +22,12 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.2.5 =
+* fixed some non-translated strings
+* updated the POT file
+* added Chinese translation, thanks to Leo Losoviz
+* fixed pending/reserved spaces not being approvable, requires EM 5.3 to work
+
 = 2.2.4.1 =
 * fixed badly named folder for upgrade
 * fixed require_once() with hardcoded path causing install/upgrade issues

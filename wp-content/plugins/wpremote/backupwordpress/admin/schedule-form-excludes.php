@@ -10,9 +10,11 @@
 
         	<label for="hmbkp-new-exclude-rule">
 
-                <?php _e( 'New Exclude Rule', 'hmbkp' ); ?>
+                <?php _e( 'New Exclude Rule[s]', 'hmbkp' ); ?>
 
-                <input id="hmbkp-new-exclude-rule" type="text" class="code" placeholder=".git/, *.mp3, wp-content/uploads/" />
+                <input id="hmbkp-new-exclude-rule" type="text" class="code" placeholder="" />
+
+                <span class="howto">Enter new exclude rules as a comma separated list, e.g. <code>.git/, *.mp3, wp-content/uploads/</code></span>
 
                 <button type="button" class="button-secondary hmbkp_preview_exclude_rule"><?php _e( 'Preview', 'hmbkp' ); ?></button>
 
@@ -37,7 +39,7 @@
 
     			    	<span class="code"><?php echo esc_attr( str_ireplace( untrailingslashit( $schedule->get_root() ), '', $exclude ) ); ?></span>
 
-    	<?php if ( strpos( $schedule->get_path(), untrailingslashit( $exclude ) ) !== false ) : ?>
+    	<?php if ( $schedule->get_path() === untrailingslashit( $exclude ) ) : ?>
 
     					<span class="reason"><?php _e( 'default', 'hmbkp' ); ?></span>
 
@@ -64,23 +66,23 @@
 
         	<ul class="subsubsub">
 
-	<?php if ( $schedule->get_excluded_files() ) : ?>
+	<?php if ( $schedule->get_excluded_file_count() ) : ?>
 
-        		<li><a href="#hmbkp_excluded_files"><?php _e( 'Excluded', 'hmbkp' ); ?></a>(<?php echo count( $schedule->get_excluded_files() ); ?>)</li>
+        		<li><a href="#hmbkp_excluded_files"><?php _e( 'Excluded', 'hmbkp' ); ?></a>(<?php echo $schedule->get_excluded_file_count(); ?>)</li>
 
     <?php endif; ?>
 
-        		<li><a href="#hmbkp_included_files"><?php _e( 'Included', 'hmbkp' ); ?></a>(<?php echo count( $schedule->get_included_files() ); ?>)</li>
+        		<li><a href="#hmbkp_included_files"><?php _e( 'Included', 'hmbkp' ); ?></a>(<?php echo $schedule->get_included_file_count(); ?>)</li>
 
-    <?php if ( $schedule->get_unreadable_files() ) : ?>
+    <?php if ( $schedule->get_unreadable_file_count() ) : ?>
 
-                <li><a href="#hmbkp_unreadable_files"><?php _e( 'Unreadable', 'hmbkp' ); ?></a>(<?php echo count( $schedule->get_unreadable_files() ); ?>)</li>
+                <li><a href="#hmbkp_unreadable_files"><?php _e( 'Unreadable', 'hmbkp' ); ?></a>(<?php echo $schedule->get_unreadable_file_count(); ?>)</li>
 
     <?php endif; ?>
 
         	</ul>
 
-	<?php if ( $schedule->get_excluded_files() ) : ?>
+	<?php if ( $schedule->get_excluded_file_count() ) : ?>
 
         	<div id="hmbkp_excluded_files">
 
@@ -96,7 +98,7 @@
 
         	</div>
 
-    <?php if ( $schedule->get_unreadable_files() ) : ?>
+    <?php if ( $schedule->get_unreadable_file_count() ) : ?>
 
             <div id="hmbkp_unreadable_files">
 

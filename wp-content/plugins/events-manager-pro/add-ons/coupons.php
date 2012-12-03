@@ -305,7 +305,7 @@ class EM_Coupons extends EM_Object {
 			<?php _e('No coupons created yet.','em-pro'); ?>
 		<?php endif; ?>
 		<?php if(count($global_coupons) > 0): ?>
-			<p><em><?php _e('The following codes will be automatically available to this event as well')?></em></p> 
+			<p><em><?php _e('The following codes will be automatically available to this event as well','em-pro')?></em></p> 
 			<?php foreach($global_coupons as $EM_Coupon): /* @var $EM_Coupon EM_Coupon */ ?>
 				<p style="margin:0px 0px 5px 0px">
 					<?php echo '<strong>'.esc_html($EM_Coupon->coupon_code).'</strong> - '. esc_html($EM_Coupon->get_discount_text()); ?><br />
@@ -527,7 +527,7 @@ class EM_Coupons extends EM_Object {
 		//check that user can access this page
 		if( is_object($EM_Coupon) && !$EM_Coupon->can_manage('edit_locations','edit_others_locations') ){
 			?>
-			<div class="wrap"><h2><?php _e('Unauthorized Access','dbem'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','dbem'),__('coupon','dbem')); ?></p></div>
+			<div class="wrap"><h2><?php _e('Unauthorized Access','dbem'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','dbem'),__('coupon','em-pro')); ?></p></div>
 			<?php
 			return false;
 		}elseif( !is_object($EM_Coupon) ){
@@ -648,7 +648,7 @@ class EM_Coupons extends EM_Object {
 		//check that user can access this page
 		if( is_object($EM_Coupon) && !$EM_Coupon->can_manage('edit_locations','edit_others_locations') ){
 			?>
-			<div class="wrap"><h2><?php _e('Unauthorized Access','dbem'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','dbem'),__('coupon','dbem')); ?></p></div>
+			<div class="wrap"><h2><?php _e('Unauthorized Access','dbem'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','dbem'),__('coupon','em-pro')); ?></p></div>
 			<?php
 			return false;
 		}elseif( !is_object($EM_Coupon) ){
@@ -683,7 +683,7 @@ class EM_Coupons extends EM_Object {
 					</tr>
 					<?php endif; ?>
 					<tr valign="top">
-						<th scope="row"><?php _e('Registerd Users Only?', 'em-pro') ?></th>
+						<th scope="row"><?php _e('Registered Users Only?', 'em-pro') ?></th>
 							<td><input type="checkbox" name="coupon_private" value="1" <?php if($EM_Coupon->coupon_private) echo 'checked="checked"'; ?> />
 							<br />
 							<em><?php _e('If checked, only logged in users will be able to use this coupon.','em-pro'); ?></em>
@@ -731,7 +731,7 @@ class EM_Coupons extends EM_Object {
 								<input type="text" class="em-date-input-loc em-date-end" />
 								<input type="hidden" class="em-date-input" name="coupon_end" value="<?php echo esc_attr(substr($EM_Coupon->coupon_end,0,10)); ?>" />
 								<br />
-								<em><?php _e('Coupons not be valid after this date.','em-pro'); ?></em>
+								<em><?php _e('Coupons will not be valid after this date.','em-pro'); ?></em>
 							</td>
 						</tr>
 					</tbody>
@@ -739,8 +739,8 @@ class EM_Coupons extends EM_Object {
 						<th scope="row"><?php _e('Discount Type', 'em-pro') ?></th>
 						<td>
 							<select name="coupon_type">
-								<option value="%" <?php echo ($EM_Coupon->coupon_type == '%')?'selected="selected"':''; ?>><?php _e('Percentage'); ?></option>
-								<option value="#" <?php echo ($EM_Coupon->coupon_type == '#')?'selected="selected"':''; ?>><?php _e('Fixed Amount'); ?></option>
+								<option value="%" <?php echo ($EM_Coupon->coupon_type == '%')?'selected="selected"':''; ?>><?php _e('Percentage','em-pro'); ?></option>
+								<option value="#" <?php echo ($EM_Coupon->coupon_type == '#')?'selected="selected"':''; ?>><?php _e('Fixed Amount', 'em-pro'); ?></option>
 							</select>
 							<br />
 						</td>
