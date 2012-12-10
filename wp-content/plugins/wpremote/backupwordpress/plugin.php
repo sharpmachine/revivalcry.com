@@ -109,10 +109,8 @@ if ( ! function_exists( 'hmbkp_init' ) ) :
  */
 function hmbkp_init() {
 
-	$plugin_data = get_plugin_data( __FILE__ );
-
 	// define the plugin version
-	define( 'HMBKP_VERSION', $plugin_data['Version'] );
+	define( 'HMBKP_VERSION', '2.1.3' );
 
 	// Load translations
 	load_plugin_textdomain( 'hmbkp', false, HMBKP_PLUGIN_SLUG . '/languages/' );

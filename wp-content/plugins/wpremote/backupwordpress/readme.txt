@@ -3,7 +3,7 @@ Contributors: humanmade, joehoyle, mattheu, tcrsavage, willmot, cuvelier
 Tags: back up, backup, backups, database, zip, db, files, archive, wp-cli, humanmade
 Requires at least: 3.3.3
 Tested up to: 3.5
-Stable tag: 2.1
+Stable tag: 2.1.3
 
 Simple automated back ups of your WordPress powered website.
 
@@ -103,11 +103,30 @@ You can also tweet <a href="http://twitter.com/humanmadeltd">@humanmadeltd</a> o
 
 == Changelog ==
 
+#### 2.1.4
+
+* Don't repeatedly try to create the backups directory in the `uploads` if `uploads` isn't writable.
+* Show the correct path in the warning message when the backups path can't be created.
+
+#### 2.1.3
+
+* Fix a regression in `2.1.2` that broke previewing and adding new exclude rules.
+
+#### 2.1.2
+
+* Fix an issue that could stop the settings panel from closing on save on servers which return `'0'` for ajax requests.
+* Fix an issue that could cause the backup root to be set to `/` on sites with `site_url` and `home` set to different domains.
+* The mysqldump fallback function will now be used if `mysqldump` produces an empty file.
+* Fix a possible PHP `NOTICE` on Apache servers.
+
 #### 2.1.1
 
 * Fix a possible fatal error when a backup schedule is instantiated outside of wp-admin.
 * Don't use functions from misc.php as loading it too early can cause fatal errors.
 * Don't hardcode an English string in the JS, use the translated string instead.
+* Properly skip dot files, should fix fatal errors on systems with `open_basedir` restrictions.
+* Don't call `apache_mod_loaded` as it caused wierd DNS issue on some sites, use `global $is_apache` instead.
+* Fix a possible double full stop at the end of the schedule sentence.
 * Minor code cleanup.
 
 #### 2.1

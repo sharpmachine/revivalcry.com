@@ -261,6 +261,8 @@ function hmbkp_rmdirtree( $dir ) {
  */
 function hmbkp_path() {
 
+	global $is_apache;
+
 	$path = get_option( 'hmbkp_path' );
 
 	// Allow the backups path to be defined
@@ -285,10 +287,10 @@ function hmbkp_path() {
 	if ( ! file_exists( $index ) && is_writable( $path ) )
 		file_put_contents( $index, '' );
 
-	// Protect the directory with a .htaccess file on Apache servers
-	if ( apply_filters( 'got_rewrite', apache_mod_loaded( 'mod_rewrite', true ) ) && function_exists( 'insert_with_markers' ) && ! file_exists( $htaccess ) && is_writable( $path ) ) {
+	$htaccess = $path . '/.htaccess';
 
-		$htaccess = $path . '/.htaccess';
+	// Protect the directory with a .htaccess file on Apache servers
+	if ( $is_apache && function_exists( 'insert_with_markers' ) && ! file_exists( $htaccess ) && is_writable( $path ) ) {
 
 		$contents[]	= '# ' . sprintf( __( 'This %s file ensures that other people cannot download your backup files.', 'hmbkp' ), '.htaccess' );
 		$contents[] = '';
@@ -327,7 +329,7 @@ function hmbkp_path_default() {
 	$upload_dir = wp_upload_dir();
 
 	// If the backups dir can't be created in WP_CONTENT_DIR then fallback to uploads
-	if ( ( ! is_dir( $path ) && ! is_writable( dirname( $path ) ) ) || ( is_dir( $path ) && ! is_writable( $path ) ) && strpos( $path, $upload_dir['basedir'] ) === false ) {
+	if ( ( ( ! is_dir( $path ) && ! is_writable( dirname( $path ) ) ) || ( is_dir( $path ) && ! is_writable( $path ) ) ) && strpos( $path, $upload_dir['basedir'] ) === false ) {
 
 		hmbkp_path_move( $path, $path = HM_Backup::conform_dir( trailingslashit( $upload_dir['basedir'] ) . substr( md5( time() ), 0, 10 ) . '-backups' ) );
 

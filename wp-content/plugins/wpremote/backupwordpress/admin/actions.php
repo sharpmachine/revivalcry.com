@@ -45,9 +45,9 @@ add_action( 'load-tools_page_' . HMBKP_PLUGIN_SLUG, 'hmbkp_request_delete_schedu
 function hmbkp_ajax_request_do_backup() {
 
 	if ( empty( $_POST['hmbkp_schedule_id'] ) )
-		return;
+		exit;
 
-	// We wan't to display any fatal errors in this ajax request so we can catch them on the other side.
+	// We want to display any fatal errors in this ajax request so we can catch them on the other side.
 	error_reporting( E_ERROR );
 	@ini_set( 'display_errors', 'On' );
 	@ini_set( 'html_errors', 'Off' );
@@ -75,12 +75,14 @@ add_action( 'wp_ajax_hmbkp_run_schedule', 'hmbkp_ajax_request_do_backup' );
  */
 function hmbkp_request_download_backup() {
 
+	global $is_apache;
+
 	if ( empty( $_GET['hmbkp_download_backup'] ) || ! check_admin_referer( 'hmbkp-download_backup' ) || ! file_exists( base64_decode( $_GET['hmbkp_download_backup'] ) ) )
 		return;
 
 	$url = str_replace( HM_Backup::conform_dir( HM_Backup::get_home_path() ), home_url(), trailingslashit( dirname( base64_decode( $_GET['hmbkp_download_backup'] ) ) ) ) . urlencode( pathinfo( base64_decode( $_GET['hmbkp_download_backup'] ), PATHINFO_BASENAME ) );
 
-	if ( apply_filters( 'got_rewrite', apache_mod_loaded( 'mod_rewrite', true ) ) ) {
+	if ( $is_apache ) {
 
 		// Force the .htaccess to be rebuilt
 		if ( file_exists( hmbkp_path() . '/.htaccess' ) )
@@ -147,7 +149,7 @@ add_action( 'admin_init', 'hmbkp_dismiss_error' );
 function hmbkp_ajax_is_backup_in_progress() {
 
 	if ( empty( $_POST['hmbkp_schedule_id'] ) )
-		return;
+		exit;
 
 	$schedule = new HMBKP_Scheduled_Backup( urldecode( $_POST['hmbkp_schedule_id'] ) );
 
@@ -168,7 +170,7 @@ add_action( 'wp_ajax_hmbkp_is_in_progress', 'hmbkp_ajax_is_backup_in_progress' )
 function hmbkp_ajax_calculate_backup_size() {
 
 	if ( empty( $_POST['hmbkp_schedule_id'] ) )
-		return;
+		exit;
 
 	$schedule = new HMBKP_Scheduled_Backup( urldecode( $_POST['hmbkp_schedule_id'] ) );
 
@@ -207,6 +209,9 @@ add_action( 'wp_ajax_hmbkp_cron_test', 'hmbkp_ajax_cron_test' );
  */
 function hmbkp_edit_schedule_load() {
 
+	if ( empty( $_GET['hmbkp_schedule_id'] ) )
+		exit;
+
 	$schedule = new HMBKP_Scheduled_Backup( $_GET['hmbkp_schedule_id'] );
 
 	require( HMBKP_PLUGIN_PATH . '/admin/schedule-form.php' );
@@ -220,6 +225,9 @@ add_action( 'wp_ajax_hmbkp_edit_schedule_load', 'hmbkp_edit_schedule_load' );
  * Load the edit schedule excludes form
  */
 function hmbkp_edit_schedule_excludes_load() {
+
+	if ( empty( $_GET['hmbkp_schedule_id'] ) )
+		exit;
 
 	$schedule = new HMBKP_Scheduled_Backup( $_GET['hmbkp_schedule_id'] );
 
@@ -253,7 +261,7 @@ add_action( 'wp_ajax_hmbkp_add_schedule_load', 'hmbkp_add_schedule_load' );
 function hmnkp_edit_schedule_submit() {
 
 	if ( empty( $_GET['hmbkp_schedule_id'] ) )
-		return;
+		exit;
 
 	$schedule = new HMBKP_Scheduled_Backup( $_GET['hmbkp_schedule_id'] );
 
@@ -325,6 +333,9 @@ add_action( 'wp_ajax_hmnkp_edit_schedule_submit', 'hmnkp_edit_schedule_submit' )
  */
 function hmbkp_add_exclude_rule() {
 
+	if ( empty( $_POST['hmbkp_schedule_id'] ) )
+		exit;
+
 	$schedule = new HMBKP_Scheduled_Backup( $_POST['hmbkp_schedule_id'] );
 
 	$schedule->set_excludes( $_POST['hmbkp_exclude_rule'], true );
@@ -346,6 +357,9 @@ add_action( 'wp_ajax_hmbkp_add_exclude_rule', 'hmbkp_add_exclude_rule' );
  * @return void
  */
 function hmbkp_delete_exclude_rule() {
+
+	if ( empty( $_GET['hmbkp_schedule_id'] ) )
+		exit;
 
 	$schedule = new HMBKP_Scheduled_Backup( $_GET['hmbkp_schedule_id'] );
 
@@ -371,17 +385,16 @@ add_action( 'wp_ajax_hmbkp_delete_exclude_rule', 'hmbkp_delete_exclude_rule' );
  */
 function hmbkp_preview_exclude_rule() {
 
-	if ( ! empty( $_POST['hmbkp_schedule_id'] ) )
-		$schedule = new HMBKP_Scheduled_Backup( $_POST['hmbkp_schedule_id'] );
+	if ( empty( $_POST['hmbkp_schedule_id'] ) || empty( $_POST['hmbkp_schedule_excludes'] ) )
+		exit;
 
-	if ( ! empty( $_POST['hmbkp_schedule_excludes'] ) )
-		$excludes = explode( ',', $_POST['hmbkp_schedule_excludes'] );
+	$schedule = new HMBKP_Scheduled_Backup( $_POST['hmbkp_schedule_id'] );
+
+	$excludes = explode( ',', $_POST['hmbkp_schedule_excludes'] );
 
 	hmbkp_file_list( $schedule, $excludes, 'get_excluded_files' );
 
 	$schedule->set_excludes( $excludes );
-
-	error_log( $schedule->get_excluded_file_count() );
 
 	if ( $schedule->get_excluded_file_count() ) { ?>
 
@@ -403,7 +416,7 @@ add_action( 'wp_ajax_hmbkp_file_list', 'hmbkp_preview_exclude_rule', 10, 0 );
 function hmbkp_display_error_and_offer_to_email_it() {
 
 	if ( empty( $_POST['hmbkp_error'] ) )
-		return;
+		exit;
 
 	$error = str_replace( HM_Backup::get_home_path(), '', $_POST['hmbkp_error'] ); ?>
 
@@ -425,7 +438,7 @@ add_action( 'wp_ajax_hmbkp_backup_error', 'hmbkp_display_error_and_offer_to_emai
 function hmbkp_send_error_via_email() {
 
 	if ( empty( $_POST['hmbkp_error'] ) )
-		return;
+		exit;
 
 	$error = $_POST['hmbkp_error'];
 
