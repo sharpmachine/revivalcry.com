@@ -10,9 +10,8 @@ if (class_exists('SU_Module')) {
 class SU_WpSettings extends SU_Module {
 	
 	var $results = array();
-
-	function get_module_title() { return __('Settings Monitor (Beta)', 'seo-ultimate'); }
-	function get_menu_title() { return __('Settings Monitor', 'seo-ultimate'); }
+	
+	function get_module_title() { return __('Settings Monitor', 'seo-ultimate'); }
 	
 	function has_menu_count() { return true; }
 	function get_menu_count() {
@@ -31,7 +30,7 @@ class SU_WpSettings extends SU_Module {
 					__('WordPress will allow search engines to visit your site.', 'seo-ultimate'));
 			else
 				$this->results[] = array(SU_RESULT_ERROR, __('Blog is hidden from search engines', 'seo-ultimate'),
-					__('WordPress is configured to block search engines. This will nullify your site&#8217;s SEO and should be resolved immediately.', 'seo-ultimate'), 'options-privacy.php');
+					__('WordPress is configured to discourage search engines. This will nullify your site&#8217;s SEO and should be resolved immediately.', 'seo-ultimate'), 'options-reading.php');
 			
 			switch (suwp::permalink_mode()) {
 				case SUWP_QUERY_PERMALINKS:
