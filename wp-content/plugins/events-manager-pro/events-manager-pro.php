@@ -5,12 +5,12 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 2.2.5
+Version: 2.2.7
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 2.242);
-define('EM_MIN_VERSION', 5.292);
+define('EMP_VERSION', 2.243);
+define('EM_MIN_VERSION', 5.322);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
@@ -61,9 +61,15 @@ class EM_Pro {
 			add_action('wp_head', array(&$this,'wp_head'));
 			add_action('admin_head', array(&$this,'admin_head'));
 		}
-		add_action('init', array(&$this,'enqueue_script'), 1); //so it gets added before EM, and events handlers override
+		add_action('em_public_script_deps', array(&$this,'enqueue_script_dependencies'));
+		add_action('em_enqueue_scripts', array(&$this,'enqueue_script'), 1); //added only when EM adds its own scripts
+		add_action('em_enqueue_admin_scripts', array(&$this,'enqueue_script'), 1); //added only when EM adds its own scripts
+		add_action('admin_init', array(&$this,'enqueue_admin_script'), 1);		
 		//includes
 		include('emp-forms.php'); //form editor
+		if( is_admin() ){
+		    include('emp-admin.php');
+		}
 		//add-ons
 		include('add-ons/gateways.php');
 		include('add-ons/bookings-form.php');
@@ -89,9 +95,28 @@ class EM_Pro {
 		$globals[] = 'dbem_pro_api_key';
 		return $globals;
 	}
+	
+	function enqueue_script_dependencies( $scripts ){
+	    global $wp_query;
+	    if( $wp_query->get_queried_object()->post_type == EM_POST_TYPE_EVENT || (!empty($_REQUEST['event_id']) && !empty($_REQUEST['action']) && $_REQUEST['action'] == 'manual_booking') ){
+	        $scripts['jquery-ui-datepicker'] = 'jquery-ui-datepicker'; //for the booking form
+	    }
+	    return $scripts;
+	}
 
 	function enqueue_script(){
-		wp_enqueue_script('events-manager-pro', plugins_url('includes/js/events-manager-pro.js',__FILE__), array('jquery', 'jquery-ui-core','jquery-ui-widget','jquery-ui-position')); //jQuery will load as dependency
+		wp_enqueue_script('events-manager-pro', plugins_url('includes/js/events-manager-pro.js',__FILE__), array('jquery')); //jQuery will load as dependency
+	}
+
+	function enqueue_admin_script(){
+	    global $pagenow;
+	    if( !empty($_REQUEST['page']) && ($_REQUEST['page'] == 'events-manager-forms-editor' || ($_REQUEST['page'] == 'events-manager-bookings' && !empty($_REQUEST['action']) && $_REQUEST['action'] == 'manual_booking')) ){
+			wp_enqueue_script('events-manager-pro', plugins_url('includes/js/events-manager-pro.js',__FILE__), array('jquery', 'jquery-ui-core','jquery-ui-widget','jquery-ui-position')); //jQuery will load as dependency	        
+	    }
+	    if( $pagenow == 'user-edit.php' ){
+	        //need to include the em script for dates
+	        EM_Scripts_and_Styles::admin_enqueue();
+	    }
 	}
 
 	/**
@@ -124,6 +149,7 @@ class EM_Pro {
 				.em-form-custom .booking-custom-item { clear:left; border-top:1px solid #dedede; padding-top:10px; overflow:visible; }
 				/* cols/fields */
 				.em-form-custom .bc-col { float:left; width:140px; text-align:left; margin:0px 20px 0px 0px; }
+				.em-form-custom .bc-col-type select { width:100%; }
 				.em-form-custom .bc-col-required { width:50px; text-align:center; }
 				.em-form-custom .bc-col-sort { margin-left:10px; width:25px; height:25px; background:url(<?php echo plugins_url('includes/images/cross.png',__FILE__); ?>) 0px 0px no-repeat; cursor:move; }
 				.em-form-custom .booking-custom-head .bc-col-sort { background:none; }
@@ -159,6 +185,16 @@ class EM_Pro {
 		?>
 		<div class="error"><p><?php _e('Please make sure you have the <a href="http://wordpress.org/extend/plugins/events-manager/">latest version</a> of Events Manager installed, as this may prevent Pro from functioning properly.','em-pro'); ?> <em><?php _e('Only admins see this message.','em-pro'); ?></em></p></div>
 		<?php
+	}
+	
+	static function log($log_text, $log_name = 'general', $force_logging = false){
+		if( get_option('dbem_enable_logging') || $force_logging ){
+			if( !class_exists('EMP_Logs') ){
+				include_once('emp-logs.php');
+			}
+			return EMP_Logs::log($log_text, $log_name);
+		}
+		return false;
 	}
 
 }

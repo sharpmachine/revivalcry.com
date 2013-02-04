@@ -157,7 +157,7 @@ class EM_Attendees_Form {
 	function tickets_form($EM_Ticket){
 		$col_numbers = $EM_Ticket->get_event()->get_bookings()->get_tickets()->get_ticket_collumns();
 		$min_spaces = $EM_Ticket->get_spaces_minimum();
-		if( !$EM_Ticket->ticket_required ) $min_spaces = 0; //zero value allowed
+		if( !$EM_Ticket->is_required() ) $min_spaces = 0; //zero value allowed
 		if( !empty($_REQUEST['em_tickets'][$EM_Ticket->ticket_id]['spaces']) ) $min_spaces = $_REQUEST['em_tickets'][$EM_Ticket->ticket_id]['spaces'];
 		?>
 		<tr class="em-attendee-details" id="em-attendee-details-<?php echo $EM_Ticket->ticket_id; ?>" <?php if( $min_spaces == 0 ) echo 'style="display:none;"'?>>
@@ -302,13 +302,16 @@ class EM_Attendees_Form {
 			$EM_Bookings_Table = new EM_Bookings_Table(true);
 			header("Content-Type: application/octet-stream; charset=utf-8");
 			header("Content-Disposition: Attachment; filename=".sanitize_title(get_bloginfo())."-bookings-export.csv");
-			if( !empty($_REQUEST['event_id']) ){
-				$EM_Event = em_get_event($_REQUEST['event_id']);
-				echo __('Event','dbem') . ' : ' . $EM_Event->event_name .  "\n";
-				if( $EM_Event->location_id > 0 ) echo __('Where','dbem') . ' - ' . $EM_Event->get_location()->location_name .  "\n";
-				echo __('When','dbem') . ' : ' . $EM_Event->output('#_EVENTDATES - #_EVENTTIMES') .  "\n";
+			do_action('em_csv_header_output');
+			if( !defined('EM_CSV_DISABLE_HEADERS') || !EM_CSV_DISABLE_HEADERS ){
+				if( !empty($_REQUEST['event_id']) ){
+					$EM_Event = em_get_event($_REQUEST['event_id']);
+					echo __('Event','dbem') . ' : ' . $EM_Event->event_name .  "\n";
+					if( $EM_Event->location_id > 0 ) echo __('Where','dbem') . ' - ' . $EM_Event->get_location()->location_name .  "\n";
+					echo __('When','dbem') . ' : ' . $EM_Event->output('#_EVENTDATES - #_EVENTTIMES') .  "\n";
+				}
+				echo sprintf(__('Exported bookings on %s','dbem'), date_i18n('D d M Y h:i', current_time('timestamp'))) .  "\n";
 			}
-			echo sprintf(__('Exported bookings on %s','dbem'), date_i18n('D d M Y h:i', current_time('timestamp'))) .  "\n";
 			$headers = $EM_Bookings_Table->get_headers(true);
 			if( !empty($_REQUEST['event_id']) ){
 				foreach(self::get_form($_REQUEST['event_id'])->form_fields as $field ){

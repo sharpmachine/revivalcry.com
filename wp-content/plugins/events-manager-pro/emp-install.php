@@ -155,7 +155,7 @@ function emp_add_options() {
 	add_option('dbem_gateway_label', __('Pay With','em-pro'));
 	//paypal
 	add_option('em_paypal_option_name', __('PayPal', 'em-pro'));
-	add_option('em_paypal_form', '<img src="'.plugins_url('events-manager-pro/includes/images/paypal/paypal_info.png','events-manager').'" />');
+	add_option('em_paypal_form', '<img src="'.plugins_url('events-manager-pro/includes/images/paypal/paypal_info.png','events-manager').'" width="228" height="61" />');
 	add_option('em_paypal_booking_feedback', __('Please wait whilst you are redirected to PayPal to proceed with payment.','em-pro'));
 	add_option('em_paypal_booking_feedback_free', __('Booking successful.', 'dbem'));
 	add_option('em_paypal_button', 'http://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif');
@@ -212,6 +212,28 @@ function emp_add_options() {
 				update_option('em_paypal_button',get_option('em_paypal_button_text')); //merge offline quick pay button option into one
 			}
 		}
+		if( get_option('em_pro_version') < 2.243 ){ //fix badly stored user dates and times
+			$EM_User_Form = EM_User_Fields::get_form();
+			foreach($EM_User_Form->form_fields as $field_id => $field){
+			    if( in_array($field['type'], array('date','time')) ){
+			        //search the user meta table and modify all occorunces of this value if the format isn't correct
+			        $meta_results = $wpdb->get_results("SELECT umeta_id, meta_value FROM {$wpdb->usermeta} WHERE meta_key='".$field_id."'", ARRAY_A);
+			        foreach($meta_results as $meta_result){
+			            if( is_serialized($meta_result['meta_value']) ){
+			                $meta_value = unserialize($meta_result['meta_value']);
+				            if( is_array($meta_value) && !empty($meta_value['start']) ){
+				                $new_value = $meta_value['start'];
+				                if( !empty($meta_value['end']) ){
+				                	$new_value .= ','.$meta_value['end'];
+				                }
+				                //update this user meta with the new value
+				                $wpdb->query("UPDATE {$wpdb->usermeta} SET meta_value='$new_value' WHERE umeta_id='{$meta_result['umeta_id']}'");
+				            }
+			            } 
+			        }
+			    }
+			}
+		}		
 	}else{
 		//Booking form stuff only run on install
 		$insert_result = $wpdb->insert(EM_META_TABLE, array('meta_value'=>serialize($booking_form_data), 'meta_key'=>'booking-form','object_id'=>0));

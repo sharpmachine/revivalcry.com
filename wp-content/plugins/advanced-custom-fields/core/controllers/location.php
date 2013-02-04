@@ -233,8 +233,14 @@ class acf_location
 	
 	function rule_match_post_type( $match, $rule, $options )
 	{
-		$post_type = get_post_type( $options['post_id'] );
-		        
+		$post_type = $options['post_type'];
+
+		if( !$post_type )
+		{
+			$post_type = get_post_type( $options['post_id'] );
+		}
+		
+
         if( $rule['operator'] == "==" )
         {
         	$match = ( $post_type == $rule['value'] );
@@ -244,6 +250,7 @@ class acf_location
         	$match = ( $post_type != $rule['value'] );
         }
 		
+	
 		return $match;
 	}
 	
@@ -258,6 +265,12 @@ class acf_location
 	
 	function rule_match_post( $match, $rule, $options )
 	{
+		// validation
+		if( !$options['post_id'] )
+		{
+			return false;
+		}
+		
 		$post = $options['post_id'];
 		        
         if($rule['operator'] == "==")
@@ -284,6 +297,12 @@ class acf_location
 	
 	function rule_match_page_type( $match, $rule, $options )
 	{
+		// validation
+		if( !$options['post_id'] )
+		{
+			return false;
+		}
+
 		$post = get_post( $options['post_id'] );
 		        
         if( $rule['value'] == 'front_page')
@@ -373,6 +392,13 @@ class acf_location
 	
 	function rule_match_page_parent( $match, $rule, $options )
 	{
+		// validation
+		if( !$options['post_id'] )
+		{
+			return false;
+		}
+		
+		
 		// vars
 		$post = get_post( $options['post_id'] );
 		$page_parent = $post->post_parent;
@@ -442,6 +468,11 @@ class acf_location
 		
 		if( empty($cats) )
 		{
+			if( !$options['post_id'] )
+			{
+				return false;
+			}
+			
 			$all_cats = get_the_category( $options['post_id'] );
         	foreach( $all_cats as $cat )
 			{
@@ -598,14 +629,22 @@ class acf_location
 	{
 		$terms = $options['taxonomy'];
 		
+		
 		if( empty($terms) )
 		{
-			$taxonomies = get_object_taxonomies($post->post_type);
+			if( !$options['post_id'] )
+			{
+				return false;
+			}
+			
+			$post_type = get_post_type( $options['post_id'] );
+			$taxonomies = get_object_taxonomies( $post_type );
+			
         	if($taxonomies)
         	{
 	        	foreach($taxonomies as $tax)
 				{
-					$all_terms = get_the_terms($post->ID, $tax);
+					$all_terms = get_the_terms( $options['post_id'], $tax );
 					if($all_terms)
 					{
 						foreach($all_terms as $all_term)
@@ -670,18 +709,28 @@ class acf_location
 			if($rule['operator'] == "==")
 	        {
 	        	$match = ( $ef_taxonomy == $rule['value'] );
+	        	
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = true;
+				}
+				
 	        }
 	        elseif($rule['operator'] == "!=")
 	        {
 	        	$match = ( $ef_taxonomy != $rule['value'] );
+	        		
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = false;
+				}
+				
 	        }
 			
 	        
-	        // override for "all"
-	        if( $rule['value'] == "all" )
-			{
-				$match = true;
-			}
+	        
 			
 		}
 		
@@ -710,18 +759,24 @@ class acf_location
 			if($rule['operator'] == "==")
 	        {
 	        	$match = ( user_can($ef_user, $rule['value']) );
+	        	
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = true;
+				}
 	        }
 	        elseif($rule['operator'] == "!=")
 	        {
 	        	$match = ( !user_can($ef_user, $rule['value']) );
+	        	
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = false;
+				}
 	        }
-			
-	        
-	        // override for "all"
-	        if( $rule['value'] == "all" )
-			{
-				$match = true;
-			}
+
 		}
 		
         
@@ -740,20 +795,41 @@ class acf_location
 	
 	function rule_match_ef_media( $match, $rule, $options )
 	{
-	
+		global $wp_version;
+
+		
+		if( version_compare($wp_version, '3.5', '>=') )
+		{
+			// in 3.5, the media rule should check the post type
+			$rule['param'] = 'post_type';
+			$rule['value'] = 'attachment';
+			return $this->rule_match_post_type( $match, $rule, $options );
+		}
+		
+		
 		$ef_media = $options['ef_media'];
 		
-        
         if( $ef_media )
-        {
-	        // override for "all"
-	        if( $rule['value'] == "all" )
-			{
-				$match = true;
-			}
-        }
+		{
+			if($rule['operator'] == "==")
+	        {
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = true;
+				}
+	        }
+	        elseif($rule['operator'] == "!=")
+	        {
+	        	// override for "all"
+		        if( $rule['value'] == "all" )
+				{
+					$match = false;
+				}
+	        }
+
+		}
 		
-        
         return $match;
         
     }

@@ -88,6 +88,7 @@ class EM_Form extends EM_Object {
 	}
 	
 	function get_post( $validate = true ){
+	    $custom_user_fields = EM_User_Fields::get_form()->form_fields;
 		foreach($this->form_fields as $field){
 		    $fieldid = $field['fieldid'];
 			$value = '';
@@ -98,8 +99,12 @@ class EM_Form extends EM_Object {
 					$this->field_values[$fieldid] = $_REQUEST[$fieldid];
 				}
 			}
+			//if this is a custom user field, change $filed to the original field so the right date/time info is retreived
+	    	if( array_key_exists($field['type'], $this->custom_user_fields) && array_key_exists($field['fieldid'], $custom_user_fields) ){
+	    	    $field = $custom_user_fields[$field['fieldid']];
+	    	}
 			//dates and time are special
-			if( in_array($field['type'], array('date','time')) ){
+			if( in_array( $field['type'], array('date','time')) ){
 				if( !empty($_REQUEST[$fieldid]['start']) ){
 					$this->field_values[$fieldid] = $_REQUEST[$fieldid]['start'];
 				}
@@ -116,6 +121,17 @@ class EM_Form extends EM_Object {
 	}
 	
 	function get_formatted_value( $field, $field_value ){
+		//FIX FOR BUG IN 2.2.5.4 and earlier for bookings using use no-user-mode
+		if( in_array($field['type'], array('time','date')) ){
+			if( is_array($field_value) && !empty($field_value['start']) ){
+				$temp_val = $field_value['start'];
+				if( !empty($field_value['end']) ){
+					$temp_val .= ','.$field_value['start'];
+				}
+				$field_value = $temp_val;
+			}
+		}
+		//output formatted value for special fields
 		switch( $field['type'] ){
 			case 'checkbox':
 				$field_value = ($field_value) ? __('Yes','dbem'):__('No','dbem');
@@ -151,8 +167,14 @@ class EM_Form extends EM_Object {
 			case 'booking_comment':
 				if( $field_value == 'n/a' && !empty($EM_Booking->booking_comment) ){ $field_value = $EM_Booking->booking_comment; }
 				break;
+			case 'country':
+				if( $field_value != 'n/a' ){ 
+					$countries = em_get_countries();
+					$field_value = $countries[$field_value];
+				}
+				break;
 			default:
-			    if( is_array($field_value) ){ $field_value = implode(',', $field_value); }
+			    if( is_array($field_value) ){ $field_value = implode(', ', $field_value); }
 			    break;
 		}
 		return $field_value;
@@ -295,8 +317,17 @@ class EM_Form extends EM_Object {
 				<?php
 				break;	
 			case 'textarea':
+				$size = 'rows="2" cols="20"';
+			    if( defined('EMP_FORMS_TEXTAREA_SIZE') && EMP_FORMS_TEXTAREA_SIZE ){
+			        $sizes = explode(',', EMP_FORMS_TEXTAREA_SIZE);
+			        if( count($sizes) > 1 ){
+						$size = 'rows="'.$sizes[0].'" cols="'.$sizes[1].'"';
+					}else{
+						$size = EMP_FORMS_TEXTAREA_SIZE;				
+					}
+			    }
 				?>
-				<textarea name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" class="input"><?php echo $default; ?></textarea>
+				<textarea name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" class="input" <?php echo $size; ?>><?php echo $default; ?></textarea>
 				<?php
 				break;
 			case 'checkbox':
@@ -1084,7 +1115,7 @@ class EM_Form extends EM_Object {
 									</div>
 								</div>
 								<?php do_action('emp_forms_editor_text_options', $this, $field_values); ?>
-							</div>							
+							</div>	
 							<?php endif; ?>
 							<?php if($user_fields): ?>
 							<div class="bct-registration bct-options" style="display:none;">

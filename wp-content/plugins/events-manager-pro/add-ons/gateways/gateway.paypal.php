@@ -228,10 +228,11 @@ class EM_Gateway_Paypal extends EM_Gateway {
 		// PayPal IPN handling code
 		if ((isset($_POST['payment_status']) || isset($_POST['txn_type'])) && isset($_POST['custom'])) {
 			
-			if (get_option( $this->gateway . "_status" ) == 'live') {
-				$domain = 'https://www.paypal.com';
+		    //Verify IPN request
+			if (get_option( 'em_'. $this->gateway . "_status" ) == 'live') {
+				$domain = 'https://www.paypal.com/cgi-bin/webscr';
 			} else {
-				$domain = 'https://www.sandbox.paypal.com';
+				$domain = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 			}
 
 			$req = 'cmd=_notify-validate';
@@ -247,48 +248,24 @@ class EM_Gateway_Paypal extends EM_Gateway {
 					. "\r\n";
 
 			@set_time_limit(60);
-			if (false && $conn = @fsockopen($domain, 80, $errno, $errstr, 30)) {
-				fputs($conn, $header . $req);
-				socket_set_timeout($conn, 30);
+			
 
-				$response = '';
-				$close_connection = false;
-				while (true) {
-					if (feof($conn) || $close_connection) {
-						fclose($conn);
-						break;
-					}
-
-					$st = @fgets($conn, 4096);
-					if ($st === false) {
-						$close_connection = true;
-						continue;
-					}
-
-					$response .= $st;
-				}
-
-				$error = '';
-				$lines = explode("\n", str_replace("\r\n", "\n", $response));
-				// looking for: HTTP/1.1 200 OK
-				if (count($lines) == 0) $error = 'Response Error: Header not found';
-				else if (substr($lines[0], -7) != ' 200 OK') $error = 'Response Error: Unexpected HTTP response';
-				else {
-					// remove HTTP header
-					while (count($lines) > 0 && trim($lines[0]) != '') array_shift($lines);
-
-					// first line will be empty, second line will have the result
-					if (count($lines) < 2) $error = 'Response Error: No content found in transaction response';
-					else if (strtoupper(trim($lines[1])) != 'VERIFIED') $error = 'Response Error: Unexpected transaction response';
-				}
-
-				if ($error != '') {
-					echo $error;
-					//fwrite($log,"\n".date('[Y-m-d H:s:i]').' Exiting, PP not verified.');
-					//fclose($log);
-					exit;
-				}
+			//add a CA certificate so that SSL requests always go through
+			add_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
+			//using WP's HTTP class
+			$ipn_verification_result = wp_remote_post($domain, array('body'=>$req));	
+			remove_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
+			
+			if ( !is_wp_error($ipn_verification_result) && $ipn_verification_result['body'] == 'VERIFIED' ) {
+				//log ipn request if needed, then move on
+				EM_Pro::log( $_POST['payment_status']." successfully received for {$_POST['mc_gross']} {$_POST['mc_currency']} (TXN ID {$_POST['txn_id']}) - Custom Info: {$_POST['custom']}", 'paypal');
+			}else{
+			    //log error if needed, send error header and exit
+				EM_Pro::log( array('IPN Verification Error', 'WP_Error'=> $ipn_verification_result, '$_POST'=> $_POST), 'paypal' );
+			    header('HTTP/1.0 502 Bad Gateway');
+			    exit;
 			}
+			//if we get past this, then the IPN went ok
 			
 			// handle cases that the system must ignore
 			$new_status = false;
@@ -432,6 +409,14 @@ Events Manager
 			echo 'Error: Missing POST variables. Identification is not possible.';
 			exit;
 		}
+	}
+	
+	/**
+	 * Fixes SSL issues with wamp and outdated server installations combined with curl requests by forcing a custom pem file, generated from - http://curl.haxx.se/docs/caextract.html
+	 * @param resource $handle
+	 */
+	public static function payment_return_local_ca_curl( $handle ){
+	    curl_setopt($handle, CURLOPT_CAINFO, dirname(__FILE__).DIRECTORY_SEPARATOR.'gateway.paypal.pem');
 	}
 	
 	/*

@@ -1197,11 +1197,14 @@ var acf = {
 		if( row_count >= max_rows )
 		{
 			repeater.addClass('disabled');
+			repeater.find('> .repeater-footer .acf-button').addClass('disabled');
 		}
 		else
 		{
 			repeater.removeClass('disabled');
+			repeater.find('> .repeater-footer .acf-button').removeClass('disabled');
 		}
+		
 	}
 	
 	
@@ -2044,8 +2047,7 @@ var acf = {
 		var a = $(this),
 			id = a.attr('data-id'),
 			ul = a.closest('ul'),
-			inside = ul.closest('.acf_postbox').children('.inside'),
-			field = inside.children('.field-' + id);
+			inside = ul.closest('.acf_postbox').children('.inside');
 		
 		
 		// classes
@@ -2058,7 +2060,7 @@ var acf = {
 			
 			var tab = $(this);
 			
-			if( tab.attr('id') == field.attr('id') )
+			if( tab.hasClass('field-' + id) )
 			{
 				tab.nextUntil('.field-tab').removeClass('acf-tab_group-hide').addClass('acf-tab_group-show');
 			}

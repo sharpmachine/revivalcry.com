@@ -231,7 +231,7 @@ class EM_Updates {
 	function info( $false, $action, $args ) {
 	
 	    // Check if this plugins API is about this plugin
-	    if( $args->slug != EMP_SLUG ) {
+	    if( $args->slug != 'events-manager-pro' ) {
 	        return false;
 	    }
 	        
@@ -243,7 +243,7 @@ class EM_Updates {
 	        'version' => $transient->checked[EMP_SLUG],
 	    );	
 	    //request the latest dev version
-	    if( defined('EMP_DEV_UPDATES') && EMP_DEV_UPDATES ){
+	    if( (defined('EMP_DEV_UPDATES') && EMP_DEV_UPDATES) || get_option('dbem_pro_dev_updates') || get_option('em_check_dev_version') ){
 	    	$args['dev_version'] = 1;
 	    }	
 	    

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Manager Pro v2.2.4.1\n"
+"Project-Id-Version: Events Manager Pro v2.2.5.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-11-19 10:12:17+0000\n"
+"PO-Revision-Date: 2012-11-26 11:16:54+0000\n"
 "Last-Translator: translations@netweblogic.com\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -131,7 +131,7 @@ msgstr ""
 #: add-ons/bookings-form/attendee-forms.php:648
 #: add-ons/bookings-form.php:391
 #: add-ons/bookings-form.php:460
-#: add-ons/gateways/gateway.php:379
+#: add-ons/gateways/gateway.php:382
 #@ em-pro
 #@ dbem
 msgid "Booking Form"
@@ -354,7 +354,6 @@ msgstr ""
 #: add-ons/bookings-form.php:394
 #: add-ons/bookings-form.php:502
 #@ em-pro
-#@ dbem
 msgid "Selected Booking Form"
 msgstr ""
 
@@ -380,7 +379,7 @@ msgstr ""
 
 #: add-ons/bookings-form.php:499
 #, php-format
-#@ default
+#@ em-pro
 msgid "Registration fields are only shown to guest visitors by default. You can choose to show these fields and make them editable by logged in user in your <a href=\"%s\">PRO Booking Form Options</a>."
 msgstr ""
 
@@ -722,7 +721,7 @@ msgid "Enter a number here only, decimals accepted."
 msgstr ""
 
 #: add-ons/coupons.php:758
-#: add-ons/gateways/gateway.php:421
+#: add-ons/gateways/gateway.php:424
 #@ default
 msgid "Save Changes"
 msgstr ""
@@ -857,7 +856,7 @@ msgstr ""
 #: add-ons/gateways/gateway.authorize.aim.php:358
 #: add-ons/gateways/gateway.authorize.aim.php:401
 #: add-ons/gateways/gateway.paypal.php:475
-#: add-ons/gateways/gateway.php:379
+#: add-ons/gateways/gateway.php:382
 #, php-format
 #@ dbem
 #@ em-pro
@@ -1250,56 +1249,56 @@ msgstr ""
 msgid "Once a booking is started and the user is taken to PayPal, Events Manager stores a booking record in the database to identify the incoming payment. These spaces may be considered reserved if you enable <em>Reserved unconfirmed spaces?</em> in your Events &gt; Settings page. If you would like these bookings to expire after x minutes, please enter a value above (note that bookings will be deleted, and any late payments will need to be refunded manually via PayPal)."
 msgstr ""
 
-#: add-ons/gateways/gateway.php:374
+#: add-ons/gateways/gateway.php:377
 #, php-format
 #@ em-pro
 msgid "Edit &quot;%s&quot; settings"
 msgstr ""
 
-#: add-ons/gateways/gateway.php:383
+#: add-ons/gateways/gateway.php:386
 #@ em-pro
 msgid "Gateway Title"
 msgstr ""
 
-#: add-ons/gateways/gateway.php:387
-#: add-ons/gateways/gateway.php:397
+#: add-ons/gateways/gateway.php:390
+#: add-ons/gateways/gateway.php:400
 #, php-format
 #@ em-pro
 msgid "Only if you have not enabled quick pay buttons in your <a href=\"%s\">gateway settings</a>."
 msgstr ""
 
-#: add-ons/gateways/gateway.php:388
+#: add-ons/gateways/gateway.php:391
 #@ em-pro
 msgid "The user will see this as the text option when choosing a payment method."
 msgstr ""
 
-#: add-ons/gateways/gateway.php:393
+#: add-ons/gateways/gateway.php:396
 #@ em-pro
 msgid "Booking Form Information"
 msgstr ""
 
-#: add-ons/gateways/gateway.php:398
+#: add-ons/gateways/gateway.php:401
 #@ em-pro
 msgid "If a user chooses to pay with this gateway, or it is selected by default, this message will be shown just below the selection."
 msgstr ""
 
-#: add-ons/gateways/gateway.php:406
+#: add-ons/gateways/gateway.php:409
 #@ em-pro
 msgid "Quick Pay Buttons"
 msgstr ""
 
-#: add-ons/gateways/gateway.php:407
+#: add-ons/gateways/gateway.php:410
 #, php-format
 #@ em-pro
 msgid "If you have chosen to only use quick pay buttons in your <a href=\"%s\">gateway settings</a>, these settings below will be used."
 msgstr ""
 
-#: add-ons/gateways/gateway.php:411
+#: add-ons/gateways/gateway.php:414
 #@ em-pro
 msgid "Payment Button"
 msgstr ""
 
-#: add-ons/gateways/gateway.php:414
+#: add-ons/gateways/gateway.php:417
 #, php-format
 #@ em-pro
 msgid "Choose the button text. To use an image instead, enter the full url starting with %s or %s."

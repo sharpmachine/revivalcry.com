@@ -17,15 +17,17 @@ class EM_Coupons extends EM_Object {
 		add_filter('em_booking_get_post', array('EM_Coupons', 'em_booking_get_post'), 10, 2);
 		add_filter('em_booking_validate', array('EM_Coupons', 'em_booking_validate'), 10, 2);
 		add_filter('em_booking_save', array('EM_Coupons', 'em_booking_save'), 10, 2);
+		add_filter('em_booking_output_placeholder',array('EM_Coupons','placeholders'),1,3); //for emails
 		//hook into paypal gateway
 		add_filter('em_gateway_paypal_get_paypal_vars', array('EM_Coupons', 'paypal_vars'), 10, 2);
 		//hook into price calculator
 		add_filter('em_booking_get_price', array('EM_Coupons', 'em_booking_get_price'), 10, 3);
+		add_filter('em_bookings_table_row_booking_price_ticket', array('EM_Coupons', 'em_booking_get_price'), 10, 3); //for ticket totals on csv exports split by ticket
 		//add coupon code info to individual booking
 		add_action('em_bookings_admin_ticket_totals_header', array('EM_Coupons', 'em_bookings_admin_ticket_totals_header'), 10, 2);
 		//add coupon info to CSV
-		add_action('em_csv_bookings_loop_after', array('EM_Coupons', 'em_csv_bookings_loop_after'),1,3); //show booking form and ticket summary
-		add_action('em_csv_bookings_headers', array('EM_Coupons', 'em_csv_bookings_headers'),1,1); //show booking form and ticket summary
+		add_action('em_bookings_table_cols_template', array('EM_Coupons', 'em_bookings_table_cols_template'),10,1);
+		add_filter('em_bookings_table_rows_col_coupon', array('EM_Coupons', 'em_bookings_table_rows_col_coupon'), 10, 3);
 		//add ajax response for coupon code queries
 		add_action('wp_ajax_coupon_check',array('EM_Coupons', 'coupon_check'));
 		add_action('wp_ajax_nopriv_coupon_check',array('EM_Coupons', 'coupon_check'));
@@ -151,6 +153,49 @@ class EM_Coupons extends EM_Object {
 			$vars['discount_amount_cart'] = $discount;
 		}
 		return $vars;
+	}
+
+	/**
+	 * @param string $replace
+	 * @param EM_Booking $EM_Booking
+	 * @param string $full_result
+	 * @return string
+	 */
+	function placeholders($replace, $EM_Booking, $full_result){
+		if( empty($replace) || $replace == $full_result ){
+			if( $full_result == '#_BOOKINGCOUPON' ){
+				//special user_name case
+				if( !empty($EM_Booking->booking_meta['coupon']) ){
+					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+					$replace = $EM_Coupon->coupon_code.' - '.$EM_Coupon->get_discount_text();					
+				}
+			}elseif( $full_result == '#_BOOKINGCOUPONCODE' ){
+				//special user_name case
+				if( !empty($EM_Booking->booking_meta['coupon']) ){
+					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+					$replace = $EM_Coupon->coupon_code;					
+				}
+			}elseif( $full_result == '#_BOOKINGCOUPONDISCOUNT' ){
+				//special user_name case
+				if( !empty($EM_Booking->booking_meta['coupon']) ){
+					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+					$replace = $EM_Coupon->get_discount_text();					
+				}
+			}elseif( $full_result == '#_BOOKINGCOUPONNAME' ){
+				//special user_name case
+				if( !empty($EM_Booking->booking_meta['coupon']) ){
+					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+					$replace = $EM_Coupon->coupon_name;					
+				}
+			}elseif( $full_result == '#_BOOKINGCOUPONDESCRIPTION' ){
+				//special user_name case
+				if( !empty($EM_Booking->booking_meta['coupon']) ){
+					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+					$replace = $EM_Coupon->coupon_description;					
+				}
+			}
+		}
+		return $replace; //no need for a filter, use the em_booking_email_placeholders filter
 	}
 	
 	/*
@@ -766,17 +811,17 @@ class EM_Coupons extends EM_Object {
 	 * CSV Functions
 	 */
 	
-	function em_csv_bookings_headers($headers){
-		$headers[] = __('Applicable Coupon');
-		return $headers; //no filter needed, use the em_csv_bookings_headers filter instead
+	function em_bookings_table_cols_template($template){
+		$template['coupon'] = __('Coupon Code','em-pro');
+		return $template;
 	}
 	
-	function em_csv_bookings_loop_after($file, $EM_Ticket_Booking, $EM_Booking){
+	function em_bookings_table_rows_col_coupon($val, $EM_Booking){
 		if( !empty($EM_Booking->booking_meta['coupon']) ){
-			$EM_Coupon = self::get_coupon($EM_Booking->booking_meta['coupon']['coupon_code'], $EM_Booking->get_event());
-			$file .= '"' .  preg_replace("/\n\r|\r\n|\n|\r/", ".     ", $EM_Coupon->coupon_name) . '",'; 
+			$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
+			$val = $EM_Coupon->coupon_code;
 		}
-		return $file; //no filter needed, use the em_csv_bookings_loop_after filter instead
+		return $val;
 	}
 
 	/* Overrides EM_Object method to apply a filter to result

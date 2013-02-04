@@ -309,6 +309,11 @@ class EM_Gateway_Offline extends EM_Gateway {
 			if( !empty($_REQUEST['person_id']) ){
 				//TODO allow users to update user info during manual booking
 				add_filter('option_dbem_emp_booking_form_reg_input', create_function('','return false;'));
+		  		remove_all_actions('pre_option_dbem_bookings_double'); //so we don't get a you're already booked here message
+				if( !get_option('dbem_bookings_double') && $EM_Booking->get_event()->get_bookings()->has_booking($_REQUEST['person_id']) ){
+					$result = false;
+					$EM_Booking->add_error( get_option('dbem_booking_feedback_already_booked') );
+				}
 			}
 		}
 		return $result;

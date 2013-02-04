@@ -19,7 +19,7 @@ class EM_Gateways {
 		add_action('em_options_page_footer_bookings', array('EM_Gateways','admin_options'));		
 		//Booking interception
 		add_filter('em_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
-		add_filter('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
+		add_action('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
 		add_filter('em_action_booking_add', array('EM_Gateways','em_action_booking_add'),1,2); //adds gateway var to feedback
 		add_filter('em_booking_delete', array('EM_Gateways', 'em_booking_delete'), 10, 2);
 		// Payment return

@@ -2,8 +2,8 @@
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
-Tested up to: 3.4.2
-Stable tag: 2.2.5
+Tested up to: 3.5
+Stable tag: 2.2.7
 
 == Description ==
 
@@ -22,6 +22,33 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.2.7 - Users using 2.2.6 with PayPal should upgrade immediately =
+* fixed mysql error when getting transaction data in specific circumstances
+* fixed pro scripts not loading along with EM scripts in admin area (e.g. bookings dashboards)
+* (critical) fixed IPN verifications failing with live PayPal accounts 
+
+= 2.2.6 =
+* fixed events with one non-required ticket not showing 1 attendee form (when shown in ticket table format)
+* fixed some non-translated strings, updated pot file 
+* added Russian translation
+* fixed registered user info not showing up on booking details/exports if no-user mode and manual booking is made
+* fixed dates and other fields not being formatted when displayed using placeholders e.g. in emails
+* updated French translation
+* adding 'define('EMP_SHARED_CUSTOM_FIELDS',true);' to your wp-config.php file allows user field ids to not be prefixed with dbem_ (for sharing user meta with other plugins)
+* added compatability with new script loading system
+* fixed PayPal IPN verification mechanism, including fallback for curl on servers with outdated SSL certificates
+* limited admin JS loading
+* added fix for badly saved/displaying user meta date/time fields, added installation script to fix previously bad date/time user meta values 
+* added fix for normal field country output formatting
+* added coupon calculation to CSV ticket total calculation
+* added removal of header in CSV if EM_CSV_DISABLE_HEADERS is defined
+* added coupon code placeholders #_BOOKINGCOUPON, #_BOOKINGCOUPONCODE, #_BOOKINGCOUPONDISCOUNT, #_BOOKINGCOUPONNAME, #_BOOKINGCOUPONDESCRIPTION
+* added coupon code column to booking tables and csv export
+* fixed IE8/safari form editor display issues
+* fixed manual bookings allowing double bookings depending on EM settings
+* fixed updates not accessing update information e.g. changelogs from our servers
+* changed em_booking_add apply_filter to add_action (since it's an action)
+
 = 2.2.5 =
 * fixed some non-translated strings
 * updated the POT file

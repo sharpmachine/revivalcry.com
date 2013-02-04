@@ -229,18 +229,10 @@ class EM_Booking_Form {
 							$replace .= $user->$field['fieldid'];
 						}elseif( !empty($EM_Booking->booking_meta['registration'][$field['fieldid']]) ){
 							//reg fields only exist as reg fields
-							if(!is_array($EM_Booking->booking_meta['registration'][$field['fieldid']])){
-								$replace .= $EM_Booking->booking_meta['registration'][$field['fieldid']];
-							}else{
-								$replace .= implode(', ', $EM_Booking->booking_meta['registration'][$field['fieldid']]);
-							}
+							$replace .= $EM_Form->get_formatted_value($field, $EM_Booking->booking_meta['registration'][$field['fieldid']]);
 						}elseif( !empty($EM_Booking->booking_meta['booking'][$field['fieldid']]) ){
 							//match for custom field value
-							if(!is_array($EM_Booking->booking_meta['booking'][$field['fieldid']])){
-								$replace .= $EM_Booking->booking_meta['booking'][$field['fieldid']];
-							}else{
-								$replace .= implode(', ', $EM_Booking->booking_meta['booking'][$field['fieldid']]);
-							}
+							$replace .= $EM_Form->get_formatted_value($field, $EM_Booking->booking_meta['booking'][$field['fieldid']]);
 						}
 					}
 				}
@@ -253,18 +245,10 @@ class EM_Booking_Form {
 							$replace = $user->$field['fieldid'];
 						}elseif( !empty($EM_Booking->booking_meta['registration'][$field['fieldid']]) ){
 							//reg fields only exist as reg fields
-							if(!is_array($EM_Booking->booking_meta['registration'][$field['fieldid']])){
-								$replace = $EM_Booking->booking_meta['registration'][$field['fieldid']];
-							}else{
-								$replace = implode(', ', $EM_Booking->booking_meta['registration'][$field['fieldid']]);
-							}
+							$replace = $EM_Form->get_formatted_value($field, $EM_Booking->booking_meta['registration'][$field['fieldid']]);
 						}elseif( !empty($EM_Booking->booking_meta['booking'][$field['fieldid']]) ){
 							//match for custom field value
-							if(!is_array($EM_Booking->booking_meta['booking'][$field['fieldid']])){
-								$replace = $EM_Booking->booking_meta['booking'][$field['fieldid']];
-							}else{
-								$replace = implode(', ', $EM_Booking->booking_meta['booking'][$field['fieldid']]);
-							}
+							$replace = $EM_Form->get_formatted_value($field, $EM_Booking->booking_meta['booking'][$field['fieldid']]);
 						}
 					}
 				}
@@ -351,6 +335,7 @@ class EM_Booking_Form {
 		foreach($EM_Form->form_fields as $fieldid => $field){
 			if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $field['type'] != 'html' ){
 				$input_value = $field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
+				if( in_array($field['type'], array('date','time')) && $input_value == 'n/a' ) $input_value = '';
 				?>
 				<tr>
 					<th><?php echo $field['label'] ?></th>
@@ -496,10 +481,10 @@ class EM_Booking_Form {
 						</h3>
 						<div class="inside">
 							<p><?php _e ( 'You can customize the fields shown in your booking forms below. ', 'em-pro' )?> <?php _e ( 'It is required that you have at least an email and name field so guest users can register.', 'em-pro' )?></p>
-							<p><?php echo sprintf(__('Registration fields are only shown to guest visitors by default. You can choose to show these fields and make them editable by logged in user in your <a href="%s">PRO Booking Form Options</a>.'),'?post_type=event&page=events-manager-options#bookings'); ?>
+							<p><?php echo sprintf(__('Registration fields are only shown to guest visitors by default. You can choose to show these fields and make them editable by logged in user in your <a href="%s">PRO Booking Form Options</a>.', 'em-pro'),'?post_type=event&page=events-manager-options#bookings'); ?>
 							<div>
 								<form method="get" action="#booking-form"> 
-									<?php _e('Selected Booking Form','dbem'); ?> :
+									<?php _e('Selected Booking Form','em-pro'); ?> :
 									<select name="form_id" onchange="this.parentNode.submit()">
 										<?php foreach( self::get_forms_names() as $form_key => $form_name_option ): ?>
 										<option value="<?php echo $form_key; ?>" <?php if($form_key == self::$form_id) echo 'selected="selected"'; ?>><?php echo $form_name_option; ?></option>

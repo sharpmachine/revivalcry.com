@@ -288,13 +288,13 @@ class EM_Gateways_Transactions{
 		$table = EM_BOOKINGS_TABLE;
 		//we can determine what to search for, based on if certain variables are set.
 		if( is_object($context) && get_class($context)=="EM_Booking" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-			$conditions[] = "booking_id = ".$context->booking_id;
+			$conditions[] = "tx.booking_id = ".$context->booking_id;
 		}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";	
+			$join = " JOIN $table ON $table.booking_id=tx.booking_id";	
 			$conditions[] = "event_id = ".$context->event_id;		
 		}elseif( is_object($context) && get_class($context)=="EM_Person" ){
 			//FIXME peole could potentially view other's txns like this
-			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
+			$join = " JOIN $table ON $table.booking_id=tx.booking_id";
 			$conditions[] = "person_id = ".$context->ID;			
 		}elseif( is_object($context) && get_class($context)=="EM_Ticket" && $context->can_manage('manage_bookings','manage_others_bookings') ){
 			$booking_ids = array();
@@ -302,14 +302,14 @@ class EM_Gateways_Transactions{
 				$booking_ids[] = $EM_Booking->booking_id;
 			}
 			if( count($booking_ids) > 0 ){
-				$conditions[] = "booking_id IN (".implode(',', $booking_ids).")";
+				$conditions[] = "tx.booking_id IN (".implode(',', $booking_ids).")";
 			}else{
 				return new stdClass();
 			}			
 		}
 		if( is_multisite() && (!is_main_site() || is_admin()) ){ //if not main blog, we show only blog specific booking info
 			global $blog_id;
-			$join = "tx JOIN $table ON $table.booking_id=tx.booking_id";
+			$join = " JOIN $table ON $table.booking_id=tx.booking_id";
 			$conditions[] = "$table.booking_id IN (SELECT $table.booking_id FROM $table, ".EM_EVENTS_TABLE." e WHERE $table.event_id=e.event_id AND e.blog_id=".$blog_id.")";
 		}
 		//filter by gateway
@@ -319,7 +319,7 @@ class EM_Gateways_Transactions{
 		//build conditions string
 		$condition = (!empty($conditions)) ? "WHERE ".implode(' AND ', $conditions):'';
 		$offset = ( $this->page > 1 ) ? ($this->page-1)*$this->limit : 0;		
-		$sql = $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS * FROM ".EM_TRANSACTIONS_TABLE." $join $condition ORDER BY transaction_id DESC  LIMIT %d, %d", $offset, $this->limit );
+		$sql = $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS * FROM ".EM_TRANSACTIONS_TABLE." tx $join $condition ORDER BY transaction_id DESC  LIMIT %d, %d", $offset, $this->limit );
 		$return = $wpdb->get_results( $sql );
 		$this->total_transactions = $wpdb->get_var( "SELECT FOUND_ROWS();" );
 		return $return;
