@@ -1409,19 +1409,23 @@ class EM_Event extends EM_Object{
 						$replace = ob_get_clean();
 					}
 					break;
+				case '#_EVENTPRICERANGEALL':				    
+				    $show_all_ticket_prices = true; //continues below
 				case '#_EVENTPRICERANGE':
 					//get the range of prices
 					$min = false;
 					$max = 0;
-					foreach( $this->get_tickets()->tickets as $EM_Ticket ){
-						/* @var $EM_Ticket EM_Ticket */
-						if( $EM_Ticket->is_available() || get_option('dbem_bookings_tickets_show_unavailable') ){
-							if($EM_Ticket->get_price() > $max ){
-								$max = $EM_Ticket->get_price();
+					if( $this->get_bookings()->is_open() || $show_all_ticket_prices ){
+						foreach( $this->get_tickets()->tickets as $EM_Ticket ){
+							/* @var $EM_Ticket EM_Ticket */
+							if( $EM_Ticket->is_available() || get_option('dbem_bookings_tickets_show_unavailable') || !empty($show_all_ticket_prices) ){
+								if($EM_Ticket->get_price() > $max ){
+									$max = $EM_Ticket->get_price();
+								}
+								if($EM_Ticket->get_price() < $min || $min === false){
+									$min = $EM_Ticket->get_price();
+								}						
 							}
-							if($EM_Ticket->get_price() < $min || $min === false){
-								$min = $EM_Ticket->get_price();
-							}						
 						}
 					}
 					if( $min === false ) $min = 0;
@@ -2122,7 +2126,7 @@ class EM_Event extends EM_Object{
  * @param string $target
  * @return mixed
  */
-function em_event_output_placeholder($result,$event,$placeholder,$full_result,$target='html'){
+function em_event_output_placeholder($result,$event,$placeholder,$target='html'){
 	if( $target == 'raw' ) return $result;
 	if( in_array($placeholder, array("#_EXCERPT",'#_EVENTEXCERPT', "#_LOCATIONEXCERPT")) && $target == 'html' ){
 		$result = apply_filters('dbem_notes_excerpt', $result);
@@ -2142,7 +2146,7 @@ function em_event_output_placeholder($result,$event,$placeholder,$full_result,$t
 			$result = apply_filters('dbem_notes', $result);
 		}
 	}elseif( in_array($placeholder, array("#_NAME",'#_LOCATION','#_TOWN','#_ADDRESS','#_LOCATIONNAME',"#_EVENTNAME","#_LOCATIONNAME")) ){
-		if ($target == "rss"){    
+		if ($target == "rss"){
 			$result = apply_filters('dbem_general_rss', $result);
 	  	}elseif ($target == "ical"){    
 			$result = apply_filters('dbem_general_ical', $result); 

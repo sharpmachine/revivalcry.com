@@ -5,7 +5,7 @@ Plugin URI: http://strategy11.com/display-widgets/
 Description: Adds checkboxes to each widget to show or hide on site pages.
 Author: Strategy11
 Author URI: http://strategy11.com
-Version: 1.23
+Version: 1.24
 */
 
 load_plugin_textdomain( 'display-widgets', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -219,6 +219,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
         foreach ($dw_pages as $page){
             if(isset($new_instance['page-'. $page->ID]))
                 $instance['page-'. $page->ID] = 1;
+            else if(isset($instance['page-'. $page->ID]))
+                unset($instance['page-'. $page->ID]);
             unset($page);
         }
     }
@@ -226,6 +228,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
     foreach ($dw_cats as $cat){
         if(isset($new_instance['cat-'. $cat->cat_ID]))
             $instance['cat-'. $cat->cat_ID] = 1;
+        else if(isset($instance['cat-'. $cat->cat_ID]))
+            unset($instance['cat-'. $cat->cat_ID]);
         unset($cat);
     }
     
@@ -233,6 +237,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
         foreach ($dw_cposts as $post_key => $custom_post){
             if(isset($new_instance['type-'. $post_key]))
                 $instance['type-'. $post_key] = 1;
+            else if(isset($instance['type-'. $post_key]))
+                unset($instance['type-'. $post_key]);
             unset($custom_post);
         }
     }
@@ -241,6 +247,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
         foreach ($dw_taxes as $tax){
             if(isset($new_instance['tax-'. $tax]))
                 $instance['tax-'. $tax] = 1;
+            else if(isset($instance['tax-'. $tax]))
+                unset($instance['tax-'. $tax]);
             unset($tax);
         }
     }
@@ -249,6 +257,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
         foreach($dw_langs as $lang){
             if(isset($new_instance['lang-'. $lang['language_code'] ]))
                 $instance['lang-'. $lang['language_code']] = 1;
+            else if(isset($instance['lang-'. $lang['language_code']]))
+                unset($instance['lang-'. $lang['language_code']]);
             unset($lang);
         }    
     }
@@ -263,6 +273,8 @@ function dw_update_widget_options($instance, $new_instance, $old_instance){
     foreach(array('front', 'home', 'archive', 'single', '404', 'search') as $page){
         if(isset($new_instance['page-'. $page]))
             $instance['page-'. $page] = 1;
+        else if(isset($instance['page-'. $page]))
+            unset($instance['page-'. $page]);
     }
 
     return $instance;

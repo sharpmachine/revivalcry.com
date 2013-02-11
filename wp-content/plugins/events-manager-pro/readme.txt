@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 2.2.7
+Stable tag: 2.2.9
 
 == Description ==
 
@@ -22,6 +22,15 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.2.9 =
+* security update for some XSS vunlerabilities
+* fixed blank date and time custom fields breaking datepickers for editing user/booking information
+* fixed coupon placeholders remaining if booking doesn't have a coupon associated with it 
+
+= 2.2.8 =
+* fixed IPN validation failing when ticket names contain special characters
+* improved IPN validation requesting, using GET method via wp_remote_get 
+
 = 2.2.7 - Users using 2.2.6 with PayPal should upgrade immediately =
 * fixed mysql error when getting transaction data in specific circumstances
 * fixed pro scripts not loading along with EM scripts in admin area (e.g. bookings dashboards)

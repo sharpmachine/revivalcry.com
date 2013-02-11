@@ -164,31 +164,31 @@ class EM_Coupons extends EM_Object {
 	function placeholders($replace, $EM_Booking, $full_result){
 		if( empty($replace) || $replace == $full_result ){
 			if( $full_result == '#_BOOKINGCOUPON' ){
-				//special user_name case
+				$replace = '';
 				if( !empty($EM_Booking->booking_meta['coupon']) ){
 					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 					$replace = $EM_Coupon->coupon_code.' - '.$EM_Coupon->get_discount_text();					
 				}
 			}elseif( $full_result == '#_BOOKINGCOUPONCODE' ){
-				//special user_name case
+				$replace = '';
 				if( !empty($EM_Booking->booking_meta['coupon']) ){
 					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 					$replace = $EM_Coupon->coupon_code;					
 				}
 			}elseif( $full_result == '#_BOOKINGCOUPONDISCOUNT' ){
-				//special user_name case
+				$replace = '';
 				if( !empty($EM_Booking->booking_meta['coupon']) ){
 					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 					$replace = $EM_Coupon->get_discount_text();					
 				}
 			}elseif( $full_result == '#_BOOKINGCOUPONNAME' ){
-				//special user_name case
+				$replace = '';
 				if( !empty($EM_Booking->booking_meta['coupon']) ){
 					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 					$replace = $EM_Coupon->coupon_name;					
 				}
 			}elseif( $full_result == '#_BOOKINGCOUPONDESCRIPTION' ){
-				//special user_name case
+				$replace = '';
 				if( !empty($EM_Booking->booking_meta['coupon']) ){
 					$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 					$replace = $EM_Coupon->coupon_description;					

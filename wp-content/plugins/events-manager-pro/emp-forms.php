@@ -96,7 +96,11 @@ class EM_Form extends EM_Object {
 				if( !is_array($_REQUEST[$fieldid])){
 					$this->field_values[$fieldid] = wp_kses_data(stripslashes($_REQUEST[$fieldid]));
 				}elseif( is_array($_REQUEST[$fieldid])){
-					$this->field_values[$fieldid] = $_REQUEST[$fieldid];
+				    $array = array();
+				    foreach( $_REQUEST[$fieldid] as $key => $array_value ){
+				        $array[$key] = wp_kses_data(stripslashes($array_value));
+				    }
+					$this->field_values[$fieldid] = $array;
 				}
 			}
 			//if this is a custom user field, change $filed to the original field so the right date/time info is retreived
@@ -107,9 +111,11 @@ class EM_Form extends EM_Object {
 			if( in_array( $field['type'], array('date','time')) ){
 				if( !empty($_REQUEST[$fieldid]['start']) ){
 					$this->field_values[$fieldid] = $_REQUEST[$fieldid]['start'];
-				}
-				if( $field['options_'.$field['type'].'_range'] && !empty($_REQUEST[$fieldid]['end']) ){
-					$this->field_values[$fieldid] .= ','. $_REQUEST[$fieldid]['end'];
+					if( $field['options_'.$field['type'].'_range'] && !empty($_REQUEST[$fieldid]['end']) ){
+						$this->field_values[$fieldid] .= ','. $_REQUEST[$fieldid]['end'];
+					}
+				}else{
+				    $this->field_values[$fieldid] = '';
 				}
 			}
 		}
@@ -129,6 +135,8 @@ class EM_Form extends EM_Object {
 					$temp_val .= ','.$field_value['start'];
 				}
 				$field_value = $temp_val;
+			}elseif( is_array($field_value) && empty($field_value['start']) ){
+			    $field_value = 'n/a'; //fix for empty value saves in 2.2.8
 			}
 		}
 		//output formatted value for special fields
@@ -196,12 +204,6 @@ class EM_Form extends EM_Object {
 	
 	function output_field($field, $post=true){
 		ob_start();
-		$default = '';
-		if($post === true && !empty($_REQUEST[$field['fieldid']])) {
-			$default = $_REQUEST[$field['fieldid']];
-		}elseif( !empty($post) ){
-			$default = $post;
-		}
 		$required = ( !empty($field['required']) ) ? ' '.apply_filters('emp_forms_output_field_required','<span class="em-form-required">*</span>'):'';
 		switch($field['type']){
 			case 'html':
@@ -303,8 +305,10 @@ class EM_Form extends EM_Object {
 		$default = '';
 		if($post === true && !empty($_REQUEST[$field['fieldid']])) {
 			$default = $_REQUEST[$field['fieldid']];
+			$default_html = $_REQUEST[$field['fieldid']];
 		}elseif( $post !== true && !empty($post) ){
-			$default = $post;
+			$default = esc_attr($post);
+			$default_html = esc_attr($post);
 		}
 		$field_name = !empty($field['name']) ? $field['name']:$field['fieldid'];
 		switch($field['type']){
@@ -327,7 +331,7 @@ class EM_Form extends EM_Object {
 					}
 			    }
 				?>
-				<textarea name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" class="input" <?php echo $size; ?>><?php echo $default; ?></textarea>
+				<textarea name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" class="input" <?php echo $size; ?>><?php echo $default_html; ?></textarea>
 				<?php
 				break;
 			case 'checkbox':
@@ -389,13 +393,14 @@ class EM_Form extends EM_Object {
 				break;
 			case 'date':
 			    $date_type = !empty($field['options_date_range']) ? 'em-date-range':'em-date-single';
-				if( !empty($_REQUEST[$field_name]['start']) ) {
+				if( !empty($_REQUEST[$field_name]['start']) && preg_match('/\d{4}-\d{2}-\d{2}/', $_REQUEST[$field_name]['start'])) {
 					$default = array( $_REQUEST[$field_name]['start'] );
-					if( !empty($_REQUEST[$field_name]['end']) ){
+					if( !empty($_REQUEST[$field_name]['end']) && preg_match('/\d{4}-\d{2}-\d{2}/', $_REQUEST[$field_name]['end'])){
 						$default[] = $_REQUEST[$field_name]['end'];
 					}
 				}else{
 					$default = explode(',',$default);
+					if( !empty($default[0]) && !preg_match('/\d{4}-\d{2}-\d{2}/', $default[0]) ) $default = ''; //make sure the value is a date
 				}
 				//we're adding a [%s] to the field id and replacing this for the start-end field names because this way other bits (e.g. attendee forms) can manipulate where the [start] and [end] are placed in the element name. 
 				$field_id = strstr($field_name,'[') ? $field_name:$field_name.'[%s]';
@@ -413,13 +418,14 @@ class EM_Form extends EM_Object {
     			break;	
 			case 'time':
 			    $date_type = !empty($field['options_time_range']) ? 'em-time-range':'em-time-single';
-				if( !empty($_REQUEST[$field_name]['start']) ) {
+				if( !empty($_REQUEST[$field_name]['start']) && !preg_match('/^([01]\d|2[0-3]):([0-5]\d) ?(AM|PM)?$/', $_REQUEST[$field_name]['start']) ) {
 					$default = array( $_REQUEST[$field_name]['start'] );
-					if( !empty($_REQUEST[$field_name]['end']) ){
+					if( !empty($_REQUEST[$field_name]['end']) && !preg_match('/^([01]\d|2[0-3]):([0-5]\d) ?(AM|PM)?$/', $_REQUEST[$field_name]['end']) ){
 						$default[] = $_REQUEST[$field_name]['end'];
 					}
 				}else{
 					$default = explode(',',$default);
+					if( !empty($default[0]) && !preg_match('/^([01]\d|2[0-3]):([0-5]\d) ?(AM|PM)?$/', $default[0]) ) $default = ''; //make sure the value is a date
 				}
 				//we're adding a [%s] to the field id and replacing this for the start-end field names because this way other bits (e.g. attendee forms) can manipulate where the [start] and [end] are placed in the element name. 
 				$field_id = strstr($field_name,'[') ? $field_name:$field_name.'[%s]';

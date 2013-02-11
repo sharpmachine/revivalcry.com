@@ -239,21 +239,15 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 			foreach ($_POST as $k => $v) {
 				if (get_magic_quotes_gpc()) $v = stripslashes($v);
-				$req .= '&' . $k . '=' . $v;
+				$req .= '&' . $k . '=' . urlencode($v);
 			}
-
-			$header = 'POST /cgi-bin/webscr HTTP/1.0' . "\r\n"
-					. 'Content-Type: application/x-www-form-urlencoded' . "\r\n"
-					. 'Content-Length: ' . strlen($req) . "\r\n"
-					. "\r\n";
-
-			@set_time_limit(60);
 			
+			@set_time_limit(60);
 
 			//add a CA certificate so that SSL requests always go through
 			add_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			//using WP's HTTP class
-			$ipn_verification_result = wp_remote_post($domain, array('body'=>$req));	
+			$ipn_verification_result = wp_remote_get($domain.'?'.$req);	
 			remove_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			
 			if ( !is_wp_error($ipn_verification_result) && $ipn_verification_result['body'] == 'VERIFIED' ) {
