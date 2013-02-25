@@ -5,7 +5,7 @@
  * Text Domain: addquicktag
  * Domain Path: /languages
  * Description: Allows you to easily add custom Quicktags to the html- and visual-editor.
- * Version:     2.2.1
+ * Version:     2.2.2
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de
  * License:     GPLv3
@@ -14,7 +14,7 @@
  * 
 License:
 ==============================================================================
-Copyright 2011 Frank Bültge  (email : frank@bueltge.de)
+Copyright 2011 - 2013 Frank Bültge  (email : frank@bueltge.de)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ This plugin requires WordPress >= 3.3 and tested with PHP Interpreter >= 5.3
  */
 class Add_Quicktag {
 	
-	static private $classobj;
+	protected static $classobj;
 	
 	static private $option_string      = 'rmnlQuicktagSettings';
 	// use filter 'addquicktag_pages' for add custom pages
@@ -100,7 +100,7 @@ class Add_Quicktag {
 		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-tinymce.php';
 		
 		foreach ( $this->get_admin_pages_for_js() as $page ) {
-			add_action( 'admin_print_scripts-' . $page, array( $this, 'print_scripts' ) );
+			add_action( 'admin_print_scripts-' . $page, array( $this, 'get_json' ) );
 			add_action( 'admin_print_scripts-' . $page, array( $this, 'admin_enqueue_scripts') );
 		}
 	}
@@ -123,7 +123,7 @@ class Add_Quicktag {
 	 * @since   2.0.0
 	 * @return  void
 	 */
-	public function print_scripts() {
+	public function get_json() {
 		global $current_screen;
 		
 		if ( isset( $current_screen->id ) && 
@@ -139,6 +139,11 @@ class Add_Quicktag {
 		else
 			$options = get_option( self :: $option_string );
 		
+		// allow change or enhance buttons array
+		$options['buttons'] = apply_filters( 'addquicktag_buttons', $options['buttons'] );
+		// hook for filter options
+		$options = apply_filters( 'addquicktag_options', $options );
+		
 		if ( ! $options )
 			return NULL;
 		
@@ -153,6 +158,7 @@ class Add_Quicktag {
 			}
 			array_multisort( $tmp, SORT_ASC, $options['buttons'] );
 		}
+		
 		?>
 		<script type="text/javascript">
 			var addquicktag_tags = <?php echo json_encode( $options ); ?>,
@@ -211,7 +217,7 @@ class Add_Quicktag {
 	 * @access  public
 	 * @return  $classobj
 	 */
-	public function get_object() {
+	public static function get_object() {
 		
 		if ( NULL === self :: $classobj ) {
 			self :: $classobj = new self;
@@ -239,10 +245,16 @@ class Add_Quicktag {
 	 * @since  2.0.0
 	 * @access public
 	 * @param  $value string, default = 'TextDomain'
-	 *		 Name, PluginURI, Version, Description, Author, AuthorURI, TextDomain, DomainPath, Network, Title
+	 *         Name, PluginURI, Version, Description, Author, AuthorURI, TextDomain, DomainPath, Network, Title
 	 * @return string
 	 */
 	public function get_plugin_data( $value = 'TextDomain' ) {
+		
+		static $plugin_data = array ();
+		
+		// fetch the data just once.
+		if ( isset( $plugin_data[ $value ] ) )
+			return $plugin_data[ $value ];
 		
 		if ( ! function_exists( 'get_plugin_data' ) )
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -250,7 +262,7 @@ class Add_Quicktag {
 		$plugin_data  = get_plugin_data( __FILE__ );
 		$plugin_value = $plugin_data[$value];
 		
-		return $plugin_value;
+		return empty ( $plugin_data[ $value ] ) ? '' : $plugin_data[ $value ];
 	}
 	
 	/**
