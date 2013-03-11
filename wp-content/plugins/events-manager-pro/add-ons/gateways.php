@@ -16,19 +16,30 @@ class EM_Gateways {
 		add_action('em_create_events_submenu',array('EM_Gateways', 'admin_menu'),10,1);
 		add_action('admin_init', array('EM_Gateways', 'handle_payment_gateways'),10,1);
 		add_action('admin_init', array('EM_Gateways', 'handle_gateways_panel_updates'),10,1);
-		add_action('em_options_page_footer_bookings', array('EM_Gateways','admin_options'));		
-		//Booking interception
-		add_filter('em_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
-		add_action('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
-		add_filter('em_action_booking_add', array('EM_Gateways','em_action_booking_add'),1,2); //adds gateway var to feedback
-		add_filter('em_booking_delete', array('EM_Gateways', 'em_booking_delete'), 10, 2);
+		add_action('em_options_page_footer_bookings', array('EM_Gateways','admin_options'));	
 		// Payment return
 		add_action('wp_ajax_em_payment', array('EM_Gateways', 'handle_payment_gateways'), 10 );
-		//Booking Form Modifications
-			//buttons only way, oudated but still possible, will eventually depreciated this once an API is out, so use the latter pls
-			add_filter('em_booking_form_buttons', array('EM_Gateways','booking_form_buttons'),10,2); //Replace button with booking buttons
-			//new way, with payment selector
-			add_action('em_booking_form_footer', array('EM_Gateways','booking_form_footer'),10,2);
+		//Booking interception
+		if( get_option('dbem_multiple_bookings') ){
+			add_action('em_multiple_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
+			add_filter('em_multiple_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
+			add_filter('em_action_emp_checkout', array('EM_Gateways','em_action_booking_add'),10,2); //adds gateway var to feedback
+			//Booking Form Modifications
+				//buttons only way, oudated but still possible, will eventually depreciated this once an API is out, so use the latter pls
+				add_filter('em_checkout_form_buttons', array('EM_Gateways','booking_form_buttons'),10,2); //Replace button with booking buttons
+				//new way, with payment selector
+				add_action('em_checkout_form_footer', array('EM_Gateways','booking_form_footer'),10,2);
+		}else{
+			add_action('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
+			add_filter('em_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
+			add_filter('em_action_booking_add', array('EM_Gateways','em_action_booking_add'),10,2); //adds gateway var to feedback
+			//Booking Form Modifications
+				//buttons only way, oudated but still possible, will eventually depreciated this once an API is out, so use the latter pls
+				add_filter('em_booking_form_buttons', array('EM_Gateways','booking_form_buttons'),10,2); //Replace button with booking buttons
+				//new way, with payment selector
+				add_action('em_booking_form_footer', array('EM_Gateways','event_booking_form_footer'),10,2);
+		}
+		add_filter('em_booking_delete', array('EM_Gateways', 'em_booking_delete'), 10, 2);
 		//Gateways and user fields
 		add_action('admin_init',array('EM_Gateways', 'customer_fields_admin_actions'),9); //before bookings
 		add_action('emp_forms_admin_page',array('EM_Gateways', 'customer_fields_admin'),30);
@@ -108,13 +119,16 @@ class EM_Gateways {
 	 */
 	/**
 	 * Hooks into em_booking_get_post filter and makes sure that if there's an active gateway for new bookings, if no $_REQUEST['gateway'] is supplied (i.e. hacking, spammer, or js problem with booking button mode).
-	 * @param unknown_type $result
-	 * @param unknown_type $EM_Booking
+	 * @param boolean $result
+	 * @param EM_Booking $EM_Booking
 	 * @return boolean
 	 */
 	static function em_booking_get_post($result, $EM_Booking){
 	    if( !empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id']) ){
 	    	return $result;
+	    }
+	    if( get_option('dbem_multiple_bookings') && get_class($EM_Booking) == 'EM_Booking' ){ //we only deal with the EM_Multiple_Booking class if we're in multi booking mode
+	        return $result;	        
 	    }
 	    if( empty($EM_Booking->booking_id) && (empty($_REQUEST['gateway']) || !array_key_exists($_REQUEST['gateway'], self::active_gateways())) && $EM_Booking->get_price() > 0 && count(EM_Gateways::active_gateways()) > 0 ){
 	        //spammer or hacker trying to get around no gateway selection
@@ -146,6 +160,12 @@ class EM_Gateways {
 		}
 	}
 	
+	static function event_booking_form_footer( $EM_Event ){
+		if(!$EM_Event->is_free() ){
+		    self::booking_form_footer();
+		}	    
+	}
+	
 	/**
 	 * Gets called at the bottom of the form before the submit button. 
 	 * Outputs a gateway selector and allows gateways to hook in and provide their own payment information to be submitted.
@@ -156,49 +176,47 @@ class EM_Gateways {
 	 * 
 	 * You'll have to ensure a gateway value is submitted in your booking form in order for paid bookings to be processed properly.
 	 */
-	static function booking_form_footer($EM_Event){
+	static function booking_form_footer(){
 		global $EM_Gateways;
 		//Display gateway input
-		if(!$EM_Event->is_free() ){
-			add_action('em_gateway_js', array('EM_Gateways','em_gateway_js'));
-			//Check if we can user quick pay buttons
-			if( get_option('dbem_gateway_use_buttons', 1) ){ //backward compatability
-				echo EM_Gateways::booking_form_buttons('',$EM_Event);
-				return;
-			}
-			//Continue with payment gateway selection
-			$active_gateways = get_option('em_payment_gateways');
-			if( is_array($active_gateways) ){
-				//Add gateway selector
-				if( count($active_gateways) > 1 ){
-				?>
-				<p class="em-booking-gateway" id="em-booking-gateway">
-					<label><?php echo get_option('dbem_gateway_label'); ?></label>
-					<select name="gateway">
-					<?php
-					foreach($active_gateways as $gateway => $active_val){
-						if(array_key_exists($gateway, $EM_Gateways)) {
-							$selected = (!empty($selected)) ? $selected:$gateway;
-							echo '<option value="'.$gateway.'">'.get_option('em_'.$gateway.'_option_name').'</option>';
-						}
-					}
-					?>
-					</select>
-				</p>
+		add_action('em_gateway_js', array('EM_Gateways','em_gateway_js'));
+		//Check if we can user quick pay buttons
+		if( get_option('dbem_gateway_use_buttons', 1) ){ //backward compatability
+			echo EM_Gateways::booking_form_buttons();
+			return;
+		}
+		//Continue with payment gateway selection
+		$active_gateways = self::active_gateways();
+		if( is_array($active_gateways) ){
+			//Add gateway selector
+			if( count($active_gateways) > 1 ){
+			?>
+			<p class="em-booking-gateway" id="em-booking-gateway">
+				<label><?php echo get_option('dbem_gateway_label'); ?></label>
+				<select name="gateway">
 				<?php
-				}elseif( count($active_gateways) == 1 ){
-					foreach($active_gateways as $gateway => $val){
+				foreach($active_gateways as $gateway => $active_val){
+					if(array_key_exists($gateway, $EM_Gateways)) {
 						$selected = (!empty($selected)) ? $selected:$gateway;
-						echo '<input type="hidden" name="gateway" value="'.$gateway.'" />';
+						echo '<option value="'.$gateway.'">'.get_option('em_'.$gateway.'_option_name').'</option>';
 					}
 				}
-				foreach($active_gateways as $gateway => $active_val){
-					echo '<div class="em-booking-gateway-form" id="em-booking-gateway-'.$gateway.'"';
-					echo ($selected == $gateway) ? '':' style="display:none;"';
-					echo '>';
-					$EM_Gateways[$gateway]->booking_form();
-					echo "</div>";
+				?>
+				</select>
+			</p>
+			<?php
+			}elseif( count($active_gateways) == 1 ){
+				foreach($active_gateways as $gateway => $val){
+					$selected = (!empty($selected)) ? $selected:$gateway;
+					echo '<input type="hidden" name="gateway" value="'.$gateway.'" />';
 				}
+			}
+			foreach($active_gateways as $gateway => $active_val){
+				echo '<div class="em-booking-gateway-form" id="em-booking-gateway-'.$gateway.'"';
+				echo ($selected == $gateway) ? '':' style="display:none;"';
+				echo '>';
+				$EM_Gateways[$gateway]->booking_form();
+				echo "</div>";
 			}
 		}
 		return; //for filter compatibility
@@ -238,7 +256,7 @@ class EM_Gateways {
 	}
 	
 	static function admin_options(){
-		if( current_user_can('activate_plugins') ){
+		if( current_user_can('list_users') ){
 		?>
 			<a name="pro-api"></a>
 			<div  class="postbox " >
@@ -257,7 +275,7 @@ class EM_Gateways {
 	}
 	
 	static function admin_menu($plugin_pages){
-		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Payment Gateways','em-pro'),__('Payment Gateways','em-pro'),'activate_plugins','events-manager-gateways',array('EM_Gateways','handle_gateways_panel'));
+		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Payment Gateways','em-pro'),__('Payment Gateways','em-pro'),'list_users','events-manager-gateways',array('EM_Gateways','handle_gateways_panel'));
 		return $plugin_pages;
 	}
 
@@ -320,7 +338,7 @@ class EM_Gateways {
 					);
 					$columns = apply_filters('em_gateways_columns', $columns);	
 					$gateways = EM_Gateways::gateways_list();
-					$active = get_option('em_payment_gateways', array());
+					$active = self::active_gateways();
 				?>	
 				<table cellspacing="0" class="widefat fixed">
 					<thead>
@@ -351,23 +369,30 @@ class EM_Gateways {
 					<tbody>
 						<?php
 						if($gateways) {
-							foreach($gateways as $key => $gateway) {
+							foreach($gateways as $key => $gateway) { 
 								if(!isset($EM_Gateways[$key])) {
 									continue;
 								}
+								$EM_Gateway = $EM_Gateways[$key]; /* @var $EM_Gateway EM_Gateway */
 								?>
 								<tr valign="middle" class="alternate">
 									<th class="check-column" scope="row"><input type="checkbox" value="<?php echo esc_attr($key); ?>" name="gatewaycheck[]"></th>
 									<td class="column-name">
 										<strong><a title="Edit <?php echo esc_attr($gateway); ?>" href="<?php echo EM_ADMIN_URL; ?>&amp;page=<?php echo $page; ?>&amp;action=edit&amp;gateway=<?php echo $key; ?>" class="row-title"><?php echo esc_html($gateway); ?></a></strong>
 										<?php
+											//Check if Multi-Booking Ready
+											if( get_option('dbem_multiple_bookings') && !$EM_Gateway->supports_multiple_bookings ){
+												echo '<br/><em>'. __('This gateway cannot be activated because it does not support multiple bookings mode.','em-pro') . '</em>';
+											}
 											$actions = array();
 											$actions['edit'] = "<span class='edit'><a href='".EM_ADMIN_URL."&amp;page=" . $page . "&amp;action=edit&amp;gateway=" . $key . "'>" . __('Settings') . "</a></span>";
 
 											if(array_key_exists($key, $active)) {
 												$actions['toggle'] = "<span class='edit activate'><a href='" . wp_nonce_url(EM_ADMIN_URL."&amp;page=" . $page. "&amp;action=deactivate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Deactivate') . "</a></span>";
 											} else {
-												$actions['toggle'] = "<span class='edit deactivate'><a href='" . wp_nonce_url(EM_ADMIN_URL."&amp;page=" . $page. "&amp;action=activate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Activate') . "</a></span>";
+												if( !get_option('dbem_multiple_bookings') || ( get_option('dbem_multiple_bookings') && $EM_Gateway->supports_multiple_bookings ) ){
+													$actions['toggle'] = "<span class='edit deactivate'><a href='" . wp_nonce_url(EM_ADMIN_URL."&amp;page=" . $page. "&amp;action=activate&amp;gateway=" . $key . "", 'toggle-gateway_' . $key) . "'>" . __('Activate') . "</a></span>";
+												}
 											}
 										?>
 										<br><div class="row-actions"><?php echo implode(" | ", $actions); ?></div>
@@ -589,10 +614,10 @@ class EM_Gateways {
 	 * @param EM_Event $EM_Event
 	 * @return string
 	 */
-	static function booking_form_buttons($button, $EM_Event){
+	static function booking_form_buttons($button = ''){
 		global $EM_Gateways;
 		$gateway_buttons = array();
-		$active_gateways = get_option('em_payment_gateways');
+		$active_gateways = self::active_gateways();
 		if( is_array($active_gateways) ){
 			foreach($active_gateways as $gateway => $active_val){
 				if(array_key_exists($gateway, $EM_Gateways) && $EM_Gateways[$gateway]->button_enabled) {
@@ -602,7 +627,7 @@ class EM_Gateways {
 					}
 				}
 			}
-			$gateway_buttons = apply_filters('em_gateway_buttons', $gateway_buttons, $EM_Event);
+			//$gateway_buttons = apply_filters('em_gateway_buttons', $gateway_buttons, $EM_Event);
 			if( count($gateway_buttons) > 0 ){
 				$button = '<div class="em-gateway-buttons"><div class="em-gateway-button first">'. implode('</div><div class="em-gateway-button">', $gateway_buttons).'</div></div>';			
 			}

@@ -1,9 +1,9 @@
 === Events Manager Pro ===
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
-Requires at least: 3.1
-Tested up to: 3.5
-Stable tag: 2.2.9
+Requires at least: 3.3
+Tested up to: 3.5.1
+Stable tag: 2.3
 
 == Description ==
 
@@ -22,8 +22,25 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3 =
+* fixed newly created user during booking not being deleted on bad card info via authorize.net
+* updated Swedish translation
+* fixed php warning
+* fixed permission problems in MS preventing form editor and other admin screens from showing to admins without plugin rights
+* updated Swedish
+* fixed newly created users not being deleted in MultiSite if bad A.net card info is supplied
+* added Multiple Bookings feature
+* fixed MultiSite PHP warning on blog creation when visiting blog first time round
+* added hooks to edit no-user booking personal information and custom user fields (requires EM 5.3.5.3 or higher)
+* better template/class renaming, adjusted AJAX loading methods to account for caching plugins
+* moved email reminders out of beta
+* fixed checkboxes, radios and multiselect custom fields in booking form not being editable by admin
+* fixed checkboxes, radios and multiselect attendee fields not being correctly editable by admin
+* fixed some attendee form display and CSS issues
+* fixed tips not appearing for core user fields
+
 = 2.2.9 =
-* security update for some XSS vunlerabilities
+* important security update for some XSS vunlerabilities - see http://em.cm/xss
 * fixed blank date and time custom fields breaking datepickers for editing user/booking information
 * fixed coupon placeholders remaining if booking doesn't have a coupon associated with it 
 

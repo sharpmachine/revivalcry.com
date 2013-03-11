@@ -9,6 +9,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	var $button_enabled = true;
 	var $payment_return = true;
 	var $count_pending_spaces = false;
+	var $supports_multiple_bookings = true;
 
 	/**
 	 * Sets up gateaway and adds relevant actions/filters 
@@ -35,8 +36,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			}
 		}else{
 			//unschedule the cron
-			$timestamp = wp_next_scheduled('emp_paypal_cron');
-			wp_unschedule_event($timestamp, 'emp_paypal_cron');			
+			wp_clear_scheduled_hook('emp_paypal_cron');			
 		}
 	}
 	
@@ -270,7 +270,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			$custom_values = explode(':',$_POST['custom']);
 			$booking_id = $custom_values[0];
 			$event_id = !empty($custom_values[1]) ? $custom_values[1]:0;
-			$EM_Booking = new EM_Booking($booking_id);
+			$EM_Booking = em_get_booking($booking_id);
 			if( !empty($EM_Booking->booking_id) && count($custom_values) == 2 ){
 				//booking exists
 				$EM_Booking->manage_override = true; //since we're overriding the booking ourselves.

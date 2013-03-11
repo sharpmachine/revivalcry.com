@@ -11,6 +11,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	var $status = 5;
 	var $button_enabled = true;
 	var $count_pending_spaces = true;
+	var $supports_multiple_bookings = true;
 
 	/**
 	 * Sets up gateway and registers actions/filters
@@ -27,6 +28,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 		add_action('em_admin_event_booking_options_buttons', array(&$this, 'event_booking_options_buttons'),10);
 		add_action('em_admin_event_booking_options', array(&$this, 'event_booking_options'),10);
 		add_action('em_bookings_single_metabox_footer', array(&$this, 'add_payment_form'),1,1); //add payment to booking
+		//Manual Booking - not necessary for Multi-Booking 
 		add_action('em_bookings_manual_booking', array(&$this, 'add_booking_form'),1,1);
 		add_filter('em_booking_get_post', array(&$this,'em_booking_get_post'),1,2);
 		add_filter('em_booking_validate', array(&$this,'em_booking_validate'),9,2); //before EM_Bookings_Form hooks in
@@ -39,7 +41,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 		global $EM_Notices, $EM_Booking, $EM_Event, $wpdb;
 		//Check if manual payment has been added
 		if( !empty($_REQUEST['booking_id']) && !empty($_REQUEST['action']) && !empty($_REQUEST['_wpnonce'])){
-			$EM_Booking = new EM_Booking($_REQUEST['booking_id']);
+			$EM_Booking = em_get_booking($_REQUEST['booking_id']);
 			if( $_REQUEST['action'] == 'gateway_add_payment' && is_object($EM_Booking) && wp_verify_nonce($_REQUEST['_wpnonce'], 'gateway_add_payment') ){
 				if( !empty($_REQUEST['transaction_total_amount']) && is_numeric($_REQUEST['transaction_total_amount']) ){
 					$this->record_transaction($EM_Booking, $_REQUEST['transaction_total_amount'], get_option('dbem_bookings_currency'), current_time('mysql'), '', 'Completed', $_REQUEST['transaction_note']);
@@ -259,7 +261,8 @@ class EM_Gateway_Offline extends EM_Gateway {
 	}
 	
 	/**
-	 * Triggered by the em_booking_add_yourgateway action, modifies the booking status if the event isn't free and also adds a filter to modify user feedback returned.
+	 * Modifies the booking status if the event isn't free and also adds a filter to modify user feedback returned.
+	 * Triggered by the em_booking_add_yourgateway action.
 	 * @param EM_Event $EM_Event
 	 * @param EM_Booking $EM_Booking
 	 * @param boolean $post_validation
@@ -281,6 +284,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	}
 	
 	/**
+	 * Hooks into the em_booking_save filter and checks whether a partial or full payment has been submitted
 	 * @param boolean $result
 	 * @param EM_Booking $EM_Booking
 	 */

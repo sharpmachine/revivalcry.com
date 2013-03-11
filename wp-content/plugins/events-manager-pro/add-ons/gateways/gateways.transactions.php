@@ -201,8 +201,13 @@ class EM_Gateways_Transactions{
 				<tr valign="middle" class="alternate">
 					<td>
 						<?php
-							$EM_Booking = new EM_Booking($transaction->booking_id);
-							echo '<a href="'.$EM_Booking->get_event()->get_bookings_url().'">'.$EM_Booking->get_event()->event_name.'</a>';
+							$EM_Booking = em_get_booking($transaction->booking_id);
+							if( get_class($EM_Booking) == 'EM_Multiple_Booking' ){
+								$link = em_add_get_params($EM_Booking->get_admin_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null));
+								echo '<a href="'.$EM_Booking->get_admin_url().'">'.__('Multiple Events','em-pro').'</a>';
+							}else{
+								echo '<a href="'.$EM_Booking->get_event()->get_bookings_url().'">'.$EM_Booking->get_event()->event_name.'</a>';
+							}
 						?>
 					</td>
 					<td>
@@ -287,7 +292,7 @@ class EM_Gateways_Transactions{
 		$conditions = array();
 		$table = EM_BOOKINGS_TABLE;
 		//we can determine what to search for, based on if certain variables are set.
-		if( is_object($context) && get_class($context)=="EM_Booking" && $context->can_manage('manage_bookings','manage_others_bookings') ){
+		if( is_object($context) && (get_class($context)=="EM_Booking" || get_class($context)=="EM_Multiple_Booking" ) && $context->can_manage('manage_bookings','manage_others_bookings') ){
 			$conditions[] = "tx.booking_id = ".$context->booking_id;
 		}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
 			$join = " JOIN $table ON $table.booking_id=tx.booking_id";	
@@ -368,7 +373,7 @@ function emp_transactions_init(){
 		global $wpdb;
 		$booking_id = $wpdb->get_var('SELECT booking_id FROM '.EM_TRANSACTIONS_TABLE." WHERE transaction_id='".$_REQUEST['txn_id']."'");
 		if( !empty($booking_id) ){
-			$EM_Booking = new EM_Booking($booking_id);
+			$EM_Booking = em_get_booking($booking_id);
 			if( (!empty($EM_Booking->booking_id) && $EM_Booking->can_manage()) || is_super_admin() ){
 				//all good, delete it
 				$wpdb->query('DELETE FROM '.EM_TRANSACTIONS_TABLE." WHERE transaction_id='".$_REQUEST['txn_id']."'");

@@ -36,6 +36,12 @@ class EM_Gateway {
 	 */
 	var $button_enabled = false;
 	/**
+	 * If your gateway is compatible with our Multiple Bookings Mode, then you can set this to true, otherwise your gateway won't be available for booking in this mode.
+	 *  
+	 * @var boolean
+	 */
+	var $supports_multiple_bookings = false;	
+	/**
 	 * Some external gateways (e.g. PayPal IPNs) return information back to your site about payments, which allow you to automatically track refunds made outside Events Manager.
 	 * If you enable this to true, be sure to add an overriding handle_payment_return function to deal with the information sent by your gateway.
 	 * @var unknown_type
@@ -86,6 +92,7 @@ class EM_Gateway {
 	function booking_add($EM_Event,$EM_Booking, $post_validation = false){
 		global $wpdb, $wp_rewrite, $EM_Notices;
 		add_filter('em_action_booking_add',array(&$this, 'booking_form_feedback'),1,2);//modify the payment return
+		add_filter('em_action_emp_checkout',array(&$this, 'booking_form_feedback'),1,2);//modify the payment return
 		if( $EM_Booking->get_price() > 0 ){
 			$EM_Booking->booking_status = $this->status; //status 4 = awaiting online payment
 		}
@@ -361,7 +368,12 @@ class EM_Gateway {
 	function is_active() {
 		global $EM_Pro;
 		$active = get_option('em_payment_gateways', array());
-		return array_key_exists($this->gateway, $active);
+		$is_active = array_key_exists($this->gateway, $active);
+		if( get_option('dbem_multiple_bookings') ){
+			return $is_active && $this->supports_multiple_bookings;
+		}else{
+			return $is_active;			
+		}
 	}
 
 	/**

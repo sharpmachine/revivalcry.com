@@ -45,9 +45,13 @@ class EM_Attendee_Form extends EM_Form {
     	return true;
     }
     
+    /* 
+     * Overrides default method by search/replacing a specific string of text located in the input field name - [%n] - which represents the number of the attendee for that ticket
+     * @see EM_Form::output_field_input()
+     */
     function output_field_input($field, $post=true){
         $output = parent::output_field_input($field, $post);
-    	if( in_array($field['type'], array('radio','checkboxes')) && $this->attendee_number !== false ){
+    	if( in_array($field['type'], array('radio','checkboxes','multiselect')) && is_numeric($this->attendee_number) ){
     	    $output = str_replace('[%n]', '['.$this->attendee_number.']', $output);
     	}
     	return $output;

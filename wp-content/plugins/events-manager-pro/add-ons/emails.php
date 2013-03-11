@@ -167,7 +167,7 @@ class EM_Emails {
 	    global $save_button;
 	    ?>
 		<div  class="postbox " >
-		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e ( 'Event Email Reminders', 'em-pro' ); ?> <em>(Beta)</em></span></h3>
+		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><?php _e ( 'Event Email Reminders', 'em-pro' ); ?></h3>
 		<div class="inside">
 			<table class='form-table'>
 				<tr><td colspan='2'>

@@ -1,4 +1,5 @@
 jQuery(document).ready(function($){
+	//offline approval link
 	$(document).delegate('.em-bookings-approve-offline', 'click', function(e){
 		if( !confirm(EM.offline_confirm) ){
 			e.stopPropagation();

@@ -12,7 +12,7 @@ class EM_Attendees_Form {
 	
 	function init(){
 		//Menu/admin page
-		if( current_user_can('activate_plugins') ){
+		if( is_admin() && current_user_can('list_users') ){
 			add_action('admin_init',array('EM_Attendees_Form', 'admin_page_actions'), 10);
 			add_action('emp_forms_admin_page',array('EM_Attendees_Form', 'admin_page'),11);
 		}
@@ -28,7 +28,7 @@ class EM_Attendees_Form {
 			add_action('em_gateway_js', array('EM_Attendees_Form','js'),10,2);
 			add_action('em_booking_form_ticket_spaces', array('EM_Attendees_Form','ticket_form'),1,1);
 			add_action('em_booking_form_tickets_loop_footer', array('EM_Attendees_Form','tickets_form'),1,1); 
-			//Booking interception
+			//Booking interception - will not trigger on multi-booking checkout
 			add_filter('em_booking_get_post', array('EM_Attendees_Form', 'em_booking_get_post'), 2, 2); //get post data + validate
 			add_filter('em_booking_validate', array('EM_Attendees_Form', 'em_booking_validate'), 2, 2); //validate object
 			//Placeholder overriding	
@@ -73,7 +73,7 @@ class EM_Attendees_Form {
 			foreach(self::$form->form_fields as $field_id => $form_data){
 			    if( $form_data['type'] == 'date' || $form_data['type'] == 'time'){
 					self::$form->form_fields[$field_id]['name'] = "em_attendee_fields[%T][$field_id][%s][]";
-			    }elseif( $form_data['type'] == 'radio' || $form_data['type'] == 'checkboxes' ){
+			    }elseif( in_array($form_data['type'], array('radio','checkboxes','multiselect')) ){
 			        self::$form->form_fields[$field_id]['name'] = "em_attendee_fields[%T][$field_id][%n]";
 			    }else{
 					self::$form->form_fields[$field_id]['name'] = "em_attendee_fields[%T][$field_id][]";
@@ -130,13 +130,57 @@ class EM_Attendees_Form {
 		foreach($form->form_fields as $field_id => $form_data){
 		    if( $form_data['type'] == 'date' || $form_data['type'] == 'time'){
 				$form->form_fields[$field_id]['name'] = "em_attendee_fields[".$EM_Ticket->ticket_id."][$field_id][%s][]";
-		    }elseif( $form_data['type'] == 'radio' || $form_data['type'] == 'checkboxes' ){
+		    }elseif( in_array($form_data['type'], array('radio','checkboxes','multiselect')) ){
 			    $form->form_fields[$field_id]['name'] = "em_attendee_fields[".$EM_Ticket->ticket_id."][$field_id][%n]";
 			}else{
 				$form->form_fields[$field_id]['name'] = "em_attendee_fields[".$EM_Ticket->ticket_id."][$field_id][]";
 		    }
 		}
 		return $form;
+	}
+	
+	/**
+	 * Returns a formatted multi-dimensional associative array of attendee information for a specific booking, split by ticket > attendee > attendee data.
+	 * example : array('ticket_id' => array('Attendee 1' => array('Label'=>'Value', 'Label 2'=>'Value 2'), 'Attendee 2' => array(...)...)...);
+	 * @param EM_Booking $EM_Booking
+	 */
+	public static function get_booking_attendees( $EM_Booking ){
+		$attendee_data = array();
+		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){
+			//Display ticket info
+			if( !empty($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) && is_array($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ){
+			    $EM_Ticket_Booking->booking = $EM_Booking; //avoid extra loading in sub-function
+			    $attendee_data[$EM_Ticket_Booking->ticket_id] = self::get_ticket_attendees($EM_Ticket_Booking);
+			}
+		}
+		return $attendee_data;
+	}
+	
+	/**
+	 * Returns a formatted multi-dimensional associative array of attendee information for a specific booking ticket.
+	 * example : array('Attendee 1' => array('Label'=>'Value', 'Label 2'=>'Value 2'), 'Attendee 2' => array(...)...);
+	 * @param EM_Ticket_Booking $EM_Ticket_Booking
+	 */
+	public static function get_ticket_attendees( $EM_Ticket_Booking ){
+	    $attendees = array();
+    	$EM_Form = EM_Attendees_Form::get_form($EM_Booking->event_id); //can be repeated since object is stored temporarily
+		$i = 1; //counter
+    	foreach( $EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id] as $field_values ){
+    		$EM_Form->field_values = $field_values;
+    		//backward compatibility for old booking forms and saved comments
+    		if( empty($EM_Form->field_values['booking_comment']) && !empty($EM_Booking->booking_comment) ){ $EM_Form->field_values['booking_comment'] = $EM_Booking->booking_comment; }
+    		//output the field values
+    		$key = sprintf(__('Attendee %s','em-pro'), $i);
+    		$attendees[$key] = array();
+    		foreach( $EM_Form->form_fields as $fieldid => $field){
+    			if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
+    				$field_value = (isset($EM_Form->field_values[$fieldid])) ? $EM_Form->field_values[$fieldid]:'n/a';
+    				$attendees[$key][$field['label']] = $EM_Form->get_formatted_value($field, $field_value);
+    			}
+    		}
+    		$i++;
+	    }
+	    return $attendees;
 	}
 	
 	/**
@@ -327,24 +371,17 @@ class EM_Attendees_Form {
 				foreach( $EM_Bookings->bookings as $EM_Booking ) {
 					/* @var $EM_Booking EM_Booking */
 					/* @var $EM_Ticket_Booking EM_Ticket_Booking */
-					$EM_Form = self::get_form($EM_Booking->event_id);
+					$attendees_data = self::get_booking_attendees($EM_Booking);
 					foreach($EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking){
 						$orig_row = $EM_Bookings_Table->get_row_csv($EM_Ticket_Booking);
-						for( $i = 0; $i < $EM_Ticket_Booking->ticket_booking_spaces; $i++ ){
-							$row = $orig_row;
-							if( isset($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i]) ){ //unlike post values each attendee has an array within the array of a ticket attendee info
-								$EM_Form->field_values = $EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i];
-								$EM_Form->errors = array();
-								//backward compatibility for old booking forms and saved comments
-								if( empty($EM_Form->field_values['booking_comment']) && !empty($EM_Booking->booking_comment) ){ $EM_Form->field_values['booking_comment'] = $EM_Booking->booking_comment; }
-								foreach( $EM_Form->form_fields as $fieldid => $field){
-									if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
-										$field_value = (isset($EM_Form->field_values[$fieldid])) ? $EM_Form->field_values[$fieldid]:'n/a';
-										$row[] = $EM_Form->get_formatted_value($field, $field_value);
-									}
+						if( !empty($attendees_data[$EM_Ticket_Booking->ticket_id]) ){ 
+							foreach($attendees_data[$EM_Ticket_Booking->ticket_id] as $attendee_title => $attendee_data){
+								$row = $orig_row;
+								foreach( $attendee_data as $field_value){
+									$row[] = $field_value;
 								}
+								fputcsv($handle, $row);
 							}
-							fputcsv($handle, $row);
 						}
 					}
 				}
@@ -408,43 +445,39 @@ class EM_Attendees_Form {
 					<div class="em-attendee-details" id="em-attendee-details-<?php echo $EM_Ticket->ticket_id; ?>" <?php if( empty($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ) echo 'style="display:none;"'?>>
 						<div class="em-attendee-fieldset">
 							<?php
-							for( $i = 0; $i < $EM_Ticket_Booking->ticket_booking_spaces; $i++ ){
-								if( isset($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i]) ){ //unlike post values each attendee has an array within the array of a ticket attendee info
-									$EM_Form->field_values = $EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i];
-									$EM_Form->errors = array();
-									//backward compatibility for old booking forms and saved comments
-									if( empty($EM_Form->field_values['booking_comment']) && !empty($EM_Booking->booking_comment) ){ $EM_Form->field_values['booking_comment'] = $EM_Booking->booking_comment; }
-									//output the field values
-									?>
-									<div class="em-booking-single-info">
-										<h4><?php echo sprintf(__('Attendee %s','em-pro'), $i+1); ?></h4>
-										<?php
-										foreach( $EM_Form->form_fields as $fieldid => $field){
-											if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
-												$field_value = (isset($EM_Form->field_values[$fieldid])) ? $EM_Form->field_values[$fieldid]:'n/a';
-												?>
-												<p>
-													<label><?php echo $field['label'] ?></label>
-													<span><?php echo $EM_Form->get_formatted_value($field, $field_value); ?></span>
-												</p>
-												<?php
-											}
-										}
-										?>
-									</div>
-									<?php
-									//output fields form
-									?>
-									<div class="em-attendee-fields em-booking-single-edit">
-										<h4><?php echo sprintf(__('Attendee %s','em-pro'), $i+1); ?></h4>
-										<?php self::admin_form($EM_Form, $EM_Ticket_Booking->ticket_id); ?>
-									</div>
-									<?php
+							//output the field values
+							$attendees_data = self::get_ticket_attendees($EM_Ticket_Booking);
+							$attendee_index = 0;
+							foreach($attendees_data as $attendee_title => $attendee_data){
+								//preload the form object with this attendee information
+								if( !empty($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$attendee_index]) ){
+									$EM_Form->field_values = $EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$attendee_index];
+									$EM_Form->attendee_number = $attendee_index;
 								}
+								?>
+								<div class="em-booking-single-info">
+									<h4><?php echo $attendee_title; ?></h4>
+									<?php foreach( $attendee_data as $attendee_label => $attendee_value): ?>
+									<p>
+										<label><?php echo $attendee_label ?></label>
+										<span><?php echo $attendee_value; ?></span>
+									</p>
+									<?php endforeach; ?>
+								</div>
+								<?php
+								//output fields form
+								?>
+								<div class="em-attendee-fields em-booking-single-edit">
+									<h4><?php echo $attendee_title; ?></h4>
+									<?php self::admin_form($EM_Form, $EM_Ticket_Booking->ticket_id); ?>
+								</div>
+								<?php
+								$attendee_index++;
 							}
 							//reset form fields to blank for template
 							$EM_Form->field_values = array();
 							$EM_Form->errors = array();
+							$EM_Form->attendee_number = false;
 							?>
 						</div>
 						<div class="em-attendee-fields-template" style="display:none;">
@@ -452,7 +485,8 @@ class EM_Attendees_Form {
 							<?php self::admin_form($EM_Form, $EM_Ticket_Booking->ticket_id); ?>
 						</div>
 					</div>
-				</td></tr>
+				</td>
+				</tr>
 				<?php
 			}
 		}
@@ -488,16 +522,22 @@ class EM_Attendees_Form {
 	 * @param int $ticket_id
 	 */
 	function admin_form( $EM_Form, $ticket_id ){
+		?>
+		<table class="em-form-fields" cellspacing="0" cellpadding="0">
+		<?php
 		foreach( $EM_Form->form_fields as $fieldid => $field){
 			if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
 				?>
-				<p class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
-					<label><?php echo $field['label'] ?></label>
-					<?php echo str_replace('%T', $ticket_id, $EM_Form->output_field_input($field, $EM_Form->field_values[$fieldid])); ?>
-				</p>
+				<tr class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
+					<th><?php echo $field['label'] ?></th>
+					<td><?php echo str_replace('%T', $ticket_id, $EM_Form->output_field_input($field, $EM_Form->field_values[$fieldid])); ?></td>
+				</tr>
 				<?php
 			}
 		}
+		?>
+		</table>
+		<?php
 	}
 	
 	/**
@@ -562,35 +602,9 @@ class EM_Attendees_Form {
 			$EM_Form = self::get_form($EM_Booking->event_id);
 			if( $full_result == '#_BOOKINGATTENDEES' ){
 				$replace = '';
-				//if you want to mess with these values, intercept the em_bookings_single_custom action instead
-				$EM_Tickets_Bookings = $EM_Booking->get_tickets_bookings();
-				foreach( $EM_Booking->get_tickets()->tickets as $EM_Ticket ){
-					if( !empty($EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id]) ){
-						$EM_Ticket_Booking = $EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id];
-						$EM_Form = self::get_form($EM_Booking->event_id);
-						//Display ticket info
-						$replace .= "\r\n". __('Ticket','em-pro').' - '. $EM_Ticket->ticket_name ."\r\n". '==============================';
-						//display a row for each space booked on this ticket
-						for( $i = 0; $i < $EM_Ticket_Booking->ticket_booking_spaces; $i++ ){
-							if( isset($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i]) ){ //unlike post values each attendee has an array within the array of a ticket attendee info
-								$EM_Form->field_values = $EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i];
-								$EM_Form->errors = array();
-								//backward compatibility for old booking forms and saved comments
-								if( empty($EM_Form->field_values['booking_comment']) && !empty($EM_Booking->booking_comment) ){ $EM_Form->field_values['booking_comment'] = $EM_Booking->booking_comment; }
-								//output the field values
-								$replace .= "\r\n". sprintf(__('Attendee %s','em-pro'), $i+1) ."\r\n". '---------------------------------';
-								foreach( $EM_Form->form_fields as $fieldid => $field){
-									if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
-										$replace .= "\r\n". $field['label'] .': ';
-										$field_value = (isset($EM_Form->field_values[$fieldid])) ? $EM_Form->field_values[$fieldid]:'n/a';
-										$replace .= $EM_Form->get_formatted_value($field, $field_value);
-									}
-								}
-								$replace .= "\r\n";
-							}
-						}
-					}
-				}
+				ob_start();
+				emp_locate_template('placeholders/bookingattendees.php', true, array('EM_Booking'=>$EM_Booking));
+				$replace = ob_get_clean();
 			}
 		}
 		return $replace; //no need for a filter, use the em_booking_email_placeholders filter

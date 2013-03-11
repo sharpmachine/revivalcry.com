@@ -7,6 +7,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 	var $status = 4;
 	var $status_txt = 'Processing (Authorize.net AIM)';
 	var $button_enabled = false; //we can's use a button here
+	var $supports_multiple_bookings = true;
 
 	var $registered_timer = 0;
 	/**
@@ -60,7 +61,11 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 		$this->registered_timer = current_time('timestamp', 1);
 		parent::booking_add($EM_Event, $EM_Booking, $post_validation);
 		if( $post_validation && empty($EM_Booking->booking_id) ){
-			add_filter('em_booking_save', array(&$this, 'em_booking_save'),2,2);
+			if( get_option('dbem_multiple_bookings') && get_class($EM_Booking) == 'EM_Multiple_Booking' ){
+		    	add_filter('em_multiple_booking_save', array(&$this, 'em_booking_save'),2,2);			    
+			}else{
+		    	add_filter('em_booking_save', array(&$this, 'em_booking_save'),2,2);
+			}		    	
 		}
 	}
 	
@@ -89,8 +94,13 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 						//delete the user we just created, only if created after em_booking_add filter is called (which is when a new user for this booking would be created)
 						$EM_Person = $EM_Booking->get_person();
 						if( strtotime($EM_Person->data->user_registered) >= $this->registered_timer ){
-							include_once(ABSPATH.'/wp-admin/includes/user.php');
-							wp_delete_user($EM_Person->ID);
+							if( is_multisite() ){
+								include_once(ABSPATH.'/wp-admin/includes/ms.php');
+								wpmu_delete_user($EM_Person->ID);
+							}else{
+								include_once(ABSPATH.'/wp-admin/includes/user.php');
+								wp_delete_user($EM_Person->ID);
+							}
 							//remove email confirmation
 							global $EM_Notices;
 							$EM_Notices->notices['confirms'] = array();
@@ -148,7 +158,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
         if( !empty($_POST['x_response_code']) && $_POST['x_response_code'] == 1  && $is_authorizenet ){
         	if( $_POST['x_type'] == 'credit' ){
         		//Since credit has another txn id we can find a booking by invoice number / booking id and cancel the booking, record new txn.
-        		$EM_Booking = new EM_Booking($_POST['x_invoice_num']);
+        		$EM_Booking = em_get_booking($_POST['x_invoice_num']);
 	        	if( !empty($EM_Booking->booking_id) ){
 	        		$EM_Booking->cancel();
 	        		$amount = $amount * -1;
@@ -161,7 +171,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 	        	//Find the transaction and booking, void the transaction, cancel the booking.
 	        	$txn = $wpdb->get_row( $wpdb->prepare( "SELECT transaction_id, transaction_gateway_id, transaction_total_amount, booking_id FROM ".EM_TRANSACTIONS_TABLE." WHERE transaction_gateway_id = %s AND transaction_gateway = %s ORDER BY transaction_total_amount DESC LIMIT 1", $_POST['x_trans_id'], $this->gateway ), ARRAY_A );
 	        	if( is_array($txn) && $txn['transaction_gateway_id'] == $_POST['x_trans_id'] && !empty($txn['booking_id']) ){
-	        		$EM_Booking = new EM_Booking($txn['booking_id']);
+	        		$EM_Booking = em_get_booking($txn['booking_id']);
 	        		$EM_Booking->cancel();
 	        		$wpdb->update(EM_TRANSACTIONS_TABLE, array('transaction_status'=>__('Voided','em-pro'),'transaction_timestamp'=>current_time('mysql')), array('transaction_id'=>$txn['transaction_id']));
 	        		echo "Transaction Processed";

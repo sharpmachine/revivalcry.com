@@ -7,6 +7,7 @@ function emp_install() {
 	 	emp_create_transactions_table();
 		emp_create_coupons_table(); 
 		emp_create_reminders_table();
+		emp_create_bookings_relationships_table();
 		emp_add_options();
 		
 		//Upate Version	
@@ -112,8 +113,22 @@ function emp_create_reminders_table(){
 		  PRIMARY KEY  (queue_id)
 		) DEFAULT CHARSET=utf8 ;";
 	dbDelta($sql);
-	$array = array('coupon_owner','coupon_code');
 	emp_sort_out_table_nu_keys($table_name,array('event_id','booking_id'));
+}
+
+function emp_create_bookings_relationships_table(){
+	global  $wpdb;
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php'); 
+    $table_name = $wpdb->prefix.'em_bookings_relationships';
+	$sql = "CREATE TABLE ".$table_name." (
+		  booking_relationship_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+		  event_id bigint(20) unsigned DEFAULT NULL,
+		  booking_id bigint(20) unsigned DEFAULT NULL,
+		  booking_main_id bigint(20) unsigned DEFAULT NULL,
+		  PRIMARY KEY  (booking_relationship_id)
+		) DEFAULT CHARSET=utf8 ;";
+	dbDelta($sql);
+	emp_sort_out_table_nu_keys($table_name,array('event_id','booking_id','booking_main_id'));
 }
 
 function emp_add_options() {
@@ -171,12 +186,41 @@ function emp_add_options() {
 	//email reminders
 	add_option('dbem_cron_emails', 0);
 	add_option('dbem_emp_emails_reminder_subject', 'Reminder - #_EVENTNAME');
-	$email_footer = __('<br/><br/>-------------------------------<br/>Powered by Events Manager - http://wp-events-plugin.com','dbem');
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br/>This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br/>When : #_EVENTDATES @ #_EVENTTIMES<br/>Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br/>We look forward to seeing you there!<br/>Yours faithfully,<br/>#_CONTACTNAME",'dbem').$email_footer;
-	add_option('dbem_emp_emails_reminder_body', str_replace("<br/>", "\n\r", $respondent_email_body_localizable));
+	$email_footer = __('<br /><br />-------------------------------<br />Powered by Events Manager - http://wp-events-plugin.com','dbem');
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br />When : #_EVENTDATES @ #_EVENTTIMES<br />Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br />We look forward to seeing you there!<br />Yours faithfully,<br />#_CONTACTNAME",'dbem').$email_footer;
+	add_option('dbem_emp_emails_reminder_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	add_option('dbem_emp_emails_reminder_time', '12:00 AM');
 	add_option('dbem_emp_emails_reminder_days', 1);	
 	add_option('dbem_emp_emails_reminder_ical', 1);
+	//multiple bookings
+	add_option('dbem_multiple_bookings_feedback_added', __('Your booking was added to your shopping cart.'));
+	add_option('dbem_multiple_bookings_feedback_already_added', __('You have already booked a spot at this eventin your cart, please modify or delete your current booking.'));
+	add_option('dbem_multiple_bookings_feedback_no_bookings', __('You have not booked any events yet. Your cart is empty.','em-pro'));
+	add_option('dbem_multiple_bookings_feedback_loading_cart', __('Loading Cart Contents...','em-pro'));	
+	//multiple bookings - emails
+	add_option('dbem_multiple_bookings_contact_email_subject', __('New Booking','em-pro'));
+	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has made a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_contact_email_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	
+	add_option('dbem_multiple_bookings_contact__email_cancelled_subject', __('Booking Cancelled','em-pro'));
+	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has cancelled a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_contact__email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	
+	add_option('dbem_multiple_bookings_email_confirmed_subject', __('Booking Confirmed','em-pro'));
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking has been confirmed. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY <br />We look forward to seeing you there!",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_email_confirmed_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	
+	add_option('dbem_multiple_bookings_email_pending_subject', __('Booking Pending','em-pro'));
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking is currently pending approval by our administrators. Once approved you will receive another confirmation email. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_email_pending_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	
+	add_option('dbem_multiple_bookings_email_rejected_subject', __('Booking Rejected','em-pro'));
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been rejected. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_email_rejected_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	
+	add_option('dbem_multiple_bookings_email_cancelled_subject', __('Booking Cancelled','em-pro'));
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been cancelled. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	add_option('dbem_multiple_bookings_email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	//Version updates
 	if( get_option('em_pro_version') ){ //upgrade, so do any specific version updates

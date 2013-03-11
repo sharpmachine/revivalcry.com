@@ -6,18 +6,24 @@ class EM_Coupons extends EM_Object {
 		//coupon admin select page
 		//coupon admin add/edit page
 		add_action('em_create_events_submenu',array('EM_Coupons', 'admin_menu'),10,1);
-		//meta box hook for adding coupons to booking info
-		add_action('em_events_admin_bookings_footer',array('EM_Coupons', 'admin_meta_box'),10,1);
-		add_action('em_event',array('EM_Coupons', 'em_event'),10,1);
-		add_filter('em_event_get_post',array('EM_Coupons', 'em_event_get_post'),10,2);
-		add_filter('em_event_save_meta',array('EM_Coupons', 'em_event_save_meta'),10,2);
 		//add field to booking form and ajax
-		add_action('em_booking_form_footer', array('EM_Coupons', 'em_booking_form_footer'),1,2);
-		//hook into booking submission to add discount and coupon info
-		add_filter('em_booking_get_post', array('EM_Coupons', 'em_booking_get_post'), 10, 2);
-		add_filter('em_booking_validate', array('EM_Coupons', 'em_booking_validate'), 10, 2);
-		add_filter('em_booking_save', array('EM_Coupons', 'em_booking_save'), 10, 2);
-		add_filter('em_booking_output_placeholder',array('EM_Coupons','placeholders'),1,3); //for emails
+		if( get_option('dbem_multiple_bookings') ){ //multiple bookings mode
+		    //add coupon field to checkout page booking form
+		    
+		}else{ //normal mode
+		    //add to any booking form
+			add_action('em_booking_form_footer', array('EM_Coupons', 'em_booking_form_footer'),1,2);
+			//meta box hook for adding coupons to booking info
+			add_action('em_events_admin_bookings_footer',array('EM_Coupons', 'admin_meta_box'),10,1);
+			add_action('em_event',array('EM_Coupons', 'em_event'),10,1);
+			add_filter('em_event_get_post',array('EM_Coupons', 'em_event_get_post'),10,2);
+			add_filter('em_event_save_meta',array('EM_Coupons', 'em_event_save_meta'),10,2);
+			//hook into booking submission to add discount and coupon info
+			add_filter('em_booking_get_post', array('EM_Coupons', 'em_booking_get_post'), 10, 2);
+			add_filter('em_booking_validate', array('EM_Coupons', 'em_booking_validate'), 10, 2);
+			add_filter('em_booking_save', array('EM_Coupons', 'em_booking_save'), 10, 2);
+		}
+		add_filter('em_booking_output_placeholder',array('EM_Coupons','placeholders'),1,3); //for email
 		//hook into paypal gateway
 		add_filter('em_gateway_paypal_get_paypal_vars', array('EM_Coupons', 'paypal_vars'), 10, 2);
 		//hook into price calculator
@@ -586,7 +592,7 @@ class EM_Coupons extends EM_Object {
 		$bookings_count = 0;
 		$EM_Bookings = array();
 		foreach($bookings as $booking_id){ 
-			$EM_Booking = new EM_Booking($booking_id);
+			$EM_Booking = em_get_booking($booking_id);
 			if( !empty($EM_Booking->booking_meta['coupon']) ){
 				$coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 				if($EM_Coupon->coupon_code == $coupon->coupon_code && $EM_Coupon->coupon_id == $coupon->coupon_id){

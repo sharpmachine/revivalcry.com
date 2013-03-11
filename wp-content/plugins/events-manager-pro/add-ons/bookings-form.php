@@ -6,6 +6,7 @@ class EM_Booking_Form {
 	 */
 	static $form;
 	static $form_id;
+	static $event_id;
 	static $form_name;
 	static $form_template;
 	
@@ -21,14 +22,21 @@ class EM_Booking_Form {
 		add_filter('em_bookings_table_rows_col', array('EM_Booking_Form','em_bookings_table_rows_col'),10,5);
 		add_filter('em_bookings_table_cols_template', array('EM_Booking_Form','em_bookings_table_cols_template'),10,2);
 		// Actions and Filters
-		add_filter('em_booking_form_custom', array('EM_Booking_Form','booking_form'),10,2); //handle the booking form template
+		add_action('em_booking_form_custom', array('EM_Booking_Form','booking_form'),10,1); //handle the booking form template
 		//Booking interception
-		//add_filter('em_booking_add', array('EM_Booking_Form', 'em_booking_add'), 1, 2); //called only when bookin is added
 		$booking_button_request = !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_add_one' && is_user_logged_in(); //in order to disable the form if booking button is pressed
 		if( !$booking_button_request ){
+			if( get_option('dbem_multiple_bookings') ){
+				//Mulitiple Booking Mode
+				add_filter('em_multiple_booking_get_post', array('EM_Booking_Form', 'em_booking_get_post'), 10, 2); //get post data + validate
+				add_filter('em_multiple_booking_validate', array('EM_Booking_Form', 'em_booking_validate'), 10, 2); //validate object
+			    add_filter('em_multiple_booking_save', array('EM_Booking_Form', 'em_booking_save'), 1, 2); //add new user fields to current EM_Person instance for use on this run
+			}else{
+			    //Normal bookings
+			    add_filter('em_booking_save', array('EM_Booking_Form', 'em_booking_save'), 1, 2); //add new user fields to current EM_Person instance for use on this run
+			}
 			add_filter('em_booking_get_post', array('EM_Booking_Form', 'em_booking_get_post'), 10, 2); //get post data + validate
 			add_filter('em_booking_validate', array('EM_Booking_Form', 'em_booking_validate'), 10, 2); //validate object
-			add_filter('em_booking_save', array('EM_Booking_Form', 'em_booking_save'), 1, 2); //add new user fields to current EM_Person instance for use on this run
 			add_filter('em_bookings_add', array('EM_Booking_Form', 'em_bookings_add'), 10, 2); //add extra use reg data
 			add_filter('em_register_new_user_pre', array('EM_Booking_Form', 'em_register_new_user_pre'), 10, 1); //add extra use reg data
 		}
@@ -54,12 +62,17 @@ class EM_Booking_Form {
 	/**
 	 * @param EM_Booking $EM_Booking
 	 */
-	function get_form($EM_Event = false){
-		if( empty(self::$form) ){
+	function get_form($EM_Event = false, $custom_form_id = false){
+	    //special lookup for multiple bookings
+	    if( is_object($custom_form_id) && get_class($custom_form_id) == 'EM_Multiple_Booking' ){ $custom_form_id = get_option('dbem_muliple_bookings_form'); }
+	    //make sure we don't need to get another form rather than the one already stored in this object
+	    $reload = (is_numeric($EM_Event) && $EM_Event != self::$event_id) || ( !empty($EM_Event->event_id) && $EM_Event->event_id != self::$event_id ) || ( empty($EM_Event) && $custom_form_id != self::$event_id );
+	    //get the right form
+		if( empty(self::$form) || $reload ){
 			global $wpdb;
 			if(is_numeric($EM_Event)){ $EM_Event = em_get_event($EM_Event); }
-			$custom_form_id = ( !empty($EM_Event->post_id) ) ? get_post_meta($EM_Event->post_id, '_custom_booking_form', true):0;
-			$form_id = empty($custom_form_id) ? get_option('em_booking_form_fields') : $custom_form_id;
+			$custom_form_id = ( !empty($EM_Event->post_id) ) ? get_post_meta($EM_Event->post_id, '_custom_booking_form', true):$custom_form_id;
+			$form_id = !empty($custom_form_id) && is_numeric($custom_form_id) ? $custom_form_id:get_option('em_booking_form_fields');
 			$sql = $wpdb->prepare("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'booking-form' AND meta_id=%d", $form_id);
 			$form_data_row = $wpdb->get_row($sql, ARRAY_A);
 			if( empty($form_data_row) ){
@@ -70,6 +83,7 @@ class EM_Booking_Form {
 				self::$form_id = $form_data_row['meta_id'];
 				self::$form_name = $form_data['name'];
 			}
+			self::$event_id = !empty($EM_Event) ? $EM_Event->event_id:false;
 			self::$form = new EM_Form($form_data['form'], 'em_bookings_form');
 			self::$form->form_required_error = get_option('em_booking_form_error_required');
 		}
@@ -128,7 +142,7 @@ class EM_Booking_Form {
 	 */
 	function em_booking_get_post($result, $EM_Booking){
 		//get, store and validate post data 
-		$EM_Form = self::get_form($EM_Booking->event_id);				
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);				
 		if( $EM_Form->get_post() ){
 			foreach($EM_Form->get_values() as $fieldid => $value){
 				if($fieldid == 'user_password'){
@@ -146,7 +160,6 @@ class EM_Booking_Form {
 					}
 				}
 			}
-			$result = $result && true;
 		}elseif( count($EM_Form->get_errors()) > 0 ){
 			$result = false;
 			$EM_Booking->add_error($EM_Form->get_errors());
@@ -160,10 +173,21 @@ class EM_Booking_Form {
 	 * @return boolean
 	 */
 	function em_booking_validate($result, $EM_Booking){
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		if( !empty($EM_Booking->booking_id) ){
 		    //no validation of user fields for current bookings
 		    add_filter('option_dbem_emp_booking_form_reg_input', create_function('','return false;'));
+		}
+		if( empty($EM_Form->field_values) ){
+		    //in the event we're validating a booking that wasn't retrieved by post, with booking meta
+		    $values = array();
+		    if( !empty($EM_Booking->booking_meta['booking']) ){
+		        $values = $EM_Booking->booking_meta['booking'];
+		    }
+		    if( !empty($EM_Booking->booking_meta['registration']) ){
+		    	$values = array_merge($values, $EM_Booking->booking_meta['registration']);
+		    }
+		    $EM_Form->field_values = $values;
 		}
 		if( !$EM_Form->validate() ){
 		    $EM_Booking->add_error($EM_Form->get_errors());
@@ -173,7 +197,7 @@ class EM_Booking_Form {
 	}
 	
 	function em_booking_save($result, $EM_Booking){
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) && (!is_user_logged_in() || (defined('EM_FORCE_REGISTRATION') && EM_FORCE_REGISTRAION)) ){
 			//assign the common registration fields to person object in case used in this instance
 			foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field_value){
@@ -187,7 +211,7 @@ class EM_Booking_Form {
 	}
 	
 	function em_bookings_add($result, $EM_Booking){
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) &&  (!get_option('dbem_bookings_registration_disable') || is_user_logged_in()) ){
 			$user_data = array();
 			foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field_value){
@@ -211,7 +235,7 @@ class EM_Booking_Form {
 	function placeholders($replace, $EM_Booking, $full_result){
 		if( empty($replace) || $replace == $full_result ){
 			$user = $EM_Booking->get_person();
-			$EM_Form = self::get_form($EM_Booking->event_id);
+			$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 			if( $full_result == '#_BOOKINGFORMCUSTOMREG{user_name}' || $full_result == '#_BOOKINGFORMCUSTOM{user_name}' ){
 				//special user_name case
 				if( !is_user_logged_in() ){
@@ -266,7 +290,7 @@ class EM_Booking_Form {
 	function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
 		global $EM_Event;
 		$event_id = (!empty($EM_Booking->get_event()->event_id) && !empty($EM_Event->event_id) && $EM_Event->event_id == $EM_Booking->get_event()->event_id ) ? $EM_Event->event_id:false;
-		$EM_Form = self::get_form($event_id);
+		$EM_Form = self::get_form($event_id, $EM_Booking);
 		if( array_key_exists($col, $EM_Form->form_fields) ){
 			$field = $EM_Form->form_fields[$col];
 			$value = get_user_meta($EM_Booking->get_person()->ID, $col, true);
@@ -301,7 +325,7 @@ class EM_Booking_Form {
 	 * @return array
 	 */
 	function em_csv_bookings_headers($headers){
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form();
 		foreach($EM_Form->form_fields as $fieldid => $field){
 			if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $fieldid != 'booking_comment' ){
 				$headers[] = $field['label']; 
@@ -316,7 +340,7 @@ class EM_Booking_Form {
 	 * @return array
 	 */	
 	function em_csv_bookings_loop_after($file, $EM_Ticket_Booking, $EM_Booking){
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		foreach($EM_Form->form_fields as $fieldid => $field){
 			if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $fieldid != 'booking_comment' ){
 				$field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
@@ -331,7 +355,7 @@ class EM_Booking_Form {
 
 	function em_bookings_single_custom( $EM_Booking ){
 		//if you want to mess with these values, intercept the em_bookings_single_custom instead
-		$EM_Form = self::get_form($EM_Booking->event_id);
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		foreach($EM_Form->form_fields as $fieldid => $field){
 			if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $field['type'] != 'html' ){
 				$input_value = $field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';

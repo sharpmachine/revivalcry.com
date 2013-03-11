@@ -8,7 +8,7 @@ class EM_Forms {
 	}
 	
 	function admin_menu($plugin_pages){
-		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Forms Editor','em-pro'),__('Forms Editor','em-pro'),'activate_plugins','events-manager-forms-editor',array('EM_Forms','admin_page'));
+		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Forms Editor','em-pro'),__('Forms Editor','em-pro'),'list_users','events-manager-forms-editor',array('EM_Forms','admin_page'));
 		return $plugin_pages; //use wp action/filters to mess with the menus
 	}
 	
@@ -24,7 +24,7 @@ class EM_Forms {
 	}
 	
 	function admin_options(){
-		if( current_user_can('activate_plugins') ){
+		if( current_user_can('list_users') ){
 		?>
 			<a name="pro-forms"></a>
 			<div  class="postbox " >
@@ -264,8 +264,14 @@ class EM_Form extends EM_Object {
 							?>
 							<p class="input-<?php echo $field['type']; ?> input-user-field">
 								<label for='<?php echo $field['fieldid'] ?>'>
-									<?php echo $field['label']. $required  ?>
-								</label> 
+									<?php if( !empty($field['options_reg_tip']) ): ?>
+										<span class="form-tip" title="<?php echo $field['options_reg_tip']; ?>">
+											<?php echo $field['label'] ?> <?php echo $required  ?>
+										</span>
+									<?php else: ?>
+										<?php echo $field['label'] ?> <?php echo $required  ?>
+									<?php endif; ?>
+								</label>
 								<input type="password" name="<?php echo $field['fieldid'] ?>" />
 							</p>
 							<?php
@@ -273,7 +279,15 @@ class EM_Form extends EM_Object {
 							//registration fields
 							?>
 							<p class="input-<?php echo $field['type']; ?> input-user-field">
-								<label for='<?php echo $field['fieldid'] ?>'><?php echo $field['label']. $required  ?></label> 
+								<label for='<?php echo $field['fieldid'] ?>'>
+									<?php if( !empty($field['options_reg_tip']) ): ?>
+										<span class="form-tip" title="<?php echo $field['options_reg_tip']; ?>">
+											<?php echo $field['label'] ?> <?php echo $required  ?>
+										</span>
+									<?php else: ?>
+										<?php echo $field['label'] ?> <?php echo $required  ?>
+									<?php endif; ?>
+								</label> 
 								<?php echo $this->output_field_input($field, $post); ?>
 							</p>
 							<?php	
@@ -304,10 +318,10 @@ class EM_Form extends EM_Object {
 		ob_start();
 		$default = '';
 		if($post === true && !empty($_REQUEST[$field['fieldid']])) {
-			$default = $_REQUEST[$field['fieldid']];
-			$default_html = $_REQUEST[$field['fieldid']];
+			$default = is_array($_REQUEST[$field['fieldid']]) ? $_REQUEST[$field['fieldid']]:esc_attr($_REQUEST[$field['fieldid']]);
+			$default_html = esc_attr($_REQUEST[$field['fieldid']]);
 		}elseif( $post !== true && !empty($post) ){
-			$default = esc_attr($post);
+			$default = is_array($post) ? $post:esc_attr($post);
 			$default_html = esc_attr($post);
 		}
 		$field_name = !empty($field['name']) ? $field['name']:$field['fieldid'];
@@ -753,7 +767,8 @@ class EM_Form extends EM_Object {
 
 	
 	private static function show_reg_fields(){
-		return ((!is_user_logged_in() || defined('EM_FORCE_REGISTRATION')) && get_option('dbem_bookings_anonymous')) || (is_user_logged_in() && get_option('dbem_emp_booking_form_reg_show')); 
+		$show_reg = ((!is_user_logged_in() || defined('EM_FORCE_REGISTRATION')) && get_option('dbem_bookings_anonymous')) || (is_user_logged_in() && get_option('dbem_emp_booking_form_reg_show'));
+		return apply_filters('emp_form_show_reg_fields', $show_reg); 
 	}
 
 	private static function validate_reg_fields(){

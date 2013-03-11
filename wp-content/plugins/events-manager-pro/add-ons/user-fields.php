@@ -21,6 +21,11 @@ class EM_User_Fields {
 		add_action( 'edit_user_profile_update', array('EM_User_Fields','save_profile_fields') );
 		//admin area additions
 		add_filter('em_person_display_summary', array('EM_User_Fields','em_person_display_summary'),10,2);
+		//booking no-user mode functions - editing/saving user data
+		add_filter('em_booking_get_person_editor', 'EM_User_Fields::em_booking_get_person_editor', 10, 2);
+		if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_modify_person' ){ //only hook in if we're editing a no-user booking
+			add_filter('em_booking_get_person_post', 'EM_User_Fields::em_booking_get_person_post', 10, 2);
+		}
 		//Booking Table and CSV Export
 		add_filter('em_bookings_table_rows_col', array('EM_User_Fields','em_bookings_table_rows_col'),10,5);
 		add_filter('em_bookings_table_cols_template', array('EM_User_Fields','em_bookings_table_cols_template'),10,2);
@@ -117,8 +122,63 @@ class EM_User_Fields {
 		}
 		return $template;
 	}
+
+
+	/*
+	 * ----------------------------------------------------------
+	* No-User Booking Functions - Edit/Save User Info
+	* ----------------------------------------------------------
+	*/
+
+	static function em_booking_get_person_editor( $content, $EM_Booking ){
+	    //if you want to mess with these values, intercept the em_bookings_single_custom instead
+	    ob_start();
+	    $EM_Form = self::get_form();
+		$name = $EM_Booking->get_person()->get_name();
+		$email = $EM_Booking->get_person()->user_email;
+		if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_modify_person' ){
+		    $name = !empty($_REQUEST['user_name']) ? $_REQUEST['user_name']:$name;
+		    $email = !empty($_REQUEST['user_email']) ? $_REQUEST['user_email']:$email;
+		}
+		?>
+		<table class="em-form-fields">
+			<tr><th><?php _e('Name','dbem'); ?> : </th><td><input type="text" name="user_name" value="<?php echo esc_attr($name); ?>" /></td></tr>
+			<tr><th><?php _e('Email','dbem'); ?> : </th><td><input type="text" name="user_email" value="<?php echo esc_attr($email); ?>" /></td></tr>
+		    <?php
+			foreach($EM_Form->form_fields as $field_id => $field){
+				$value = !empty($EM_Booking->booking_meta['registration'][$field_id]) ? $EM_Booking->booking_meta['registration'][$field_id]:'';
+				if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_modify_person' ){
+					$value = !empty($_REQUEST[$field_id]) ? $_REQUEST[$field_id]:$value;
+			    }
+				?>
+				<tr>
+					<th><label for="<?php echo $field_id; ?>"><?php echo $field['label']; ?></label></th>
+					<td>
+						<?php echo $EM_Form->output_field_input($field, $value); ?>
+					</td>
+				</tr>
+				<?php
+			}
+		    ?>
+		</table>
+	    <?php
+	    return ob_get_clean();
+	}
 	
-	
+	static function em_booking_get_person_post( $result, $EM_Booking ){
+		//get, store and validate post data
+		$EM_Form = self::get_form();
+		if( $EM_Form->get_post() && $EM_Form->validate() && $result ){
+			foreach($EM_Form->get_values() as $fieldid => $value){
+				//registration fields
+				$EM_Booking->booking_meta['registration'][$fieldid] = $value;
+			}
+		}elseif( count($EM_Form->get_errors()) > 0 ){
+			$result = false;
+			$EM_Booking->add_error($EM_Form->get_errors());
+		}
+		return $result;
+	}
 	
 	/*
 	 * ----------------------------------------------------------
@@ -129,7 +189,8 @@ class EM_User_Fields {
 	static function em_person_display_summary($summary, $EM_Person){
 		global $EM_Booking;
 		$EM_Form = self::get_form();
-		if( !get_option('dbem_bookings_registration_disable') || $EM_Person->ID != get_option('dbem_bookings_registration_user') || is_object($EM_Booking) ){
+		$no_user = get_option('dbem_bookings_registration_disable') && $EM_Person->ID == get_option('dbem_bookings_registration_user');
+		if( !get_option('dbem_bookings_registration_disable') || ($no_user && is_object($EM_Booking)) ){
 			ob_start();
 			//a bit of repeated stuff from the original EM_Person::display_summary() static function
 			?>
@@ -138,7 +199,7 @@ class EM_User_Fields {
 					<td><?php echo get_avatar($EM_Person->ID); ?></td>
 					<td style="padding-left:10px; vertical-align: top;">
 						<table>
-							<?php if( get_option('dbem_bookings_registration_disable') && $EM_Person->ID == get_option('dbem_bookings_registration_user') ): ?>
+							<?php if( $no_user ): ?>
 							<tr><th><?php _e('Name','dbem'); ?> : </th><th><?php echo $EM_Person->get_name() ?></th></tr>
 							<?php else: ?>
 							<tr><th><?php _e('Name','dbem'); ?> : </th><th><a href="<?php echo EM_ADMIN_URL ?>&amp;page=events-manager-bookings&amp;person_id=<?php echo $EM_Person->ID; ?>"><?php echo $EM_Person->get_name() ?></a></th></tr>
@@ -147,8 +208,7 @@ class EM_User_Fields {
 							<?php foreach( $EM_Form->form_fields as $field_id => $field ){
 								$value = get_user_meta($EM_Person->ID, $field_id, true);
 								//override by registration value in case value is now empty, otherwise show n/a
-								$guest_user = get_option('dbem_bookings_registration_disable') && $EM_Person->ID == get_option('dbem_bookings_registration_user');
-								if( !empty($EM_Booking->booking_meta['registration'][$field_id]) && (empty($value) || $guest_user) ){
+								if( !empty($EM_Booking->booking_meta['registration'][$field_id]) && (empty($value) || $no_user) ){
 									$value = $EM_Booking->booking_meta['registration'][$field_id];
 								}elseif( empty($value) || $guest_user ){
 									$value = "<em>".__('n/a','em-pro')."</em>";
