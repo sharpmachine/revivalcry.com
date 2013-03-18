@@ -34,22 +34,26 @@
 				</section>
 				
 				<section class="span-8 last">
-								<?php query_posts("post_type=videos&posts_per_page=1"); ?>
-			
-			<?php if (have_posts()) : ?>
-			
-	<?php while (have_posts()) : the_post(); ?>
-					<iframe width="620" height="345" src="http://www.youtube.com/embed/<?php the_field('youtube_video_id'); ?>?rel=0" frameborder="0" allowfullscreen></iframe>
-						<?php endwhile; ?>
-			
+
+<iframe src="http://www.xpmedia.com/embed/11909" frameborder="0" width="620" height="345"></iframe>
+
+
+	<!--<?php query_posts("post_type=videos&posts_per_page=1"); ?>
+
+		<?php if (have_posts()) : ?>
+
+		<?php while (have_posts()) : the_post(); ?>
+			<iframe width="620" height="345" src="http://www.youtube.com/embed/<?php the_field('youtube_video_id'); ?>?rel=0" frameborder="0" allowfullscreen></iframe>
+		<?php endwhile; ?>
+
 		<?php // Navigation ?>
-			
-	<?php else : ?>
-			
+
+		<?php else : ?>
+
 		<?php // No Posts Found ?>
-			
-<?php endif; ?>
-				</section>
+
+	<?php endif; ?> -->
+</section>
 				
 			</section><!-- #content -->
 		</div><!-- #content-container -->
