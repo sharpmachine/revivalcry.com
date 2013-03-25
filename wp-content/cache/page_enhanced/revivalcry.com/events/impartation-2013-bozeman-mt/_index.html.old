@@ -48,22 +48,22 @@
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Feed" href="http://revivalcry.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Comments Feed" href="http://revivalcry.com/comments/feed/" />
 
-			<script type="text/javascript">//<![CDATA[
-			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5476032-5']);
-							_gaq.push(['_trackPageview']);
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-			//]]></script>
-			<link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Impartation 2013 &#8211; Bozeman, MT! Comments Feed" href="http://revivalcry.com/events/impartation-2013-bozeman-mt/feed/" />
-	<!-- Shopp dynamic catalog styles -->
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.2 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-5476032-5']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
+				<!-- Shopp dynamic catalog styles -->
 	<style type="text/css">
 	#shopp ul.products li.product { width: 16%; } /* For grid view */
 	</style>
@@ -237,13 +237,13 @@ var orangebox_vars = {"addThis":""};
 
 	<h2>Additional Info</h2>
 	<p><strong>Speakers: </strong>Joshua Mills, Katie Souza,<br \>
-		<strong>Worship: </strong>Rick Pino, Steve Swanson<br \>
+		<strong>Worship: </strong>Rick Pino, Steve Swanson, Resonance with Tammi Reanier<br \>
 		<strong>Child Care: </strong> TBA</p>
 	
-	<p><a href="http://revivalcry.com/events/impartation-2013-bozeman-mt/#more-info"  class="scroll-to">More info...</a></p>
+	<p><a href="#more-info" class="scroll-to">More info...</a></p>
 
 	<p class="event-actions">
-<a href="http://revivalcry.com/events/impartation-2013-bozeman-mt/#print"  class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png"></a><a href="mailto:?subject=Impartation 2013 &#8211; Bozeman, MT!&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/impartation-2013-bozeman-mt/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a><a href="http://revivalcry.com/events/impartation-2013-bozeman-mt/#register"  class="button scroll-to">Register Now</a></p>
+<a href="#print" class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png" ></a><a href="mailto:?subject=Impartation 2013 &#8211; Bozeman, MT!&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/impartation-2013-bozeman-mt/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a><a href="#register" class="button scroll-to">Register Now</a></p>
         </div>
 					
 	<div class="span-5 prepend-2 last">
@@ -254,13 +254,14 @@ var orangebox_vars = {"addThis":""};
 
 <div class="span-10 prepend-1 last" id="more-info" style="padding-top:50px; padding-bottom:50px">
 <h1>Details</h1>
-<p><p><p align="justify"><a href="http://revivalcry.com/events/revival-cry-riverton-6-2-12/dennisreanierfeb2012-2/"  rel="attachment wp-att-1558"><img class="alignleft size-thumbnail wp-image-1558" alt="DennisReanier(Feb2012)-2" src="http://revivalcry.com/wp-content/uploads/2012/02/DennisReanierFeb2012-2-220x150.jpg" width="220" height="150" /></a>Our conference host <strong>Dennis Reanier</strong> is an apostolic leader with a prophetic voice to empower this generation to release the creativity of the Kingdom of God with-in them. As the founder of the Apostolic Resource Center, Revival Cry Ministries, and LOFT, Dennis continues to activate countless people internationally through impartation to stir revival, reformation, and revolution in preparation of the emerging agenda of the end time harvest. He is the co-founder of “Be A Hero, USA” – a non-profit organization for helping children at risk around the world. Dennis authored the sought after book Shaking Heaven and Earth. He has appeared on several Christian radio and television broadcasts including TBN and has a key role in the film Angel Stories by Jonathan Nixon. He will also be featured on God TV and XP Ministries with Patricia King on March 11, 2013. Dennis received a B.A. in Sociology from Seattle Pacific University and a M.A. in Theology at Fuller Theological Seminary. Dennis and his wife, Tammi reside in Bozeman, Montana with their four daughters Jordan, Raegan, Naomi, and Josie.</p>
+<p><p><p align="justify"><a href="http://revivalcry.com/events/revival-cry-riverton-6-2-12/dennisreanierfeb2012-2/"  rel="attachment wp-att-1558"><img class="alignleft size-thumbnail wp-image-1558" alt="DennisReanier(Feb2012)-2" src="http://revivalcry.com/wp-content/uploads/2012/02/DennisReanierFeb2012-2-220x150.jpg" width="220" height="150" /></a>Our conference host <strong>Dennis Reanier</strong> is an apostolic leader with a prophetic voice to empower this generation to release the creativity of the Kingdom of God with-in them. As the founder of the Apostolic Resource Center, Revival Cry Ministries, and LOFT, Dennis continues to activate countless people internationally through impartation to stir revival, reformation, and revolution in preparation of the emerging agenda of the end time harvest. He is the co-founder of “Be A Hero, USA” – a non-profit organization for helping children at risk around the world. Dennis authored the sought after book Shaking Heaven and Earth. He has appeared on several Christian radio and television broadcasts including TBN and has a key role in the film Angel Stories by Jonathan Nixon. He will also be featured on God TV and XP Ministries with Patricia King on March 11, 2013. Dennis received a B.A. in Sociology from Seattle Pacific University and a M.A. in Theology at Fuller Theological Seminary. Dennis and his wife, Tammi reside in Bozeman, Montana with their four daughters Jordan, Raegan, Naomi, and Josie.</p>
 <p><strong><a href="http://revivalcry.com/wp-content/uploads/2013/03/Joshua_Mills.jpg" ><img class="size-thumbnail wp-image-1821 alignright" alt="Joshua_Mills" src="http://revivalcry.com/wp-content/uploads/2013/03/Joshua_Mills-220x150.jpg" width="220" height="150" /></a>Joshua Mills</strong> is an anointed minister of the gospel, recording artist, conference speaker and author. He worships by standing under the cloud and ministering directly from the glory unto the people. He has written over 600 songs and is known for his ability to lead people into spontaneous worship. Traveling all over North America and around the world, he has been creating a realm of glory wherever he goes with a clear message that &#8220;praise changes the atmosphere and worship sustains the climate.&#8221;</p>
 <p>A signature mark of Joshua Mills&#8217; ministry is the miracles, signs and wonders that testify of the love and glory of Jesus Christ. As Joshua worships and preaches to congregations worldwide God is revealing Himself through a demonstration and release of His manifest presence. Joshua Mills resides with his wife, Janet, and their son, Lincoln, in Palm Springs, California while pursuing Gods purpose and destiny for Hollywood and the Entertainment Industry in Southern California.</p>
-<p><strong><a href="http://revivalcry.com/events/impartation-2013-9-27-13/katie_souza/"  rel="attachment wp-att-1823"><img class="alignleft size-thumbnail wp-image-1823" alt="Katie_Souza" src="http://revivalcry.com/wp-content/uploads/2013/03/Katie_Souza-220x150.jpg" width="220" height="150" /></a>Katie Souza</strong> is Founder and President of Expected End Ministries. She is an international speaker, radio and television host, and author. She has been featured numerous times on TBN, The 700 Club, God-TV, Patricia King&#8217;s &#8220;Extreme Prophetic&#8221; and Sid Roth&#8217;s &#8220;It&#8217;s Supernatural.&#8221; She was chosen, along with only nine others, by Sid Roth to write a chapter in his new book, &#8220;Stories of Supernatural Healing.&#8221; She hosted her own radio program, &#8220;Transforming Captivity into Promise&#8221; and has a long history of radio broadcasting.</p>
+<p><strong><a href="http://revivalcry.com/events/impartation-2013-9-27-13/katie_souza/"  rel="attachment wp-att-1823"><img class="alignleft size-thumbnail wp-image-1823" alt="Katie_Souza" src="http://revivalcry.com/wp-content/uploads/2013/03/Katie_Souza-220x150.jpg" width="220" height="150" /></a>Katie Souza</strong> is Founder and President of Expected End Ministries. She is an international speaker, radio and television host, and author. She has been featured numerous times on TBN, The 700 Club, God-TV, Patricia King&#8217;s &#8220;Extreme Prophetic&#8221; and Sid Roth&#8217;s &#8220;It&#8217;s Supernatural.&#8221; She was chosen, along with only nine others, by Sid Roth to write a chapter in his new book, &#8220;Stories of Supernatural Healing.&#8221; She hosted her own radio program, &#8220;Transforming Captivity into Promise&#8221; and has a long history of radio broadcasting.</p>
 <p>In late 2006, the Lord released a healing anointing on Expected End Ministries. People with afflictions such as infectious diseases, chronic body pain and ocular eye diseases have been healed. The promises of God gave to Katie throughout her captivity are now coming to pass because of her obedience, determination and faith in the God she serves. Katie continues to travel across the nation teaching how the Glory Light of Jesus can heal soul wounds enabling the Body of Christ to walk in wholeness and freedom. The Lord has called EEM to start a discipleship program for ex-felons coming out of prison. This program, &#8220;The Transformation House&#8221; will be located in Arizona. It will be based on the Bible and her book, &#8220;The Captivity Series: The Key to Your Expected End.&#8221;</p>
 <p><strong><a href="http://revivalcry.com/events/impartation-2013-9-27-13/promotion-materials-rick-pino-promo-pic-1/"  rel="attachment wp-att-1824"><img class="size-thumbnail wp-image-1824 alignright" alt="Promotion Materials -Rick Pino Promo Pic 1" src="http://revivalcry.com/wp-content/uploads/2013/03/Promotion-Materials-Rick-Pino-Promo-Pic-1-220x150.jpg" width="220" height="150" /></a>Rick Pino</strong> is the founder of Fire Rain Ministries, a “voice crying out” ministry who for the past 8 years has been calling people to lives of radical love, radical holiness, and radical devotion to Jesus. His music is known for being militant, joyful, intimate, and prophetic. Rick is also the co-founder of &#8220;Fire on the Altar&#8221; regional worship events, which are 50-hour gatherings of non-stop worship in the heart of the tabernacle of David. Currently, Rick and his wife Lindsey live in Austin, TX with their daughter Zoey.</p>
 <p><strong><a href="http://revivalcry.com/events/impartation-2013-9-27-13/steve_swanson/"  rel="attachment wp-att-1825"><img class="alignleft size-thumbnail wp-image-1825" alt="Steve_Swanson" src="http://revivalcry.com/wp-content/uploads/2013/03/Steve_Swanson-220x150.jpg" width="220" height="150" /></a>Steve Swanson</strong> has traveled throughout the world leading people in worship. He has led worship in conferences with many powerful ministries of the Kingdom such as: Randy Clark, Heidi Baker, Patricia King, Paul Keith Davis, Bill Johnson, JoAnn McFatter, Julie Meyer, Joshua Mills and many more. Steve carries a powerful anointing and impartation in worship, intercession, and prophecy that create an atmosphere of breakthrough in worship that opens the heavens. His unique gifting and passion allow worshipers to experience freedom, joy, and intimacy with the Lord. Steve has released 20 worship CD’s and continues to record and produce his own as well as other artist’s works. Steve, his wife Lisa and their two sons, reside in Casa Grande, Arizona. Since 1997 they have overseen Friends of the Bridegroom Worship Ministries, a ministry dedicated to the release of His creativity in worship and the arts.</p>
+<p><strong></strong><a href="http://revivalcry.com/events/revival-cry-riverton-6-2-12/tammireanier225x150-2/"  rel="attachment wp-att-1559"><img class="size-full wp-image-1559 alignright" alt="TammiReanier" src="http://revivalcry.com/wp-content/uploads/2012/02/TammiReanier225x150-e1336782276274.jpg" width="195" height="130" /></a><strong>Resonance with Tammi Reanier </strong>is exploring heavenly realms through the mystery of music, that takes us to deeper dimensions of God&#8217;s manifest presence. On a quest to respond to heaven by releasing the sound of heaven that inspires worship and calls forth revelation that changes hearts and captivates the world. <strong>Tammi Reanier</strong> is a seasoned prophetic worship leader empowered by the audience of one. As co-founder of the Apostolic Resource Center, Revival Cry Ministries, and LOFT, Tammi is raising up spiritual children while imparting and activating a contagious heart for worship. She is gifted with grace to reproduce worshiper leaders while tenaciously and boldly seeking to usher in a new sound of worship with creative freedom. As the mother of four daughters, the legacy she hands down to the next generation by example is always on her heart.</p>
 <p><strong>Lodging:</strong></p>
 <p>Holiday Inn<br />
 5 E Baxter Ln<br />
@@ -293,7 +294,7 @@ TBD</p>
 												<form id='em-booking-form' class="em-booking-form" name='booking-form' method='post' action='/events/impartation-2013-bozeman-mt/#em-booking'>
 			 	<input type='hidden' name='action' value='booking_add'/>
 			 	<input type='hidden' name='event_id' value='113'/>
-			 	<input type='hidden' name='_wpnonce' value='243a4bbc9e'/>
+			 	<input type='hidden' name='_wpnonce' value='f0cb2fb5be'/>
 				<table class="em-tickets" cellspacing="0" cellpadding="0">
 	<tr>
 				<th class="em-bookings-ticket-table-type">Ticket Type</th>
@@ -345,6 +346,24 @@ TBD</p>
 									<option >14</option>
 									<option >15</option>
 									<option >16</option>
+											</select>
+										</td>
+														</tr>		
+														<tr class="em-ticket" id="em-ticket-230">
+																<td class="em-bookings-ticket-table-type">Children Under 11 - Attending Childcare<br><span class="ticket-desc">for every child using child care</span></td>
+																							<td class="em-bookings-ticket-table-price">$35.00</td>
+																							<td class="em-bookings-ticket-table-spaces">
+											<select name="em_tickets[230][spaces]" class="em-ticket-select" id="em-ticket-spaces-230">
+								<option>0</option>									<option >1</option>
+									<option >2</option>
+									<option >3</option>
+									<option >4</option>
+									<option >5</option>
+									<option >6</option>
+									<option >7</option>
+									<option >8</option>
+									<option >9</option>
+									<option >10</option>
 											</select>
 										</td>
 														</tr>		
@@ -514,66 +533,14 @@ TBD</p>
 				</div><!-- #post-## -->
 
 				
-<div id="disqus_thread">
-    </div>
+			<div id="comments">
 
-<script type="text/javascript">
-/* <![CDATA[ */
-    var disqus_url = 'http://revivalcry.com/events/impartation-2013-bozeman-mt/';
-    var disqus_identifier = '1828 http://revivalcry.com/events/impartation-2013-bozeman-mt/';
-    var disqus_container_id = 'disqus_thread';
-    var disqus_domain = 'disqus.com';
-    var disqus_shortname = 'revivalcry';
-    var disqus_title = "Impartation 2013 &#8211; Bozeman, MT!";
-        var disqus_config = function () {
-        var config = this; // Access to the config object
-        config.language = '';
 
-        /*
-           All currently supported events:
-            * preData — fires just before we request for initial data
-            * preInit - fires after we get initial data but before we load any dependencies
-            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
-            * afterRender - fires when template is rendered but before we show it
-            * onReady - everything is done
-         */
+	<p class="nocomments">Comments are closed.</p>
 
-        config.callbacks.preData.push(function() {
-            // clear out the container (its filled for SEO/legacy purposes)
-            document.getElementById(disqus_container_id).innerHTML = '';
-        });
-                config.callbacks.onReady.push(function() {
-            // sync comments in the background so we don't block the page
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = '?cf_action=sync_comments&post_id=1828';
 
-            var firstScript = document.getElementsByTagName( "script" )[0];
-            firstScript.parentNode.insertBefore(script, firstScript);
-        });
-                    };
-/* ]]> */
-</script>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-    var DsqLocal = {
-        'trackbacks': [
-        ],
-        'trackback_url': "http:\/\/revivalcry.com\/events\/impartation-2013-bozeman-mt\/trackback\/"    };
-/* ]]> */
-</script>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-/* ]]> */
-</script>
+								
+</div><!-- #comments -->
 
 
 			</section><!-- #content -->
@@ -744,11 +711,11 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.25.0-2013.01.18'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.3.3'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201311'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201312'></script>
 <script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Maraa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
 
-	<script src="http://stats.wordpress.com/e-201311.js" type="text/javascript"></script>
+	<script src="http://stats.wordpress.com/e-201312.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	st_go({v:'ext',j:'1:2.2',blog:'32069135',post:'1828',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,1828,2);};
@@ -765,4 +732,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-13 18:07:16 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-23 18:49:58 by W3 Total Cache -->

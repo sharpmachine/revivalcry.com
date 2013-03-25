@@ -48,20 +48,21 @@
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Feed" href="http://revivalcry.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Comments Feed" href="http://revivalcry.com/comments/feed/" />
 
-			<script type="text/javascript">//<![CDATA[
-			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5476032-5']);
-							_gaq.push(['_trackPageview']);
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-			//]]></script>
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.2 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-5476032-5']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
 			<link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; River of Life Ministries Comments Feed" href="http://revivalcry.com/events/river-life-ministries-2/feed/" />
 	<!-- Shopp dynamic catalog styles -->
 	<style type="text/css">
@@ -240,22 +241,22 @@ var orangebox_vars = {"addThis":""};
 		<strong>Worship: </strong>River of Life Ministries Worship Team<br \>
 		<strong>Child Care: </strong> Not Provided</p>
 	
-	<p><a href="http://revivalcry.com/events/river-life-ministries-2/#more-info"  class="scroll-to">More info...</a></p>
+	<p><a href="#more-info" class="scroll-to">More info...</a></p>
 
 	<p class="event-actions">
-<a href="http://revivalcry.com/events/river-life-ministries-2/#print"  class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png"></a><a href="mailto:?subject=River of Life Ministries&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/river-life-ministries-2/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a></p>
+<a href="#print" class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png" ></a><a href="mailto:?subject=River of Life Ministries&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/river-life-ministries-2/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a></p>
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-a0534' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-a0534' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-4d60d' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-4d60d' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
    				<div class="em-map-balloon-content" ><strong>River of Life Ministries</strong><br/>2955 East 2nd Street 
 <br/>WY, Casper, 82609<br/>
 <a href="http://maps.google.com/maps?saddr=&daddr=2955 East 2nd Street,Casper,WY,82609" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-a0534' style="display:none; visibility:hidden;">
+		<div class='em-location-map-coords' id='em-location-map-coords-4d60d' style="display:none; visibility:hidden;">
 			<span class="lat">42.8488131</span>
 			<span class="lng">-106.2881261</span>
 		</div>
@@ -514,4 +515,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-18 02:33:24 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-24 01:49:24 by W3 Total Cache -->

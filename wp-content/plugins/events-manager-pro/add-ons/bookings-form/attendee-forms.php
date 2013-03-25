@@ -12,7 +12,7 @@ class EM_Attendees_Form {
 	
 	function init(){
 		//Menu/admin page
-		if( is_admin() && current_user_can('list_users') ){
+		if( is_admin() && current_user_can(get_option('dbem_capability_forms_editor', 'list_users')) ){
 			add_action('admin_init',array('EM_Attendees_Form', 'admin_page_actions'), 10);
 			add_action('emp_forms_admin_page',array('EM_Attendees_Form', 'admin_page'),11);
 		}
@@ -743,6 +743,7 @@ class EM_Attendees_Form {
 									<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('attendee_form_add'); ?>" />
 									<input type="submit"  value="<?php _e ( 'Add New', 'em-pro' ); ?> &raquo;" class="button-secondary" />
 								</form>
+								<?php do_action('em_attendees_form_admin_page_actions', $EM_Form); ?>
 								<?php if( self::$form_id == get_option('em_attendee_form_fields') && self::$form_id > 0 ): ?>
 								<br /><em><?php _e('This is the default attendee form and will be used for any event where you have not chosen a speficic form to use.','em-pro'); ?></em>
 								<?php endif; ?>

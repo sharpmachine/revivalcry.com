@@ -78,7 +78,7 @@ class EM_Updates {
 		if( is_super_admin() ){
 		?>
 			<a name="pro-api"></a>
-			<div  class="postbox " >
+			<div  class="postbox " id="em-opt-pro-key" >
 			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Pro Membership Key', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table' <?php echo ( $api ) ? 'style="background-color:#ffece8;"':'' ?>>

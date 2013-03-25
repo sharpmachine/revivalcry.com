@@ -186,6 +186,11 @@ class EM_User_Fields {
 	 * ----------------------------------------------------------
 	 */
 	
+	/**
+	 * @param string $summary
+	 * @param EM_Person $EM_Person
+	 * @return string|unknown
+	 */
 	static function em_person_display_summary($summary, $EM_Person){
 		global $EM_Booking;
 		$EM_Form = self::get_form();
@@ -204,9 +209,9 @@ class EM_User_Fields {
 							<?php else: ?>
 							<tr><th><?php _e('Name','dbem'); ?> : </th><th><a href="<?php echo EM_ADMIN_URL ?>&amp;page=events-manager-bookings&amp;person_id=<?php echo $EM_Person->ID; ?>"><?php echo $EM_Person->get_name() ?></a></th></tr>
 							<?php endif; ?>
-							<tr><th><?php _e('Email','dbem'); ?> : </th><td><?php echo $EM_Person->user_email; ?></td></tr>
+							<tr><th><?php _e('Email','dbem'); ?> : </th><td><?php echo esc_html($EM_Person->user_email); ?></td></tr>
 							<?php foreach( $EM_Form->form_fields as $field_id => $field ){
-								$value = get_user_meta($EM_Person->ID, $field_id, true);
+								$value = esc_html(get_user_meta($EM_Person->ID, $field_id, true));
 								//override by registration value in case value is now empty, otherwise show n/a
 								if( !empty($EM_Booking->booking_meta['registration'][$field_id]) && (empty($value) || $no_user) ){
 									$value = $EM_Booking->booking_meta['registration'][$field_id];

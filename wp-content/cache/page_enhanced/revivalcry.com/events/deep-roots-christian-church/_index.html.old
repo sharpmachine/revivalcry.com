@@ -48,20 +48,21 @@
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Feed" href="http://revivalcry.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Comments Feed" href="http://revivalcry.com/comments/feed/" />
 
-			<script type="text/javascript">//<![CDATA[
-			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5476032-5']);
-							_gaq.push(['_trackPageview']);
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-			//]]></script>
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.2 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-5476032-5']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
 			<link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Deep Roots Christian Church Comments Feed" href="http://revivalcry.com/events/deep-roots-christian-church/feed/" />
 	<!-- Shopp dynamic catalog styles -->
 	<style type="text/css">
@@ -240,22 +241,22 @@ var orangebox_vars = {"addThis":""};
 		<strong>Worship: </strong>Deep Roots Christian Church Worship Band<br \>
 		<strong>Child Care: </strong> see church for details</p>
 	
-	<p><a href="http://revivalcry.com/events/deep-roots-christian-church/#more-info"  class="scroll-to">More info...</a></p>
+	<p><a href="#more-info" class="scroll-to">More info...</a></p>
 
 	<p class="event-actions">
-<a href="http://revivalcry.com/events/deep-roots-christian-church/#print"  class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png"></a><a href="mailto:?subject=Deep Roots Christian Church&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/deep-roots-christian-church/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a></p>
+<a href="#print" class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png" ></a><a href="mailto:?subject=Deep Roots Christian Church&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/deep-roots-christian-church/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a></p>
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-71c95' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-71c95' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-34b01' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-34b01' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
    				<div class="em-map-balloon-content" ><strong>Deep Roots Christian Church</strong><br/>4161 N Rancho Dr # 110 
 <br/>NV, Las Vegas, 89130<br/>
 <a href="http://maps.google.com/maps?saddr=&daddr=4161 N Rancho Dr # 110,Las Vegas,NV,89130" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-71c95' style="display:none; visibility:hidden;">
+		<div class='em-location-map-coords' id='em-location-map-coords-34b01' style="display:none; visibility:hidden;">
 			<span class="lat">36.2357948</span>
 			<span class="lng">-115.22962000000001</span>
 		</div>
@@ -493,11 +494,11 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.25.0-2013.01.18'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.3.3'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201311'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201312'></script>
 <script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Maraa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
 
-	<script src="http://stats.wordpress.com/e-201311.js" type="text/javascript"></script>
+	<script src="http://stats.wordpress.com/e-201312.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	st_go({v:'ext',j:'1:2.2',blog:'32069135',post:'1712',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,1712,2);};
@@ -514,4 +515,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-14 07:06:30 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-24 01:49:28 by W3 Total Cache -->

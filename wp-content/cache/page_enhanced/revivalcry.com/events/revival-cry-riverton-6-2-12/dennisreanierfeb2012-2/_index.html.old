@@ -50,20 +50,21 @@
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Feed" href="http://revivalcry.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Comments Feed" href="http://revivalcry.com/comments/feed/" />
 
-			<script type="text/javascript">//<![CDATA[
-			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5476032-5']);
-							_gaq.push(['_trackPageview']);
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-			//]]></script>
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.2 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-5476032-5']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
 			<link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; DennisReanier(Feb2012)-2 Comments Feed" href="http://revivalcry.com/events/revival-cry-riverton-6-2-12/dennisreanierfeb2012-2/feed/" />
 	<!-- Shopp dynamic catalog styles -->
 	<style type="text/css">
@@ -397,4 +398,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-18 11:56:18 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-22 22:22:52 by W3 Total Cache -->

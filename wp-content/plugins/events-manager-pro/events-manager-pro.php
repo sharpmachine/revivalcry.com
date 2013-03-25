@@ -5,11 +5,11 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 2.3
+Version: 2.3.1
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 2.294);
+define('EMP_VERSION', 2.3);
 define('EM_MIN_VERSION', 5.353);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
@@ -92,7 +92,7 @@ class EM_Pro {
 	function install(){
 	    //Upgrade/Install Routine
     	$old_version = get_option('em_pro_version');
-    	if( EMP_VERSION > $old_version || $old_version == '' ){
+    	if( EMP_VERSION > $old_version || $old_version == '' || (is_multisite() && !EM_MS_GLOBAL && get_option('emp_ms_global_install')) ){
     		require_once('emp-install.php');
     		emp_install();
     	}
@@ -273,6 +273,7 @@ function emp_delete_blog( $blog_id ){
 	$wpdb->query('DROP TABLE '.$prefix.'em_transactions');
 	$wpdb->query('DROP TABLE '.$prefix.'em_coupons');
 	$wpdb->query('DROP TABLE '.$prefix.'em_email_queue');
+	$wpdb->query('DROP TABLE '.$prefix.'em_bookings_relationships');
 }
 add_action('delete_blog','emp_delete_blog');
 

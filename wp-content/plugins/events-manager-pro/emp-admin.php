@@ -20,8 +20,8 @@ class EM_Pro_Admin{
     public static function multiple_bookings_settings(){
         global $save_button;
         ?>
-        <div  class="postbox " >
-        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Muliple Bookings Mode','em-pro'); ?> <em>(Alpha)</em></span></h3>
+        <div  class="postbox " id="em-opt-multiple-bookings" >
+        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Alpha)</em></span></h3>
         	<div class="inside">
         		<table class='form-table'>
         			<tr><td colspan='2'>

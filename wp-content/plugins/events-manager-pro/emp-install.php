@@ -2,12 +2,18 @@
 
 function emp_install() {
 	$old_version = get_option('em_pro_version');
-	if( EMP_VERSION > $old_version || $old_version == '' ){
+	if( EMP_VERSION > $old_version || $old_version == ''|| (is_multisite() && !EM_MS_GLOBAL && get_option('emp_ms_global_install')) ){
 	 	// Creates the tables + options if necessary
-	 	emp_create_transactions_table();
-		emp_create_coupons_table(); 
-		emp_create_reminders_table();
-		emp_create_bookings_relationships_table();
+		if( !EM_MS_GLOBAL || (EM_MS_GLOBAL && is_main_blog()) ){
+		    //hm....
+		 	emp_create_transactions_table();
+			emp_create_coupons_table(); 
+			emp_create_reminders_table();
+			emp_create_bookings_relationships_table();
+	 		delete_option('emp_ms_global_install'); //in case for some reason the user changed global settings
+	 	}else{
+	 		update_option('emp_ms_global_install',1); //in case for some reason the user changes global settings in the future
+	 	}
 		emp_add_options();
 		
 		//Upate Version	

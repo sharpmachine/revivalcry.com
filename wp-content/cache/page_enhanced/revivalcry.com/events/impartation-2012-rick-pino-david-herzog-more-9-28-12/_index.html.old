@@ -48,20 +48,21 @@
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Feed" href="http://revivalcry.com/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Revival Cry with Dennis Reanier &raquo; Comments Feed" href="http://revivalcry.com/comments/feed/" />
 
-			<script type="text/javascript">//<![CDATA[
-			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5476032-5']);
-							_gaq.push(['_trackPageview']);
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-			//]]></script>
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.2 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-5476032-5']);
+				            _gaq.push(['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
 				<!-- Shopp dynamic catalog styles -->
 	<style type="text/css">
 	#shopp ul.products li.product { width: 16%; } /* For grid view */
@@ -239,22 +240,22 @@ var orangebox_vars = {"addThis":""};
 		<strong>Worship: </strong>Rick Pino, Heather Clark<br \>
 		<strong>Child Care: </strong> Child care will be provided for ages 0-10 on-site at Petra Academy for all sessions.</p>
 	
-	<p><a href="http://revivalcry.com/events/impartation-2012-rick-pino-david-herzog-more-9-28-12/#more-info"  class="scroll-to">More info...</a></p>
+	<p><a href="#more-info" class="scroll-to">More info...</a></p>
 
 	<p class="event-actions">
-<a href="http://revivalcry.com/events/impartation-2012-rick-pino-david-herzog-more-9-28-12/#print"  class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png"></a><a href="mailto:?subject=Impartation 2012 &#8211; New Location!&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/impartation-2012-rick-pino-david-herzog-more-9-28-12/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a><a href="http://revivalcry.com/events/impartation-2012-rick-pino-david-herzog-more-9-28-12/#register"  class="button scroll-to">Register Now</a></p>
+<a href="#print" class="button black print" onclick="window.print(); return false;" title="Print this event"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/print.png" ></a><a href="mailto:?subject=Impartation 2012 &#8211; New Location!&body=Check out this upcoming Revival Cry event. http://revivalcry.com/events/impartation-2012-rick-pino-david-herzog-more-9-28-12/"  class="button black" title="Email event to a friend"><img src="http://revivalcry.com/wp-content/themes/revivalcry/images/email.png"></a><a href="http://revivalcry.com/events"  class="button">All events</a><a href="#register" class="button scroll-to">Register Now</a></p>
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-9afc4' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-9afc4' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-15bf1' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-15bf1' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
    				<div class="em-map-balloon-content" ><strong>Petra Academy</strong><br/>4720 Classical Way 
 <br/>MT, Bozeman, 59718<br/>
 <a href="http://maps.google.com/maps?saddr=&daddr=4720 Classical Way,Bozeman,MT,59718" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-9afc4' style="display:none; visibility:hidden;">
+		<div class='em-location-map-coords' id='em-location-map-coords-15bf1' style="display:none; visibility:hidden;">
 			<span class="lat">45.6841187</span>
 			<span class="lng">-111.10625249999998</span>
 		</div>
@@ -496,4 +497,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-18 13:18:18 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-24 23:43:35 by W3 Total Cache -->

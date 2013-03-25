@@ -8,7 +8,7 @@ class EM_Forms {
 	}
 	
 	function admin_menu($plugin_pages){
-		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Forms Editor','em-pro'),__('Forms Editor','em-pro'),'list_users','events-manager-forms-editor',array('EM_Forms','admin_page'));
+		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Forms Editor','em-pro'),__('Forms Editor','em-pro'),get_option('dbem_capability_forms_editor', 'list_users'),'events-manager-forms-editor',array('EM_Forms','admin_page'));
 		return $plugin_pages; //use wp action/filters to mess with the menus
 	}
 	
@@ -27,7 +27,7 @@ class EM_Forms {
 		if( current_user_can('list_users') ){
 		?>
 			<a name="pro-forms"></a>
-			<div  class="postbox " >
+			<div  class="postbox " id="em-opt-pro-booking-form-options" >
 			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'PRO Booking Form Options', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table'>
@@ -110,9 +110,9 @@ class EM_Form extends EM_Object {
 			//dates and time are special
 			if( in_array( $field['type'], array('date','time')) ){
 				if( !empty($_REQUEST[$fieldid]['start']) ){
-					$this->field_values[$fieldid] = $_REQUEST[$fieldid]['start'];
+					$this->field_values[$fieldid] = wp_kses_data($_REQUEST[$fieldid]['start']);
 					if( $field['options_'.$field['type'].'_range'] && !empty($_REQUEST[$fieldid]['end']) ){
-						$this->field_values[$fieldid] .= ','. $_REQUEST[$fieldid]['end'];
+						$this->field_values[$fieldid] .= ','. wp_kses_data($_REQUEST[$fieldid]['end']);
 					}
 				}else{
 				    $this->field_values[$fieldid] = '';

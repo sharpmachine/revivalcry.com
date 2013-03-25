@@ -259,7 +259,7 @@ class EM_Gateways {
 		if( current_user_can('list_users') ){
 		?>
 			<a name="pro-api"></a>
-			<div  class="postbox " >
+			<div  class="postbox " id="em-opt-gateway-options">
 			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Payment Gateway Options', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table'>

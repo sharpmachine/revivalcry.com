@@ -23,7 +23,7 @@ class EM_Multiple_Bookings_Admin {
 	public static function emails(){
 	    global $save_button;
 		?>
-		<div  class="postbox " >
+		<div  class="postbox " id="em-opt-multiple-booking-emails" >
 		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e ( 'Multiple Booking Email Templates', 'em-pro' ); ?> </span></h3>
 		<div class="inside">
 			<table class='form-table'>

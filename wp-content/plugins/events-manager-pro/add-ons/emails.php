@@ -166,7 +166,7 @@ class EM_Emails {
 	function options(){
 	    global $save_button;
 	    ?>
-		<div  class="postbox " >
+		<div  class="postbox " id="em-opt-email-reminders" >
 		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><?php _e ( 'Event Email Reminders', 'em-pro' ); ?></h3>
 		<div class="inside">
 			<table class='form-table'>
