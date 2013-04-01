@@ -176,37 +176,7 @@ var orangebox_vars = {"addThis":""};
 				</hgroup>
 				<nav role="navigation">
 										<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
-												<div class="menu-header"><ul id="menu-main-navigation" class="menu"><li id="menu-item-790" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-790"><a href="http://revivalcry.com" >Home</a></li>
-<li id="menu-item-791" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-791"><a href="http://revivalcry.com/about/" >About</a></li>
-<li id="menu-item-800" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-800"><a href="http://revivalcry.com/revivalist/" >Revivalist</a>
-<ul class="sub-menu">
-	<li id="menu-item-931" class="menu-item menu-item-type-post_type menu-item-object-revivalist menu-item-931"><a href="http://revivalcry.com/revivalist/dennis-reanier/" >Dennis Reanier</a></li>
-	<li id="menu-item-929" class="menu-item menu-item-type-post_type menu-item-object-revivalist menu-item-929"><a href="http://revivalcry.com/revivalist/tammi-reanier/" >Tammi Reanier</a></li>
-	<li id="menu-item-930" class="menu-item menu-item-type-post_type menu-item-object-revivalist menu-item-930"><a href="http://revivalcry.com/revivalist/shane-cantrell/" >Shane Cantrell</a></li>
-	<li id="menu-item-1520" class="menu-item menu-item-type-post_type menu-item-object-revivalist menu-item-1520"><a href="http://revivalcry.com/revivalist/kelly-hostetter/" >Kelly Hostetter</a></li>
-</ul>
-</li>
-<li id="menu-item-792" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-792"><a href="http://revivalcry.com/media/" >Media</a>
-<ul class="sub-menu">
-	<li id="menu-item-925" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-925"><a href="http://revivalcry.com/media/videos/" >Videos</a></li>
-	<li id="menu-item-926" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-926"><a href="http://revivalcry.com/media/photo-gallery/" >Photo Gallery</a></li>
-</ul>
-</li>
-<li id="menu-item-793" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-793"><a href="http://revivalcry.com/events/" >Events</a>
-<ul class="sub-menu">
-	<li id="menu-item-928" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-928"><a href="http://revivalcry.com/events/" >Upcoming Events</a></li>
-	<li id="menu-item-927" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-927"><a href="http://revivalcry.com/invite/" >Invite Dennis</a></li>
-</ul>
-</li>
-<li id="menu-item-806" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-806"><a href="http://revivalcry.com/store/" >Store</a></li>
-<li id="menu-item-794" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-794"><a href="http://revivalcry.com/give/" >Give</a></li>
-<li id="menu-item-801" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-801"><a href="http://revivalcry.com/testimonies/" >Testimonies</a>
-<ul class="sub-menu">
-	<li id="menu-item-975" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-975"><a href="http://revivalcry.com/testimonies/" >Read Testimonies</a></li>
-	<li id="menu-item-977" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-977"><a href="http://revivalcry.com/testimonies#submit-testimonies" >Submit a Testimony</a></li>
-</ul>
-</li>
-</ul></div>				</nav><!-- nav -->
+																</nav><!-- nav -->
 			</div><!-- #header -->	
 			
 					</header>
@@ -231,10 +201,10 @@ var orangebox_vars = {"addThis":""};
 		7:00 PM - 10:30 PM</p>
 	
 	<h2>Location</h2>
-	<p><strong>New Wineskins Ministry<br /></strong>
-	       16204 13 Mile Road<br />
-               Roseville, MI,      48066<br />
-<a href="http://maps.google.com/maps?saddr=&daddr=16204 13 Mile Road,Roseville,MI,48066" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></p>
+	<p><strong><br /></strong>
+	       <br />
+               , ,      <br />
+<a href="http://maps.google.com/maps?saddr=&daddr=,,," onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></p>
 
 	<h2>Additional Info</h2>
 	<p><strong>Speakers: </strong>Dennis Reanier,<br \>
@@ -248,19 +218,7 @@ var orangebox_vars = {"addThis":""};
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-86203' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-86203' style="display:none; visibility:hidden;">
-   			<div class="em-map-balloon" style="font-size:12px;">
-   				<div class="em-map-balloon-content" ><strong>New Wineskins Ministry</strong><br/>16204 13 Mile Road 
-<br/>MI, Roseville, 48066<br/>
-<a href="http://maps.google.com/maps?saddr=&daddr=16204 13 Mile Road,Roseville,MI,48066" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
-   			</div>
-   		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-86203' style="display:none; visibility:hidden;">
-			<span class="lat">42.5246062</span>
-			<span class="lng">-82.92560979999996</span>
-		</div>
-		
+          <i>Map Unavailable</i>
 	</div>
 	<div class="clear"></div>
 </div><!-- .full-width-white -->
@@ -515,4 +473,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-25 11:46:53 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-31 08:10:43 by W3 Total Cache -->

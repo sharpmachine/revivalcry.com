@@ -248,15 +248,15 @@ var orangebox_vars = {"addThis":""};
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-501fc' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-501fc' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-c4981' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-c4981' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
    				<div class="em-map-balloon-content" ><strong>New Wineskins Ministry</strong><br/>16204 13 Mile Road 
 <br/>MI, Roseville, 48066<br/>
 <a href="http://maps.google.com/maps?saddr=&daddr=16204 13 Mile Road,Roseville,MI,48066" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-501fc' style="display:none; visibility:hidden;">
+		<div class='em-location-map-coords' id='em-location-map-coords-c4981' style="display:none; visibility:hidden;">
 			<span class="lat">42.5246062</span>
 			<span class="lng">-82.92560979999996</span>
 		</div>
@@ -515,4 +515,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-03-25 11:46:58 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-03-30 23:46:07 by W3 Total Cache -->
