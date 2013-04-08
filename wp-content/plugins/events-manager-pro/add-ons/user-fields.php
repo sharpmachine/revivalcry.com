@@ -207,7 +207,7 @@ class EM_User_Fields {
 							<?php if( $no_user ): ?>
 							<tr><th><?php _e('Name','dbem'); ?> : </th><th><?php echo $EM_Person->get_name() ?></th></tr>
 							<?php else: ?>
-							<tr><th><?php _e('Name','dbem'); ?> : </th><th><a href="<?php echo EM_ADMIN_URL ?>&amp;page=events-manager-bookings&amp;person_id=<?php echo $EM_Person->ID; ?>"><?php echo $EM_Person->get_name() ?></a></th></tr>
+							<tr><th><?php _e('Name','dbem'); ?> : </th><th><a href="<?php echo $EM_Person->get_bookings_url(); ?>"><?php echo $EM_Person->get_name() ?></a></th></tr>
 							<?php endif; ?>
 							<tr><th><?php _e('Email','dbem'); ?> : </th><td><?php echo esc_html($EM_Person->user_email); ?></td></tr>
 							<?php foreach( $EM_Form->form_fields as $field_id => $field ){

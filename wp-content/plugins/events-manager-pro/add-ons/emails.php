@@ -6,11 +6,11 @@ class EM_Emails {
 	function init() {
 	    add_action('update_option_dbem_emp_emails_reminder_time', array('EM_Emails','clear_crons'));
 		if( get_option('dbem_cron_emails', 1) ) {
-		    $todays_time_to_run = strtotime(date('Y-m-d', time()).' '.  get_option('dbem_emp_emails_reminder_time'));
-		    $tomorrows_time_to_run = strtotime(date('Y-m-d', time()+(86400)).' '. get_option('dbem_emp_emails_reminder_time'));
-		    $time = $todays_time_to_run > time() ? $todays_time_to_run:$tomorrows_time_to_run;
 			//set up cron for addint to email queue
 			if( !wp_next_scheduled('emp_cron_emails_queue') ){
+			    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'));
+			    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'));
+			    $time = $todays_time_to_run > current_time('timestamp') ? $todays_time_to_run:$tomorrows_time_to_run;
 				$result = wp_schedule_event( $time,'daily','emp_cron_emails_queue');
 			}
 			add_action('emp_cron_emails_queue', array('EM_Emails','queue_emails') );
@@ -22,6 +22,9 @@ class EM_Emails {
 			if( get_option('dbem_emp_emails_reminder_ical') ){
 				//set up emails for ical cleaning
 				if( !wp_next_scheduled('emp_cron_emails_ical_cleanup') ){
+				    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'));
+				    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'));
+				    $time = $todays_time_to_run > current_time('timestamp') ? $todays_time_to_run:$tomorrows_time_to_run;
 					$result = wp_schedule_event( $time,'daily','emp_cron_emails_ical_cleanup');
 				}
 				add_action('emp_cron_emails_ical_cleanup', array('EM_Emails','clean_icals') );

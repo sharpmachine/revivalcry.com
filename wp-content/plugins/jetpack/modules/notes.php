@@ -4,6 +4,7 @@
  * Module Description: Monitor and manage your site's activity with Notifications in your Toolbar and on WordPress.com.
  * Sort Order: 1
  * First Introduced: 1.9
+ * Requires Connection: Yes
  */
 
 if ( !defined( 'JETPACK_NOTES__CACHE_BUSTER' ) ) define( 'JETPACK_NOTES__CACHE_BUSTER', JETPACK__VERSION . '-' . gmdate( 'oW' ) );
@@ -166,7 +167,7 @@ class Jetpack_Notifications {
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'notes',
 			'title'  => '<span id="wpnt-notes-unread-count" class="' . esc_attr( $classes ) . '">
-					<span class="noticon noticon-notification" /></span>
+					<span class="noticon noticon-notification"></span>
 					</span>',
 			'meta'   => array(
 				'html'  => '<div id="wpnt-notes-panel" style="display:none"><div class="wpnt-notes-panel-header"><span class="wpnt-notes-header">' . __('Notifications', 'jetpack') . '</span><span class="wpnt-notes-panel-link"></span></div></div>',

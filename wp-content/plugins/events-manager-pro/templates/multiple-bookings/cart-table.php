@@ -46,6 +46,21 @@ if( empty($EM_Multiple_Booking->bookings) ){
 								- <?php _e('details','em-pro'); ?>
 							</a>
 						</div>
+						<?php
+							//get booking form information (aside from attendee info 
+							$booking_data = EM_Booking_Form::get_booking_data($EM_Booking);
+							if( count($booking_data['booking']) ){ 
+							?>
+							<div class="em-cart-table-event-details em-cart-table-event-details-<?php echo $EM_Booking->get_event()->event_id; ?> em-cart-info">
+								<div class="em-cart-info-booking-title"><?php echo __('Booking Information','em-pro') ?></div>
+								<div class="em-cart-info-values">
+									<?php foreach( $booking_data['booking'] as $booking_label => $booking_value ): ?>
+									<label><?php echo $booking_label; ?> :</label>
+									<span><?php echo $booking_value; ?></span><br />
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php } ?>
 					</td>
 					<td class="em-cart-table-spaces"><span><?php echo $EM_Booking->get_spaces(); ?></span></td>
 					<td class="em-cart-table-price"><span><?php echo $EM_Booking->get_price(false, true); ?></span></td>
@@ -58,9 +73,9 @@ if( empty($EM_Multiple_Booking->bookings) ){
 						<div class="em-cart-table-ticket"><?php echo $EM_Ticket_Booking->get_ticket()->ticket_name; ?></div>
 						<?php //BEGIN Attendee Info (if applicable) ?>
 						<?php foreach( EM_Attendees_Form::get_ticket_attendees($EM_Ticket_Booking) as $attendee_title => $attendee_data): ?>
-						<div class="em-cart-attendee-info">
-							<span class="em-cart-attendee-info-title"><?php echo $attendee_title; ?></span>
-							<div class="em-cart-attendee-info-values">
+						<div class="em-cart-info">
+							<span class="em-cart-info-title"><?php echo $attendee_title; ?></span>
+							<div class="em-cart-info-values">
 							<?php
 							foreach( $attendee_data as $attendee_label => $attendee_value ){
 								?>
@@ -102,9 +117,21 @@ if( empty($EM_Multiple_Booking->bookings) ){
 			</tr>
 			<?php endif; ?>
 			<?php if( $has_discounts ): ?>
+			<?php 
+				$discounts = apply_filters('em_booking_get_discounts', array(), $EM_Multiple_Booking);
+				$total_discount = 0; 
+			?>
 			<tr class="em-cart-totals-discount">
-				<th colspan="<?php echo $cols; ?>"><?php _e('Discounts','em-pro'); ?></th>
-				<td></td>
+				<th colspan="<?php echo $cols; ?>">
+					<?php _e('Discounts','em-pro'); ?>
+					<div class="em-cart-discount-summary">
+						<?php foreach($discounts as $discount): ?>
+						<div class="em-cart-discount-summary-item"><?php echo $discount['desc']; ?> - <?php echo $discount['amount']; ?></div>
+						<?php $total_discount += $discount['amount']; ?>
+						<?php endforeach; ?>
+					</div>
+				</th>
+				<td><?php echo em_get_currency_formatted($total_discount); ?></td>
 			</tr>
 			<?php endif; ?>
 			<tr class="em-cart-totals-total">

@@ -20,7 +20,8 @@ class EM_Gateways {
 		// Payment return
 		add_action('wp_ajax_em_payment', array('EM_Gateways', 'handle_payment_gateways'), 10 );
 		//Booking interception
-		if( get_option('dbem_multiple_bookings') ){
+		if( get_option('dbem_multiple_bookings') && !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){
+		    //Multiple bookings mode (and not doing a manual booking)
 			add_action('em_multiple_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
 			add_filter('em_multiple_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
 			add_filter('em_action_emp_checkout', array('EM_Gateways','em_action_booking_add'),10,2); //adds gateway var to feedback
@@ -30,6 +31,7 @@ class EM_Gateways {
 				//new way, with payment selector
 				add_action('em_checkout_form_footer', array('EM_Gateways','booking_form_footer'),10,2);
 		}else{
+		    //Normal Bookings mode, or manual booking
 			add_action('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
 			add_filter('em_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
 			add_filter('em_action_booking_add', array('EM_Gateways','em_action_booking_add'),10,2); //adds gateway var to feedback
@@ -163,7 +165,7 @@ class EM_Gateways {
 	static function event_booking_form_footer( $EM_Event ){
 		if(!$EM_Event->is_free() ){
 		    self::booking_form_footer();
-		}	    
+		}
 	}
 	
 	/**

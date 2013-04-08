@@ -132,7 +132,9 @@ class EM_Multiple_Booking extends EM_Booking{
 	        //if all went well, save master booking
 	        $saved = apply_filters('em_multiple_booking_save', $this->save( false ), $this);
 	        if( $saved ){
-	            //create relations between bookings and master booking
+	            //firstly delete all previous relationships if they exist
+	            $wpdb->query($wpdb->prepare('DELETE FROM '.EM_BOOKINGS_RELATIONSHIPS_TABLE.' WHERE booking_main_id=%d', $this->booking_id));
+	            //create new relations between bookings and master booking
 	            $rel_inserts = array();
 	            foreach($this->get_bookings() as $EM_Booking){
 	            	$rel_inserts[] = $wpdb->insert(EM_BOOKINGS_RELATIONSHIPS_TABLE, array('booking_id'=>$EM_Booking->booking_id, 'booking_main_id'=>$this->booking_id, 'event_id'=>$EM_Booking->event_id));
@@ -142,7 +144,7 @@ class EM_Multiple_Booking extends EM_Booking{
 	    if( $result && $saved && !in_array(false, $rel_inserts) ){
 	        //successfully saved everything
 	        //same concept/code to what we do with EM_Bookings::add();
-		    do_action('em_bookings_added', this);
+		    do_action('em_bookings_added', $this);
 			$email = $this->email();
 			if( get_option('dbem_bookings_approval') == 1 && $this->booking_status == 0){
 				$this->feedback_message = get_option('dbem_booking_feedback_pending');

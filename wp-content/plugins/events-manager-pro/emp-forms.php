@@ -685,21 +685,18 @@ class EM_Form extends EM_Object {
 							$this->add_error( __( 'The email address isn&#8217;t correct.', 'dbem') );
 							$result = false;
 						}
-						//validate the rest
-						if( array_key_exists($field['type'], $this->core_user_fields) ){
-							//regex
-							if( !empty($field['options_reg_regex']) && !@preg_match('/'.$field['options_reg_regex'].'/',$value) ){
-								if( !($value == '' && !$field['required']) ){
-									$this_err = (!empty($field['options_reg_error'])) ? $field['options_reg_error']:$err;
-									$this->add_error($this_err);
-									$result = false;
-								}
-							}
-							//non-empty match
-							if( empty($value) && !empty($field['required']) ){
-								$this->add_error($err);
+						//regex
+						if( !empty($field['options_reg_regex']) && !@preg_match('/'.$field['options_reg_regex'].'/',$value) ){
+							if( !($value == '' && !$field['required']) ){
+								$this_err = (!empty($field['options_reg_error'])) ? $field['options_reg_error']:$err;
+								$this->add_error($this_err);
 								$result = false;
 							}
+						}
+						//non-empty match
+						if( empty($value) && !empty($field['required']) ){
+							$this->add_error($err);
+							$result = false;
 						}
 						//custom field chekcs
 						if( array_key_exists($field['type'], $this->custom_user_fields)) {

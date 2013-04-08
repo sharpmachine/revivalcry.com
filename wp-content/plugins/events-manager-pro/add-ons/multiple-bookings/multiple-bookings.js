@@ -19,7 +19,6 @@ jQuery(document).ready(function($){
 	$(document).on( 'click', '.em-cart-table a.em-cart-table-actions-remove', function(e){
 		e.preventDefault();
 		var event_id = $(this).attr('rel');
-		e.preventDefault();
 		container = $(this).parents('.em-cart-table').first().parent();
 		$.ajax({
 			url: EM.bookingajaxurl,
@@ -32,7 +31,6 @@ jQuery(document).ready(function($){
 			},
 			success : function(response, statusText, xhr, $form) {
 				$('#em-loading').remove();
-				$('.em-booking-message').remove();
 				//show error or success message
 				if(response.result){
 					$(document).trigger('em_cart_refresh');
@@ -40,6 +38,27 @@ jQuery(document).ready(function($){
 					$('<div class="em-booking-message-error em-booking-message">'+response.message+'</div>').insertBefore(em_booking_form);
 				    $('html, body').animate({ scrollTop: em_booking_form.parent().offset().top - 30 }); //sends user back to top of form
 				}
+			}
+		});
+		return false;
+	});
+	$(document).on( 'click', '.em-cart-actions-empty', function(e){
+		if( !confirm(EM.mb_empty_cart) ) return false;
+		e.preventDefault();
+		container = $(this).parent();
+		$.ajax({
+			url: EM.bookingajaxurl,
+			data: { 'action':'emp_empty_cart'},
+			dataType: 'jsonp',
+			type:'post',
+			beforeSend: function(formData, jqForm, options) {
+				$('.em-booking-message').remove();
+				container.append('<div id="em-loading"></div>');
+			},
+			success : function(response, statusText, xhr, $form) {
+				$('#em-loading').remove();
+				//show error or success message
+				window.location.reload();
 			}
 		});
 		return false;

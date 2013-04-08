@@ -79,7 +79,7 @@
 <link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.3.3' type='text/css' media='all' />
 <link rel='stylesheet' id='events-manager-css'  href='http://revivalcry.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=3.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='jetpack-widgets-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/widgets/widgets.css?ver=20121003' type='text/css' media='all' />
-<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.1' type='text/css' media='all' />
 <script type='text/javascript' src='http://revivalcry.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
@@ -141,8 +141,9 @@ var orangebox_vars = {"addThis":""};
 		.em-cart-table-event-summary .em-cart-table-spaces { text-align:center; }
 		.em-cart-table-event-summary .em-cart-table-price, tbody.em-cart-totals td { text-align:right; }
 		.em-cart-table-event-details .em-cart-table-ticket { font-weight:bold; }
-		.em-cart-attendee-info .em-cart-attendee-info-title { text-decoration:underline; }
-		.em-cart-attendee-info .em-cart-attendee-info-values label { font-style:italic; display: inline-block; width:150px; }		 
+		.em-cart-info .em-cart-info-title { text-decoration:underline; }
+		.em-cart-info .em-cart-info-booking-title { font-weight:bold; }
+		.em-cart-info .em-cart-info-values label { font-style:italic; display: inline-block; width:150px; }		 
 		/*! qTip2 v2.0.0 | http://craigsworks.com/projects/qtip2/ | Licensed MIT, GPL */#qtip-rcontainer{position:absolute;left:-28000px;top:-28000px;display:block;visibility:hidden}#qtip-rcontainer .ui-tooltip{display:block!important;visibility:hidden!important;position:static!important;float:left!important}.ui-tooltip,.qtip{position:absolute;left:-28000px;top:-28000px;display:none;max-width:280px;min-width:50px;font-size:10.5px;line-height:12px}.ui-tooltip-content{position:relative;padding:5px 9px;overflow:hidden;text-align:left;word-wrap:break-word}.ui-tooltip-titlebar{position:relative;min-height:14px;padding:5px 35px 5px 10px;overflow:hidden;border-width:0 0 1px;font-weight:700}.ui-tooltip-titlebar+.ui-tooltip-content{border-top-width:0!important}.ui-tooltip-titlebar .ui-state-default{position:absolute;right:4px;top:50%;margin-top:-9px;cursor:pointer;outline:medium none;border-width:1px;border-style:solid}* html .ui-tooltip-titlebar .ui-state-default{top:16px}.ui-tooltip-titlebar .ui-icon,.ui-tooltip-icon .ui-icon{display:block;text-indent:-1000em;direction:ltr}.ui-tooltip-icon,.ui-tooltip-icon .ui-icon{-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;text-decoration:none}.ui-tooltip-icon .ui-icon{width:18px;height:14px;text-align:center;text-indent:0;font:normal bold 10px/13px Tahoma,sans-serif;color:inherit;background:transparent none no-repeat -100em -100em}.ui-tooltip-focus{}.ui-tooltip-hover{}.ui-tooltip-default{border-width:1px;border-style:solid;border-color:#F1D031;background-color:#FFFFA3;color:#555}.ui-tooltip-default .ui-tooltip-titlebar{background-color:#FFEF93}.ui-tooltip-default .ui-tooltip-icon{border-color:#CCC;background:#F1F1F1;color:#777}.ui-tooltip-default .ui-tooltip-titlebar .ui-state-hover{border-color:#AAA;color:#111}/*! Light tooltip style */.ui-tooltip-light{background-color:#fff;border-color:#E2E2E2;color:#454545}.ui-tooltip-light .ui-tooltip-titlebar{background-color:#f1f1f1}/*! Dark tooltip style */.ui-tooltip-dark{background-color:#505050;border-color:#303030;color:#f3f3f3}.ui-tooltip-dark .ui-tooltip-titlebar{background-color:#404040}.ui-tooltip-dark .ui-tooltip-icon{border-color:#444}.ui-tooltip-dark .ui-tooltip-titlebar .ui-state-hover{border-color:#303030}/*! Cream tooltip style */.ui-tooltip-cream{background-color:#FBF7AA;border-color:#F9E98E;color:#A27D35}.ui-tooltip-cream .ui-tooltip-titlebar{background-color:#F0DE7D}.ui-tooltip-cream .ui-state-default .ui-tooltip-icon{background-position:-82px 0}/*! Red tooltip style */.ui-tooltip-red{background-color:#F78B83;border-color:#D95252;color:#912323}.ui-tooltip-red .ui-tooltip-titlebar{background-color:#F06D65}.ui-tooltip-red .ui-state-default .ui-tooltip-icon{background-position:-102px 0}.ui-tooltip-red .ui-tooltip-icon{border-color:#D95252}.ui-tooltip-red .ui-tooltip-titlebar .ui-state-hover{border-color:#D95252}/*! Green tooltip style */.ui-tooltip-green{background-color:#CAED9E;border-color:#90D93F;color:#3F6219}.ui-tooltip-green .ui-tooltip-titlebar{background-color:#B0DE78}.ui-tooltip-green .ui-state-default .ui-tooltip-icon{background-position:-42px 0}/*! Blue tooltip style */.ui-tooltip-blue{background-color:#E5F6FE;border-color:#ADD9ED;color:#5E99BD}.ui-tooltip-blue .ui-tooltip-titlebar{background-color:#D0E9F5}.ui-tooltip-blue .ui-state-default .ui-tooltip-icon{background-position:-2px 0}.ui-tooltip-shadow{-webkit-box-shadow:1px 1px 3px 1px rgba(0,0,0,.15);-moz-box-shadow:1px 1px 3px 1px rgba(0,0,0,.15);box-shadow:1px 1px 3px 1px rgba(0,0,0,.15)}.ui-tooltip-rounded,.ui-tooltip-tipsy,.ui-tooltip-bootstrap{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.ui-tooltip-youtube{-moz-border-radius:2px;-webkit-border-radius:2px;border-radius:2px;-webkit-box-shadow:0 0 3px #333;-moz-box-shadow:0 0 3px #333;box-shadow:0 0 3px #333;color:#fff;border-width:0;background:#4A4A4A;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0, #4A4A4A),color-stop(100%,black));background-image:-webkit-linear-gradient(top, #4A4A4A 0,black 100%);background-image:-moz-linear-gradient(top, #4A4A4A 0,black 100%);background-image:-ms-linear-gradient(top, #4A4A4A 0,black 100%);background-image:-o-linear-gradient(top, #4A4A4A 0,black 100%)}.ui-tooltip-youtube .ui-tooltip-titlebar{background-color:#4A4A4A;background-color:rgba(0,0,0,0)}.ui-tooltip-youtube .ui-tooltip-content{padding:.75em;font:12px arial,sans-serif;filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#4a4a4a, EndColorStr=#000000);-ms-filter:"progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#4a4a4a, EndColorStr=#000000);"}.ui-tooltip-youtube .ui-tooltip-icon{border-color:#222}.ui-tooltip-youtube .ui-tooltip-titlebar .ui-state-hover{border-color:#303030}.ui-tooltip-jtools{background:#232323;background:rgba(0,0,0,.7);background-image:-webkit-gradient(linear,left top,left bottom,from( #717171),to( #232323));background-image:-moz-linear-gradient(top, #717171, #232323);background-image:-webkit-linear-gradient(top, #717171, #232323);background-image:-ms-linear-gradient(top, #717171, #232323);background-image:-o-linear-gradient(top, #717171, #232323);border:2px solid #ddd;border:2px solid rgba(241,241,241,1);-moz-border-radius:2px;-webkit-border-radius:2px;border-radius:2px;-webkit-box-shadow:0 0 12px #333;-moz-box-shadow:0 0 12px #333;box-shadow:0 0 12px #333}.ui-tooltip-jtools .ui-tooltip-titlebar{background-color:transparent;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171, endColorstr=#4A4A4A);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171, endColorstr=#4A4A4A)"}.ui-tooltip-jtools .ui-tooltip-content{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A, endColorstr=#232323);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A, endColorstr=#232323)"}.ui-tooltip-jtools .ui-tooltip-titlebar,.ui-tooltip-jtools .ui-tooltip-content{background:transparent;color:#fff;border:0 dashed transparent}.ui-tooltip-jtools .ui-tooltip-icon{border-color:#555}.ui-tooltip-jtools .ui-tooltip-titlebar .ui-state-hover{border-color:#333}.ui-tooltip-cluetip{-webkit-box-shadow:4px 4px 5px rgba(0,0,0,.4);-moz-box-shadow:4px 4px 5px rgba(0,0,0,.4);box-shadow:4px 4px 5px rgba(0,0,0,.4);background-color:#D9D9C2;color:#111;border:0 dashed transparent}.ui-tooltip-cluetip .ui-tooltip-titlebar{background-color:#87876A;color:#fff;border:0 dashed transparent}.ui-tooltip-cluetip .ui-tooltip-icon{border-color:#808064}.ui-tooltip-cluetip .ui-tooltip-titlebar .ui-state-hover{border-color:#696952;color:#696952}.ui-tooltip-tipsy{background:#000;background:rgba(0,0,0,.87);color:#fff;border:0 solid transparent;font-size:11px;font-family:'Lucida Grande',sans-serif;font-weight:700;line-height:16px;text-shadow:0 1px black}.ui-tooltip-tipsy .ui-tooltip-titlebar{padding:6px 35px 0 10;background-color:transparent}.ui-tooltip-tipsy .ui-tooltip-content{padding:6px 10}.ui-tooltip-tipsy .ui-tooltip-icon{border-color:#222;text-shadow:none}.ui-tooltip-tipsy .ui-tooltip-titlebar .ui-state-hover{border-color:#303030}.ui-tooltip-tipped{border:3px solid #959FA9;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;background-color:#F9F9F9;color:#454545;font-weight:400;font-family:serif}.ui-tooltip-tipped .ui-tooltip-titlebar{border-bottom-width:0;color:#fff;background:#3A79B8;background-image:-webkit-gradient(linear,left top,left bottom,from( #3A79B8),to( #2E629D));background-image:-webkit-linear-gradient(top, #3A79B8, #2E629D);background-image:-moz-linear-gradient(top, #3A79B8, #2E629D);background-image:-ms-linear-gradient(top, #3A79B8, #2E629D);background-image:-o-linear-gradient(top, #3A79B8, #2E629D);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8, endColorstr=#2E629D);-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8, endColorstr=#2E629D)"}.ui-tooltip-tipped .ui-tooltip-icon{border:2px solid #285589;background:#285589}.ui-tooltip-tipped .ui-tooltip-icon .ui-icon{background-color:#FBFBFB;color:#555}.ui-tooltip-bootstrap{font-size:13px;line-height:18px;color:#333;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.2);*border-right-width:2px;*border-bottom-width:2px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);-moz-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2);-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}.ui-tooltip-bootstrap .ui-tooltip-titlebar{font-size:18px;line-height:22px;border-bottom:1px solid #ccc;background-color:transparent}.ui-tooltip-bootstrap .ui-tooltip-titlebar .ui-state-default{right:9px;top:49%;border-style:none}.ui-tooltip-bootstrap .ui-tooltip-icon{background:#fff}.ui-tooltip-bootstrap .ui-tooltip-icon .ui-icon{width:auto;height:auto;float:right;font-size:20px;font-weight:700;line-height:18px;color:#000;text-shadow:0 1px 0 #fff;opacity:.2;filter:alpha(opacity=20)}.ui-tooltip-bootstrap .ui-tooltip-icon .ui-icon:hover{color:#000;text-decoration:none;cursor:pointer;opacity:.4;filter:alpha(opacity=40)}.ui-tooltip:not(.ie9haxors) div.ui-tooltip-content,.ui-tooltip:not(.ie9haxors) div.ui-tooltip-titlebar{filter:none;-ms-filter:none}.ui-tooltip .ui-tooltip-tip{margin:0 auto;overflow:hidden;z-index:10}.ui-tooltip .ui-tooltip-tip,.ui-tooltip .ui-tooltip-tip .qtip-vml{position:absolute;line-height:.1px!important;font-size:.1px!important;color:#123456;background:transparent;border:0 dashed transparent}.ui-tooltip .ui-tooltip-tip canvas{top:0;left:0}.ui-tooltip .ui-tooltip-tip .qtip-vml{behavior:url(#default#VML);display:inline-block;visibility:visible}#qtip-overlay{position:fixed;left:-10000em;top:-10000em}#qtip-overlay.blurs{cursor:pointer}#qtip-overlay div{position:absolute;left:0;top:0;width:100%;height:100%;background-color:#000;opacity:.7;filter:alpha(opacity=70);-ms-filter:"alpha(Opacity=70)"}
 		</style>
 				<style type="text/css">
@@ -152,7 +153,7 @@ var orangebox_vars = {"addThis":""};
 			.em-coupon-success { color:green; background:url(http://revivalcry.com/wp-content/plugins/events-manager-pro/includes/images/success.png) 0px 0px no-repeat }
 			.em-coupon-error { color:red; background:url(http://revivalcry.com/wp-content/plugins/events-manager-pro/includes/images/error.png) 0px 0px no-repeat }
 		</style>
-		<style type="text/css">.broken_link, a.broken_link {
+		<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">.broken_link, a.broken_link {
 	text-decoration: line-through;
 }</style>		
 <link rel='alternate' type="application/rss+xml" title="Revival Cry with Dennis Reanier Catalog Products RSS Feed" href="http://revivalcry.com/store/category/catalog/feed/" />
@@ -227,309 +228,445 @@ var orangebox_vars = {"addThis":""};
 					<div class="entry-content">
 						<h1>Photo Gallery</h1>
 
-		<div data-carousel-extra='{"blog_id":1,"permalink":"http:\/\/revivalcry.com\/media\/photo-gallery\/"}' id='gallery-1' class='gallery galleryid-918 gallery-columns-4 gallery-size-thumbnail gallery1'><script type="text/javascript">
-// <![CDATA[
-	jQuery(document).ready(function () {
-		jQuery(".gallery1 a").lightBox({captionPosition:"gallery"});		
-	});
-// ]]&gt;
-</script>
-<dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n.jpg"  title="Impartation 2010 - Jake Hamilton Band - Marc Ford Playing Guitar"><img src="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Marc Ford Playing Guitar" /></a>
-</dt><dd class="gallery-caption" id="caption1072"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Marc Ford Playing Guitar</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n.jpg"  title="Impartation 2010 - Jake Hamilton Band - EFX Pedals"><img src="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - EFX Pedals" /></a>
-</dt><dd class="gallery-caption" id="caption1073"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - EFX Pedals</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton Rocking It"><img src="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton Rocking It" /></a>
-</dt><dd class="gallery-caption" id="caption1074"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton Rocking It</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n.jpg"  title="Impartation 2010 - Jason Upton Band - Jason Upton Band &amp; Dennis Reanier"><img src="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jason Upton Band - Jason Upton Band &amp; Dennis Reanier" /></a>
-</dt><dd class="gallery-caption" id="caption1075"><span class="imagecaption">Impartation 2010 - Jason Upton Band - Jason Upton Band & Dennis Reanier</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/test.jpg"  title="Impartation 2010 - Prophetic Painting - Patricia Gazy"><img src="http://revivalcry.com/wp-content/uploads/2011/12/test-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Prophetic Painting - Patricia Gazy" /></a>
-</dt><dd class="gallery-caption" id="caption1076"><span class="imagecaption">Impartation 2010 - Prophetic Painting - Patricia Gazy</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton"><img src="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton" /></a>
-</dt><dd class="gallery-caption" id="caption1077"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n.jpg"  title="Impartation 2010 - Jason Upton Band - Jason Upton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jason Upton Band - Jason Upton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1078"><span class="imagecaption">Impartation 2010 - Jason Upton Band - Jason Upton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n.jpg"  title="Impartation 2010 - Jaso Upton Band - Jason Upton on Keys"><img src="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jaso Upton Band - Jason Upton on Keys" /></a>
-</dt><dd class="gallery-caption" id="caption1079"><span class="imagecaption">Impartation 2010 - Jaso Upton Band - Jason Upton on Keys</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Band - Seth Thomas on Drums"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Seth Thomas on Drums" /></a>
-</dt><dd class="gallery-caption" id="caption1298"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Seth Thomas on Drums</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1299"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1300"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton" /></a>
-</dt><dd class="gallery-caption" id="caption1301"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton" /></a>
-</dt><dd class="gallery-caption" id="caption1302"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104-1024x682.jpg"  title="Impartation 2010 - Prophetic Painting - Patricia Gazy"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Prophetic Painting - Patricia Gazy" /></a>
-</dt><dd class="gallery-caption" id="caption1303"><span class="imagecaption">Impartation 2010 - Prophetic Painting - Patricia Gazy</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1304"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136-1024x682.jpg"  title="Impartation 2010 - Worshipers"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Worshipers" /></a>
-</dt><dd class="gallery-caption" id="caption1305"><span class="imagecaption">Impartation 2010 - Worshipers</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton" /></a>
-</dt><dd class="gallery-caption" id="caption1306"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1307"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1-682x1024.jpg"  title="Impartation 2010 - Worshipers"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Worshipers" /></a>
-</dt><dd class="gallery-caption" id="caption1309"><span class="imagecaption">Impartation 2010 - Worshipers</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton &amp; Jordan Reanier"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton &amp; Jordan Reanier" /></a>
-</dt><dd class="gallery-caption" id="caption1310"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton & Jordan Reanier</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Jake Hamilton Prophesys over Jordan Reanier"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Jake Hamilton Prophesys over Jordan Reanier" /></a>
-</dt><dd class="gallery-caption" id="caption1311"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Jake Hamilton Prophesys over Jordan Reanier</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216-1024x682.jpg"  title="Imparation 2010 - Worshipers"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216-220x150.jpg" width="220" height="150" alt="Imparation 2010 - Worshipers" /></a>
-</dt><dd class="gallery-caption" id="caption1312"><span class="imagecaption">Imparation 2010 - Worshipers</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1313"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1314"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1315"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1316"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288-682x1024.jpg"  title="Impartation 2010 - Prophetic Painting - Patricia Gazy"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Prophetic Painting - Patricia Gazy" /></a>
-</dt><dd class="gallery-caption" id="caption1317"><span class="imagecaption">Impartation 2010 - Prophetic Painting - Patricia Gazy</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Band - Dustin Lau on Keys"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Band - Dustin Lau on Keys" /></a>
-</dt><dd class="gallery-caption" id="caption1318"><span class="imagecaption">Impartation 2010 - Jake Hamilton Band - Dustin Lau on Keys</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299-682x1024.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1319"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305-1024x682.jpg"  title="Impartation 2010 - Jake Hamilton Worshiping"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jake Hamilton Worshiping" /></a>
-</dt><dd class="gallery-caption" id="caption1320"><span class="imagecaption">Impartation 2010 - Jake Hamilton Worshiping</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327-682x1024.jpg"  title="Impartation 2010 - Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1321"><span class="imagecaption">Impartation 2010 - Jason Upton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332-682x1024.jpg"  title="Impartation 2010 - Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332-220x150.jpg" width="220" height="150" alt="Impartation 2010 - Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1322"><span class="imagecaption">Impartation 2010 - Jason Upton Band</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11-1024x682.jpg"  title="Prophetic Healing Event - Feb 2012 - Katie Souza"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event - Feb 2012 - Katie Souza" /></a>
-</dt><dd class="gallery-caption" id="caption1373"><span class="imagecaption">Prophetic Healing Event - Feb 2012 - Katie Souza</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103-1024x682.jpg"  title="Prophetic Healing Event - Feb 2012 - Jason Upton Band - Al Sergel"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band - Al Sergel" /></a>
-</dt><dd class="gallery-caption" id="caption1375"><span class="imagecaption">Prophetic Healing Event - Feb 2012 - Jason Upton Band - Al Sergel</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117-682x1024.jpg"  title="Prophetic Healing Event - Feb 2012 - Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1376"><span class="imagecaption">Prophetic Healing Event - Feb 2012 - Jason Upton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127-1024x682.jpg"  title="Prophetic Healing Event - Feb 2012 - Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1377"><span class="imagecaption">Prophetic Healing Event - Feb 2012 - Jason Upton Band</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132-682x1024.jpg"  title="Prophetic Healing Event - Feb 2012 - Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1378"><span class="imagecaption">Prophetic Healing Event - Feb 2012 - Jason Upton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1379"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1380"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton Band</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton Band"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
-</dt><dd class="gallery-caption" id="caption1381"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton Band</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton Band - Matt Schwartz"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band - Matt Schwartz" /></a>
-</dt><dd class="gallery-caption" id="caption1382"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton Band - Matt Schwartz</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Prophetic Art"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Prophetic Art" /></a>
-</dt><dd class="gallery-caption" id="caption1384"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Prophetic Art</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Prophetic Dance"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Prophetic Dance" /></a>
-</dt><dd class="gallery-caption" id="caption1385"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Prophetic Dance</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Worshiper"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Worshiper" /></a>
-</dt><dd class="gallery-caption" id="caption1386"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Worshiper</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Prophetic Art"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Prophetic Art" /></a>
-</dt><dd class="gallery-caption" id="caption1387"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Prophetic Art</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1388"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1391"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1392"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1394"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1395"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453-682x1024.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1396"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1397"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Dennis Reanier"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Dennis Reanier" /></a>
-</dt><dd class="gallery-caption" id="caption1399"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Dennis Reanier</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492-1024x682.jpg"  title=""><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492-220x150.jpg" width="220" height="150" alt="" /></a>
-</dt></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301-1024x682.jpg"  title="Prophetic Healing Event – Feb 2012 – Jason Upton"><img src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301-220x150.jpg" width="220" height="150" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
-</dt><dd class="gallery-caption" id="caption1403"><span class="imagecaption">Prophetic Healing Event – Feb 2012 – Jason Upton</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba-1024x576.jpg"  title="Dennis Reanier with Chikuma (Antonio) Kudanba in Phoenix, AZ"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba-220x150.jpg" width="220" height="150" alt="Dennis Reanier with Chikuma (Antonio) Kudanba in Phoenix, AZ" /></a>
-</dt><dd class="gallery-caption" id="caption1630"><span class="imagecaption">Dennis Reanier with Chikuma (Antonio) Kudanba in Phoenix, AZ</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife-1024x576.jpg"  title="Dennis Reanier with James Purdy and his wife in Phoenix, AZ"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife-220x150.jpg" width="220" height="150" alt="Dennis Reanier with James Purdy and his wife in Phoenix, AZ" /></a>
-</dt><dd class="gallery-caption" id="caption1631"><span class="imagecaption">Dennis Reanier with James Purdy and his wife in Phoenix, AZ</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson-1024x576.jpg"  title="Dennis with Mornay and Angela Johnson in Phoenix, AZ"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson-220x150.jpg" width="220" height="150" alt="Dennis with Mornay and Angela Johnson in Phoenix, AZ" /></a>
-</dt><dd class="gallery-caption" id="caption1632"><span class="imagecaption">Dennis with Mornay and Angela Johnson in Phoenix, AZ</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King-1024x576.jpg"  title="Dennis Reanier with Patricia King at Quantum Healing Event sharing about JohnOneFiveOneEvent."><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King-220x150.jpg" width="220" height="150" alt="Dennis Reanier with Patricia King at Quantum Healing Event sharing about JohnOneFiveOneEvent." /></a>
-</dt><dd class="gallery-caption" id="caption1633"><span class="imagecaption">Dennis Reanier with Patricia King at Quantum Healing Event sharing about JohnOneFiveOneEvent.</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1-1024x576.jpg"  title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1-220x150.jpg" width="220" height="150" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
-</dt><dd class="gallery-caption" id="caption1636"><span class="imagecaption">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-<span class="imagedescription">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2-1024x576.jpg"  title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2-220x150.jpg" width="220" height="150" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
-</dt><dd class="gallery-caption" id="caption1637"><span class="imagecaption">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-<span class="imagedescription">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3-1024x576.jpg"  title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3-220x150.jpg" width="220" height="150" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
-</dt><dd class="gallery-caption" id="caption1638"><span class="imagecaption">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-<span class="imagedescription">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4-1024x576.jpg"  title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4-220x150.jpg" width="220" height="150" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
-</dt><dd class="gallery-caption" id="caption1639"><span class="imagecaption">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-<span class="imagedescription">Dennis Reanier with new friend after fire tunnel at John 151 Phoenix</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba-1024x576.jpg"  title="Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba-220x150.jpg" width="220" height="150" alt="Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1640"><span class="imagecaption">Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell-1024x576.jpg"  title="Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell-220x150.jpg" width="220" height="150" alt="Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1641"><span class="imagecaption">Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier-1024x576.jpg"  title="Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier-220x150.jpg" width="220" height="150" alt="Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1642"><span class="imagecaption">Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba-1024x576.jpg"  title="Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba-220x150.jpg" width="220" height="150" alt="Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1643"><span class="imagecaption">Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-1024x576.jpg"  title="Sean Smith with Dennis Reanier at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-220x150.jpg" width="220" height="150" alt="Sean Smith with Dennis Reanier at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1644"><span class="imagecaption">Sean Smith with Dennis Reanier at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Sean Smith with Dennis Reanier at John 151 Phoenix Event</span><br />
-</dd></dl><br style="clear: both" /><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix-1024x576.jpg"  title="Sean Smith with new friends at John 151 Phoenix Event"><img src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix-220x150.jpg" width="220" height="150" alt="Sean Smith with new friends at John 151 Phoenix Event" /></a>
-</dt><dd class="gallery-caption" id="caption1645"><span class="imagecaption">Sean Smith with new friends at John 151 Phoenix Event</span><br />
-<span class="imagedescription">Sean Smith with new friends at John 151 Phoenix Event</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035-1024x576.jpg"  title="Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program"><img src="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035-220x150.jpg" width="220" height="150" alt="Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program" /></a>
-</dt><dd class="gallery-caption" id="caption1658"><span class="imagecaption">Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program</span><br />
-<span class="imagedescription">Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program</span><br />
-</dd></dl><dl class="gallery-item">
-<dt class="gallery-icon">
-<a href="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003-1024x576.jpg"  title="Dennis Reanier prays with Patricia King on XP Ministries Program"><img src="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003-220x150.jpg" width="220" height="150" alt="Dennis Reanier prays with Patricia King on XP Ministries Program" /></a>
-</dt><dd class="gallery-caption" id="caption1659"><span class="imagecaption">Dennis Reanier prays with Patricia King on XP Ministries Program</span><br />
-<span class="imagedescription">Dennis Reanier prays with Patricia King on XP Ministries Program</span><br />
-</dd></dl><br style="clear: both" /></div>
+		<div data-carousel-extra='{"blog_id":1,"permalink":"http:\/\/revivalcry.com\/media\/photo-gallery\/"}' id='gallery-1' class='gallery galleryid-918 gallery-columns-3 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/73101_1321096567495_1833248888_588598_7630193_n/"  title='Playing Guitar'><img data-attachment-id="1072" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Playing Guitar" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/73101_1321096567495_1833248888_588598_7630193_n-220x150.jpg" class="attachment-thumbnail" alt="Playing Guitar" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Marc Ford Playing Guitar
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/39577_1321096487493_1833248888_588597_6123156_n/"  title='EFX Pedals'><img data-attachment-id="1073" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n.jpg" data-orig-size="720,480" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="EFX Pedals" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/39577_1321096487493_1833248888_588597_6123156_n-220x150.jpg" class="attachment-thumbnail" alt="EFX Pedals" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; EFX Pedals
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/75699_1321096367490_1833248888_588596_6084487_n/"  title='Rocking it'><img data-attachment-id="1074" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n.jpg" data-orig-size="720,480" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Rocking it" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/75699_1321096367490_1833248888_588596_6084487_n-220x150.jpg" class="attachment-thumbnail" alt="Rocking it" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton Rocking It
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/74583_1321096207486_1833248888_588595_60295_n/"  title='Worship'><img data-attachment-id="1075" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Worship" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/74583_1321096207486_1833248888_588595_60295_n-220x150.jpg" class="attachment-thumbnail" alt="Worship" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jason Upton Band &#8211; Jason Upton Band &#038; Dennis Reanier
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/test-4/"  title='Prophetic Painting'><img data-attachment-id="1076" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/test.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Painting" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/test-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/test.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/test-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Painting" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Prophetic Painting &#8211; Patricia Gazy
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/148440_1321100287588_1833248888_588614_6451894_n/"  title='Jake Hamilton'><img data-attachment-id="1077" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/148440_1321100287588_1833248888_588614_6451894_n-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/150014_1321106327739_1833248888_588660_7893795_n/"  title='Jason Upton Worshiping'><img data-attachment-id="1078" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jason Upton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/150014_1321106327739_1833248888_588660_7893795_n-220x150.jpg" class="attachment-thumbnail" alt="Jason Upton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jason Upton Band &#8211; Jason Upton Worshiping
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/150246_1321103767675_1833248888_588640_5819652_n/"  title='Jason Upton'><img data-attachment-id="1079" data-orig-file="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n.jpg" data-orig-size="480,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2011/12/150246_1321103767675_1833248888_588640_5819652_n-220x150.jpg" class="attachment-thumbnail" alt="Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jaso Upton Band &#8211; Jason Upton on Keys
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0096/"  title='Seth Thomas on Drums'><img data-attachment-id="1298" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285341112&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Seth Thomas on Drums" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0096-220x150.jpg" class="attachment-thumbnail" alt="Impartation 2010 - Jake Hamilton Band - Seth Thomas on Drums" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Seth Thomas on Drums
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0117-1/"  title='Jake Hamilton Band'><img data-attachment-id="1299" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285342389&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0117.1-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0125/"  title='Jake Hamilton Band'><img data-attachment-id="1300" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285342420&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0125-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0129/"  title='Jake Hamilton'><img data-attachment-id="1301" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285342444&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0129-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0132/"  title='Jake Hamilton'><img data-attachment-id="1302" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285342470&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_0132-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1104/"  title='Prophetic Painting'><img data-attachment-id="1303" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285395095&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.004&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Painting" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1104-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Painting" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Prophetic Painting &#8211; Patricia Gazy
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1133/"  title='Jake Hamilton Band'><img data-attachment-id="1304" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285395750&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;28&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1133-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1136/"  title='Worshipers'><img data-attachment-id="1305" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285395969&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;28&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.025&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Worshipers" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1136-220x150.jpg" class="attachment-thumbnail" alt="Worshipers" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Worshipers
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1172/"  title='Jake Hamilton'><img data-attachment-id="1306" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285396504&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1172-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1173/"  title='Jake Hamilton Band'><img data-attachment-id="1307" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285396509&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1173-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1183-1/"  title='Worshipers'><img data-attachment-id="1309" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285396863&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Worshipers" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1183.1-220x150.jpg" class="attachment-thumbnail" alt="Worshipers" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Worshipers
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1194/"  title='Jake Hamilton &amp; Jordan Reanier'><img data-attachment-id="1310" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194.jpg" data-orig-size="2400,3600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285396929&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton &amp; Jordan Reanier" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1194-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton &amp; Jordan Reanier" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton &#038; Jordan Reanier
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1198/"  title='Jake Hamilton Prophesys over Jordan Reanier'><img data-attachment-id="1311" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285396944&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Prophesys over Jordan Reanier" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1198-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Prophesys over Jordan Reanier" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Jake Hamilton Prophesys over Jordan Reanier
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1216/"  title='Worshipers'><img data-attachment-id="1312" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216.jpg" data-orig-size="3600,2400" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285398322&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.025&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Worshipers" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1216-220x150.jpg" class="attachment-thumbnail" alt="Worshipers" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Imparation 2010 &#8211; Worshipers
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1228/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1313" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285398513&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1228-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1239/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1314" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285398622&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.0125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1239-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1244/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1315" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285398678&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.0125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1244-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1254/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1316" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285398741&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.0125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1254-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1288/"  title='Prophetic Painting'><img data-attachment-id="1317" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285448537&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Painting" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1288-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Painting" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Prophetic Painting &#8211; Patricia Gazy
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1292/"  title='Jake Hamilton Band'><img data-attachment-id="1318" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285448575&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1292-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Band &#8211; Dustin Lau on Keys
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1299/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1319" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285448725&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1299-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1305/"  title='Jake Hamilton Worshiping'><img data-attachment-id="1320" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285448745&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jake Hamilton Worshiping" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1305-220x150.jpg" class="attachment-thumbnail" alt="Jake Hamilton Worshiping" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jake Hamilton Worshiping
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1327/"  title='Jason Upton Band'><img data-attachment-id="1321" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285462872&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1327-220x150.jpg" class="attachment-thumbnail" alt="Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_1332/"  title='Jason Upton Band'><img data-attachment-id="1322" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.5&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1285462916&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/02/IMG_1332-220x150.jpg" class="attachment-thumbnail" alt="Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Impartation 2010 &#8211; Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0096-1-2/"  title='Prophetic Healing Event - Feb 2012 - Katie Souza'><img data-attachment-id="1373" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330279487&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;100&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event &#8211; Feb 2012 &#8211; Katie Souza" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0096.11-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event - Feb 2012 - Katie Souza" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event &#8211; Feb 2012 &#8211; Katie Souza
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0103/"  title='Prophetic Healing Event - Feb 2012 - Jason Upton Band - Al Sergel'><img data-attachment-id="1375" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330285963&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.0125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band &#8211; Al Sergel" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0103-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band - Al Sergel" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band &#8211; Al Sergel
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0117/"  title='Prophetic Healing Event - Feb 2012 - Jason Upton Band'><img data-attachment-id="1376" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286077&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;170&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0117-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0127/"  title='Prophetic Healing Event - Feb 2012 - Jason Upton Band'><img data-attachment-id="1377" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286206&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0127-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0132-2/"  title='Prophetic Healing Event - Feb 2012 - Jason Upton Band'><img data-attachment-id="1378" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286245&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;153&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0132-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event - Feb 2012 - Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event &#8211; Feb 2012 &#8211; Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0135/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton Band'><img data-attachment-id="1379" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286251&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;153&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0135-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0137/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton Band'><img data-attachment-id="1380" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286359&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;173&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0137-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton Band
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0142/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton Band'><img data-attachment-id="1381" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286422&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton Band" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0142-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton Band
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0144/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton Band - Matt Schwartz'><img data-attachment-id="1382" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330286451&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;148&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton Band &#8211; Matt Schwartz" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0144-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton Band - Matt Schwartz" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton Band &#8211; Matt Schwartz
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0149/"  title='Prophetic Healing Event – Feb 2012 – Prophetic Art'><img data-attachment-id="1384" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330291226&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;130&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Prophetic Art" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0149-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Prophetic Art" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Prophetic Art
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0157/"  title='Prophetic Healing Event – Feb 2012 – Prophetic Dance'><img data-attachment-id="1385" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330291354&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.033333333333333&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Prophetic Dance" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0157-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Prophetic Dance" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Prophetic Dance
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0166/"  title='Prophetic Healing Event – Feb 2012 – Worshiper'><img data-attachment-id="1386" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330291517&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;170&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.033333333333333&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Worshiper" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0166-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Worshiper" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Worshiper
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0170/"  title='Prophetic Healing Event – Feb 2012 – Prophetic Art'><img data-attachment-id="1387" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330291583&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;78&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Prophetic Art" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0170-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Prophetic Art" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Prophetic Art
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_0185-1/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1388" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330291770&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_0185.1-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9354/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1391" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330204342&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.00625&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9354-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9391-2/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1392" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2.jpg" data-orig-size="2400,3600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330204611&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;85&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.003125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9391.2-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9430/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1394" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330205111&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;80&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.003125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9430-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9449/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1395" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330205169&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.003125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9449-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9453/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1396" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453.jpg" data-orig-size="2912,4368" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330205242&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;73&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453-200x300.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453-682x1024.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9453-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9461-1/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1397" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330205570&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.008&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9461.1-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9484/"  title='Prophetic Healing Event – Feb 2012 – Dennis Reanier'><img data-attachment-id="1399" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330208039&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;195&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Dennis Reanier" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9484-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Dennis Reanier" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Dennis Reanier
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_9492/"  title='Prophetic Healing Event – Feb 2012 – Dennis Reanier'><img data-attachment-id="1400" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330208166&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;200&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.01&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Dennis Reanier" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_9492-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Dennis Reanier" /></a>
+			</dt></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/img_94301/"  title='Prophetic Healing Event – Feb 2012 – Jason Upton'><img data-attachment-id="1403" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301.jpg" data-orig-size="4368,2912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;Canon EOS 5D&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330205111&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;80&quot;,&quot;iso&quot;:&quot;1600&quot;,&quot;shutter_speed&quot;:&quot;0.003125&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Prophetic Healing Event – Feb 2012 – Jason Upton" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301-300x200.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301-1024x682.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/03/IMG_94301-220x150.jpg" class="attachment-thumbnail" alt="Prophetic Healing Event – Feb 2012 – Jason Upton" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Prophetic Healing Event – Feb 2012 – Jason Upton
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/dennis-with-chikuma-antonio-kudanba/"  title='Dennis Reanier with Chikuma (Antonio) Kudanba'><img data-attachment-id="1630" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1328743969&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with Chikuma (Antonio) Kudanba" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Chikuma-Antonio-Kudanba-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with Chikuma (Antonio) Kudanba in Phoenix, AZ" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with Chikuma (Antonio) Kudanba in Phoenix, AZ
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/dennis-with-james-purdy-and-his-wife/"  title='Dennis Reanier with James Purdy and his wife'><img data-attachment-id="1631" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1328736597&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with James Purdy and his wife" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-James-Purdy-and-his-wife-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with James Purdy and his wife in Phoenix, AZ" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with James Purdy and his wife in Phoenix, AZ
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/dennis-with-mornay-and-angela-johnson/"  title='Dennis with Mornay and Angela Johnson'><img data-attachment-id="1632" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1328736633&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis with Mornay and Angela Johnson" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Mornay-and-Angela-Johnson-220x150.jpg" class="attachment-thumbnail" alt="Dennis with Mornay and Angela Johnson in Phoenix, AZ" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis with Mornay and Angela Johnson in Phoenix, AZ
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href="http://revivalcry.com/media/photo-gallery/dennis-with-patricia-king/"  title='Dennis with Patricia King'><img data-attachment-id="1633" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1328768178&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis with Patricia King" data-image-description="" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-with-Patricia-King-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with Patricia King at Quantum Healing Event sharing about JohnOneFiveOneEvent." /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with Patricia King at Quantum Healing Event sharing about JohnOneFiveOneEvent.
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/dennis-reanier-with-new-friend-after-fire-tunnel-1/' title='Dennis Reanier with new friend after fire tunnel at John 151 Phoenix'><img data-attachment-id="1636" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330064057&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" data-image-description="&lt;p&gt;Dennis Reanier with new friend after fire tunnel at John 151 Phoenix&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-1-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with new friend after fire tunnel at John 151 Phoenix
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/dennis-reanier-with-new-friend-after-fire-tunnel-2/' title='Dennis Reanier with new friend after fire tunnel at John 151 Phoenix'><img data-attachment-id="1637" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330064132&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" data-image-description="&lt;p&gt;Dennis Reanier with new friend after fire tunnel at John 151 Phoenix&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-2-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with new friend after fire tunnel at John 151 Phoenix
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/dennis-reanier-with-new-friend-after-fire-tunnel-3/' title='Dennis Reanier with new friend after fire tunnel at John 151 Phoenix'><img data-attachment-id="1638" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330064260&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" data-image-description="&lt;p&gt;Dennis Reanier with new friend after fire tunnel at John 151 Phoenix&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-3-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with new friend after fire tunnel at John 151 Phoenix
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/dennis-reanier-with-new-friend-after-fire-tunnel-4/' title='Dennis Reanier with new friend after fire tunnel at John 151 Phoenix'><img data-attachment-id="1639" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330064284&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" data-image-description="&lt;p&gt;Dennis Reanier with new friend after fire tunnel at John 151 Phoenix&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Dennis-Reanier-with-new-friend-after-fire-tunnel-4-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier with new friend after fire tunnel at John 151 Phoenix" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier with new friend after fire tunnel at John 151 Phoenix
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/sean-smith-with-chikuma-antonio-kudanba/' title='Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event'><img data-attachment-id="1640" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330052967&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" data-image-description="&lt;p&gt;Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Chikuma-Antonio-Kudanba-220x150.jpg" class="attachment-thumbnail" alt="Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Sean Smith with Chikuma (Antonio) Kudanba at John 151 Phoenix Event
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/sean-smith-with-dennis-reanier-and-shane-cantrell/' title='Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event'><img data-attachment-id="1641" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330054381&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.02&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event" data-image-description="&lt;p&gt;Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-and-Shane-Cantrell-220x150.jpg" class="attachment-thumbnail" alt="Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Sean Smith with Dennis Reanier and Shane Cantrell at John 151 Phoenix Event
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/stacey-campbell-with-dennis-reanier-and-tammi-reanier/' title='Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event'><img data-attachment-id="1642" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1329905577&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event" data-image-description="&lt;p&gt;Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Stacey-Campbell-with-Dennis-Reanier-and-Tammi-Reanier-220x150.jpg" class="attachment-thumbnail" alt="Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Stacey Campbell with Dennis Reanier and Tammi Reanier at John 151 Phoenix Event
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/tammi-reanier-with-chikuma-antonio-kudanba/' title='Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event'><img data-attachment-id="1643" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330052717&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" data-image-description="&lt;p&gt;Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Tammi-Reanier-with-Chikuma-Antonio-Kudanba-220x150.jpg" class="attachment-thumbnail" alt="Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Tammi Reanier with Chikuma (Antonio) Kudanba at John 151 Phoenix Event
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/sean-smith-with-dennis-reanier/' title='Sean Smith with Dennis Reanier at John 151 Phoenix Event'><img data-attachment-id="1644" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330054320&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.016666666666667&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Sean Smith with Dennis Reanier at John 151 Phoenix Event" data-image-description="&lt;p&gt;Sean Smith with Dennis Reanier at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-Dennis-Reanier-220x150.jpg" class="attachment-thumbnail" alt="Sean Smith with Dennis Reanier at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Sean Smith with Dennis Reanier at John 151 Phoenix Event
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/sean-smith-with-new-friends-at-john-151-phoenix/' title='Sean Smith with new friends at John 151 Phoenix Event'><img data-attachment-id="1645" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330053327&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.014285714285714&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Sean Smith with new friends at John 151 Phoenix Event" data-image-description="&lt;p&gt;Sean Smith with new friends at John 151 Phoenix Event&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/08/Sean-Smith-with-new-friends-at-John-151-Phoenix-220x150.jpg" class="attachment-thumbnail" alt="Sean Smith with new friends at John 151 Phoenix Event" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Sean Smith with new friends at John 151 Phoenix Event
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/patricia-king-035/' title='Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program'><img data-attachment-id="1658" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.1&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330463270&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;5&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0.022222222222222&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program" data-image-description="&lt;p&gt;Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/09/Patricia-King-035-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier shares about the supernatural with Patricia King on XP Ministries Program
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon'>
+				<a href='http://revivalcry.com/media/photo-gallery/patricia_king_003/' title='Dennis Reanier prays with Patricia King on XP Ministries Program'><img data-attachment-id="1659" data-orig-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003.jpg" data-orig-size="1920,1080" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;3.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;FinePix S2940\/Walmart&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1330459569&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;8.9&quot;,&quot;iso&quot;:&quot;800&quot;,&quot;shutter_speed&quot;:&quot;0.011111111111111&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dennis Reanier prays with Patricia King on XP Ministries Program" data-image-description="&lt;p&gt;Dennis Reanier prays with Patricia King on XP Ministries Program&lt;/p&gt;
+" data-medium-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003-300x168.jpg" data-large-file="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003-1024x576.jpg" width="220" height="150" src="http://revivalcry.com/wp-content/uploads/2012/09/Patricia_King_003-220x150.jpg" class="attachment-thumbnail" alt="Dennis Reanier prays with Patricia King on XP Ministries Program" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption'>
+				Dennis Reanier prays with Patricia King on XP Ministries Program
+				</dd></dl>
+			<br style='clear: both;' />
+		</div>
+
 											</div><!-- .entry-content -->
 				</div><!-- #post-## -->
 
@@ -614,12 +751,12 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","ajaxurl":"http:\/\/revivalcry.com\/wp-admin\/admin-ajax.php","nonce":"45fbb27128","display_exif":"1","display_geo":"1","background_color":"black","comment":"Comment","post_comment":"Post Comment","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","ajaxurl":"http:\/\/revivalcry.com\/wp-admin\/admin-ajax.php","nonce":"91dd7f2bcf","display_exif":"1","display_geo":"1","background_color":"black","comment":"Comment","post_comment":"Post Comment","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.25.0-2013.01.18'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.3.3'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201314'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201315'></script>
 <script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Apraa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/lightbox-gallery/js/jquery.lightbox.js?ver=3.5.1'></script>
@@ -631,14 +768,13 @@ var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/_inc/jquery.spin.js?ver=3.5.1'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel.js?ver=20130109'></script>
 
-	<script src="http://stats.wordpress.com/e-201314.js" type="text/javascript"></script>
+	<script src="http://stats.wordpress.com/e-201315.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	st_go({v:'ext',j:'1:2.2',blog:'32069135',post:'918',tz:'0'});
+	st_go({v:'ext',j:'1:2.2.1',blog:'32069135',post:'918',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,918,2);};
 	if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
 	else load_cmc();
-	</script>
-<style type='text/css'>img#wpstats{display:none}</style>  <!-- scripts concatenated and minified via ant build script-->
+	</script>  <!-- scripts concatenated and minified via ant build script-->
 	<script src="http://revivalcry.com/wp-content/themes/revivalcry/js/plugins.js"></script>
 	<script src="http://revivalcry.com/wp-content/themes/revivalcry/js/script.js"></script>
 	</body>
@@ -648,4 +784,4 @@ var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-04-01 08:32:22 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-04-08 11:55:36 by W3 Total Cache -->

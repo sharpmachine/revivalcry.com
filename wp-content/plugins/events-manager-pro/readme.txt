@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 
 == Description ==
 
@@ -22,6 +22,17 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.2 =
+* added Finnish
+* updated German
+* fixed various PHP warnings
+* fixed user bookings link pointing to admin admin area from front-end bookings admin
+* removed some redundant code from paypal gateway
+* added 'empty cart' button to 'view cart' page
+* fixed custom user fields not being saved properly in MB mode
+* fixed manual bookings for MB mode
+* Multiple Bookings now beta, no flag required in wp-config.php file
+
 = 2.3.1 =
 * added dbem_capability_forms_editor wp_option for showing form editor menu to other user roles
 * added em_attendees_form_admin_page_actions action

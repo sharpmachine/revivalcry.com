@@ -285,16 +285,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 					case 'Processed':
 						// case: successful payment
 						$this->record_transaction($EM_Booking, $amount, $currency, $timestamp, $_POST['txn_id'], $_POST['payment_status'], '');
-				
-						//get booking metadata
-						$user_data = array();
-						if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) ){
-							foreach($EM_Booking->booking_meta['registration'] as $fieldid => $field){
-								if( trim($field) !== '' ){
-									$user_data[$fieldid] = $field;
-								}
-							}
-						}
+
 						if( $_POST['mc_gross'] >= $EM_Booking->get_price(false, false, true) && (!get_option('em_'.$this->gateway.'_manual_approval', false) || !get_option('dbem_bookings_approval')) ){
 							$EM_Booking->approve(true, true); //approve and ignore spaces
 						}else{

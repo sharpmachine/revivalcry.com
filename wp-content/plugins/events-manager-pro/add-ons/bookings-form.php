@@ -37,7 +37,7 @@ class EM_Booking_Form {
 			}
 			add_filter('em_booking_get_post', array('EM_Booking_Form', 'em_booking_get_post'), 10, 2); //get post data + validate
 			add_filter('em_booking_validate', array('EM_Booking_Form', 'em_booking_validate'), 10, 2); //validate object
-			add_filter('em_bookings_add', array('EM_Booking_Form', 'em_bookings_add'), 10, 2); //add extra use reg data
+			add_action('em_bookings_added', array('EM_Booking_Form', 'em_bookings_added'), 10, 1); //add extra use reg data
 			add_filter('em_register_new_user_pre', array('EM_Booking_Form', 'em_register_new_user_pre'), 10, 1); //add extra use reg data
 		}
 		//Placeholder overriding
@@ -210,7 +210,7 @@ class EM_Booking_Form {
 		return $result;
 	}
 	
-	function em_bookings_add($result, $EM_Booking){
+	function em_bookings_added($EM_Booking){
 		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
 		if( !empty($EM_Booking->booking_meta['registration']) && is_array($EM_Booking->booking_meta['registration']) &&  (!get_option('dbem_bookings_registration_disable') || is_user_logged_in()) ){
 			$user_data = array();
@@ -223,7 +223,29 @@ class EM_Booking_Form {
 				update_user_meta($EM_Booking->person_id, $userkey, $uservalue);
 			}
 		}
-		return $result;
+	}
+	
+	/**
+	 * Returns a formatted multi-dimensional associative array of booking form and user information for a specific booking (not including attendees).
+	 * example : array('booking' => array('Label'=>'Value', 'Label 2'=>'Value 2'), 'registration' => array(...)...);
+	 * @param EM_Booking $EM_Booking
+	 */
+	public static function get_booking_data( $EM_Booking, $include_registration_info = false ){
+	    $booking_data = array('booking'=>array());
+	    if( $include_registration_info ) $booking_data['registration'] = array();
+	    if( is_array($EM_Booking->booking_meta['booking']) || ($include_registration_info && is_array($EM_Booking->booking_meta['registration'])) ){
+			$EM_Form = self::get_form($EM_Booking->get_event());
+			foreach($EM_Form->form_fields as $fieldid => $field){
+				if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $field['type'] != 'html' ){
+					$input_value = $field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
+					if( in_array($field['type'], array('date','time')) && $input_value == 'n/a' ) $input_value = '';
+					$booking_data['booking'][$field['label']] = $EM_Form->get_formatted_value($field, $input_value);
+				}elseif( $field['type'] != 'html' ){
+				    $booking_data['registration'][$field['label']] = $EM_Form->get_formatted_value($field, $input_value);
+				}
+			}
+	    }
+	    return $booking_data;
 	}
 
 	/**

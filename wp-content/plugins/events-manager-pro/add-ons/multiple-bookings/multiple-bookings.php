@@ -7,21 +7,24 @@ class EM_Multiple_Bookings{
     public static function init(){
 		include('multiple-booking.php');
 		include('multiple-bookings-widget.php');
-		//admin stuff
-		if( is_admin() ){
+		if( is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX) ){ //admin stuff
 		    include('multiple-bookings-admin.php');
+		}elseif( !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){ //not admin area or a manual booking
+			//modify traditional booking forms behaviour
+			add_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
+			add_filter('em_booking_validate', 'EM_Multiple_Bookings::prevent_user_validation', 1); //prevent user fields validation
+	        //hooking into the booking process
+	        add_action('em_booking_add','EM_Multiple_Bookings::em_booking_add', 1, 3); //prevent booking being made and add to cart
 		}
-		add_filter('em_get_booking','EM_Multiple_Bookings::em_get_booking');
-        //hooking into the booking process
-        add_action('em_booking_add','EM_Multiple_Bookings::em_booking_add', 1, 3); //prevent booking being made and add to cart
-		//modify traditional booking forms behaviour
-		add_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
-		add_filter('em_booking_validate', 'EM_Multiple_Bookings::prevent_user_validation', 1); //prevent user fields validation
+		add_filter('em_get_booking','EM_Multiple_Bookings::em_get_booking'); //switch EM_Booking with EM_Multiple_Booking object if applicable
+		add_filter('em_wp_localize_script', 'EM_Multiple_Bookings::em_wp_localize_script');
 		//cart/checkout pages
 		add_filter('the_content', 'EM_Multiple_Bookings::pages');
-		//ajax calls for cart checkout
+		//ajax calls for cart actions
 		add_action('wp_ajax_emp_checkout_remove_item','EM_Multiple_Bookings::remove_booking');
 		add_action('wp_ajax_nopriv_emp_checkout_remove_item','EM_Multiple_Bookings::remove_booking');
+		add_action('wp_ajax_emp_empty_cart','EM_Multiple_Bookings::empty_cart_ajax');
+		add_action('wp_ajax_nopriv_emp_empty_cart','EM_Multiple_Bookings::empty_cart_ajax');
 		//ajax calls for cart checkout
 		add_action('wp_ajax_emp_checkout','EM_Multiple_Bookings::checkout');
 		add_action('wp_ajax_nopriv_emp_checkout','EM_Multiple_Bookings::checkout');
@@ -38,8 +41,8 @@ class EM_Multiple_Bookings{
 		add_shortcode('em_cart_contents', 'EM_Multiple_Bookings::cart_contents');
 		add_action('em_booking_js_footer', 'EM_Multiple_Bookings::em_booking_js_footer');
 		//booking admin pages
-		add_action('em_bookings_admin_page', 'EM_Multiple_Bookings::bookings_admin_notices');
-		add_action('em_bookings_multiple_booking', 'EM_Multiple_Bookings::booking_admin',1,1);
+		add_action('em_bookings_admin_page', 'EM_Multiple_Bookings::bookings_admin_notices'); //add MB warnings if booking is part of a bigger booking
+		add_action('em_bookings_multiple_booking', 'EM_Multiple_Bookings::booking_admin',1,1); //handle page for showing a single multiple booking
     }
     
     public static function em_get_booking($EM_Booking){
@@ -47,6 +50,11 @@ class EM_Multiple_Bookings{
             return new EM_Multiple_Booking($EM_Booking);
         }
         return $EM_Booking;
+    }
+    
+    public static function em_wp_localize_script( $vars ){
+	    $vars['mb_empty_cart'] = get_option('dbem_multiple_bookings_feedback_empty_cart');
+	    return $vars;
     }
     
     /**
@@ -100,6 +108,8 @@ class EM_Multiple_Bookings{
      */
     public static function em_booking_add( $EM_Event, $EM_Booking, $post_validation ){
         global $EM_Notices;
+        $feedback = '';
+        $result = false;
         if( self::session_start() ){
 	        if ( $post_validation ) {
 	            //booking can be added to cart
@@ -133,18 +143,30 @@ class EM_Multiple_Bookings{
         $EM_Multiple_Booking = self::get_multiple_booking();
 		if( !empty($_REQUEST['event_id']) && !empty($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]) ){
 		    unset($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]);
+		    $feedback = '';
 		    $result = true;
 		}else{
-		    $result = false;
 		    $feedback = __('Could not remove booking due to an unexpected error.', 'em-pro');
+		    $result = false;
 		}
         if( defined('DOING_AJAX') ){
         	$return = array('result'=>$result, 'message'=>$feedback);
-        	echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Booking));
+        	echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Multiple_Booking));
         }else{
         	wp_redirect(wp_get_referer());
         }
         die();
+    }
+    
+    public static function empty_cart(){
+	    self::session_start();
+        unset($_SESSION['em_multiple_bookings']);
+    }
+    
+    public static function empty_cart_ajax(){
+	    self::empty_cart();
+	    echo EM_Object::json_encode(array('success'=>true));
+	    die();
     }
     
     public static function checkout(){
@@ -368,6 +390,19 @@ class EM_Multiple_Bookings{
     
     public static function booking_admin(){
 		emp_locate_template('multiple-bookings/admin.php',true);
+		if( !defined('EM_CART_JS_LOADED') ){
+			//load 
+			function em_cart_js_footer(){
+				?>
+				<script type="text/javascript">
+					<?php include('multiple-bookings.js'); ?>
+				</script>
+				<?php
+			}
+			add_action('wp_footer','em_cart_js_footer');
+			add_action('admin_footer','em_cart_js_footer');
+			define('EM_CART_JS_LOADED',true);
+		}
 	}
 }
 EM_Multiple_Bookings::init();

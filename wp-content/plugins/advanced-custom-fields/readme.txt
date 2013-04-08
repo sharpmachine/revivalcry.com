@@ -2,7 +2,7 @@
 Contributors: Elliot Condon
 Tags: custom, field, custom field, advanced, simple fields, magic fields, more fields, repeater, matrix, post, type, text, textarea, file, image, edit, admin
 Requires at least: 3.0.0
-Tested up to: 3.5.0
+Tested up to: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,28 @@ http://support.advancedcustomfields.com/
 
 
 == Changelog ==
+
+= 4.0.0 =
+* [Optimized] Optimize performance by removing heavy class structure and implementing light weight hooks & filters!
+* [Changed] Remove all Add-on code from the core plugin and separate into individual plugins with self hosted updates
+* [Added] Add field 'Taxonomy'
+* [Added] Add field 'User'
+* [Added] Add field 'Email'
+* [Added] Add field 'Password'
+* [Added] Add field group title validation
+* [Fixed] Fix issue where get_field_object returns the wrong field when using WPML
+* [Fixed] Fix duplicate functionality - http://support.advancedcustomfields.com/discussion/4471/duplicate-fields-in-admin-doesn039t-replicate-repeater-fields 
+* [Added] Add conditional statements to tab field - http://support.advancedcustomfields.com/discussion/4674/conditional-tabs
+* [Fixed] Fix issue with Preview / Draft where preview would not save custom field data - http://support.advancedcustomfields.com/discussion/4401/cannot-preview-or-schedule-content-to-be-published
+* [Added] Add function get_field_groups()
+* [Added] Add function delete_field() - http://support.advancedcustomfields.com/discussion/4788/deleting-a-field-through-php
+* [Added] Add get_sub_field_object function - http://support.advancedcustomfields.com/discussion/4991/select-inside-repeaterfield
+* [Added] Add 'Top Level' option to page type location rule
+* [Fixed] Fix taxonomy location rule - http://support.advancedcustomfields.com/discussion/5004/field-group-rules-issue
+* [Fixed] Fix tab field with conditional logic - https://github.com/elliotcondon/acf4/issues/14
+* [Fixed] Revert back to original field_key idea. attractive field key's cause too many issues with import / export
+* [Added] Add message field - http://support.advancedcustomfields.com/discussion/5263/additional-description-field
+* [Removed] Removed the_content filter from WYSIWYG field
 
 = 3.5.8.1 =
 * [Fixed] Fix PHP error in text / textarea fields

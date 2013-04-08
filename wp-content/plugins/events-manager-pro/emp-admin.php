@@ -5,9 +5,7 @@
 class EM_Pro_Admin{
     public static function init(){
         //Multiple Bookings
-        if( defined('EMP_MULTIPLE_BOOKINGS') && EMP_MULTIPLE_BOOKINGS ){
-	        add_action('em_options_page_footer_bookings', 'EM_Pro_Admin::multiple_bookings_settings');
-        }
+        add_action('em_options_page_footer_bookings', 'EM_Pro_Admin::multiple_bookings_settings');
         //Logging
         add_action('em_options_page_panel_admin_tools', 'EM_Pro_Admin::logging_settings');
         add_action('add_option_dbem_enable_logging', 'EM_Pro_Admin::logging_enable', 10, 2);
@@ -21,11 +19,14 @@ class EM_Pro_Admin{
         global $save_button;
         ?>
         <div  class="postbox " id="em-opt-multiple-bookings" >
-        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Alpha)</em></span></h3>
+        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Beta)</em></span></h3>
         	<div class="inside">
         		<table class='form-table'>
         			<tr><td colspan='2'>
-        				<p><?php _e('Multiple Bookings Mode enables your visitors to make bookings follow a flow similar to that of a shopping cart, meaning users can book multiple events and pay for them in one go.','em-pro'); ?></p>
+        				<p>
+        					<?php _e('Multiple Bookings Mode enables your visitors to make bookings follow a flow similar to that of a shopping cart, meaning users can book multiple events and pay for them in one go.','em-pro'); ?>
+        					<a href="http://wp-events-plugin.com/documentation/multiple-booking-mode/"><?php echo sprintf(__('More about %s.','em-pro'), __('Multiple Bookings Mode','em-pro')); ?></a>
+        				</p>
         			</td></tr>
         			<?php
         			em_options_radio_binary ( __( 'Enable Muliple Bookings Mode?', 'em-pro' ), 'dbem_multiple_bookings' );
@@ -63,6 +64,7 @@ class EM_Pro_Admin{
 	        				em_options_input_text( __('Loading Cart Contents'), 'dbem_multiple_bookings_feedback_loading_cart', __('If caching plugins are used, cart contents are loaded after a page load and this text is shown whilst loading.','em-pro'));
 	        				em_options_input_text( __('Event Already Booked'), 'dbem_multiple_bookings_feedback_already_added', __('This event has already been added to the cart and cannot be added twice.','em-pro'));
 	        				em_options_input_text( __('No Bookings'), 'dbem_multiple_bookings_feedback_no_bookings', __('User has not booked any events yet, cart is empty.','em-pro'));
+	        				em_options_input_text( __('Empty Cart Warning'), 'dbem_multiple_bookings_feedback_empty_cart', __('Warning after the "empty cart" button is clicked.','em-pro'));
 	        			?>
         			</tbody>
         			<?php echo $save_button; ?>
