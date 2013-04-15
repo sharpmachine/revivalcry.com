@@ -188,10 +188,10 @@ class acf_field_functions
 	{
 		// strip slashes
 		// - not needed? http://support.advancedcustomfields.com/discussion/3168/backslashes-stripped-in-wysiwyg-filed
-		if( get_magic_quotes_gpc() )
-		{
+		//if( get_magic_quotes_gpc() )
+		//{
 			$value = stripslashes_deep($value);
-		}
+		//}
 		
 		
 		// apply filters
@@ -416,7 +416,7 @@ class acf_field_functions
 			$id = str_replace('[', '-', $id); // location rules (select) does'nt have "fields[" in it
 			$id = str_replace(']', '', $id);
 			
-			$field['id'] = 'acf-' . $id;
+			$field['id'] = 'acf-field-' . $id;
 		}
 		
 		
@@ -435,6 +435,12 @@ class acf_field_functions
 	
 	function update_field( $field, $post_id )
 	{
+		// sanitize field name
+		// - http://support.advancedcustomfields.com/discussion/5262/sanitize_title-on-field-name
+		// - issue with camel case! Replaced with JS
+		//$field['name'] = sanitize_title( $field['name'] );
+		
+		
 		// filters
 		$field = apply_filters('acf/update_field/type=' . $field['type'], $field, $post_id ); // new filter
 		

@@ -25,7 +25,7 @@ class acf_upgrade
 		// actions
 		add_action('admin_menu', array($this,'admin_menu'), 11);
 		add_action('wp_ajax_acf_upgrade', array($this, 'upgrade_ajax'));
-		
+		//add_action('admin_footer', array($this, 'admin_footer'), 99);
 	}
 	
 	
@@ -39,9 +39,17 @@ class acf_upgrade
 	
 	function admin_menu()
 	{
+		// dont run on plugin activate!
+		if( isset($_GET['action']) && $_GET['action'] == 'activate-plugin' )
+		{
+			return;
+		}
+		
+		
 		// vars
 		$new_version = apply_filters('acf/get_info', 'version');
 		$old_version = get_option('acf_version', false);
+		
 		
 		if( $new_version != $old_version )
 		{
@@ -67,7 +75,31 @@ class acf_upgrade
 			}
 		}
 		
+
 		add_submenu_page('edit.php?post_type=acf', __('Upgrade','acf'), __('Upgrade','acf'), 'manage_options','acf-upgrade', array($this,'html') );
+	}
+	
+	
+	/*
+	*  admin_footer
+	*
+	*  @description: 
+	*  @since: 3.6
+	*  @created: 3/04/13
+	*/
+	
+	function admin_footer()
+	{
+		// Mesages
+		$dismissed = get_option('acf_dismissed', array());
+		
+		if( !in_array('download_addons', $dismissed) )
+		{
+			// update db
+			//$dismissed[] = 'download_addons';
+			//update_option('acf_dismissed', $dismissed );
+			
+		}
 	}
 	
 	
