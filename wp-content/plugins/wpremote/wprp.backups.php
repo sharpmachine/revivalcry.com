@@ -27,7 +27,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 			self::$instance = new WPRP_Backups();
 
 		return self::$instance;
-	
+
 	}
 
 	/**
@@ -61,7 +61,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 		@rmdir( $dir );
 
 	}
-	
+
 	/**
 	 * Setup HM Backup
 	 *
@@ -74,10 +74,12 @@ class WPRP_Backups extends WPRP_HM_Backup {
 		$this->set_path( $this->path() );
 
 		// Set the excludes
-		if ( ! empty( $_GET['backup_excludes'] ) )
-			$this->set_excludes( array_map( 'urldecode', $_GET['backup_excludes'] ), true );
+		if ( class_exists( 'WPR_API_Request' ) &&  WPR_API_Request::get_arg( 'backup_excludes' ) )
+			$this->set_excludes( WPR_API_Request::get_arg( 'backup_excludes' ) );
+		else if ( isset( $_GET['backup_excludes'] ) )
+			$this->set_excludes( $_GET['backup_excludes'] );
 
-		$this->filesize_transient = 'wprp_' . '_' . $this->get_type() . '_' . md5( $this->exclude_string() ) . '_filesize';
+		$this->filesize_transient = 'wprp_' . '_' . $this->get_type() . '_' . substr( md5( $this->exclude_string() ), 20 ) . '_filesize';
 
 	}
 
@@ -87,7 +89,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 	 * @return true|WP_Error
 	 */
 	public function do_backup() {
-		
+
 		@ignore_user_abort( true );
 
 		$this->set_status( 'Starting backup...' );
@@ -98,7 +100,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 			return new WP_Error( 'backup-failed', implode( ', ', $this->get_errors() ) );
 
 		return true;
-	
+
 	}
 
 	/**
@@ -136,7 +138,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 		}
 
 		return new WP_Error( 'backup-failed', 'No backup was found' );
-	
+
 	}
 
 	/**
@@ -155,19 +157,19 @@ class WPRP_Backups extends WPRP_HM_Backup {
 
 		if ( file_exists( trailingslashit( $this->get_path() ) . 'index.html' ) )
 			unlink( trailingslashit( $this->get_path() ) . 'index.html' );
-		
+
 		if ( file_exists( trailingslashit( $this->get_path() ) . '.htaccess' ) )
 			unlink( trailingslashit( $this->get_path() ) . '.htaccess' );
 
 		rmdir( $this->get_path() );
 
 		delete_option( 'wprp_backup_path' );
-	
+
 	}
 
 	/**
 	 * Get the estimated size of the sites files and database
-	 * 
+	 *
 	 * If the size hasn't been calculated yet then it fires an API request
 	 * to calculate the size and returns string 'Calculating'
 	 *
@@ -178,7 +180,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 
 		// Check the cache
 		if ( $size = get_transient( $this->filesize_transient ) ) {
-			
+
 			// If we have a number, format it and return
 			if ( is_numeric( $size ) )
 				return size_format( $size, null, '%01u %s' );
@@ -257,7 +259,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 
 			break;
 
-			case 'hmbkp_warning' : 
+			case 'hmbkp_warning' :
 
 			    if ( $this->get_warnings() ) {
 
@@ -280,7 +282,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 	    endswitch;
 
 	}
-	
+
 	/**
 	 * Get the path to the backups directory
 	 *
@@ -376,7 +378,7 @@ class WPRP_Backups extends WPRP_HM_Backup {
 				$key[] = $constant;
 
  		return md5( shuffle( $key ) );
-	
+
 	}
 
 	/**
@@ -503,7 +505,7 @@ function _wprp_backups_api_call( $action ) {
 
 		case 'get_backup' :
 			return WPRP_Backups::get_instance()->get_backup();
-		
+
 		case 'delete_backup' :
 			return WPRP_Backups::get_instance()->cleanup();
 
@@ -534,9 +536,9 @@ function _wprp_get_backups_info() {
  * The calculated size is stored in a transient
  */
 function wprp_ajax_calculate_backup_size() {
-	
+
 	WPRP_Backups::get_instance()->get_filesize();
-	
+
 	exit;
 }
 add_action( 'wp_ajax_nopriv_wprp_calculate_backup_size', 'wprp_ajax_calculate_backup_size' );

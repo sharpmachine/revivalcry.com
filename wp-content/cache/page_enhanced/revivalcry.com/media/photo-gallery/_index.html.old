@@ -76,7 +76,7 @@
 <link rel='stylesheet' id='shopp.catalog-css'  href='http://revivalcry.com/wp-content/plugins/shopp/core/ui/styles/catalog.css?ver=1.1.9.1' type='text/css' media='screen' />
 <link rel='stylesheet' id='shopp-css'  href='http://revivalcry.com/wp-content/themes/revivalcry/shopp/shopp.css?ver=1.1.9.1' type='text/css' media='screen' />
 <link rel='stylesheet' id='shopp.colorbox-css'  href='http://revivalcry.com/wp-content/plugins/shopp/core/ui/styles/colorbox.css?ver=1.1.9.1' type='text/css' media='screen' />
-<link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='events-manager-css'  href='http://revivalcry.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=3.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='jetpack-widgets-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/widgets/widgets.css?ver=20121003' type='text/css' media='all' />
 <link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.2' type='text/css' media='all' />
@@ -739,7 +739,6 @@ var orangebox_vars = {"addThis":""};
 var sjss = {"cp":"1","c":"$","p":"2","t":",","d":".","g":"3","nocache":"","REQUIRED_FIELD":"Your %s is required.","INVALID_EMAIL":"The e-mail address you provided does not appear to be a valid address.","MIN_LENGTH":"The %s you entered is too short. It must be at least %d characters long.","PASSWORD_MISMATCH":"The passwords you entered do not match. They must match in order to confirm you are correctly entering the password you want to use.","REQUIRED_CHECKBOX":"%s must be checked before you can proceed."};/* ]]> */
 </script>
 <link rel='stylesheet' id='jetpack-carousel-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel.css?ver=20120629' type='text/css' media='all' />
-<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel-ie8fix.css?ver=20121024' type='text/css' media='all' />
 <script type='text/javascript'>
 /* <![CDATA[ */
 var _wpcf7 = {"loaderUrl":"http:\/\/revivalcry.com\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Sending ...","cached":"1"};
@@ -752,11 +751,11 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","ajaxurl":"http:\/\/revivalcry.com\/wp-admin\/admin-ajax.php","nonce":"07678d25e7","display_exif":"1","display_geo":"1","background_color":"black","comment":"Comment","post_comment":"Post Comment","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","ajaxurl":"http:\/\/revivalcry.com\/wp-admin\/admin-ajax.php","nonce":"2689ef3b74","display_exif":"1","display_geo":"1","background_color":"black","comment":"Comment","post_comment":"Post Comment","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.25.0-2013.01.18'></script>
-<script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.3.3'></script>
+<script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.32.0-2013.04.03'></script>
+<script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.4'></script>
 <script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201316'></script>
 <script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Apraa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
@@ -785,4 +784,4 @@ var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-04-15 13:57:06 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-04-21 16:30:47 by W3 Total Cache -->
