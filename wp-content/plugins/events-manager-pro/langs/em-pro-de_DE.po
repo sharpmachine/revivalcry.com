@@ -2,13 +2,16 @@
 # This file is distributed under the same license as the Events Manager Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-03-25 16:24:07+0000\n"
+"PO-Revision-Date: 2013-04-18 15:02+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
+"X-Generator: Poedit 1.5.5\n"
 "Project-Id-Version: Events Manager Pro\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Marcus Sykes <wp.plugins@netweblogic.com>\n"
+"Language-Team: \n"
 
 #: add-ons/bookings-form/attendee-forms.php:40
 msgid "Title"
@@ -47,8 +50,12 @@ msgid "Split bookings by attendee"
 msgstr "Reservierungen nach Teilnehmern aufteilen"
 
 #: add-ons/bookings-form/attendee-forms.php:360
-msgid "A row will be created for each space booked and will automatically include any attendee information associated with that booked ticket."
-msgstr "Für jeden reservierten Platz wird eine Zeile erstellt, die Teilnehmerinformationen des reservierten Tickets beinhaltet."
+msgid ""
+"A row will be created for each space booked and will automatically include "
+"any attendee information associated with that booked ticket."
+msgstr ""
+"Für jeden reservierten Platz wird eine Zeile erstellt, die "
+"Teilnehmerinformationen des reservierten Tickets beinhaltet."
 
 #: add-ons/bookings-form/attendee-forms.php:533
 #: add-ons/bookings-form/attendee-forms.php:705
@@ -60,8 +67,12 @@ msgid "Ticket"
 msgstr "Ticket"
 
 #: add-ons/bookings-form/attendee-forms.php:642 add-ons/bookings-form.php:454
-msgid "The form <em>%s</em> is now the default booking form. All events without a pre-defined booking form will start using this form from now on."
-msgstr "Das Formular <em>%s</em> ist jetzt das Standard-Reservierungsformular. Alle Veranstaltungen ohne eigenes Formular werden ab sofort dieses verwenden."
+msgid ""
+"The form <em>%s</em> is now the default booking form. All events without a "
+"pre-defined booking form will start using this form from now on."
+msgstr ""
+"Das Formular <em>%s</em> ist jetzt das Standard-Reservierungsformular. Alle "
+"Veranstaltungen ohne eigenes Formular werden ab sofort dieses verwenden."
 
 #: add-ons/bookings-form/attendee-forms.php:648 add-ons/bookings-form.php:460
 msgid "%s Deleted"
@@ -85,8 +96,11 @@ msgid "Attendee Form"
 msgstr "Teilnehmerformular"
 
 #: add-ons/bookings-form/attendee-forms.php:692
-msgid "If enabled, this form will be shown and required for every space booked."
-msgstr "Wenn aktiviert, wird dieses Formular angezeigt und ist für jeden reservierten Platz verpflichtend."
+msgid ""
+"If enabled, this form will be shown and required for every space booked."
+msgstr ""
+"Wenn aktiviert, wird dieses Formular angezeigt und ist für jeden "
+"reservierten Platz verpflichtend."
 
 #: add-ons/bookings-form/attendee-forms.php:695
 msgid "Enable Attendee Forms"
@@ -98,11 +112,15 @@ msgstr "Zum Standard machen"
 
 #: add-ons/bookings-form/attendee-forms.php:720 add-ons/bookings-form.php:516
 msgid ""
-"You are about to make this your default booking form. All events without an existing specifically chosen booking form will use this new default form from now on.\n"
+"You are about to make this your default booking form. All events without an "
+"existing specifically chosen booking form will use this new default form "
+"from now on.\n"
 "\n"
 " Are you sure you want to do this?"
 msgstr ""
-"Du bist dabei, diese Formular zu Deinem Standardformular zu machen. Alle Veranstaltungen, bei denen kein spezifisches Reservierungsformular angegeben wird, werden ab sofort dieses verwenden\n"
+"Du bist dabei, diese Formular zu Deinem Standardformular zu machen. Alle "
+"Veranstaltungen, bei denen kein spezifisches Reservierungsformular angegeben "
+"wird, werden ab sofort dieses verwenden\n"
 "\n"
 "Bist Du sicher?"
 
@@ -112,12 +130,21 @@ msgid "Add New"
 msgstr "Hinzufügen"
 
 #: add-ons/bookings-form/attendee-forms.php:732
-msgid "This is the default attendee form and will be used for any event where you have not chosen a speficic form to use."
-msgstr "Dies ist das Standard Teilnehmerformular, das für alle Veranstaltungen verwendet wird, für die Du nicht ein spezifisches Formular ausgewählt hast."
+msgid ""
+"This is the default attendee form and will be used for any event where you "
+"have not chosen a speficic form to use."
+msgstr ""
+"Dies ist das Standard Teilnehmerformular, das für alle Veranstaltungen "
+"verwendet wird, für die Du nicht ein spezifisches Formular ausgewählt hast."
 
 #: add-ons/bookings-form/attendee-forms.php:734
-msgid "If you don't want to ask for attendee information by default, select None as your booking form and make it the default form."
-msgstr "Wenn Du nicht standardmäßig nach Teilnehmerinformationen fragen willst, wähle \"Keines\" als Dein Reservierungsformular und mache es zum Standardformular"
+msgid ""
+"If you don't want to ask for attendee information by default, select None as "
+"your booking form and make it the default form."
+msgstr ""
+"Wenn Du nicht standardmäßig nach Teilnehmerinformationen fragen willst, "
+"wähle \"Keines\" als Dein Reservierungsformular und mache es zum "
+"Standardformular"
 
 #: add-ons/bookings-form/attendee-forms.php:738 add-ons/bookings-form.php:533
 msgid "You are now editing "
@@ -135,7 +162,8 @@ msgid ""
 msgstr ""
 "Bist Du sicher, dass Du dieses Formular löschen möchtest?\n"
 "\n"
-"Alle Veranstaltungen, die dieses Formular verwenden, werden dann automatisch das Standardformular verwenden."
+"Alle Veranstaltungen, die dieses Formular verwenden, werden dann automatisch "
+"das Standardformular verwenden."
 
 #: add-ons/bookings-form/attendee-forms.php:759
 msgid "Default Value"
@@ -143,7 +171,9 @@ msgstr "Standardwert"
 
 #: add-ons/bookings-form/attendee-forms.php:759
 msgid "No attendee form selected. Choose a form, or create a new one above."
-msgstr "Kein Teilnehmerformular ausgewählt. Wähle ein Formular oder erstelle oben ein neues."
+msgstr ""
+"Kein Teilnehmerformular ausgewählt. Wähle ein Formular oder erstelle oben "
+"ein neues."
 
 #: add-ons/bookings-form.php:43 add-ons/gateways.php:36 emp-install.php:126
 #: emp-install.php:137
@@ -176,28 +206,52 @@ msgid "Fax"
 msgstr "Fax"
 
 #: add-ons/bookings-form.php:392
-msgid "You can choose to use a custom booking form, or leave as is to use the default booking form."
-msgstr "Du kannst ein eigenes Reservierungsformular wählen, oder das Standardformular verwenden."
+msgid ""
+"You can choose to use a custom booking form, or leave as is to use the "
+"default booking form."
+msgstr ""
+"Du kannst ein eigenes Reservierungsformular wählen, oder das "
+"Standardformular verwenden."
 
 #: add-ons/bookings-form.php:394 add-ons/bookings-form.php:502
 msgid "Selected Booking Form"
 msgstr "Wähle Reservierungsformular"
 
 #: add-ons/bookings-form.php:439
-msgid "You must include an E-mail field type for booking forms to work. These are used to create the user account and aren't shown to logged in users."
-msgstr "Du musst ein Email Feld mit angeben, damit Reservierungsformulare funktionieren. Diese werden verwendet, um Benutzerkonten anzulegen und werden den angemeldeten Benutzern nicht gezeigt."
+msgid ""
+"You must include an E-mail field type for booking forms to work. These are "
+"used to create the user account and aren't shown to logged in users."
+msgstr ""
+"Du musst ein Email Feld mit angeben, damit Reservierungsformulare "
+"funktionieren. Diese werden verwendet, um Benutzerkonten anzulegen und "
+"werden den angemeldeten Benutzern nicht gezeigt."
 
 #: add-ons/bookings-form.php:498
-msgid "It is required that you have at least an email and name field so guest users can register."
-msgstr "Ein Email- und Namensfeld wird benötigt, dass sich Gast-Benutzer registrieren können."
+msgid ""
+"It is required that you have at least an email and name field so guest users "
+"can register."
+msgstr ""
+"Ein Email- und Namensfeld wird benötigt, dass sich Gast-Benutzer "
+"registrieren können."
 
 #: add-ons/bookings-form.php:499
-msgid "Registration fields are only shown to guest visitors by default. You can choose to show these fields and make them editable by logged in user in your <a href=\"%s\">PRO Booking Form Options</a>."
-msgstr "Registrierungsfelder werden nur Gastbenutzern standardmäßig angezeigt. Du kannst in Deinen <a href=\"%s\">PRO Reservierungsformular Optionen</a> einstellen, ob diese Felder nur angezeigt werden, oder vom angemeldeten Benutzer geändert werden können."
+msgid ""
+"Registration fields are only shown to guest visitors by default. You can "
+"choose to show these fields and make them editable by logged in user in your "
+"<a href=\"%s\">PRO Booking Form Options</a>."
+msgstr ""
+"Registrierungsfelder werden nur Gastbenutzern standardmäßig angezeigt. Du "
+"kannst in Deinen <a href=\"%s\">PRO Reservierungsformular Optionen</a> "
+"einstellen, ob diese Felder nur angezeigt werden, oder vom angemeldeten "
+"Benutzer geändert werden können."
 
 #: add-ons/bookings-form.php:528
-msgid "This is the default bookings form and will be used for any event where you have not chosen a speficic form to use."
-msgstr "Das ist das Standard-Reservierungsformular, das für jede Veranstaltung verwendet wird, für die Du kein spezifisches Formular ausgewählt hast."
+msgid ""
+"This is the default bookings form and will be used for any event where you "
+"have not chosen a speficic form to use."
+msgstr ""
+"Das ist das Standard-Reservierungsformular, das für jede Veranstaltung "
+"verwendet wird, für die Du kein spezifisches Formular ausgewählt hast."
 
 #: add-ons/coupons/coupon.php:53 add-ons/coupons.php:469
 #: add-ons/coupons.php:479
@@ -274,15 +328,20 @@ msgstr "Ungültiger Gutschein"
 
 #: add-ons/coupons.php:295
 msgid "Coupons selected here will be applied to bookings made for this event."
-msgstr "Hier ausgewählte Gutscheine werden für Reservierungen für diese Veranstaltung verwendet."
+msgstr ""
+"Hier ausgewählte Gutscheine werden für Reservierungen für diese "
+"Veranstaltung verwendet."
 
 #: add-ons/coupons.php:305
 msgid "No coupons created yet."
 msgstr "Noch keine Gutscheine erstellt."
 
 #: add-ons/coupons.php:308
-msgid "The following codes will be automatically available to this event as well"
-msgstr "Die folgenden Codes werden auch automatisch für diese Veranstaltungen verfügbar sein"
+msgid ""
+"The following codes will be automatically available to this event as well"
+msgstr ""
+"Die folgenden Codes werden auch automatisch für diese Veranstaltungen "
+"verfügbar sein"
 
 #: add-ons/coupons.php:438
 msgid "Edit Coupons"
@@ -334,7 +393,8 @@ msgstr "Gutschein Verwendungsverlauf"
 
 #: add-ons/coupons.php:558
 msgid "You are viewing the details of coupon %s - <a href=\"%s\">edit</a>"
-msgstr "Du siehst die Details des Gutscheins %s - <a href=\"%s\">bearbeiten</a>"
+msgstr ""
+"Du siehst die Details des Gutscheins %s - <a href=\"%s\">bearbeiten</a>"
 
 #: add-ons/coupons.php:587 add-ons/coupons.php:598
 msgid "Booker"
@@ -370,7 +430,8 @@ msgstr "Site-weiter Gutschein?"
 
 #: add-ons/coupons.php:681
 msgid "All events on this site will accept this coupon."
-msgstr "Alle Veranstaltungen auf dieser Website werden diesen Gutschein akzeptieren."
+msgstr ""
+"Alle Veranstaltungen auf dieser Website werden diesen Gutschein akzeptieren."
 
 #: add-ons/coupons.php:686
 msgid "Registered Users Only?"
@@ -437,16 +498,38 @@ msgid "Event Email Reminders"
 msgstr "Email Erinnerungen für Veranstaltungen"
 
 #: add-ons/emails.php:175
-msgid "Events Manager can send people that booked a place at your events a reminder email before it starts."
-msgstr "Events Manager kann den Veranstaltungsgästen vor Start der Veranstaltung eine Erinnerungs per Email senden."
+msgid ""
+"Events Manager can send people that booked a place at your events a reminder "
+"email before it starts."
+msgstr ""
+"Events Manager kann den Veranstaltungsgästen vor Start der Veranstaltung "
+"eine Erinnerungs per Email senden."
 
 #: add-ons/emails.php:176
-msgid "We use <a href=\"%s\">WP Cron</a> for scheduling checks for future events, which relies on site visits to trigger these tasks to run. If you have low levels of site traffic, this may not happen frequently enough, so you may want to consider forcing WP-Cron to run every few minutes. For more information, <a href=\"%s\">read this tutorial</a> on setting up WP Cron."
-msgstr "Wir verwenden <a href=\"%s\">WP Cron</a> für zeitgesteuerte Aktionen für zukünftige Veranstaltungen. Das Auslösen von Aktionen ist von Seitenbesuchen abhängig. Wenn Du niedrige Zugriffszahlen auf Deiner Website hast, könnte es sein, dass zeitgesteuerte Aktionen nicht häufig genug ausgelöst werden. In diesem Fall kannst Du WP Cron so einstellen, dass es alle paar Minuten automatisch läuft. Für weitere Informationen, <a href=\"%s\">siehe dieses Tutorial</a> über die Konfiguration von WP Cron."
+msgid ""
+"We use <a href=\"%s\">WP Cron</a> for scheduling checks for future events, "
+"which relies on site visits to trigger these tasks to run. If you have low "
+"levels of site traffic, this may not happen frequently enough, so you may "
+"want to consider forcing WP-Cron to run every few minutes. For more "
+"information, <a href=\"%s\">read this tutorial</a> on setting up WP Cron."
+msgstr ""
+"Wir verwenden <a href=\"%s\">WP Cron</a> für zeitgesteuerte Aktionen für "
+"zukünftige Veranstaltungen. Das Auslösen von Aktionen ist von Seitenbesuchen "
+"abhängig. Wenn Du niedrige Zugriffszahlen auf Deiner Website hast, könnte es "
+"sein, dass zeitgesteuerte Aktionen nicht häufig genug ausgelöst werden. In "
+"diesem Fall kannst Du WP Cron so einstellen, dass es alle paar Minuten "
+"automatisch läuft. Für weitere Informationen, <a href=\"%s\">siehe dieses "
+"Tutorial</a> über die Konfiguration von WP Cron."
 
 #: add-ons/emails.php:178
-msgid "<strong>Important!</strong>, you should use SMTP as your email setup if you are sending automated emails in this way for optimal performance. Other methods are not suited to sending mass emails."
-msgstr "<strong>Wichtig!</strong> Verwende SMTP als Email Einstellung für beste Leistung, wenn Du auf diesem Weg automatische Emails senden willst. Andere Methoden sind nicht geeignet für Massen-Emails."
+msgid ""
+"<strong>Important!</strong>, you should use SMTP as your email setup if you "
+"are sending automated emails in this way for optimal performance. Other "
+"methods are not suited to sending mass emails."
+msgstr ""
+"<strong>Wichtig!</strong> Verwende SMTP als Email Einstellung für beste "
+"Leistung, wenn Du auf diesem Weg automatische Emails senden willst. Andere "
+"Methoden sind nicht geeignet für Massen-Emails."
 
 #: add-ons/emails.php:181
 msgid "Enable Email Reminders?"
@@ -457,24 +540,42 @@ msgid "Days before reminder"
 msgstr "Tage vor der Erinnerung"
 
 #: add-ons/emails.php:182
-msgid "You can choose to send people attending your event x days before the event starts. Minimum is one day."
-msgstr "Du kannst eine automatische Erinnerung x Tage vor der Veranstaltung an die Teilnhemer senden. Minimum ist ein Tag."
+msgid ""
+"You can choose to send people attending your event x days before the event "
+"starts. Minimum is one day."
+msgstr ""
+"Du kannst eine automatische Erinnerung x Tage vor der Veranstaltung an die "
+"Teilnhemer senden. Minimum ist ein Tag."
 
 #: add-ons/emails.php:183
 msgid "Attach ical invite?"
 msgstr "Hänge ical Einladung an?"
 
 #: add-ons/emails.php:183
-msgid "If using SMTP in your email settings. You can automatically attach an ical file which some email clients (e.g. gmail) will render as an invitation they can add to their calendar."
-msgstr "Wenn Du SMTP in Deinen Email Einstellungen verwendest, kannst Du automatisch eine iCal Datei zur Veranstaltungsbestätigung anhängen lassen, die manche Email Programme als Kalendereinladung interpretieren."
+msgid ""
+"If using SMTP in your email settings. You can automatically attach an ical "
+"file which some email clients (e.g. gmail) will render as an invitation they "
+"can add to their calendar."
+msgstr ""
+"Wenn Du SMTP in Deinen Email Einstellungen verwendest, kannst Du automatisch "
+"eine iCal Datei zur Veranstaltungsbestätigung anhängen lassen, die manche "
+"Email Programme als Kalendereinladung interpretieren."
 
 #: add-ons/emails.php:187
 msgid "WP Cron Time"
 msgstr "WP Cron Zeit"
 
 #: add-ons/emails.php:190
-msgid "Every day Events Manager automatically checks upcoming events in order to generate emails. You can choose at what time of day to run this check, if your site has a lot of traffic, it may help having this run at times of lower server loads."
-msgstr "Events Manager überprüft täglich anstehende Veranstaltungen, um Emails zu generieren. Du kannst einstellen, zu welcher Tageszeit diese Überprüfungen laufen. Wenn Deine Site viele Zugriffe hat, kannst Du dies zu Zeiten niedrigerer Last laufen lassen."
+msgid ""
+"Every day Events Manager automatically checks upcoming events in order to "
+"generate emails. You can choose at what time of day to run this check, if "
+"your site has a lot of traffic, it may help having this run at times of "
+"lower server loads."
+msgstr ""
+"Events Manager überprüft täglich anstehende Veranstaltungen, um Emails zu "
+"generieren. Du kannst einstellen, zu welcher Tageszeit diese Überprüfungen "
+"laufen. Wenn Deine Site viele Zugriffe hat, kannst Du dies zu Zeiten "
+"niedrigerer Last laufen lassen."
 
 #: add-ons/emails.php:194
 msgid "Reminder subject"
@@ -511,8 +612,12 @@ msgid "Success Message"
 msgstr "Erfolgsmeldung"
 
 #: add-ons/gateways/gateway.authorize.aim.php:346
-msgid "The message that is shown to a user when a booking is successful and payment has been taken."
-msgstr "Diese Nachricht wird gezeigt, wenn eine erfolgreiche Reservierung und Bezahlung erfolgt ist."
+msgid ""
+"The message that is shown to a user when a booking is successful and payment "
+"has been taken."
+msgstr ""
+"Diese Nachricht wird gezeigt, wenn eine erfolgreiche Reservierung und "
+"Bezahlung erfolgt ist."
 
 #: add-ons/gateways/gateway.authorize.aim.php:350
 #: add-ons/gateways/gateway.paypal.php:459
@@ -520,8 +625,13 @@ msgid "Success Free Message"
 msgstr "Erfolg freie Nachricht"
 
 #: add-ons/gateways/gateway.authorize.aim.php:353
-msgid "If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be charged."
-msgstr "Wenn Du kostenfreie (z.B. Reservierung für Abendkasse) und kostenpflichtige Tickets anbietes, wird diese Nachricht angezeigt und der Benutzer wird nicht zur Zahlung aufgefordert."
+msgid ""
+"If some cases if you allow a free ticket (e.g. pay at gate) as well as paid "
+"tickets, this message will be shown and the user will not be charged."
+msgstr ""
+"Wenn Du kostenfreie (z.B. Reservierung für Abendkasse) und kostenpflichtige "
+"Tickets anbietes, wird diese Nachricht angezeigt und der Benutzer wird nicht "
+"zur Zahlung aufgefordert."
 
 #: add-ons/gateways/gateway.authorize.aim.php:358
 #: add-ons/gateways/gateway.authorize.aim.php:401
@@ -530,8 +640,12 @@ msgid "%s Options"
 msgstr "%s Optionen"
 
 #: add-ons/gateways/gateway.authorize.aim.php:359
-msgid "Please visit the <a href=\"%s\">documentation</a> for further instructions on setting up Authorize.net with Events Manager."
-msgstr "Lies die <a href=\"%s\">Dokumentation</a> für weitere Instruktionen zur Konfiguration von Authorize.net für Events Manager."
+msgid ""
+"Please visit the <a href=\"%s\">documentation</a> for further instructions "
+"on setting up Authorize.net with Events Manager."
+msgstr ""
+"Lies die <a href=\"%s\">Dokumentation</a> für weitere Instruktionen zur "
+"Konfiguration von Authorize.net für Events Manager."
 
 #: add-ons/gateways/gateway.authorize.aim.php:363
 msgid "Mode"
@@ -546,8 +660,15 @@ msgid "Live"
 msgstr "Live"
 
 #: add-ons/gateways/gateway.authorize.aim.php:371
-msgid "Please visit <a href=\"%s\">Authorize.net</a> to set up a sandbox account if you would like to test this gateway out. Alternatively, you can use your real account in test mode, which you can set on your Authorize.net control panel."
-msgstr "Besuche <a href=\"%s\">Authorize.net</a>, um ein Sandbox Konto einzurichten, wenn Du dieses Gateway testen willst. Alternativ kannst Du auch über Dein Authorize.net Control Panel ein reales Konto in den Testmodus versetzen."
+msgid ""
+"Please visit <a href=\"%s\">Authorize.net</a> to set up a sandbox account if "
+"you would like to test this gateway out. Alternatively, you can use your "
+"real account in test mode, which you can set on your Authorize.net control "
+"panel."
+msgstr ""
+"Besuche <a href=\"%s\">Authorize.net</a>, um ein Sandbox Konto einzurichten, "
+"wenn Du dieses Gateway testen willst. Alternativ kannst Du auch über Dein "
+"Authorize.net Control Panel ein reales Konto in den Testmodus versetzen."
 
 #: add-ons/gateways/gateway.authorize.aim.php:375
 msgid "API Login ID"
@@ -562,8 +683,15 @@ msgid "Payment Notifications"
 msgstr "Zahlungshinweis"
 
 #: add-ons/gateways/gateway.authorize.aim.php:384
-msgid "If you would like to receive notifications from Authorize.net and handle refunds or voided transactions automatically, you need to enable Silent Post URL and provide an MD5 Hash in your merchant interface."
-msgstr "Wenn Du Benachrichtigungen von Authorize.net erhalten möchtest und Rückerstattungen oder ungültige Transaktionen automatisch bearbeiten lassen möchtest, musst Du die Silent Post URL aktivieren und einen MD5 Hash in Deinem Händler-Interface angeben."
+msgid ""
+"If you would like to receive notifications from Authorize.net and handle "
+"refunds or voided transactions automatically, you need to enable Silent Post "
+"URL and provide an MD5 Hash in your merchant interface."
+msgstr ""
+"Wenn Du Benachrichtigungen von Authorize.net erhalten möchtest und "
+"Rückerstattungen oder ungültige Transaktionen automatisch bearbeiten lassen "
+"möchtest, musst Du die Silent Post URL aktivieren und einen MD5 Hash in "
+"Deinem Händler-Interface angeben."
 
 #: add-ons/gateways/gateway.authorize.aim.php:385
 msgid "Your return url is %s."
@@ -578,8 +706,11 @@ msgid "Security: MD5 Hash"
 msgstr "Sicherheit: MD5 Hash"
 
 #: add-ons/gateways/gateway.authorize.aim.php:391
-msgid "This string of text needs to match that in your merchant interface settings."
-msgstr "Diese Zeichenfolge muss der Zeichenfolge in Deinen Händler-Interface Einstellungen entsprechen."
+msgid ""
+"This string of text needs to match that in your merchant interface settings."
+msgstr ""
+"Diese Zeichenfolge muss der Zeichenfolge in Deinen Händler-Interface "
+"Einstellungen entsprechen."
 
 #: add-ons/gateways/gateway.authorize.aim.php:395
 msgid "User Login ID"
@@ -607,16 +738,28 @@ msgstr "Empfänger erhält folgende Email Fußzeile"
 
 #: add-ons/gateways/gateway.authorize.aim.php:425
 #: add-ons/gateways/gateway.paypal.php:563
-msgid "Approvals must also be required for all bookings in your <a href=\"%s\">settings</a> for this to work properly."
-msgstr "Damit dies funktioniert, müssen Genehmigungen für alle Reservierungen in Deinen <a href=\"%s\">Einstellungen</a> aktiviert sein."
+msgid ""
+"Approvals must also be required for all bookings in your <a href=\"%s"
+"\">settings</a> for this to work properly."
+msgstr ""
+"Damit dies funktioniert, müssen Genehmigungen für alle Reservierungen in "
+"Deinen <a href=\"%s\">Einstellungen</a> aktiviert sein."
 
 #: add-ons/gateways/gateway.offline.php:57
-msgid "Please enter a valid payment amount. Numbers only, use negative number to credit a booking."
-msgstr "Bitte gib einen gültigen Zahlungsbetrag ein. Nur Ziffern. Benutze negative Zahlen für eine Gutschrift."
+msgid ""
+"Please enter a valid payment amount. Numbers only, use negative number to "
+"credit a booking."
+msgstr ""
+"Bitte gib einen gültigen Zahlungsbetrag ein. Nur Ziffern. Benutze negative "
+"Zahlen für eine Gutschrift."
 
 #: add-ons/gateways/gateway.offline.php:189
-msgid "Please enter a valid payment amount (e.g. 10.00). Use negative numbers to credit a booking."
-msgstr "Bitte gib einen gültigen Betrag ein (z.B. 10,00). Benutze negative Zahlen für eine Gutschrift."
+msgid ""
+"Please enter a valid payment amount (e.g. 10.00). Use negative numbers to "
+"credit a booking."
+msgstr ""
+"Bitte gib einen gültigen Betrag ein (z.B. 10,00). Benutze negative Zahlen "
+"für eine Gutschrift."
 
 #: add-ons/gateways/gateway.offline.php:234
 msgid "Go back to &quot;%s&quot; bookings"
@@ -644,20 +787,32 @@ msgid "Fully Paid"
 msgstr "Vollständig beahlt"
 
 #: add-ons/gateways/gateway.offline.php:363
-msgid "If you check this as fully paid, and leave the amount paid blank, it will be assumed the full payment has been made."
-msgstr "Wenn Du dies als komplett bezahlt markierst und den Betrag leer läßt, wird angenommen, dass eine vollständige Bezahlung durchgeführt wurde."
+msgid ""
+"If you check this as fully paid, and leave the amount paid blank, it will be "
+"assumed the full payment has been made."
+msgstr ""
+"Wenn Du dies als komplett bezahlt markierst und den Betrag leer läßt, wird "
+"angenommen, dass eine vollständige Bezahlung durchgeführt wurde."
 
 #: add-ons/gateways/gateway.offline.php:389
-msgid "The message that is shown to a user when a booking with offline payments is successful."
-msgstr "Diese Nachricht wird dem Benutzer angezeigt, wenn eine Reservierung mit Offline-Bezahlung erfolgreich war."
+msgid ""
+"The message that is shown to a user when a booking with offline payments is "
+"successful."
+msgstr ""
+"Diese Nachricht wird dem Benutzer angezeigt, wenn eine Reservierung mit "
+"Offline-Bezahlung erfolgreich war."
 
 #: add-ons/gateways/gateway.paypal.php:22
 msgid "Awaiting PayPal Payment"
 msgstr "PayPal Zahlung erwartet"
 
 #: add-ons/gateways/gateway.paypal.php:80
-msgid "To finalize your booking, please click the following button to proceed to PayPal."
-msgstr "Um Deine Reservierung abzuschließen, klicke bitte den folgenden Knopf für die Weiterleitung zu PayPal."
+msgid ""
+"To finalize your booking, please click the following button to proceed to "
+"PayPal."
+msgstr ""
+"Um Deine Reservierung abzuschließen, klicke bitte den folgenden Knopf für "
+"die Weiterleitung zu PayPal."
 
 #: add-ons/gateways/gateway.paypal.php:418
 msgid "Unknown"
@@ -668,56 +823,96 @@ msgid "Unprocessed payment needs refund"
 msgstr "Unbearbeitete Zahlung benötigt Erstattung"
 
 #: add-ons/gateways/gateway.paypal.php:455
-msgid "The message that is shown to a user when a booking is successful whilst being redirected to PayPal for payment."
-msgstr "Diese Nachricht wird einem Benutzer nach erfolgreicher Reservierung angezeigt, während er nach PayPal zur Bezahlung umgeleitet wird."
+msgid ""
+"The message that is shown to a user when a booking is successful whilst "
+"being redirected to PayPal for payment."
+msgstr ""
+"Diese Nachricht wird einem Benutzer nach erfolgreicher Reservierung "
+"angezeigt, während er nach PayPal zur Bezahlung umgeleitet wird."
 
 #: add-ons/gateways/gateway.paypal.php:462
-msgid "If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected to PayPal."
-msgstr "Diese Nachricht wird in manchen Fällen angezeigt, wenn Du sowohl kostenlose Tickets (z.B. Reservierung für Abendkasse), als auch kostenpflichtige Tickets ermöglichst. Eine Umleitung zu PayPal erfolgt nicht."
+msgid ""
+"If some cases if you allow a free ticket (e.g. pay at gate) as well as paid "
+"tickets, this message will be shown and the user will not be redirected to "
+"PayPal."
+msgstr ""
+"Diese Nachricht wird in manchen Fällen angezeigt, wenn Du sowohl kostenlose "
+"Tickets (z.B. Reservierung für Abendkasse), als auch kostenpflichtige "
+"Tickets ermöglichst. Eine Umleitung zu PayPal erfolgt nicht."
 
 #: add-ons/gateways/gateway.paypal.php:466
 msgid "Thank You Message"
 msgstr "Dankesnachricht"
 
 #: add-ons/gateways/gateway.paypal.php:469
-msgid "If you choose to return users to the default Events Manager thank you page after a user has paid on PayPal, you can customize the thank you message here."
-msgstr "Wenn Du nach der erfolgreichen PayPal Zahlung zur Standard Events Manager Dankeschön-Seite zurück kehren willst, kannst Du die angezeigte Danke-Nachricht hier angeben."
+msgid ""
+"If you choose to return users to the default Events Manager thank you page "
+"after a user has paid on PayPal, you can customize the thank you message "
+"here."
+msgstr ""
+"Wenn Du nach der erfolgreichen PayPal Zahlung zur Standard Events Manager "
+"Dankeschön-Seite zurück kehren willst, kannst Du die angezeigte Danke-"
+"Nachricht hier angeben."
 
 #: add-ons/gateways/gateway.paypal.php:476
-msgid "<strong>Important:</strong>In order to connect PayPal with your site, you need to enable IPN on your account."
-msgstr "<strong>Wichtig:</strong>Wenn du PayPal mit deiner Seite verbindest, musst du IPN bei deinem Account erlauben."
+msgid ""
+"<strong>Important:</strong>In order to connect PayPal with your site, you "
+"need to enable IPN on your account."
+msgstr ""
+"<strong>Wichtig:</strong>Wenn du PayPal mit deiner Seite verbindest, musst "
+"du IPN bei deinem Account erlauben."
 
 #: add-ons/gateways/gateway.paypal.php:476
 msgid "Your return url is %s"
 msgstr "Deine Rücksendeadresse lautet %s"
 
 #: add-ons/gateways/gateway.paypal.php:477
-msgid "Please visit the <a href=\"%s\">documentation</a> for further instructions."
-msgstr "Bitte lies die <a href=\"%s\">Dokumentation</a> für weitere Instruktionen."
+msgid ""
+"Please visit the <a href=\"%s\">documentation</a> for further instructions."
+msgstr ""
+"Bitte lies die <a href=\"%s\">Dokumentation</a> für weitere Instruktionen."
 
 #: add-ons/gateways/gateway.paypal.php:492
 msgid "PayPal Language"
 msgstr "PayPal Sprache"
 
 #: add-ons/gateways/gateway.paypal.php:510
-msgid "PayPal allows you to select a default language users will see. This is also determined by PayPal which detects the locale of the users browser. The default would be US."
-msgstr "Du kannst mit PayPal die Standardsprache einstellen. PayPal erkennt die Sprache auch aus dem Browser des Benutzers. Der Standardwert ist US."
+msgid ""
+"PayPal allows you to select a default language users will see. This is also "
+"determined by PayPal which detects the locale of the users browser. The "
+"default would be US."
+msgstr ""
+"Du kannst mit PayPal die Standardsprache einstellen. PayPal erkennt die "
+"Sprache auch aus dem Browser des Benutzers. Der Standardwert ist US."
 
 #: add-ons/gateways/gateway.paypal.php:524
 msgid "Return URL"
 msgstr "Rückkehr URL"
 
 #: add-ons/gateways/gateway.paypal.php:527
-msgid "Once a payment is completed, users will be offered a link to this URL which confirms to the user that a payment is made. If you would to customize the thank you page, create a new page and add the link here. For automatic redirect, you need to turn auto-return on in your PayPal settings."
-msgstr "Wenn eine Zahlung durchgeführt wurde, wird dem Benutzer ein Link zu einer URL mit der Zahlungsbestätigung angezeigt. Wenn Du diese Seite anpassen möchtest, kreiere eine neue Seite und gib den Link hier ein. Für eine automatische Umleitung musst Du die Auto-Return Funktion in Deinen PayPal Einstellungen aktivieren."
+msgid ""
+"Once a payment is completed, users will be offered a link to this URL which "
+"confirms to the user that a payment is made. If you would to customize the "
+"thank you page, create a new page and add the link here. For automatic "
+"redirect, you need to turn auto-return on in your PayPal settings."
+msgstr ""
+"Wenn eine Zahlung durchgeführt wurde, wird dem Benutzer ein Link zu einer "
+"URL mit der Zahlungsbestätigung angezeigt. Wenn Du diese Seite anpassen "
+"möchtest, kreiere eine neue Seite und gib den Link hier ein. Für eine "
+"automatische Umleitung musst Du die Auto-Return Funktion in Deinen PayPal "
+"Einstellungen aktivieren."
 
 #: add-ons/gateways/gateway.paypal.php:531
 msgid "Cancel URL"
 msgstr "Abbruch URL"
 
 #: add-ons/gateways/gateway.paypal.php:534
-msgid "Whilst paying on PayPal, if a user cancels, they will be redirected to this page."
-msgstr "Wenn der Benutzer den PayPal Zahlungsvorgang abbricht, wird er auf diese Seite umgeleitet."
+msgid ""
+"Whilst paying on PayPal, if a user cancels, they will be redirected to this "
+"page."
+msgstr ""
+"Wenn der Benutzer den PayPal Zahlungsvorgang abbricht, wird er auf diese "
+"Seite umgeleitet."
 
 #: add-ons/gateways/gateway.paypal.php:552
 msgid "Delete Bookings Pending Payment"
@@ -728,44 +923,78 @@ msgid "minutes"
 msgstr "Minuten"
 
 #: add-ons/gateways/gateway.paypal.php:555
-msgid "Once a booking is started and the user is taken to PayPal, Events Manager stores a booking record in the database to identify the incoming payment. These spaces may be considered reserved if you enable <em>Reserved unconfirmed spaces?</em> in your Events &gt; Settings page. If you would like these bookings to expire after x minutes, please enter a value above (note that bookings will be deleted, and any late payments will need to be refunded manually via PayPal)."
-msgstr "Wenn eine Reservierung gestartet und der Benutzer zu PayPal umgeleitet wird, speichert Events Manager einen Reservierungsdatensatz in der Datenbank, um die eingehende Zahlung zu identifizieren. Diese Pläte können als reserviert betrachtet werden, wenn Du <em>Unbestätigte Plätze reservieren</em> bei Veranstaltungen &gt; Einstellungen aktivierst. Wenn Du willst, dass diese Reservierungen nach x Minuten ungültig werden, gib bitte oben einen Wert ein. (Beachte, dass Reservierungen gelöscht werden und spätere Zahlungsvorgänge manuell via PayPal erstattet werden müssen)."
+msgid ""
+"Once a booking is started and the user is taken to PayPal, Events Manager "
+"stores a booking record in the database to identify the incoming payment. "
+"These spaces may be considered reserved if you enable <em>Reserved "
+"unconfirmed spaces?</em> in your Events &gt; Settings page. If you would "
+"like these bookings to expire after x minutes, please enter a value above "
+"(note that bookings will be deleted, and any late payments will need to be "
+"refunded manually via PayPal)."
+msgstr ""
+"Wenn eine Reservierung gestartet und der Benutzer zu PayPal umgeleitet wird, "
+"speichert Events Manager einen Reservierungsdatensatz in der Datenbank, um "
+"die eingehende Zahlung zu identifizieren. Diese Pläte können als reserviert "
+"betrachtet werden, wenn Du <em>Unbestätigte Plätze reservieren</em> bei "
+"Veranstaltungen &gt; Einstellungen aktivierst. Wenn Du willst, dass diese "
+"Reservierungen nach x Minuten ungültig werden, gib bitte oben einen Wert "
+"ein. (Beachte, dass Reservierungen gelöscht werden und spätere "
+"Zahlungsvorgänge manuell via PayPal erstattet werden müssen)."
 
 #: add-ons/gateways/gateway.php:386
 msgid "Gateway Title"
 msgstr "Gateway Titel"
 
 #: add-ons/gateways/gateway.php:390 add-ons/gateways/gateway.php:400
-msgid "Only if you have not enabled quick pay buttons in your <a href=\"%s\">gateway settings</a>."
-msgstr "Nur, wenn Du Quick Pay Buttons in Deinen <a href=\"%s\">Gateway Einstellungen</a> nicht aktiviert hast."
+msgid ""
+"Only if you have not enabled quick pay buttons in your <a href=\"%s"
+"\">gateway settings</a>."
+msgstr ""
+"Nur, wenn Du Quick Pay Buttons in Deinen <a href=\"%s\">Gateway "
+"Einstellungen</a> nicht aktiviert hast."
 
 #: add-ons/gateways/gateway.php:391
-msgid "The user will see this as the text option when choosing a payment method."
-msgstr "Der Benutzer sieht dies als Textoption, wenn er eine Zahlungsmethode auswählt."
+msgid ""
+"The user will see this as the text option when choosing a payment method."
+msgstr ""
+"Der Benutzer sieht dies als Textoption, wenn er eine Zahlungsmethode "
+"auswählt."
 
 #: add-ons/gateways/gateway.php:396
 msgid "Booking Form Information"
 msgstr "Reservierungsformular-Informationen"
 
 #: add-ons/gateways/gateway.php:401
-msgid "If a user chooses to pay with this gateway, or it is selected by default, this message will be shown just below the selection."
-msgstr "Wenn ein Benutzer dieses Zahlungsgateway wählt, oder es standardmäßig gewählt ist, wird diese Nachricht unter der Auswahl angezeigt."
+msgid ""
+"If a user chooses to pay with this gateway, or it is selected by default, "
+"this message will be shown just below the selection."
+msgstr ""
+"Wenn ein Benutzer dieses Zahlungsgateway wählt, oder es standardmäßig "
+"gewählt ist, wird diese Nachricht unter der Auswahl angezeigt."
 
 #: add-ons/gateways/gateway.php:409
 msgid "Quick Pay Buttons"
 msgstr "Quick Pay Buttons"
 
 #: add-ons/gateways/gateway.php:410
-msgid "If you have chosen to only use quick pay buttons in your <a href=\"%s\">gateway settings</a>, these settings below will be used."
-msgstr "Wenn Du  ausschließlich Quick Pay Buttons in Deinen <a href=\"%s\">Gateway Einstellungen</a> ausgewählt hast, werden die Einstellungen unten verwendet."
+msgid ""
+"If you have chosen to only use quick pay buttons in your <a href=\"%s"
+"\">gateway settings</a>, these settings below will be used."
+msgstr ""
+"Wenn Du  ausschließlich Quick Pay Buttons in Deinen <a href=\"%s\">Gateway "
+"Einstellungen</a> ausgewählt hast, werden die Einstellungen unten verwendet."
 
 #: add-ons/gateways/gateway.php:414
 msgid "Payment Button"
 msgstr "Zahlungsknopf"
 
 #: add-ons/gateways/gateway.php:417
-msgid "Choose the button text. To use an image instead, enter the full url starting with %s or %s."
-msgstr "Wähle den Button Text. Um stattdessen ein Bild zu verwenden, gib die vollständige URL, beginnend mit %s oder %s ein."
+msgid ""
+"Choose the button text. To use an image instead, enter the full url starting "
+"with %s or %s."
+msgstr ""
+"Wähle den Button Text. Um stattdessen ein Bild zu verwenden, gib die "
+"vollständige URL, beginnend mit %s oder %s ein."
 
 #: add-ons/gateways/gateways.transactions.php:98
 msgid "Gateway"
@@ -808,12 +1037,17 @@ msgid "Company"
 msgstr "Firma"
 
 #: add-ons/gateways.php:50
-msgid "All transactional history associated with this booking will also be deleted."
+msgid ""
+"All transactional history associated with this booking will also be deleted."
 msgstr "Die Transaktionshistorie dieser Reservierung wird ebenfalls gelöscht."
 
 #: add-ons/gateways.php:51
-msgid "Are you sure you want to delete? This may make your transaction history out of sync with your payment gateway provider."
-msgstr "Bist Du sicher, dass Du löschen willst? Die Transaktionshistorie mit Deinem Zahlungsgateway Betreiber gerät dadurch eventuell durcheinander."
+msgid ""
+"Are you sure you want to delete? This may make your transaction history out "
+"of sync with your payment gateway provider."
+msgstr ""
+"Bist Du sicher, dass Du löschen willst? Die Transaktionshistorie mit Deinem "
+"Zahlungsgateway Betreiber gerät dadurch eventuell durcheinander."
 
 #: add-ons/gateways.php:57
 msgid "Awaiting Online Payment"
@@ -824,8 +1058,14 @@ msgid "Awaiting Offline Payment"
 msgstr "Offline Zahlung ausstehend"
 
 #: add-ons/gateways.php:121
-msgid "Choice of payment method not recognized. If you are seeing this error and selecting a method of payment, we apologize for the inconvenience. Please contact us and we'll help you make a booking as soon as possible."
-msgstr "Zahlungsmethode nicht erkannt. Wenn Du diese Fehlermeldung siehst, kontaktiere uns und wir helfen Dir, Deine Reservierung so schnell wie möglich durchzuführen. Entschuldigung für die Unannehmlichkeiten."
+msgid ""
+"Choice of payment method not recognized. If you are seeing this error and "
+"selecting a method of payment, we apologize for the inconvenience. Please "
+"contact us and we'll help you make a booking as soon as possible."
+msgstr ""
+"Zahlungsmethode nicht erkannt. Wenn Du diese Fehlermeldung siehst, "
+"kontaktiere uns und wir helfen Dir, Deine Reservierung so schnell wie "
+"möglich durchzuführen. Entschuldigung für die Unannehmlichkeiten."
 
 #: add-ons/gateways.php:245
 msgid "Payment Gateway Options"
@@ -836,16 +1076,30 @@ msgid "Enable Quick Pay Buttons?"
 msgstr "Quick Pay Button aktivieren?"
 
 #: add-ons/gateways.php:249
-msgid "Only works with gateways that do not require additional payment information to be submitted (e.g. PayPal and Offline payments). If enabled, the default booking form submit button is not used, and each gateway will have a button (or image, see <a href=\"%s\">individual gateway settings</a>) which if clicked on will submit a booking for that gateway."
-msgstr "Funktioniert nur mit Gateways, die keine weiteren Zahlungsinformationen benötigen (z.B. PayPal und Offline Zahlungen). Wenn aktiviert, wird der Standard Bestätigungs-Knopf nicht benutzt und jedes Gateway wird einen Knopf haben (oder ein Bild, siehe <a href=\"%s\">individuelle Gateway Einstellungen</a>)."
+msgid ""
+"Only works with gateways that do not require additional payment information "
+"to be submitted (e.g. PayPal and Offline payments). If enabled, the default "
+"booking form submit button is not used, and each gateway will have a button "
+"(or image, see <a href=\"%s\">individual gateway settings</a>) which if "
+"clicked on will submit a booking for that gateway."
+msgstr ""
+"Funktioniert nur mit Gateways, die keine weiteren Zahlungsinformationen "
+"benötigen (z.B. PayPal und Offline Zahlungen). Wenn aktiviert, wird der "
+"Standard Bestätigungs-Knopf nicht benutzt und jedes Gateway wird einen Knopf "
+"haben (oder ein Bild, siehe <a href=\"%s\">individuelle Gateway "
+"Einstellungen</a>)."
 
 #: add-ons/gateways.php:250
 msgid "Gateway Label"
 msgstr "Gateway Bezeichnung"
 
 #: add-ons/gateways.php:250
-msgid "If you are not using quick pay buttons a drop-down menu will be used, with this label."
-msgstr "Wenn Du keine Quick Pay Buttons verwendest, erscheint eine Auswahlbox mit dieser Bezeichnung."
+msgid ""
+"If you are not using quick pay buttons a drop-down menu will be used, with "
+"this label."
+msgstr ""
+"Wenn Du keine Quick Pay Buttons verwendest, erscheint eine Auswahlbox mit "
+"dieser Bezeichnung."
 
 #: add-ons/gateways.php:394
 msgid "No Payment gateways were found for this install."
@@ -856,20 +1110,36 @@ msgid "Common User Fields for Gateways"
 msgstr "Allgemeine Benutzerfelder für Gateways"
 
 #: add-ons/gateways.php:545
-msgid "In many cases, customer address information is required by gateways for verification. This section connects your custom fields to commonly used customer information fields."
-msgstr "In vielen Fällen ist die Kundenadresse vom Gateway zur Überprüfung erforderlich.  Dieser Bereich verbindet individuelle Felder mit gewöhnlich genutzten Benutzerinformationsfeldern."
+msgid ""
+"In many cases, customer address information is required by gateways for "
+"verification. This section connects your custom fields to commonly used "
+"customer information fields."
+msgstr ""
+"In vielen Fällen ist die Kundenadresse vom Gateway zur Überprüfung "
+"erforderlich.  Dieser Bereich verbindet individuelle Felder mit gewöhnlich "
+"genutzten Benutzerinformationsfeldern."
 
 #: add-ons/gateways.php:546
-msgid "After creating user fields above, you should link them up in here so some gateways can make use of them when processing payments."
-msgstr "Nach dem Anlegen der Benutzerfelder oben solltest Du sie hier verlinken, so dass einige Gateways sie für die Zahlungsverarbeitung verwenden können."
+msgid ""
+"After creating user fields above, you should link them up in here so some "
+"gateways can make use of them when processing payments."
+msgstr ""
+"Nach dem Anlegen der Benutzerfelder oben solltest Du sie hier verlinken, so "
+"dass einige Gateways sie für die Zahlungsverarbeitung verwenden können."
 
 #: add-ons/gateways.php:549
 msgid "Name (first/last)"
 msgstr "Name (Vorname/Nachname)"
 
 #: add-ons/gateways.php:549
-msgid "Generated accordingly from user first/last name or full name field. If a name field isn't provided in your booking form, the username will be used instead."
-msgstr "Entsprechend generiert aus dem Vor-/Nachnamen oder vollständigem Namensfeld. Wenn kein Name im Reservierungsformular angegeben wird, wird stattdessen der Benutzername verwendet."
+msgid ""
+"Generated accordingly from user first/last name or full name field. If a "
+"name field isn't provided in your booking form, the username will be used "
+"instead."
+msgstr ""
+"Entsprechend generiert aus dem Vor-/Nachnamen oder vollständigem Namensfeld. "
+"Wenn kein Name im Reservierungsformular angegeben wird, wird stattdessen der "
+"Benutzername verwendet."
 
 #: add-ons/gateways.php:550
 msgid "Uses the WordPress account email associated with the user."
@@ -896,20 +1166,37 @@ msgid "User Fields"
 msgstr "Benutzerfelder"
 
 #: add-ons/user-fields.php:261
-msgid "Registration fields are only shown to guest visitors. If you add new fields here and save, they will then be available as custom registrations in your bookings editor, and this information will be accessible and editable on each user <a href=\"%s\">profile page</a>."
-msgstr "Registrierungsfelder werden nur Gastbesuchern angezeigt. Wenn Du hier neue Felder angibst und sicherst, sind sie als individuelle Registrierungen ein Deinem Reservierungseditor verfügbar. Diese Information ist bearbeitbar auf der <a href=\"%s\">Profilseite</a> des Benutzers."
+msgid ""
+"Registration fields are only shown to guest visitors. If you add new fields "
+"here and save, they will then be available as custom registrations in your "
+"bookings editor, and this information will be accessible and editable on "
+"each user <a href=\"%s\">profile page</a>."
+msgstr ""
+"Registrierungsfelder werden nur Gastbesuchern angezeigt. Wenn Du hier neue "
+"Felder angibst und sicherst, sind sie als individuelle Registrierungen ein "
+"Deinem Reservierungseditor verfügbar. Diese Information ist bearbeitbar auf "
+"der <a href=\"%s\">Profilseite</a> des Benutzers."
 
 #: add-ons/user-fields.php:262
-msgid "<strong>Important:</strong> When editing this form, to make sure your current user information is displayed, do not change their field names."
-msgstr "<strong>Wichtig:</strong>Wenn Du dieses Formular bearbeitest, ändere nicht die Feldnamen, um sicher zu stellen, dass die aktuellen Benutzerinformationen angezeigt werden."
+msgid ""
+"<strong>Important:</strong> When editing this form, to make sure your "
+"current user information is displayed, do not change their field names."
+msgstr ""
+"<strong>Wichtig:</strong>Wenn Du dieses Formular bearbeitest, ändere nicht "
+"die Feldnamen, um sicher zu stellen, dass die aktuellen "
+"Benutzerinformationen angezeigt werden."
 
 #: emp-forms.php:11 emp-forms.php:19
 msgid "Forms Editor"
 msgstr "Formulareditor"
 
 #: emp-forms.php:20
-msgid "On this page you can create/edit various forms used within Events Manager Pro."
-msgstr "Auf dieser Seite kannst Du diverse Formulare von Events Manager Pro erzeugen/bearbeiten."
+msgid ""
+"On this page you can create/edit various forms used within Events Manager "
+"Pro."
+msgstr ""
+"Auf dieser Seite kannst Du diverse Formulare von Events Manager Pro erzeugen/"
+"bearbeiten."
 
 #: emp-forms.php:31
 msgid "PRO Booking Form Options"
@@ -920,24 +1207,42 @@ msgid "Show profile fields to logged in users?"
 msgstr "Zeige Profilfelder des angemeldeten Benutzers?"
 
 #: emp-forms.php:35
-msgid "When logged in, users usually don't see their profile fields, with this enabled, users will be able to update their profile fields alongside their booking. This is particularly useful if the user is missing key information. Note that this does not include usernames, name, passwords and emails, these must be modified from their user profile page."
-msgstr "Wenn angemeldet, sehen Benutzer normalerweise ihre Profilfelder nicht. Ist diese Einstellung aktiviert, können Benutzer gleichzeitig mit der Reservierung ihre Profilfelder aktualisieren. Das ist besonders hilfreich, wenn Schlüsselinformationen fehlen. Beachte, dass dies nicht Benutzername, Passwort und Email Adresse einschließt. Diese Informationen müssen auf der Profilseite des Benutzers bearbeitet werden."
+msgid ""
+"When logged in, users usually don't see their profile fields, with this "
+"enabled, users will be able to update their profile fields alongside their "
+"booking. This is particularly useful if the user is missing key information. "
+"Note that this does not include usernames, name, passwords and emails, these "
+"must be modified from their user profile page."
+msgstr ""
+"Wenn angemeldet, sehen Benutzer normalerweise ihre Profilfelder nicht. Ist "
+"diese Einstellung aktiviert, können Benutzer gleichzeitig mit der "
+"Reservierung ihre Profilfelder aktualisieren. Das ist besonders hilfreich, "
+"wenn Schlüsselinformationen fehlen. Beachte, dass dies nicht Benutzername, "
+"Passwort und Email Adresse einschließt. Diese Informationen müssen auf der "
+"Profilseite des Benutzers bearbeitet werden."
 
 #: emp-forms.php:36
 msgid "Make profile fields editable?"
 msgstr "Profilfelder bearbeitbar?"
 
 #: emp-forms.php:36
-msgid "If profile fields are set to show to logged in users, you can also choose whether or not to make these fields editable or just for viewing reference."
-msgstr "Wenn die Anzeige von Profilfeldern für angemeldete Benutzer aktiviert ist, kannst Du entscheiden, ob diese Felder nur angezeigt werden oder auch bearbeitbar sind."
+msgid ""
+"If profile fields are set to show to logged in users, you can also choose "
+"whether or not to make these fields editable or just for viewing reference."
+msgstr ""
+"Wenn die Anzeige von Profilfeldern für angemeldete Benutzer aktiviert ist, "
+"kannst Du entscheiden, ob diese Felder nur angezeigt werden oder auch "
+"bearbeitbar sind."
 
 #: emp-forms.php:545
 msgid "You must also add an end date."
 msgstr "Du musst auch ein Endedatum angeben."
 
 #: emp-forms.php:549 emp-forms.php:562
-msgid "Dates must have correct formatting. Please use the date picker provided."
-msgstr "Datum muss korrektes Format haben. Bitte den Datums-Selektor verwenden."
+msgid ""
+"Dates must have correct formatting. Please use the date picker provided."
+msgstr ""
+"Datum muss korrektes Format haben. Bitte den Datums-Selektor verwenden."
 
 #: emp-forms.php:555
 msgid "Please provide a later end date."
@@ -952,8 +1257,10 @@ msgid "You must provide an end time."
 msgstr "Du musst eine Endzeit auswählen"
 
 #: emp-forms.php:590 emp-forms.php:596 emp-forms.php:978
-msgid "Please use the time picker provided to select the appropriate time format."
-msgstr "Bitte verwende den Zeit-Selektor, um das geeignete Zeitformat auszuwählen."
+msgid ""
+"Please use the time picker provided to select the appropriate time format."
+msgstr ""
+"Bitte verwende den Zeit-Selektor, um das geeignete Zeitformat auszuwählen."
 
 #: emp-forms.php:602 emp-forms.php:998
 msgid "You must provide a start time."
@@ -986,8 +1293,12 @@ msgstr "Tipp Text"
 
 #: emp-forms.php:824 emp-forms.php:866 emp-forms.php:892 emp-forms.php:958
 #: emp-forms.php:1017 emp-forms.php:1045 emp-forms.php:1066 emp-forms.php:1096
-msgid "Will appear next to your field label as a question mark with a popup tip bubble."
-msgstr "Steht neben Deiner Feldbezeichnung als Fragezeichen mit einer Popup-Tip Blase."
+msgid ""
+"Will appear next to your field label as a question mark with a popup tip "
+"bubble."
+msgstr ""
+"Steht neben Deiner Feldbezeichnung als Fragezeichen mit einer Popup-Tip "
+"Blase."
 
 #: emp-forms.php:833 emp-forms.php:858 emp-forms.php:902 emp-forms.php:912
 #: emp-forms.php:922 emp-forms.php:932 emp-forms.php:968 emp-forms.php:978
@@ -1001,8 +1312,12 @@ msgid "Content"
 msgstr "Inhalt"
 
 #: emp-forms.php:844
-msgid "This html will be displayed on your form, the label for this field is used only for reference purposes."
-msgstr "Dieses HTML wird auf deinem Formular angezeigt. Die Feldbezeichnung ist nur für Referenzzwecke."
+msgid ""
+"This html will be displayed on your form, the label for this field is used "
+"only for reference purposes."
+msgstr ""
+"Dieses HTML wird auf deinem Formular angezeigt. Die Feldbezeichnung ist nur "
+"für Referenzzwecke."
 
 #: emp-forms.php:874
 msgid "Date Range?"
@@ -1017,8 +1332,11 @@ msgid "Separator"
 msgstr "Trenner"
 
 #: emp-forms.php:885 emp-forms.php:951
-msgid "This text will appear between the two date fields if this is a date range."
-msgstr "Dieser Text erscheint zwischen den zwei Datumsfeldern, wenn es sich um einen Zeitraum handelt."
+msgid ""
+"This text will appear between the two date fields if this is a date range."
+msgstr ""
+"Dieser Text erscheint zwischen den zwei Datumsfeldern, wenn es sich um einen "
+"Zeitraum handelt."
 
 #: emp-forms.php:896 emp-forms.php:961
 msgid "Error Messages"
@@ -1041,15 +1359,19 @@ msgid "This error will show if an incorrect date format is used."
 msgstr "Fehlermeldung für inkorrektes Datumformat."
 
 #: emp-forms.php:912
-msgid "Please use the date picker provided to select the appropriate date format."
-msgstr "Verwende bitte den Datumsselektor, um das richtige Datumsformat auszuwählen."
+msgid ""
+"Please use the date picker provided to select the appropriate date format."
+msgstr ""
+"Verwende bitte den Datumsselektor, um das richtige Datumsformat auszuwählen."
 
 #: emp-forms.php:917
 msgid "End date required"
 msgstr "Endedatum benötigt"
 
 #: emp-forms.php:921
-msgid "This error will show if the field is a date-range and no end date is selected."
+msgid ""
+"This error will show if the field is a date-range and no end date is "
+"selected."
 msgstr "Fehlermeldung, wenn für einen Zeitraum kein Endedatum vergeben wurde."
 
 #: emp-forms.php:922
@@ -1061,7 +1383,9 @@ msgid "Start date required"
 msgstr "Startdatum benötigt"
 
 #: emp-forms.php:931
-msgid "This error will show if the field is a date-range and no start date is selected."
+msgid ""
+"This error will show if the field is a date-range and no start date is "
+"selected."
 msgstr "Fehlermeldung, wenn für einen Zeitraum kein Startdatum vergeben wurde."
 
 #: emp-forms.php:940
@@ -1081,7 +1405,9 @@ msgid "End time required"
 msgstr "Ende-Zeit benötigt"
 
 #: emp-forms.php:987
-msgid "This error will show if the field is a time-range and no end time is selected."
+msgid ""
+"This error will show if the field is a time-range and no end time is "
+"selected."
 msgstr "Fehlermeldung, wenn für einen Zeitraum kein Endedatum vergeben wurde."
 
 #: emp-forms.php:993
@@ -1089,7 +1415,9 @@ msgid "Start time required"
 msgstr "Start-Zeit benötigt"
 
 #: emp-forms.php:997
-msgid "This error will show if the field is a time-range and no start time is selected."
+msgid ""
+"This error will show if the field is a time-range and no start time is "
+"selected."
 msgstr "Fehlemeldung, wenn für einen Zeitraum kein Startdatum vergeben wurde."
 
 #: emp-install.php:155
@@ -1110,39 +1438,74 @@ msgstr "Kreditkarte"
 
 #: emp-install.php:170
 msgid "Booking successful. You have not been charged for this booking."
-msgstr "Reservierung erfolgreich. Dir wurde für diese Reservierung nichts verrechnet."
+msgstr ""
+"Reservierung erfolgreich. Dir wurde für diese Reservierung nichts verrechnet."
 
 #: emp-install.php:174
-msgid "<br/><br/>-------------------------------<br/>Powered by Events Manager - http://wp-events-plugin.com"
-msgstr "<br/><br/>-------------------------------<br/>Powered by Events Manager - http://wp-events-plugin.com"
+msgid ""
+"<br/><br/>-------------------------------<br/>Powered by Events Manager - "
+"http://wp-events-plugin.com"
+msgstr ""
+"<br/><br/>-------------------------------<br/>Powered by Events Manager - "
+"http://wp-events-plugin.com"
 
 #: emp-install.php:175
-msgid "Dear #_BOOKINGNAME, <br/>This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br/>When : #_EVENTDATES @ #_EVENTTIMES<br/>Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br/>We look forward to seeing you there!<br/>Yours faithfully,<br/>#_CONTACTNAME"
-msgstr "Liebe/r #_BOOKINGNAME, <br/>Dies ist eine freundliche Erinnerung an Deine Buchung von #_BOOKINGSPACES Platz/Plätzen für #_EVENTNAME.<br/>Wann : #_EVENTDATES @ #_EVENTTIMES<br/>Wo : #_LOCATIONNAME - #_LOCATIONFULLLINE<br/>Wir freuen uns auf Dich!<br/>Viele Grüße,<br/>#_CONTACTNAME"
+msgid ""
+"Dear #_BOOKINGNAME, <br/>This is a reminder about your #_BOOKINGSPACES space/"
+"spaces reserved for #_EVENTNAME.<br/>When : #_EVENTDATES @ #_EVENTTIMES<br/"
+">Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br/>We look forward to seeing "
+"you there!<br/>Yours faithfully,<br/>#_CONTACTNAME"
+msgstr ""
+"Liebe/r #_BOOKINGNAME, <br/>Dies ist eine freundliche Erinnerung an Deine "
+"Buchung von #_BOOKINGSPACES Platz/Plätzen für #_EVENTNAME.<br/>Wann : "
+"#_EVENTDATES @ #_EVENTTIMES<br/>Wo : #_LOCATIONNAME - #_LOCATIONFULLLINE<br/"
+">Wir freuen uns auf Dich!<br/>Viele Grüße,<br/>#_CONTACTNAME"
 
 #: emp-updates.php:32
 msgid "Please enter a valid API key in your <a href=\"%s\">settings page</a>."
-msgstr "Bitte gib einen gültigen API Key in Deinen <a href=\"%s\">Einstellungen</a> ein."
+msgstr ""
+"Bitte gib einen gültigen API Key in Deinen <a href=\"%s\">Einstellungen</a> "
+"ein."
 
 #: emp-updates.php:41
-msgid "To access automatic updates, you must update your <a href=\"%s\">Membership Key</a> for Events Mananager Pro <a href=\"#pro-api\">here</a>. Only admins see this message."
-msgstr "Bitte aktualiere Deinen <a href=\"%s\">Membership Key</a> für Events Mananager Pro <a href=\"#pro-api\">here</a>, um diese Nachricht zu entfernen."
+msgid ""
+"To access automatic updates, you must update your <a href=\"%s\">Membership "
+"Key</a> for Events Mananager Pro <a href=\"#pro-api\">here</a>. Only admins "
+"see this message."
+msgstr ""
+"Bitte aktualiere Deinen <a href=\"%s\">Membership Key</a> für Events "
+"Mananager Pro <a href=\"#pro-api\">here</a>, um diese Nachricht zu entfernen."
 
 #: emp-updates.php:104
 msgid "looking for dev mode options? we moved it into <em>Admin Tools</em>"
-msgstr "Suchst Du nach den Dev Mode Optionen? Wir haben sie verschoben nach <em>Admin Werkzeuge</em>."
+msgstr ""
+"Suchst Du nach den Dev Mode Optionen? Wir haben sie verschoben nach "
+"<em>Admin Werkzeuge</em>."
 
 #: events-manager-pro.php:154
-msgid "Please make sure you install Events Manager as well. You can search and install this plugin from your plugin installer or download it <a href=\"http://wordpress.org/extend/plugins/events-manager/\">here</a>."
-msgstr "Stelle bitte sicher, dass auch Events Manager installiert ist. Du kannst diese Plugin auf Deiner Plugin-Seite finden und installieren oder <a href=\"http://wordpress.org/extend/plugins/events-manager/\">hier</a>herunterladen. "
+msgid ""
+"Please make sure you install Events Manager as well. You can search and "
+"install this plugin from your plugin installer or download it <a href="
+"\"http://wordpress.org/extend/plugins/events-manager/\">here</a>."
+msgstr ""
+"Stelle bitte sicher, dass auch Events Manager installiert ist. Du kannst "
+"diese Plugin auf Deiner Plugin-Seite finden und installieren oder <a href="
+"\"http://wordpress.org/extend/plugins/events-manager/\">hier</"
+"a>herunterladen. "
 
 #: events-manager-pro.php:154 events-manager-pro.php:160
 msgid "Only admins see this message."
 msgstr "Nur Administratoren sehen diese Nachricht."
 
 #: events-manager-pro.php:160
-msgid "Please make sure you have the <a href=\"http://wordpress.org/extend/plugins/events-manager/\">latest version</a> of Events Manager installed, as this may prevent Pro from functioning properly."
-msgstr "Bitte stelle sicher, dass du die <a href=\"http://wordpress.org/extend/plugins/events-manager/\">neueste Version</a> von Events Manager installiert hast, da sonst die Pro Funktionen ggf. nicht richtig funktionieren."
+msgid ""
+"Please make sure you have the <a href=\"http://wordpress.org/extend/plugins/"
+"events-manager/\">latest version</a> of Events Manager installed, as this "
+"may prevent Pro from functioning properly."
+msgstr ""
+"Bitte stelle sicher, dass du die <a href=\"http://wordpress.org/extend/"
+"plugins/events-manager/\">neueste Version</a> von Events Manager installiert "
+"hast, da sonst die Pro Funktionen ggf. nicht richtig funktionieren."
 
 #: add-ons/gateways.php:260
 msgid "Payment Gateways"
@@ -1320,8 +1683,14 @@ msgid "Edit/View"
 msgstr "Bearbeiten/Ansehen"
 
 #: add-ons/gateways/gateway.offline.php:69
-msgid "Be aware that by approving a booking awaiting payment, a full payment transaction will be registered against this booking, meaning that it will be considered as paid."
-msgstr "Beachte, dass durch die Genehmigung noch nicht bezahlten Reservierung, eine volle Zahlung für diese Reservierung registriert wird, d.h. die Reservierung wird als gezahlt betrachtet."
+msgid ""
+"Be aware that by approving a booking awaiting payment, a full payment "
+"transaction will be registered against this booking, meaning that it will be "
+"considered as paid."
+msgstr ""
+"Beachte, dass durch die Genehmigung noch nicht bezahlten Reservierung, eine "
+"volle Zahlung für diese Reservierung registriert wird, d.h. die Reservierung "
+"wird als gezahlt betrachtet."
 
 #: add-ons/gateways/gateway.offline.php:160
 msgid "Add Booking"
@@ -1332,8 +1701,18 @@ msgid "add booking"
 msgstr "Buchung hinzufügen"
 
 #: emp-install.php:162
-msgid "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a seperate email containing account details to access your booking information on this site. You may log into your account at www.paypal.com to view details of this transaction."
-msgstr "Vielen Dank für Deine Zahlung. Deine Transaktion wurde abgeschlossen und eine Quittung für Deinen Kauf wurde Dir zusammen mit einer separaten E-Mail zugestellt. Diese enthält Kontendetails, um auf Informationen zu Deiner Buchung auf dieser Website zuzugreifen. Du kannst Dich an Deinem Konto bei www.paypal.com anmelden, um Details zu dieser Transaktion anzuzeigen."
+msgid ""
+"Thank you for your payment. Your transaction has been completed, and a "
+"receipt for your purchase has been emailed to you along with a seperate "
+"email containing account details to access your booking information on this "
+"site. You may log into your account at www.paypal.com to view details of "
+"this transaction."
+msgstr ""
+"Vielen Dank für Deine Zahlung. Deine Transaktion wurde abgeschlossen und "
+"eine Quittung für Deinen Kauf wurde Dir zusammen mit einer separaten E-Mail "
+"zugestellt. Diese enthält Kontendetails, um auf Informationen zu Deiner "
+"Buchung auf dieser Website zuzugreifen. Du kannst Dich an Deinem Konto bei "
+"www.paypal.com anmelden, um Details zu dieser Transaktion anzuzeigen."
 
 #: add-ons/gateways/gateway.paypal.php:481
 msgid "PayPal Email"
@@ -1364,16 +1743,24 @@ msgid "PayPal Page Logo"
 msgstr "PayPal Seiten Logo"
 
 #: add-ons/gateways/gateway.paypal.php:541
-msgid "Add your logo to the PayPal payment page. It's highly recommended you link to a https:// address."
-msgstr "Füge Dein Logo auf der PayPal-Zahlungsseite ein. Es ist sehr ratsam, eine https:// Adresse als Link zu verwenden."
+msgid ""
+"Add your logo to the PayPal payment page. It's highly recommended you link "
+"to a https:// address."
+msgstr ""
+"Füge Dein Logo auf der PayPal-Zahlungsseite ein. Es ist sehr ratsam, eine "
+"https:// Adresse als Link zu verwenden."
 
 #: add-ons/gateways/gateway.paypal.php:545
 msgid "Border Color"
 msgstr "Randfarbe"
 
 #: add-ons/gateways/gateway.paypal.php:548
-msgid "Provide a hex value color to change the color from the default blue to another color (e.g. #CCAAAA)."
-msgstr "Gib einen Hex-Wert, um die Farbe von der Standardeinstellung blau zu einer anderen Farbe (zB # CCAAAA) zu ändern."
+msgid ""
+"Provide a hex value color to change the color from the default blue to "
+"another color (e.g. #CCAAAA)."
+msgstr ""
+"Gib einen Hex-Wert, um die Farbe von der Standardeinstellung blau zu einer "
+"anderen Farbe (zB # CCAAAA) zu ändern."
 
 #: add-ons/gateways/gateway.authorize.aim.php:421
 #: add-ons/gateways/gateway.paypal.php:559
@@ -1382,20 +1769,26 @@ msgstr "Abgeschlossene Transaktionen manuell genehmigen?"
 
 #: add-ons/gateways/gateway.authorize.aim.php:424
 #: add-ons/gateways/gateway.paypal.php:562
-msgid "By default, when someone pays for a booking, it gets automatically approved once the payment is confirmed. If you would like to manually verify and approve bookings, tick this box."
-msgstr "Standardmäßig wird eine Buchung automatisch genehmigt, wenn die Zahlung dafür bestätigt ist. Wenn Du Buchungen manuell überprüfen und genehmigen willst, bitte hier auswählen."
+msgid ""
+"By default, when someone pays for a booking, it gets automatically approved "
+"once the payment is confirmed. If you would like to manually verify and "
+"approve bookings, tick this box."
+msgstr ""
+"Standardmäßig wird eine Buchung automatisch genehmigt, wenn die Zahlung "
+"dafür bestätigt ist. Wenn Du Buchungen manuell überprüfen und genehmigen "
+"willst, bitte hier auswählen."
 
 #: emp-forms.php:634
 msgid "The email address isn&#8217;t correct."
 msgstr "Die E-Mailadresse ist nicht korrekt."
 
-#: add-ons/bookings-form.php:340 add-ons/gateways/gateway.authorize.aim.php:407
-#: emp-forms.php:121
+#: add-ons/bookings-form.php:340
+#: add-ons/gateways/gateway.authorize.aim.php:407 emp-forms.php:121
 msgid "Yes"
 msgstr "Ja"
 
-#: add-ons/bookings-form.php:340 add-ons/gateways/gateway.authorize.aim.php:408
-#: emp-forms.php:121
+#: add-ons/bookings-form.php:340
+#: add-ons/gateways/gateway.authorize.aim.php:408 emp-forms.php:121
 msgid "No"
 msgstr "Nein"
 
@@ -1413,12 +1806,22 @@ msgid "You can customize the fields shown in your booking forms below. "
 msgstr "Du kannst die Felder in Deinem Buchungsformular unten anpassen"
 
 #: add-ons/bookings-form/attendee-forms.php:755 add-ons/bookings-form.php:550
-msgid "<strong>Important:</strong> When editing this form, to make sure your old booking information is displayed, make sure new field ids correspond with the old ones."
-msgstr "<strong>Wichtig:</strong> Wenn Du dieses Formular editierst, stelle sicher, dass Deine alte Reservierungsinformation angezeigt wird. Stelle sicher, dass neue Feld-IDs zu den alten passen."
+msgid ""
+"<strong>Important:</strong> When editing this form, to make sure your old "
+"booking information is displayed, make sure new field ids correspond with "
+"the old ones."
+msgstr ""
+"<strong>Wichtig:</strong> Wenn Du dieses Formular editierst, stelle sicher, "
+"dass Deine alte Reservierungsinformation angezeigt wird. Stelle sicher, dass "
+"neue Feld-IDs zu den alten passen."
 
 #: emp-forms.php:738
-msgid "DO NOT change these values if you want to keep your field settings associated with previous booking fields."
-msgstr "Diese Werte NICHT ÄNDERN, wenn Du Deine Feldeinstellungen erhalten willst, die mit vorigen Buchungsfeldern assoziiert sind."
+msgid ""
+"DO NOT change these values if you want to keep your field settings "
+"associated with previous booking fields."
+msgstr ""
+"Diese Werte NICHT ÄNDERN, wenn Du Deine Feldeinstellungen erhalten willst, "
+"die mit vorigen Buchungsfeldern assoziiert sind."
 
 #: emp-forms.php:750
 msgid "Select Type"
@@ -1466,7 +1869,9 @@ msgstr "Auswählen ..."
 
 #: emp-forms.php:817
 msgid "Shown when a default value isn't selected, selected by default."
-msgstr "Standardmäßig ausgewählt. Wird gezeigt, wenn kein Standardwert ausgewählt wird."
+msgstr ""
+"Standardmäßig ausgewählt. Wird gezeigt, wenn kein Standardwert ausgewählt "
+"wird."
 
 #: emp-forms.php:828 emp-forms.php:853 emp-forms.php:1021 emp-forms.php:1049
 #: emp-forms.php:1077 emp-forms.php:1107 emp-forms.php:1140
@@ -1490,12 +1895,17 @@ msgid "Regex"
 msgstr "Regex"
 
 #: emp-forms.php:1073 emp-forms.php:1103
-msgid "By adding a regex expression, you can limit the possible values a user can input, for example the following only allows numbers: "
-msgstr "Durch Hinzfügen eines Regex-Ausdrucks kannst Du die zulässigen Werte für Benutzereingaben einschränken. Z.B. wird das folgende nur Zahlen akzeptieren:"
+msgid ""
+"By adding a regex expression, you can limit the possible values a user can "
+"input, for example the following only allows numbers: "
+msgstr ""
+"Durch Hinzfügen eines Regex-Ausdrucks kannst Du die zulässigen Werte für "
+"Benutzereingaben einschränken. Z.B. wird das folgende nur Zahlen akzeptieren:"
 
 #: emp-forms.php:1081 emp-forms.php:1111
 msgid "If the regex above does not match this error will be displayed."
-msgstr "Wenn die regex oben nicht übereinstimmt, dann wird dieser Fehler angezeigt."
+msgstr ""
+"Wenn die regex oben nicht übereinstimmt, dann wird dieser Fehler angezeigt."
 
 #: emp-forms.php:1133
 msgid "Private Key"
@@ -1543,8 +1953,14 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: emp-updates.php:48
-msgid "Dev Mode active: Just a friendly reminder that you have added %s to your wp-config.php file. Only admins see this message, and it will go away when you remove that line."
-msgstr "Dev-Modus aktiv: Nur eine freundliche Erinnerung, dass Du %s zu Deiner wp-config.php Datei hinzugfügt haben. Nur Administratoren sehen diese Nachricht, und sie wird verschwinden, wenn Du die Zeile entfernst."
+msgid ""
+"Dev Mode active: Just a friendly reminder that you have added %s to your wp-"
+"config.php file. Only admins see this message, and it will go away when you "
+"remove that line."
+msgstr ""
+"Dev-Modus aktiv: Nur eine freundliche Erinnerung, dass Du %s zu Deiner wp-"
+"config.php Datei hinzugfügt haben. Nur Administratoren sehen diese "
+"Nachricht, und sie wird verschwinden, wenn Du die Zeile entfernst."
 
 #: add-ons/emails.php:170 add-ons/gateways.php:245 emp-forms.php:31
 #: emp-updates.php:82
@@ -1560,8 +1976,13 @@ msgid "Pro Member Key"
 msgstr "Pro-Mitgliedsschlüssel"
 
 #: emp-updates.php:86
-msgid "Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>."
-msgstr "Fügen Deinen Pro-Mitgliedsschlüssel ein, um auf automatische Updates zuzugreifen. Du kannst Deinen Mitgliedsschlüssel bekommen bei <a href=\"%s\">here</a>."
+msgid ""
+"Insert your Pro Member Key to access automatic updates you can get your "
+"membership key from <a href=\"%s\">here</a>."
+msgstr ""
+"Fügen Deinen Pro-Mitgliedsschlüssel ein, um auf automatische Updates "
+"zuzugreifen. Du kannst Deinen Mitgliedsschlüssel bekommen bei <a href=\"%s"
+"\">here</a>."
 
 #: add-ons/gateways/gateway.php:377
 msgid "Edit &quot;%s&quot; settings"
@@ -1580,5 +2001,8 @@ msgid "Resume Payment"
 msgstr "Zahlung wiederaufnehmen"
 
 #: emp-install.php:159
-msgid "Please wait whilst you are redirected to PayPal to proceed with payment."
-msgstr "Bitte warte, während Du zu Paypal umgeleitet wirst, um mit der Zahlung fortzufahren."
+msgid ""
+"Please wait whilst you are redirected to PayPal to proceed with payment."
+msgstr ""
+"Bitte warte, während Du zu Paypal umgeleitet wirst, um mit der Zahlung "
+"fortzufahren."

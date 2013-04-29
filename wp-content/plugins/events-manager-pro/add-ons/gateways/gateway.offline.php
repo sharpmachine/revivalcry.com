@@ -186,7 +186,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 							<tbody>
 							  <tr valign="top">
 								  <th scope="row"><?php _e('Amount', 'em-pro') ?></th>
-									  <td><input type="text" name="transaction_total_amount" value="<?php if(!empty($_REQUEST['transaction_total_amount'])) echo $_REQUEST['transaction_total_amount']; ?>" />
+									  <td><input type="text" name="transaction_total_amount" value="<?php if(!empty($_REQUEST['transaction_total_amount'])) echo esc_attr($_REQUEST['transaction_total_amount']); ?>" />
 									  <br />
 									  <em><?php _e('Please enter a valid payment amount (e.g. 10.00). Use negative numbers to credit a booking.','em-pro'); ?></em>
 								  </td>
@@ -194,7 +194,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 							  <tr valign="top">
 								  <th scope="row"><?php _e('Comments', 'em-pro') ?></th>
 								  <td>
-										<textarea name="transaction_note"><?php if(!empty($_REQUEST['transaction_note'])) echo $_REQUEST['transaction_note']; ?></textarea>
+										<textarea name="transaction_note"><?php if(!empty($_REQUEST['transaction_note'])) echo esc_attr($_REQUEST['transaction_note']); ?></textarea>
 								  </td>
 							  </tr>
 							</tbody>
@@ -368,7 +368,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 			<input type="hidden" name="manual_booking" value="<?php echo wp_create_nonce('em_manual_booking_'.$EM_Event->event_id); ?>" />
 			<p class="em-booking-gateway" id="em-booking-gateway">
 				<label><?php _e('Amount Paid','em-pro'); ?></label>
-				<input type="text" name="payment_amount" id="em-payment-amount" value="<?php if(!empty($_REQUEST['payment_amount'])) echo $_REQUEST['payment_amount']; ?>">
+				<input type="text" name="payment_amount" id="em-payment-amount" value="<?php if(!empty($_REQUEST['payment_amount'])) echo esc_attr($_REQUEST['payment_amount']); ?>">
 				<?php _e('Fully Paid','em-pro'); ?> <input type="checkbox" name="payment_full" id="em-payment-full" value="1"><br />
 				<em><?php _e('If you check this as fully paid, and leave the amount paid blank, it will be assumed the full payment has been made.' ,'em-pro'); ?></em>
 			</p>

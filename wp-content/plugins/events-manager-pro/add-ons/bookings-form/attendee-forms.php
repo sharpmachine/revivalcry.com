@@ -49,7 +49,7 @@ class EM_Attendees_Form {
 	 * @return EM_Attendee_Form
 	 */
 	function get_form($EM_Event = false){
-		if( empty(self::$form) || (!empty($EM_Event) && $EM_Event->event_id == self::$form->event_id) ){
+		if( empty(self::$form) || (!empty($EM_Event) && !empty(self::$form->event_id) && $EM_Event->event_id == self::$form->event_id) ){
 			global $wpdb;
 			if(is_numeric($EM_Event)){ $EM_Event = em_get_event($EM_Event); }
 			$form_id = self::get_form_id($EM_Event);
@@ -166,7 +166,7 @@ class EM_Attendees_Form {
 	public static function get_ticket_attendees( $EM_Ticket_Booking ){
 	    $attendees = array();
 	    if( is_array($EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ){
-	    	$EM_Form = EM_Attendees_Form::get_form($EM_Booking->event_id); //can be repeated since object is stored temporarily
+	    	$EM_Form = EM_Attendees_Form::get_form($EM_Ticket_Booking->get_booking()->event_id); //can be repeated since object is stored temporarily
 			$i = 1; //counter
 	    	foreach( $EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id] as $field_values ){
 	    		$EM_Form->field_values = $field_values;
@@ -731,11 +731,11 @@ class EM_Attendees_Form {
 										<?php endforeach; ?>
 									</select>
 									<input type="hidden" name="post_type" value="<?php echo EM_POST_TYPE_EVENT; ?>" />
-									<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+									<input type="hidden" name="page" value="<?php echo esc_attr($_REQUEST['page']); ?>" />
 								</form>
 								<?php if( self::$form_id != get_option('em_attendee_form_fields') ): ?>
 								<form method="post" action="<?php echo add_query_arg(array('att_form_id'=>null)); ?>#attendee-form"> 
-									<input type="hidden" name="att_form_id" value="<?php echo $_REQUEST['att_form_id']; ?>" />
+									<input type="hidden" name="att_form_id" value="<?php echo esc_attr($_REQUEST['att_form_id']); ?>" />
 									<input type="hidden" name="attendee_form_action" value="default" />
 									<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('attendee_form_default'); ?>" />
 									<input type="submit" value="<?php _e ( 'Make Default', 'em-pro' ); ?> &raquo;" class="button-secondary" onclick="return confirm('<?php _e('You are about to make this your default booking form. All events without an existing specifically chosen booking form will use this new default form from now on.\n\n Are you sure you want to do this?') ?>');" />
@@ -764,7 +764,7 @@ class EM_Attendees_Form {
 									</form>
 									<?php if( self::$form_id != get_option('em_attendee_form_fields') ): ?>
 									<form method="post" action="<?php echo add_query_arg(array('att_form_id'=>null)); ?>#attendee-form" id="attendee-form-rename">
-										<input type="hidden" name="att_form_id" value="<?php echo $_REQUEST['att_form_id']; ?>" />
+										<input type="hidden" name="att_form_id" value="<?php echo esc_attr($_REQUEST['att_form_id']); ?>" />
 										<input type="hidden" name="attendee_form_action" value="delete" />
 										<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('attendee_form_delete'); ?>" />
 										<input type="submit" value="<?php _e ( 'Delete', 'em-pro' ); ?> &raquo;" class="button-secondary" onclick="return confirm('<?php _e('Are you sure you want to delete this form?\n\n All events using this form will start using the default form automatically.'); ?>');" />

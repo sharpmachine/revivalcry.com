@@ -75,7 +75,7 @@ class EM_Coupons extends EM_Object {
 				$EM_Coupon = new EM_Coupon($EM_Booking->booking_meta['coupon']);
 				$price = $EM_Coupon->apply_discount($price);
 			}
-			if( $add_tax === true || get_option('dbem_bookings_tax_auto_add') ){
+			if( $add_tax === true && !get_option('dbem_bookings_tax_auto_add') ){
 				$price = round($price * (1 + get_option('dbem_bookings_tax')/100),2);
 			}
 		}

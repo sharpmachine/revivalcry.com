@@ -33,7 +33,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 				<?php if( preg_match('/https?:\/\//',get_option('dbem_multiple_bookings_submit_button')) ): //Settings have an image url (we assume). Use it here as the button.?>
 				<input type="image" src="<?php echo get_option('dbem_multiple_bookings_submit_button'); ?>" class="em-booking-submit" id="em-booking-submit" />
 				<?php else: //Display normal submit button ?>
-				<input type="submit" class="em-booking-submit" id="em-booking-submit" value="<?php echo get_option('dbem_multiple_bookings_submit_button','Place Order'); ?>" />
+				<input type="submit" class="em-booking-submit" id="em-booking-submit" value="<?php echo get_option('dbem_multiple_bookings_submit_button'); ?>" />
 				<?php endif; ?>
 			</div>
 			<?php do_action('em_checkout_form_footer_after_buttons', $EM_Multiple_Booking); //do not delete ?>

@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.3.2
+Stable tag: 2.3.4
 
 == Description ==
 
@@ -22,6 +22,20 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.4 =
+* fixed bug when trying to switch booking forms in form editor
+* fixed localization typo
+* added sanitation to various input textboxes in admin area
+
+= 2.3.3 =
+* fixed coupon final price miscalculations when tax is automatically included in ticket price
+* fixed customer user gateway fields not being passed on correctly when in no-user mode
+* fixed password user field problems in MB mode
+* improved pro update notifier and key checking consistency
+* added option for MB bookings submit button
+* fixed form regex rules still being required if value is blank and form field not required
+* fixed user profile page failed validation still resulting in update notice along with errors
+
 = 2.3.2 =
 * added Finnish
 * updated German

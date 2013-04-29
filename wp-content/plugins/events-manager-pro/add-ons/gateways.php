@@ -517,6 +517,8 @@ class EM_Gateways {
 			$associated_fields = get_option('emp_gateway_customer_fields');
 			$form_field_id = $associated_fields[$field_name];
 		}
+		//if no-user mode, discard the $user_id, we only deal with the booking object
+		if( get_option('dbem_bookings_registration_disable') && $user_id == get_option('dbem_bookings_registration_user') ) $user_id = false;
 		//determine field value
 		if( empty($user_id) && !empty($EM_Booking) ){
 			//get meta from booking if user meta isn't available

@@ -254,9 +254,12 @@ class EM_User_Fields {
 			foreach($EM_Form->form_fields as $field_id => $field){
 				?>
 				<tr>
-					<th><label for="<?php echo $field_id; ?>"><?php echo $field['label']; ?></label></th>
+					<th><label for="<?php echo esc_attr($field_id); ?>"><?php echo esc_html($field['label']); ?></label></th>
 					<td>
-						<?php echo $EM_Form->output_field_input($field, get_user_meta($user->ID, $field_id, true)); ?>
+						<?php
+							$field_val = isset($_REQUEST[$field['fieldid']]) ? $_REQUEST[$field['fieldid']] : get_user_meta($user->ID, $field_id, true); 
+							echo $EM_Form->output_field_input($field, $field_val); 
+						?>
 					</td>
 				</tr>
 				<?php
@@ -275,9 +278,18 @@ class EM_User_Fields {
 			foreach($EM_Form->form_fields as $field_id => $field){
 				update_user_meta( $user_id, $field_id, $EM_Form->field_values[$field_id] );
 			}
-		}else{
-			$EM_Notices->add_error($EM_Form->get_errors(), true);
 		}
+		if( count($EM_Form->errors) > 0 ){
+			$EM_Notices->add_error($EM_Form->get_errors());
+			add_filter('user_profile_update_errors', 'EM_User_Fields::save_profile_fields_errors', 10, 3);
+		}
+	}
+	
+	static function save_profile_fields_errors( $errors, $update, $user ){
+		global $EM_Notices;
+		$errors->add('em_user_fields', $EM_Notices->get_errors(false));
+		$EM_Notices = new EM_Notices();
+		return $errors;
 	}
 	
 	static function admin_page_actions() {

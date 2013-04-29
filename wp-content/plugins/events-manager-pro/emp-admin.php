@@ -60,11 +60,12 @@ class EM_Pro_Admin{
 							</td>
 						</tr>
 	        			<?php
-	        				em_options_input_text( __('Successfully Added Message'), 'dbem_multiple_bookings_feedback_added', __('A booking was successfull added to the bookings cart.','em-pro'));
-	        				em_options_input_text( __('Loading Cart Contents'), 'dbem_multiple_bookings_feedback_loading_cart', __('If caching plugins are used, cart contents are loaded after a page load and this text is shown whilst loading.','em-pro'));
-	        				em_options_input_text( __('Event Already Booked'), 'dbem_multiple_bookings_feedback_already_added', __('This event has already been added to the cart and cannot be added twice.','em-pro'));
-	        				em_options_input_text( __('No Bookings'), 'dbem_multiple_bookings_feedback_no_bookings', __('User has not booked any events yet, cart is empty.','em-pro'));
-	        				em_options_input_text( __('Empty Cart Warning'), 'dbem_multiple_bookings_feedback_empty_cart', __('Warning after the "empty cart" button is clicked.','em-pro'));
+	        				em_options_input_text( __('Successfully Added Message','em-pro'), 'dbem_multiple_bookings_feedback_added', __('A booking was successfull added to the bookings cart.','em-pro'));
+	        				em_options_input_text( __('Loading Cart Contents','em-pro'), 'dbem_multiple_bookings_feedback_loading_cart', __('If caching plugins are used, cart contents are loaded after a page load and this text is shown whilst loading.','em-pro'));
+	        				em_options_input_text( __('Event Already Booked','em-pro'), 'dbem_multiple_bookings_feedback_already_added', __('This event has already been added to the cart and cannot be added twice.','em-pro'));
+	        				em_options_input_text( __('No Bookings','em-pro'), 'dbem_multiple_bookings_feedback_no_bookings', __('User has not booked any events yet, cart is empty.','em-pro'));
+	        				em_options_input_text( __('Empty Cart Warning','em-pro'), 'dbem_multiple_bookings_feedback_empty_cart', __('Warning after the "empty cart" button is clicked.','em-pro'));
+	        				em_options_input_text( __('Checkout Form Button','em-pro'), 'dbem_multiple_bookings_submit_button', __('The text shown in the checkout page form.','em-pro'));
 	        			?>
         			</tbody>
         			<?php echo $save_button; ?>
@@ -90,7 +91,7 @@ class EM_Pro_Admin{
 	    ?>
 	    <h4 style="font-size:1.1em;"><?php _e ( 'Logging', 'dbem' ); ?></h4>
 		<table class="form-table">
-			<?php em_options_radio_binary ( __( 'Enable Logging?', 'em-pro' ), 'dbem_enable_logging', sprintf(__('If enabled, a folder called %s will be created. Please ensure that your wp-contents folder is writable by the server.'), '<code>'.WP_PLUGIN_DIR.'events-manager-logs'.'</code>')); ?>
+			<?php em_options_radio_binary ( __( 'Enable Logging?', 'em-pro' ), 'dbem_enable_logging', sprintf(__('If enabled, a folder called %s will be created. Please ensure that your wp-contents folder is writable by the server.'), '<code>'.WP_PLUGIN_DIR.'/events-manager-logs'.'</code>')); ?>
 		</table>
 		<?php
 	}

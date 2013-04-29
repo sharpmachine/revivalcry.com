@@ -366,7 +366,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 		</tbody>
 		</table>
 		<h3><?php echo sprintf(__('%s Options','dbem'),'Authorize.net')?></h3>
-		<p style="font-style:italic;"><?php echo sprintf(__('Please visit the <a href="%s">documentation</a> for further instructions on setting up Authorize.net with Events Manager.','em-pro'), 'http://wp-events-plugin.com/documentation/events-with-authorize-net'); ?></p>
+		<p style="font-style:italic;"><?php echo sprintf(__('Please visit the <a href="%s">documentation</a> for further instructions on setting up Authorize.net with Events Manager.','em-pro'), 'http://wp-events-plugin.com/documentation/event-bookings-with-authorize-net-aim/'); ?></p>
 		<table class="form-table">
 		<tbody>
 			 <tr valign="top">

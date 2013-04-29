@@ -204,6 +204,7 @@ function emp_add_options() {
 	add_option('dbem_multiple_bookings_feedback_no_bookings', __('You have not booked any events yet. Your cart is empty.','em-pro'));
 	add_option('dbem_multiple_bookings_feedback_loading_cart', __('Loading Cart Contents...','em-pro'));
 	add_option('dbem_multiple_bookings_feedback_empty_cart', __('Are you sure you want to empty your cart?','em-pro'));
+	add_option('dbem_multiple_bookings_submit_button', __('Place Order','em_pro'));
 	//multiple bookings - emails
 	add_option('dbem_multiple_bookings_contact_email_subject', __('New Booking','em-pro'));
 	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has made a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;

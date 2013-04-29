@@ -317,6 +317,7 @@ class EM_Form extends EM_Object {
 	function output_field_input($field, $post=true){
 		ob_start();
 		$default = '';
+		$default_html = '';
 		if($post === true && !empty($_REQUEST[$field['fieldid']])) {
 			$default = is_array($_REQUEST[$field['fieldid']]) ? $_REQUEST[$field['fieldid']]:esc_attr($_REQUEST[$field['fieldid']]);
 			$default_html = esc_attr($_REQUEST[$field['fieldid']]);
@@ -438,7 +439,7 @@ class EM_Form extends EM_Object {
 						$default[] = $_REQUEST[$field_name]['end'];
 					}
 				}else{
-					$default = explode(',',$default);
+					if( !is_array($default) ) $default = explode(',',$default);
 					if( !empty($default[0]) && !preg_match('/^([01]\d|2[0-3]):([0-5]\d) ?(AM|PM)?$/', $default[0]) ) $default = ''; //make sure the value is a date
 				}
 				//we're adding a [%s] to the field id and replacing this for the start-end field names because this way other bits (e.g. attendee forms) can manipulate where the [start] and [end] are placed in the element name. 
@@ -513,12 +514,10 @@ class EM_Form extends EM_Object {
 				case 'text':
 				case 'textarea':
 					//regex
-					if( !empty($field['options_text_regex']) && !@preg_match('/'.$field['options_text_regex'].'/',$value) ){
-						if( !($value == '' && $field['required']) ){
-							$this_err = (!empty($field['options_text_error'])) ? $field['options_text_error']:$err;
-							$this->add_error($this_err);
-							$result = false;
-						}
+					if( trim($value) != '' && !empty($field['options_text_regex']) && !@preg_match('/'.$field['options_text_regex'].'/',$value) ){
+						$this_err = (!empty($field['options_text_error'])) ? $field['options_text_error']:$err;
+						$this->add_error($this_err);
+						$result = false;
 					}
 					//non-empty match
 					if( $result && trim($value) == '' && !empty($field['required']) ){
@@ -682,16 +681,14 @@ class EM_Form extends EM_Object {
 						if( is_user_logged_in() && !get_option('dbem_emp_booking_form_reg_input') ) break;
 						//add field-specific validation
 						if ( $field['type'] == 'user_email' && ! is_email( $value ) ) {
-							$this->add_error( __( 'The email address isn&#8217;t correct.', 'dbem') );
+							$this->add_error( __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.', 'dbem') );
 							$result = false;
 						}
 						//regex
-						if( !empty($field['options_reg_regex']) && !@preg_match('/'.$field['options_reg_regex'].'/',$value) ){
-							if( !($value == '' && !$field['required']) ){
-								$this_err = (!empty($field['options_reg_error'])) ? $field['options_reg_error']:$err;
-								$this->add_error($this_err);
-								$result = false;
-							}
+						if( trim($value) != '' && !empty($field['options_reg_regex']) && !@preg_match('/'.$field['options_reg_regex'].'/',$value) ){
+							$this_err = (!empty($field['options_reg_error'])) ? $field['options_reg_error']:$err;
+							$this->add_error($this_err);
+							$result = false;
 						}
 						//non-empty match
 						if( empty($value) && !empty($field['required']) ){

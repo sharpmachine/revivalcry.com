@@ -170,9 +170,9 @@ class EM_Multiple_Bookings{
     }
     
     public static function checkout(){
-        global $EM_Notices;
+        global $EM_Notices, $EM_Booking;
 		check_ajax_referer('emp_checkout');
-		$EM_Multiple_Booking = self::get_multiple_booking();
+		$EM_Booking = $EM_Multiple_Booking = self::get_multiple_booking();
         //remove filters so that our master booking validates user fields
 		remove_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
 		remove_filter('em_booking_validate', 'EM_Multiple_Bookings::prevent_user_validation', 1); //prevent user fields validation

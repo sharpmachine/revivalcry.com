@@ -66,7 +66,7 @@ class EM_Booking_Form {
 	    //special lookup for multiple bookings
 	    if( is_object($custom_form_id) && get_class($custom_form_id) == 'EM_Multiple_Booking' ){ $custom_form_id = get_option('dbem_muliple_bookings_form'); }
 	    //make sure we don't need to get another form rather than the one already stored in this object
-	    $reload = (is_numeric($EM_Event) && $EM_Event != self::$event_id) || ( !empty($EM_Event->event_id) && $EM_Event->event_id != self::$event_id ) || ( empty($EM_Event) && $custom_form_id != self::$event_id );
+	    $reload = (is_numeric($EM_Event) && $EM_Event != self::$event_id) || ( !empty($EM_Event->event_id) && $EM_Event->event_id != self::$event_id ) || ( empty($EM_Event) && $custom_form_id && $custom_form_id != self::$form_id );
 	    //get the right form
 		if( empty(self::$form) || $reload ){
 			global $wpdb;
@@ -537,11 +537,11 @@ class EM_Booking_Form {
 										<?php endforeach; ?>
 									</select>
 									<input type="hidden" name="post_type" value="<?php echo EM_POST_TYPE_EVENT; ?>" />
-									<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+									<input type="hidden" name="page" value="<?php echo esc_attr($_REQUEST['page']); ?>" />
 								</form>
 								<?php if( self::$form_id != get_option('em_booking_form_fields') ): ?>
 								<form method="post" action="<?php echo add_query_arg(array('form_id'=>null)); ?>#booking-form"> 
-									<input type="hidden" name="form_id" value="<?php echo $_REQUEST['form_id']; ?>" />
+									<input type="hidden" name="form_id" value="<?php echo esc_attr($_REQUEST['form_id']); ?>" />
 									<input type="hidden" name="bookings_form_action" value="default" />
 									<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('bookings_form_default'); ?>" />
 									<input type="submit" value="<?php _e ( 'Make Default', 'em-pro' ); ?> &raquo;" class="button-secondary" onclick="return confirm('<?php _e('You are about to make this your default booking form. All events without an existing specifically chosen booking form will use this new default form from now on.\n\n Are you sure you want to do this?') ?>');" />
@@ -568,7 +568,7 @@ class EM_Booking_Form {
 							</form>
 							<?php if( self::$form_id != get_option('em_booking_form_fields') ): ?>
 							<form method="post" action="<?php echo add_query_arg(array('form_id'=>null)); ?>#booking-form" id="bookings-form-rename">
-								<input type="hidden" name="form_id" value="<?php echo $_REQUEST['form_id']; ?>" />
+								<input type="hidden" name="form_id" value="<?php echo esc_attr($_REQUEST['form_id']); ?>" />
 								<input type="hidden" name="bookings_form_action" value="delete" />
 								<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('bookings_form_delete'); ?>" />
 								<input type="submit" value="<?php _e ( 'Delete', 'em-pro' ); ?> &raquo;" class="button-secondary" onclick="return confirm('<?php _e('Are you sure you want to delete this form?\n\n All events using this form will start using the default form automatically.'); ?>');" />

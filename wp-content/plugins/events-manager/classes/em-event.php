@@ -287,7 +287,7 @@ class EM_Event extends EM_Object{
 					$field_name = substr($event_meta_key, 1);
 					if($event_meta_key[0] != '_'){
 						$this->event_attributes[$event_meta_key] = ( count($event_meta_val) > 1 ) ? $event_meta_val:$event_meta_val[0];					
-					}elseif( !in_array($field_name, $this->post_fields) ){
+					}elseif( is_string($field_name) && !in_array($field_name, $this->post_fields) ){
 						if( array_key_exists($field_name, $this->fields) ){
 							$this->$field_name = $event_meta_val[0];
 						}elseif( in_array($field_name, array('event_owner_name','event_owner_anonymous','event_owner_email')) ){
@@ -341,7 +341,7 @@ class EM_Event extends EM_Object{
 		global $allowedposttags;
 		//we need to get the post/event name and content.... that's it.
 		$this->post_content = isset($_POST['content']) ? wp_kses( stripslashes($_POST['content']), $allowedposttags):'';
-		$this->event_name = !empty($_POST['event_name']) ? wp_kses_data( stripslashes($_POST['event_name']) ):'';
+		$this->event_name = !empty($_POST['event_name']) ? htmlspecialchars_decode(wp_kses_data(htmlspecialchars_decode(stripslashes($_POST['event_name'])))):'';
 		$this->post_type = ($this->is_recurring() || !empty($_POST['recurring'])) ? 'event-recurring':EM_POST_TYPE_EVENT;
 		//don't forget categories!
 		$this->get_categories()->get_post();
@@ -1172,7 +1172,7 @@ class EM_Event extends EM_Object{
 			$event_string = str_replace($result, $attString ,$event_string );
 		}
 	 	//First let's do some conditional placeholder removals
-	 	for ($i = 0 ; $i < get_option('dbem_conditional_recursions',1); $i++){ //you can add nested recursions by modifying this setting in your wp_options table
+	 	for ($i = 0 ; $i < EM_CONDITIONAL_RECURSIONS; $i++){ //you can add nested recursions by modifying this setting in your wp_options table
 			preg_match_all('/\{([a-zA-Z0-9_]+)\}(.+?)\{\/\1\}/s', $event_string, $conditionals);
 			if( count($conditionals[0]) > 0 ){
 				//Check if the language we want exists, if not we take the first language there
@@ -1361,7 +1361,7 @@ class EM_Event extends EM_Object{
 					if( !$this->event_all_day ){
 						$time_format = ( get_option('dbem_time_format') ) ? get_option('dbem_time_format'):get_option('time_format');
 						if($this->event_start_time != $this->event_end_time ){
-							$replace = date_i18n($time_format, $this->start). get_option('dbem_times_seperator') . date_i18n($time_format, $this->end);
+							$replace = date_i18n($time_format, $this->start). get_option('dbem_times_separator') . date_i18n($time_format, $this->end);
 						}else{
 							$replace = date_i18n($time_format, $this->start);
 						}
@@ -1373,7 +1373,7 @@ class EM_Event extends EM_Object{
 					//get format of time to show
 					$date_format = ( get_option('dbem_date_format') ) ? get_option('dbem_date_format'):get_option('date_format');
 					if( $this->event_start_date != $this->event_end_date){
-						$replace = date_i18n($date_format, $this->start). get_option('dbem_dates_seperator') . date_i18n($date_format, $this->end);
+						$replace = date_i18n($date_format, $this->start). get_option('dbem_dates_separator') . date_i18n($date_format, $this->end);
 					}else{
 						$replace = date_i18n($date_format, $this->start);
 					}
@@ -1425,7 +1425,7 @@ class EM_Event extends EM_Object{
 					//get the range of prices
 					$min = false;
 					$max = 0;
-					if( $this->get_bookings()->is_open() || $show_all_ticket_prices ){
+					if( $this->get_bookings()->is_open() || !empty($show_all_ticket_prices) ){
 						foreach( $this->get_tickets()->tickets as $EM_Ticket ){
 							/* @var $EM_Ticket EM_Ticket */
 							if( $EM_Ticket->is_available() || get_option('dbem_bookings_tickets_show_unavailable') || !empty($show_all_ticket_prices) ){
