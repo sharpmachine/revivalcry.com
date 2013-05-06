@@ -74,7 +74,7 @@
 <link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='events-manager-css'  href='http://revivalcry.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=3.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='jetpack-widgets-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/widgets/widgets.css?ver=20121003' type='text/css' media='all' />
-<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.4' type='text/css' media='all' />
 <script type='text/javascript' src='http://revivalcry.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
@@ -248,15 +248,15 @@ var orangebox_vars = {"addThis":""};
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-93299' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-93299' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-dc48d' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-dc48d' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
    				<div class="em-map-balloon-content" ><strong>C3 Performing Arts Center</strong><br/>4579 Mission Gorge Place 
 <br/>CA, San Diego, 92120<br/>
 <a href="http://maps.google.com/maps?saddr=&daddr=4579 Mission Gorge Place,San Diego,CA,92120" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-93299' style="display:none; visibility:hidden;">
+		<div class='em-location-map-coords' id='em-location-map-coords-dc48d' style="display:none; visibility:hidden;">
 			<span class="lat">32.781569</span>
 			<span class="lng">-117.09369900000002</span>
 		</div>
@@ -291,114 +291,7 @@ var orangebox_vars = {"addThis":""};
 <div class="span-10 prepend-1 last">
 <h3>Registration</h3>
 <div id="em-booking" class="em-booking">
-												<form id='em-booking-form' class="em-booking-form" name='booking-form' method='post' action='/events/revival-cry-san-diego-conference-5-4-13/#em-booking'>
-			 	<input type='hidden' name='action' value='booking_add'/>
-			 	<input type='hidden' name='event_id' value='110'/>
-			 	<input type='hidden' name='_wpnonce' value='fecb9880ad'/>
-													<div class='em-booking-form-details'>
-								<p class="ticket-price"><label>Price</label><strong>$15.00</strong></p>					
-				<p class="em-tickets-spaces">
-					<label for='em_tickets'>Spaces</label>
-								<select name="em_tickets[177][spaces]" class="em-ticket-select" id="em-ticket-spaces-177">
-																	<option selected="selected">1</option>
-									<option >2</option>
-									<option >3</option>
-									<option >4</option>
-									<option >5</option>
-									<option >6</option>
-									<option >7</option>
-									<option >8</option>
-									<option >9</option>
-									<option >10</option>
-											</select>
-							</p>
-								
-													<p class="input-first_name input-user-field">
-								<label for='first_name'>
-																			First Name  <span class="em-form-required">*</span>																	</label> 
-														<input type="text" name="first_name" id="first_name" class="input" value=""  />
-													</p>
-														<p class="input-last_name input-user-field">
-								<label for='last_name'>
-																			Last Name  <span class="em-form-required">*</span>																	</label> 
-														<input type="text" name="last_name" id="last_name" class="input" value=""  />
-													</p>
-											<p class="input-group input-text input-field-all_attending">
-					<label for='all_attending'>
-													Names of ALL individuals attending  <span class="em-form-required">*</span>											</label>
-									<input type="text" name="all_attending" id="all_attending" class="input" value=""  />
-								</p>
-										<p class="input-dbem_phone input-user-field">
-							<label for='dbem_phone'>
-																	Phone  <span class="em-form-required">*</span>															</label>
-											<input type="text" name="dbem_phone" id="dbem_phone" class="input" value=""  />
-										</p>
-													<p class="input-user_email input-user-field">
-								<label for='user_email'>
-																			Email  <span class="em-form-required">*</span>																	</label> 
-														<input type="text" name="user_email" id="user_email" class="input" value=""  />
-													</p>
-											<p class="input-group input-text input-field-user_address">
-					<label for='user_address'>
-													Street Address  <span class="em-form-required">*</span>											</label>
-									<input type="text" name="user_address" id="user_address" class="input" value=""  />
-								</p>
-								<p class="input-group input-text input-field-user_city">
-					<label for='user_city'>
-													City  <span class="em-form-required">*</span>											</label>
-									<input type="text" name="user_city" id="user_city" class="input" value=""  />
-								</p>
-								<p class="input-group input-text input-field-user_zip">
-					<label for='user_zip'>
-													Zip  <span class="em-form-required">*</span>											</label>
-									<input type="text" name="user_zip" id="user_zip" class="input" value=""  />
-								</p>
-								<p class="input-group input-text input-field-user_state">
-					<label for='user_state'>
-													State/Providence  <span class="em-form-required">*</span>											</label>
-									<input type="text" name="user_state" id="user_state" class="input" value=""  />
-								</p>
-								<p class="input-group input-select input-field-children_amount">
-					<label for='children_amount'>
-													How many children will be attending childcare: 											</label>
-									<select name="children_amount" class="children_amount" >
-													<option selected="selected">
-						0					</option>
-									<option >
-						1					</option>
-									<option >
-						2					</option>
-									<option >
-						3					</option>
-									<option >
-						4					</option>
-									<option >
-						5					</option>
-									<option >
-						6					</option>
-									<option >
-						7					</option>
-									<option >
-						8					</option>
-									<option >
-						9					</option>
-									<option >
-						10					</option>
-								</select>
-								</p>
-								<p class="input-group input-text input-field-children_ages">
-					<label for='children_ages'>
-													What are the ages of children in childcare? example: 2, 4, 11, 14 											</label>
-									<input type="text" name="children_ages" id="children_ages" class="input" value=""  />
-								</p>
-										<div class="em-gateway-buttons"><div class="em-gateway-button first">			<input type="image" class="em-booking-submit em-gateway-button" id="em-gateway-button-paypal" src="http://revivalcry.com/wp-content/themes/revivalcry/images/book-registration.png" alt="PayPal" />
-		</div></div><input type="hidden" name="gateway" value="paypal" /><style type="text/css">input.em-booking-submit { display:none; } .em-gateway-button input.em-booking-submit { display:block; }</style>						<div class="em-booking-buttons">
-														<input type="submit" class="em-booking-submit" id="em-booking-submit" value="Send your booking" />
-													</div>
-											</div>
-							</form>	
-						<br class="clear" style="clear:left;" />
-		  
+				<p>Bookings are closed for this event.</p>
 	</div>
 <p class="note-box tal"><img title="Cards" src="http://revivalcry.com/wp-content/uploads/2011/06/cards.png" alt="Cards" width="144" height="21" /> All payments are process by <img title="Paypal" src="http://revivalcry.com/wp-content/uploads/2011/06/paypal.png" alt="Paypal" width="74" height="21" />.</p>
 </div>
@@ -552,23 +445,6 @@ $(document).bind('em_booking_gateway_add_paypal', function(event, response){
 		ppForm.append('<input id="em-paypal-submit" type="submit" style="display:none" />');
 		ppForm.appendTo('body').trigger('submit');
 	}
-});//Select Submission
-$('.em-booking-gateway select[name=gateway]').change(function(e){
-	var gateway = $(this).find('option:selected').val();
-	$('div.em-booking-gateway-form').hide();
-	$('div#em-booking-gateway-'+gateway).show();
-});
-//Button Submission
-$('input.em-gateway-button').click(function(e){
-	//prevents submission in order to append a hidden field and bind to the booking form submission event
-	e.preventDefault();
-	//get gateway name
-	var gateway = $(this).attr('id').replace('em-gateway-button-','');
-	var parent = $(this).parents('.em-booking-form').first();
-	parent.find('input[name=gateway]').remove();
-	parent.append('<input type="hidden" name="gateway" value="'+gateway+'" />');
-	parent.trigger('submit');
-	return false;
 });							
 			});
 					</script>
@@ -589,13 +465,13 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.32.0-2013.04.03'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.4'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201318'></script>
-<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Apraa'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201319'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Mayaa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
 
-	<script src="http://stats.wordpress.com/e-201318.js" type="text/javascript"></script>
+	<script src="http://stats.wordpress.com/e-201319.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	st_go({v:'ext',j:'1:2.2.2',blog:'32069135',post:'1817',tz:'0'});
+	st_go({v:'ext',j:'1:2.2.4',blog:'32069135',post:'1817',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,1817,2);};
 	if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
 	else load_cmc();
@@ -609,4 +485,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-04-29 04:21:08 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-05-06 11:52:33 by W3 Total Cache -->

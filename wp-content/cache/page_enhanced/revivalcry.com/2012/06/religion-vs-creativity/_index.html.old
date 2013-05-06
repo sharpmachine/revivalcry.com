@@ -84,7 +84,7 @@
 <link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='events-manager-css'  href='http://revivalcry.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=3.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='jetpack-widgets-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/widgets/widgets.css?ver=20121003' type='text/css' media='all' />
-<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.4' type='text/css' media='all' />
 <script type='text/javascript' src='http://revivalcry.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
@@ -244,7 +244,7 @@ var orangebox_vars = {"addThis":""};
 
 					<div class="entry-content">
 						<p>The current religious structure is not releasing the creativity of His people, but keeping it for the agenda of the institution.  So God is rearranging the structure to release the creativity of His Kingdom through His saints.  Leaders are always talking about getting back to the book of acts. But they seem to want it in their current structure.  When the move of God in Acts was a viral outpouring of Holy Spirit&#8217;s creativity through His people gone rogue from the religious institution of the day.  That&#8217;s why Constantine put Christians in buildings to keep the creativity of the Kingdom from spreading in the marketplace with signs, wonders, and miracles.  It&#8217;s time for the creativity of God&#8217;s DNA in you to go viral!  How do you steward your God given creativity?  Is the religious institution of Christianity paralyzing your creativity?  If so, what are you going to do to break out of the box?</p>
-<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share:</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow" class="share-print sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/#print"  title="Click to print"><span>Print</span></a></li><li class="share-email"><a rel="nofollow" class="share-email sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=email"  title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" class="share-facebook sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=facebook"  title="Share on Facebook" id="sharing-facebook-1583"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" class="share-twitter sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=twitter"  title="Click to share on Twitter" id="sharing-twitter-1583"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" class="share-google-plus-1 sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=google-plus-1"  title="Click to share on Google+" id="sharing-google-1583"><span>Google +1</span></a></li><li class="share-end"></li></ul><div class="sharing-clear"></div></div></div></div>											</div><!-- .entry-content -->
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share:</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow" class="share-print sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/#print"  title="Click to print"><span>Print</span></a></li><li class="share-email"><a rel="nofollow" class="share-email sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=email"  title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" class="share-facebook sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=facebook"  title="Share on Facebook" id="sharing-facebook-1583"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" class="share-twitter sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=twitter"  title="Click to share on Twitter" id="sharing-twitter-1583"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" class="share-google-plus-1 sd-button share-icon" href="http://revivalcry.com/2012/06/religion-vs-creativity/?share=google-plus-1"  title="Click to share on Google+" id="sharing-google-1583"><span>Google +1</span></a></li><li class="share-end"></li></ul></div></div></div>											</div><!-- .entry-content -->
 					
 						<div class="entry-utility">
 						This entry was posted in <a href="http://revivalcry.com/category/creativity/" title="View all posts in Creativity" rel="category tag">Creativity</a> and tagged <a href="http://revivalcry.com/tag/creativity-2/" rel="tag">creativity</a>, <a href="http://revivalcry.com/tag/dennis-reanier/" rel="tag">dennis reanier</a>, <a href="http://revivalcry.com/tag/religion/" rel="tag">religion</a>.											</div><!-- .entry-utility -->
@@ -546,13 +546,13 @@ var WPGroHo = {"my_hash":""};
 </script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.32.0-2013.04.03'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.4'></script>
-<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201317'></script>
-<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Apraa'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201318'></script>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?ver=2013Mayaa'></script>
 <script type='text/javascript' src='http://revivalcry.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=3.5.1'></script>
 
-	<script src="http://stats.wordpress.com/e-201317.js" type="text/javascript"></script>
+	<script src="http://stats.wordpress.com/e-201318.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	st_go({v:'ext',j:'1:2.2.2',blog:'32069135',post:'1583',tz:'0'});
+	st_go({v:'ext',j:'1:2.2.4',blog:'32069135',post:'1583',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,1583,2);};
 	if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
 	else load_cmc();
@@ -566,4 +566,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-04-28 11:46:18 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-05-05 17:44:22 by W3 Total Cache -->
