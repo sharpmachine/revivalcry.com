@@ -188,21 +188,20 @@ class EM_Multiple_Booking extends EM_Booking{
 	}
 	
 	/**
-	 * Gets the total price for this whole booking. Seting $force_reset to true will recheck spaces, even if previously done so.
-	 * @param boolean $force_refresh
+	 * Gets the total price for this whole booking, including taxes, discounts, etc.
 	 * @param boolean $format
-	 * @param boolean $add_tax
 	 * @return float
 	 */
-	function get_price( $force_refresh=false, $format=false, $add_tax='x' ){
-		if($force_refresh || $this->booking_price == 0 || $add_tax !== 'x' || get_option('dbem_bookings_tax_auto_add')){
+	function get_price( $format=false ){
+		if( $this->booking_price === null ){
 			$this->booking_price = 0;
 			foreach($this->get_bookings() as $EM_Booking){
-			    $this->booking_price += $EM_Booking->get_price($force_refresh, false, $add_tax);
+			    $this->booking_price += $EM_Booking->get_price();
 			}
+			$this->booking_price = apply_filters('em_multiple_booking_get_price', $this->booking_price, $this);
 		}
 		if($format){
-			return em_get_currency_formatted($this->booking_price);
+			return $this->format_price($this->booking_price);
 		}
 		return $this->booking_price;
 	}
@@ -214,7 +213,18 @@ class EM_Multiple_Booking extends EM_Booking{
 	function get_event(){
 		global $EM_Event;
 		if( !is_object($this->event) || get_class($this->event) !='EM_Event' ){
-			$this->event = new EM_Event();
+			if( count($this->get_bookings()) == 1 ){
+			    foreach( $this->get_bookings() as $EM_Booking ){
+				    $this->event = $EM_Booking->get_event();
+				    break;
+			    }
+			}else{
+			    $this->event = new EM_Event();
+			    $this->event->event_name = __('Multiple Events','em-pro');
+			}
+		}elseif( $this->event->event_id && count($this->get_bookings()) != 1 ){
+		    $this->event = new EM_Event(); //reset event object
+			$this->event->event_name = __('Multiple Events','em-pro');
 		}
 		return $this->event;
 	}

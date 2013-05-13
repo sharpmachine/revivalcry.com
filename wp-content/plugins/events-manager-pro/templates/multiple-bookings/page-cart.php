@@ -15,7 +15,9 @@ global $EM_Notices;
 echo $EM_Notices;
 emp_locate_template('multiple-bookings/cart-table.php',true);
 ?>
-<form action="<?php echo get_permalink(get_option('dbem_multiple_bookings_checkout_page')); ?>" method="get">
-	<button type="submit" class="em-cart-actions-empty"><?php _e('Empty Cart','em-pro'); ?></button>
-	<button type="submit"><?php _e('Proceed to Checkout','em-pro'); ?></button>
-</form>
+<div class="em-cart-actions">
+	<form action="<?php echo get_permalink(get_option('dbem_multiple_bookings_checkout_page')); ?>" method="get">
+		<button type="submit" class="em-cart-actions-empty"><?php _e('Empty Cart','em-pro'); ?></button>
+		<button type="submit"><?php _e('Proceed to Checkout','em-pro'); ?></button>
+	</form>
+</div>

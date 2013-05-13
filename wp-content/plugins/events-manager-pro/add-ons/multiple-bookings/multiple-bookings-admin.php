@@ -20,6 +20,81 @@ class EM_Multiple_Bookings_Admin {
         }
     }
     
+    /**
+     * Settings for Multiple Bookings Mode 
+     */
+    public static function settings(){
+        global $save_button;
+        ?>
+        <div  class="postbox " id="em-opt-multiple-bookings" >
+        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Beta)</em></span></h3>
+        	<div class="inside">
+        		<table class='form-table'>
+        			<tr><td colspan='2'>
+        				<p>
+        					<?php _e('Multiple Bookings Mode enables your visitors to make bookings follow a flow similar to that of a shopping cart, meaning users can book multiple events and pay for them in one go.','em-pro'); ?>
+        					<a href="http://wp-events-plugin.com/documentation/multiple-booking-mode/"><?php echo sprintf(__('More about %s.','em-pro'), __('Multiple Bookings Mode','em-pro')); ?></a>
+        				</p>
+        			</td></tr>
+        			<?php
+        			em_options_radio_binary ( __( 'Enable Muliple Bookings Mode?', 'em-pro' ), 'dbem_multiple_bookings' );
+        			?>
+        			<tbody id="dbem-js-multiple-bookings">
+        				<tr>
+							<td><?php echo __( 'Checkout Page', 'em-pro'); ?></td>
+							<td>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_checkout_page', 'selected'=>get_option('dbem_multiple_bookings_checkout_page'), 'show_option_none'=>sprintf(__('Select ...', 'dbem')) )); ?>
+								<br />
+								<em>
+									<?php
+									echo __('This page will be where the user reviews their bookings, enters additional information (such as user registration info) and proceeds with payment.','em-pro');
+									echo ' '. sprintf(__( 'Please <a href="%s">add a new page</a> and assign it here. This is required for Multiple Bookings Mode to work.','em-pro'), 'post-new.php?post_type=page'); 
+									?>
+								</em>
+							</td>
+						</tr>
+	        			<?php
+	        				em_options_radio_binary( __('Redirect To Checkout on Booking?','em-pro'), 'dbem_multiple_bookings_redirect', __('It set to yes, when a booking has been added to the cart, the user will be redirected to the checkout page. Whilst redirecting the confirmation message below will also be shown, you may also want to modify that too let them know they are being redirected.','em-pro'));
+	        				em_options_select( __('Checkout Page Booking Form','em-pro'), 'dbem_multiple_bookings_form', EM_Booking_Form::get_forms_names(), __('This form will be shown on the checkout page, which should include user fields you may want when registering new users. Any non-user fields will be added as supplementary information to every booking, if you have identical Field IDs on the individual event booking form, that field value will be saved to the individual booking instead.','em-pro'));
+	        			?>
+        				<tr>
+							<td><?php echo __( 'Cart Page', 'em-pro'); ?></td>
+							<td>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_cart_page', 'selected'=>get_option('dbem_multiple_bookings_cart_page'), 'show_option_none'=>sprintf(__('Select ...', 'dbem')) )); ?>
+								<br />
+								<em><?php 
+									echo __('This page will display the events the user has chosen to book and allow them to edit their bookings before checkout.','em-pro');
+									echo ' '.sprintf(__( 'Please <a href="%s">add a new page</a> and assign it here. This is required for Multiple Bookings Mode to work.','em-pro'), 'post-new.php?post_type=page'); ?>
+								</em>
+							</td>
+						</tr>
+	        			<?php
+	        				em_options_input_text( __('Successfully Added Message','em-pro'), 'dbem_multiple_bookings_feedback_added', __('A booking was successfull added to the bookings cart.','em-pro'));
+	        				em_options_input_text( __('Loading Cart Contents','em-pro'), 'dbem_multiple_bookings_feedback_loading_cart', __('If caching plugins are used, cart contents are loaded after a page load and this text is shown whilst loading.','em-pro'));
+	        				em_options_input_text( __('Event Already Booked','em-pro'), 'dbem_multiple_bookings_feedback_already_added', __('This event has already been added to the cart and cannot be added twice.','em-pro'));
+	        				em_options_input_text( __('No Bookings','em-pro'), 'dbem_multiple_bookings_feedback_no_bookings', __('User has not booked any events yet, cart is empty.','em-pro'));
+	        				em_options_input_text( __('Empty Cart Warning','em-pro'), 'dbem_multiple_bookings_feedback_empty_cart', __('Warning after the "empty cart" button is clicked.','em-pro'));
+	        				em_options_input_text( __('Checkout Form Button','em-pro'), 'dbem_multiple_bookings_submit_button', __('The text shown in the checkout page form.','em-pro'));
+	        			?>
+        			</tbody>
+        			<?php echo $save_button; ?>
+        		</table>
+        	</div> <!-- . inside -->
+        </div> <!-- .postbox -->
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$('input:radio[name="dbem_multiple_bookings"]').change(function(){
+					if( $('input:radio[name="dbem_multiple_bookings"]:checked').val() == 1 ){
+						$('tbody#dbem-js-multiple-bookings').show();
+					}else{
+						$('tbody#dbem-js-multiple-bookings').hide();					
+					}
+				}).first().trigger('change');
+			});
+		</script>
+		<?php
+    }
+    
 	public static function emails(){
 	    global $save_button;
 		?>

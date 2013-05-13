@@ -74,7 +74,7 @@
 <link rel='stylesheet' id='contact-form-7-css'  href='http://revivalcry.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.4' type='text/css' media='all' />
 <link rel='stylesheet' id='events-manager-css'  href='http://revivalcry.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=3.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='jetpack-widgets-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/widgets/widgets.css?ver=20121003' type='text/css' media='all' />
-<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='sharedaddy-css'  href='http://revivalcry.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.css?ver=2.2.5' type='text/css' media='all' />
 <script type='text/javascript' src='http://revivalcry.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
@@ -120,6 +120,7 @@ var orangebox_vars = {"addThis":""};
 		 div.em-gateway-button { float:left; padding-left:20px; margin-left:20px; border-left:1px solid #777; }
 		/* Cart CSS */
 		.em-cart-widget-content .em-cart-widget-total { border-top:1px solid #efefef; margin-top:5px; }
+		.em-cart-actions { text-align:right; margin:10px 0px;}
 		 /* Checkout Form CSS */
 		.em-cart-table { border-collapse:collapse; border-spacing:0; width:100%; }		 
 		.em-cart-table { border-collapse:0px; }
@@ -130,9 +131,9 @@ var orangebox_vars = {"addThis":""};
 		.em-cart-table tbody.em-cart-totals th { text-align:right; padding-right:20px; }
 		.em-cart-table .em-cart-table-details-hide { display:none; visibility:none; }
 		.em-cart-table .em-cart-table-event-details { display:none; visibility:none; }
-		.em-cart-table-event-summary .em-cart-table-event-title { font-weight:bold; }
-		.em-cart-table-event-summary .em-cart-table-spaces { text-align:center; }
-		.em-cart-table-event-summary .em-cart-table-price, tbody.em-cart-totals td { text-align:right; }
+		.em-cart-table .em-cart-table-event-title { font-weight:bold; }
+		.em-cart-table .em-cart-table-spaces { text-align:center; }
+		.em-cart-table .em-cart-table-price, tbody.em-cart-totals td { text-align:right; }
 		.em-cart-table-event-details .em-cart-table-ticket { font-weight:bold; }
 		.em-cart-info .em-cart-info-title { text-decoration:underline; }
 		.em-cart-info .em-cart-info-booking-title { font-weight:bold; }
@@ -145,6 +146,8 @@ var orangebox_vars = {"addThis":""};
 			.em-coupon-message { display:inline-block; margin:5px 0px 0px 105px; text-indent:22px; }
 			.em-coupon-success { color:green; background:url(http://revivalcry.com/wp-content/plugins/events-manager-pro/includes/images/success.png) 0px 0px no-repeat }
 			.em-coupon-error { color:red; background:url(http://revivalcry.com/wp-content/plugins/events-manager-pro/includes/images/error.png) 0px 0px no-repeat }
+			.em-cart-coupons-form .em-coupon-message{ margin:5px 0px 0px 0px; }
+			#em-coupon-loading { margin-right:4px; }	
 		</style>
 		<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">.broken_link, a.broken_link {
 	text-decoration: line-through;
@@ -231,9 +234,9 @@ var orangebox_vars = {"addThis":""};
 	
 	<h2>Location</h2>
 	<p><strong>Christ In You International<br /></strong>
-	       7856 S. Jentilly Ln<br />
-               Tempe, AZ,      85284<br />
-<a href="http://maps.google.com/maps?saddr=&daddr=7856 S. Jentilly Ln,Tempe,AZ,85284" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></p>
+	       1875 East Ravenswood Dr.<br />
+               Gilbert, AZ,      85298<br />
+<a href="http://maps.google.com/maps?saddr=&daddr=1875 East Ravenswood Dr.,Gilbert,AZ,85298" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></p>
 
 	<h2>Additional Info</h2>
 	<p><strong>Speakers: </strong>Dennis Reanier,<br \>
@@ -247,17 +250,17 @@ var orangebox_vars = {"addThis":""};
         </div>
 					
 	<div class="span-5 prepend-2 last">
-             		<div class='em-location-map' id='em-location-map-1806e' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
-   		<div class='em-location-map-info' id='em-location-map-info-1806e' style="display:none; visibility:hidden;">
+             		<div class='em-location-map' id='em-location-map-9bf2b' style='background: #CDCDCD; width: 400px; height: 300px'>Loading Map....</div>
+   		<div class='em-location-map-info' id='em-location-map-info-9bf2b' style="display:none; visibility:hidden;">
    			<div class="em-map-balloon" style="font-size:12px;">
-   				<div class="em-map-balloon-content" ><strong>Christ In You International</strong><br/>7856 S. Jentilly Ln 
-<br/>AZ, Tempe, 85284<br/>
-<a href="http://maps.google.com/maps?saddr=&daddr=7856 S. Jentilly Ln,Tempe,AZ,85284" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
+   				<div class="em-map-balloon-content" ><strong>Christ In You International</strong><br/>1875 East Ravenswood Dr. 
+<br/>AZ, Gilbert, 85298<br/>
+<a href="http://maps.google.com/maps?saddr=&daddr=1875 East Ravenswood Dr.,Gilbert,AZ,85298" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://maps.google.com']);" target=_blank">Get Directions</a></div>
    			</div>
    		</div>
-		<div class='em-location-map-coords' id='em-location-map-coords-1806e' style="display:none; visibility:hidden;">
-			<span class="lat">33.344594</span>
-			<span class="lng">-111.92785900000001</span>
+		<div class='em-location-map-coords' id='em-location-map-coords-9bf2b' style="display:none; visibility:hidden;">
+			<span class="lat">33.219897</span>
+			<span class="lng">-111.74949400000003</span>
 		</div>
 		
 	</div>
@@ -266,7 +269,7 @@ var orangebox_vars = {"addThis":""};
 
 <div class="span-10 prepend-1 last" id="more-info" style="padding-top:50px; padding-bottom:50px">
 <h1>Details</h1>
-<p>Dennis Reanier will be ministering at <strong>Christ In You International</strong> in <strong>Tempe, AZ </strong>on <strong>Sunday (5/12) at 7:00pm</strong><strong>!</strong></p>
+<p>Dennis Reanier will be ministering at <strong>Christ In You International</strong> in <strong>Gilbert, AZ </strong>on <strong>Sunday (5/12) at 7:00pm</strong><strong>!</strong></p>
 <p>Please contact Revival Cry Ministries if you have any questions: 406-522-7107 or 406-595-0679 or http://www.revivalcry.com!</p>
 
 </div>
@@ -445,7 +448,7 @@ var WPGroHo = {"my_hash":""};
 
 	<script src="http://stats.wordpress.com/e-201319.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	st_go({v:'ext',j:'1:2.2.4',blog:'32069135',post:'1898',tz:'0'});
+	st_go({v:'ext',j:'1:2.2.5',blog:'32069135',post:'1898',tz:'0'});
 	var load_cmc = function(){linktracker_init(32069135,1898,2);};
 	if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
 	else load_cmc();
@@ -459,4 +462,4 @@ var WPGroHo = {"my_hash":""};
 
 Page Caching using disk: enhanced
 
- Served from: revivalcry.com @ 2013-05-06 14:40:40 by W3 Total Cache -->
+ Served from: revivalcry.com @ 2013-05-12 23:02:08 by W3 Total Cache -->

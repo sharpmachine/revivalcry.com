@@ -5,12 +5,12 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 2.3.4
+Version: 2.3.5
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 2.32);
-define('EM_MIN_VERSION', 5.3642);
+define('EMP_VERSION', 2.35);
+define('EM_MIN_VERSION', 5.4);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
@@ -143,6 +143,7 @@ class EM_Pro {
 		 div.em-gateway-button { float:left; padding-left:20px; margin-left:20px; border-left:1px solid #777; }
 		/* Cart CSS */
 		.em-cart-widget-content .em-cart-widget-total { border-top:1px solid #efefef; margin-top:5px; }
+		.em-cart-actions { text-align:right; margin:10px 0px;}
 		 /* Checkout Form CSS */
 		.em-cart-table { border-collapse:collapse; border-spacing:0; width:100%; }		 
 		.em-cart-table { border-collapse:0px; }
@@ -153,9 +154,9 @@ class EM_Pro {
 		.em-cart-table tbody.em-cart-totals th { text-align:right; padding-right:20px; }
 		.em-cart-table .em-cart-table-details-hide { display:none; visibility:none; }
 		.em-cart-table .em-cart-table-event-details { display:none; visibility:none; }
-		.em-cart-table-event-summary .em-cart-table-event-title { font-weight:bold; }
-		.em-cart-table-event-summary .em-cart-table-spaces { text-align:center; }
-		.em-cart-table-event-summary .em-cart-table-price, tbody.em-cart-totals td { text-align:right; }
+		.em-cart-table .em-cart-table-event-title { font-weight:bold; }
+		.em-cart-table .em-cart-table-spaces { text-align:center; }
+		.em-cart-table .em-cart-table-price, tbody.em-cart-totals td { text-align:right; }
 		.em-cart-table-event-details .em-cart-table-ticket { font-weight:bold; }
 		.em-cart-info .em-cart-info-title { text-decoration:underline; }
 		.em-cart-info .em-cart-info-booking-title { font-weight:bold; }

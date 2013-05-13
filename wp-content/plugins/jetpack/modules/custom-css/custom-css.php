@@ -1144,14 +1144,11 @@ class Jetpack_Custom_CSS {
 	 * When on the edit screen, make sure the custom content width
 	 * setting is applied to the large image size.
 	 */
-	static function editor_max_image_size( $dims, $size, $context ) {
+	static function editor_max_image_size( $dims, $size = 'medium', $context = null ) {
 		list( $width, $height ) = $dims;
 
-		if ( 'large' == $size && 'edit' == $context ) {
-			$content_width = Jetpack::get_content_width();
-			if ( $content_width < $width )
-				$width = $content_width;
-		}
+		if ( 'large' == $size && 'edit' == $context )
+			$width = Jetpack::get_content_width();
 
 		return array( $width, $height );
 	}

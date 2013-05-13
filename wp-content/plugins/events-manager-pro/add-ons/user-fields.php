@@ -215,7 +215,7 @@ class EM_User_Fields {
 								//override by registration value in case value is now empty, otherwise show n/a
 								if( !empty($EM_Booking->booking_meta['registration'][$field_id]) && (empty($value) || $no_user) ){
 									$value = $EM_Booking->booking_meta['registration'][$field_id];
-								}elseif( empty($value) || $guest_user ){
+								}elseif( empty($value) || $no_user ){
 									$value = "<em>".__('n/a','em-pro')."</em>";
 								}								
 								if( $value != "<em>".__('n/a','em-pro')."</em>"){ 

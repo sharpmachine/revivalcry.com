@@ -15,6 +15,7 @@ class EM_Coupon extends EM_Object {
 	var $coupon_end;
 	var $coupon_max;
 	var $coupon_type = '';
+	var $coupon_tax = '';
 	var $coupon_discount = 0;
 	var $coupon_eventwide = false;
 	var $coupon_sitewide = false;
@@ -31,6 +32,7 @@ class EM_Coupon extends EM_Object {
 		'coupon_end' => array('name'=>'end','type'=>'%s','null'=>true),
 		'coupon_max' => array('name'=>'max','type'=>'%d', 'null'=>true),
 		'coupon_type' => array('name'=>'type','type'=>'%s'),
+		'coupon_tax' => array('name'=>'tax','type'=>'%s', 'null'=>true),
 		'coupon_discount' => array('name'=>'discount','type'=>'%f'),
 		'coupon_private' => array('name'=>'private','type'=>'%d', 'null'=>true),
 		'coupon_eventwide' => array('name'=>'eventwide','type'=>'%d', 'null'=>true),
@@ -55,7 +57,7 @@ class EM_Coupon extends EM_Object {
 		if( is_numeric($id) && $search_by == 'id' ){
 			//search by coupon_id, get post_id and blog_id (if in ms mode) and load the post
 			$coupon = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".EM_COUPONS_TABLE." WHERE coupon_id=%d",$id), ARRAY_A);
-		}elseif( is_numeric($id) && $search_by == 'code' ){
+		}elseif( $search_by == 'code' ){
 			//search by coupon_id, get post_id and blog_id (if in ms mode) and load the post
 			$coupon = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".EM_COUPONS_TABLE." WHERE coupon_code='%s'",$id), ARRAY_A);
 		}elseif( is_array($id) ){
@@ -68,88 +70,17 @@ class EM_Coupon extends EM_Object {
 		}
 		$this->id = $this->coupon_id;
 		$this->owner = $this->coupon_owner;
+		if( empty($this->coupon_tax) ){
+			//special tax consideration for EM <5.4
+		    if( get_option('dbem_legacy_bookings_tax_auto_add', 'x') !== 'x' ){
+		        $this->coupon_tax = get_option('dbem_legacy_bookings_tax_auto_add') ? 'post':'pre';
+		    }else{
+		        $this->coupon_tax = get_option('dbem_bookings_tax_auto_add') ? 'post':'pre';   
+		    }
+		}
+		
 		do_action('em_coupon', $this, $id);
 	}
-	
-	/**
-	 * Retrieve event information via POST (used in situations where posts aren't submitted via WP)
-	 * @param boolean $validate whether or not to run validation, default is true
-	 * @return boolean
-	 */
-	function get_post($validate = true){
-		do_action('em_coupon_get_post_pre', $this);
-		$this->coupon_code = ( !empty($_POST['coupon_code']) ) ? wp_kses($_POST['coupon_code'], array()):'';
-		$this->coupon_name = ( !empty($_POST['coupon_name']) ) ? wp_kses($_POST['coupon_name'], array()):'';
-		$this->coupon_description = ( !empty($_POST['coupon_description']) ) ? wp_kses($_POST['coupon_description'], array()):'';
-		$this->coupon_start = ( !empty($_POST['coupon_start']) ) ? $_POST['coupon_start']:'';
-		$this->coupon_end = ( !empty($_POST['coupon_end']) ) ? $_POST['coupon_end']:'';
-		$this->coupon_max = ( !empty($_POST['coupon_max']) && is_numeric($_POST['coupon_max']) ) ? $_POST['coupon_max']:'';
-		$this->coupon_type = ( !empty($_POST['coupon_type']) ) ? $_POST['coupon_type']:'';
-		$this->coupon_discount = ( !empty($_POST['coupon_discount']) ) ? $_POST['coupon_discount']:'';
-		if( !empty($this->coupon_discount) && $this->coupon_discount < 0 ){ $this->coupon_discount = $this->coupon_discount * -1 ; } //no negatives
-		$this->coupon_eventwide = ( !empty($_POST['coupon_eventwide']) ) ? 1:0;
-		$this->coupon_sitewide = ( !empty($_POST['coupon_sitewide']) ) ? 1:0;
-		$this->coupon_private = ( !empty($_POST['coupon_private']) ) ? 1:0;
-		$result = $validate ? $this->validate():true; //validate both post and meta, otherwise return true
-		return apply_filters('em_coupon_get_post', $result, $this);		
-	}
-	
-	function validate(){
-		$validate = true;
-		foreach( $this->required_fields as $field => $msg){
-			if( empty($this->$field) ){
-				$validate = false;
-				$this->add_error( sprintf(__("%s is required.", "dbem"),$msg) );
-			}
-		}
-		return apply_filters('em_coupon_validate', $validate, $this );		
-	}
-	
-	function save(){
-		global $wpdb;
-		if( !$this->can_manage('manage_bookings', 'manage_others_bookings') ){
-			return apply_filters('em_coupon_save', false, $this);
-		}
-		//Set Blog ID
-		if( is_multisite() && empty($this->blog_id) ){
-			$this->blog_id = get_current_blog_id();
-		}
-		if( empty($this->coupon_owner) ){ $this->coupon_owner = get_current_user_id(); }
-		do_action('em_coupon_save_pre', $this);
-		$coupon_array = $this->to_array(true);
-		$just_added_coupon = false;
-		if( empty($this->coupon_id) ){
-			unset($coupon_array['coupon_id']);
-			if ( !$wpdb->insert(EM_COUPONS_TABLE, $coupon_array) ){
-				$this->add_error( sprintf(__('Something went wrong saving your %s.','em-pro'),__('Coupon','em-pro')));
-			}else{
-				//success, so link the coupon with the post via an coupon id meta value for easy retrieval
-				$this->coupon_id = $wpdb->insert_id;
-				$this->feedback_message = sprintf(__('Successfully saved %s','em-pro'),__('Coupon','em-pro'));
-				do_action('em_coupon_save_new', $this);
-			}
-		}else{
-			if ( $wpdb->update(EM_COUPONS_TABLE, $coupon_array, array('coupon_id'=>$this->coupon_id) ) === false ){
-				$this->add_error( sprintf(__('Something went wrong updating your %s.','em-pro'),__('Coupon','em-pro')));			
-			}else{
-				$this->feedback_message = sprintf(__('Successfully saved %s','em-pro'),__('Coupon','em-pro'));
-			}		
-		}
-		$this->id = $this->coupon_id;
-		$this->owner = $this->coupon_owner;
-		return apply_filters('em_coupon_save', count($this->errors) == 0, $this, $just_added_coupon);
-	}
-	
-	function delete($force_delete = true){ //atm wp seems to force cp deletions anyway
-		global $wpdb;
-		$result = false;
-		if( $this->can_manage('manage_bookings','manage_others_bookings') ){
-			do_action('em_coupon_delete_pre', $this);
-			$result = $wpdb->query("DELETE FROM ".EM_COUPONS_TABLE." WHERE coupon_id=".$this->coupon_id);
-			$this->feedback_message = sprintf(__('Successfully deleted %s','em-pro'),__('Coupon','em-pro'));
-		}
-		return apply_filters('em_coupon_delete', $result !== false, $this);
-	}	
 	
 	function apply_discount($price){
 		switch($this->coupon_type){
@@ -230,7 +161,7 @@ class EM_Coupon extends EM_Object {
 	
 	function has_events(){
 		global $wpdb;
-		$sql = "SELECT count(object_id) as events_no FROM ".EM_META_TABLE." WHERE meta_value = {$this->coupon_id}";   
+		$sql = "SELECT count(object_id) as events_no FROM ".EM_META_TABLE." WHERE meta_value = {$this->coupon_id} AND  meta_key='event-coupon'";   
 	 	$affected_events = $wpdb->get_row($sql);
 		return apply_filters('em_coupon_has_events', (count($affected_events) > 0), $this);
 	}

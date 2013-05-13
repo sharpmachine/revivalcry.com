@@ -64,7 +64,7 @@ class EM_Booking_Form {
 	 */
 	function get_form($EM_Event = false, $custom_form_id = false){
 	    //special lookup for multiple bookings
-	    if( is_object($custom_form_id) && get_class($custom_form_id) == 'EM_Multiple_Booking' ){ $custom_form_id = get_option('dbem_muliple_bookings_form'); }
+	    if( is_object($custom_form_id) && get_class($custom_form_id) == 'EM_Multiple_Booking' ){ $custom_form_id = get_option('dbem_multiple_bookings_form'); }
 	    //make sure we don't need to get another form rather than the one already stored in this object
 	    $reload = (is_numeric($EM_Event) && $EM_Event != self::$event_id) || ( !empty($EM_Event->event_id) && $EM_Event->event_id != self::$event_id ) || ( empty($EM_Event) && $custom_form_id && $custom_form_id != self::$form_id );
 	    //get the right form
@@ -236,8 +236,8 @@ class EM_Booking_Form {
 	    if( is_array($EM_Booking->booking_meta['booking']) || ($include_registration_info && is_array($EM_Booking->booking_meta['registration'])) ){
 			$EM_Form = self::get_form($EM_Booking->get_event());
 			foreach($EM_Form->form_fields as $fieldid => $field){
+				$input_value = $field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
 				if( !array_key_exists($fieldid, $EM_Form->user_fields) && !in_array($fieldid, array('user_email','user_name')) && $field['type'] != 'html' ){
-					$input_value = $field_value = (isset($EM_Booking->booking_meta['booking'][$fieldid])) ? $EM_Booking->booking_meta['booking'][$fieldid]:'n/a';
 					if( in_array($field['type'], array('date','time')) && $input_value == 'n/a' ) $input_value = '';
 					$booking_data['booking'][$field['label']] = $EM_Form->get_formatted_value($field, $input_value);
 				}elseif( $field['type'] != 'html' ){

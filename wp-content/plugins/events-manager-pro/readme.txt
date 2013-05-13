@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 
 == Description ==
 
@@ -22,6 +22,18 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.5 =
+* revamp of coupons system, uses v5.4 discount system
+* coupons now support Multiple Bookings Mode
+* coupons can now be added pre/post tax
+* delayed transactions table init() so BP doesn't trigger a _doing_it_wrong function
+* moved MB stuff out of emp-admin.php and into multiple-bookings-admin.php
+* added option for redirection to checkout page for multiple bookings whenever making a single booking
+* updated MB mode and PayPal gateway to use new v5.4 pricing functions
+* fixed some php warnings
+* updated russian language file
+* improved retrieval of booking name in MB mode, e.g. single event booking = event name, multiple booking = 'Multiple Events'
+
 = 2.3.4 =
 * fixed bug when trying to switch booking forms in form editor
 * fixed localization typo

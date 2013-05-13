@@ -84,7 +84,8 @@ class acf_field_relationship extends acf_field
 			'lang' => false,
 			'update_post_meta_cache' => false,
 			'field_key' => '',
-			'nonce' => ''
+			'nonce' => '',
+			'ancestor' => false,
 		);
 		
 		$options = array_merge( $options, $_POST );
@@ -179,7 +180,17 @@ class acf_field_relationship extends acf_field
 		
 		
 		// load field
-		$field = apply_filters('acf/load_field', false, $options['field_key'] );
+		$field = array();
+		if( $options['ancestor'] )
+		{
+			$ancestor = apply_filters('acf/load_field', array(), $options['ancestor'] );
+			$field = acf_get_child_field_from_parent_field( $options['field_key'], $ancestor );
+		}
+		else
+		{
+			$field = apply_filters('acf/load_field', array(), $options['field_key'] );
+		}
+		
 		$field = array_merge( $this->defaults, $field );
 		
 		$the_post = get_post( $options['post_id'] );
@@ -221,7 +232,7 @@ class acf_field_relationship extends acf_field
 				// featured_image
 				if( in_array('featured_image', $field['result_elements']) )
 				{
-					$image = get_the_post_thumbnail( $the_post->ID, array(21, 21) );
+					$image = get_the_post_thumbnail( $post->ID, array(21, 21) );
 					
 					$title .= '<div class="result-thumbnail">' . $image . '</div>';
 				}
@@ -270,7 +281,7 @@ class acf_field_relationship extends acf_field
 		// vars
 		$field = array_merge($this->defaults, $field);
 
-
+		
 		// no row limit?
 		if( !$field['max'] || $field['max'] < 1 )
 		{
@@ -301,9 +312,33 @@ class acf_field_relationship extends acf_field
 				$class .= ' has-' . $filter;
 			}
 		}
+		
+		$attributes = array(
+			'max' => $field['max'],
+			's' => '',
+			'paged' => 1,
+			'post_type' => implode(',', $field['post_type']),
+			'taxonomy' => implode(',', $field['taxonomy']),
+			'field_key' => $field['key']
+		);
+		
+		
+		// Lang
+		if( defined('ICL_LANGUAGE_CODE') )
+		{
+			$attributes['lang'] = ICL_LANGUAGE_CODE;
+		}
+		
+		
+		// parent
+		preg_match('/\[(field_.*?)\]/', $field['name'], $ancestor);
+		if( isset($ancestor[1]) && $ancestor[1] != $field['key'])
+		{
+			$attributes['ancestor'] = $ancestor[1];
+		}
 				
 		?>
-<div class="acf_relationship<?php echo $class; ?>" data-max="<?php echo $field['max']; ?>" data-s="" data-paged="1" data-post_type="<?php echo implode(',', $field['post_type']); ?>" data-taxonomy="<?php echo implode(',', $field['taxonomy']); ?>" <?php if( defined('ICL_LANGUAGE_CODE') ){ echo 'data-lang="' . ICL_LANGUAGE_CODE . '"';} ?> data-field_key="<?php echo $field['key']; ?>">
+<div class="acf_relationship<?php echo $class; ?>"<?php foreach( $attributes as $k => $v ): ?> data-<?php echo $k; ?>="<?php echo $v; ?>"<?php endforeach; ?>>
 	
 	<!-- Hidden Blank default value -->
 	<input type="hidden" name="<?php echo $field['name']; ?>" value="" />
@@ -543,8 +578,8 @@ class acf_field_relationship extends acf_field
 			'name'	=>	'fields['.$key.'][filters]',
 			'value'	=>	$field['filters'],
 			'choices'	=>	array(
-				'search'	=>	'Search',
-				'post_type'	=>	'Post Type Select'
+				'search'	=>	__("Search",'acf'),
+				'post_type'	=>	__("Post Type Select",'acf'),
 			)
 		));
 		?>
@@ -553,7 +588,7 @@ class acf_field_relationship extends acf_field
 <tr class="field_option field_option_<?php echo $this->name; ?>">
 	<td class="label">
 		<label><?php _e("Elements",'acf'); ?></label>
-		<p>Selected elements will be displayed in each result</p>
+		<p><?php _e("Selected elements will be displayed in each result",'acf') ?></p>
 	</td>
 	<td>
 		<?php 
@@ -563,8 +598,8 @@ class acf_field_relationship extends acf_field
 			'value'	=>	$field['result_elements'],
 			'choices' => array(
 				'featured_image' => 'Featured Image',
-				'post_title' => 'Post Title',
-				'post_type' => 'Post Type'
+				'post_title' => __("Post Title",'acf'),
+				'post_type' => __("Post Type",'acf'),
 			),
 			'disabled' => array(
 				'post_title'

@@ -178,9 +178,9 @@ class EM_Gateway_Paypal extends EM_Gateway {
 		if( get_option('em_'. $this->gateway . "_lc" ) ){
 		    $paypal_vars['lc'] = get_option('em_'. $this->gateway . "_lc" );
 		}
-		if( !get_option('dbem_bookings_tax_auto_add') && is_numeric(get_option('dbem_bookings_tax')) && get_option('dbem_bookings_tax') > 0 ){
-			//tax only added if auto_add is disabled, since it would be added to individual ticket prices
-			$paypal_vars['tax_cart'] = round($EM_Booking->get_price(false,false,false) * (get_option('dbem_bookings_tax')/100), 2);
+		//tax is added regardless of whether included in ticket price, otherwise we can't calculate post/pre tax discounts
+		if( $EM_Booking->get_price_taxes() > 0 ){ 
+			$paypal_vars['tax_cart'] = round($EM_Booking->get_price_taxes(), 2);
 		}
 		if( get_option('em_'. $this->gateway . "_return" ) != "" ){
 			$paypal_vars['return'] = get_option('em_'. $this->gateway . "_return" );
@@ -195,14 +195,21 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			$paypal_vars['cpp_cart_border_color'] = get_option('em_'. $this->gateway . "_format_border" );
 		}
 		$count = 1;
-		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){
-			$price = $EM_Ticket_Booking->get_ticket()->get_price();
+		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){ /* @var $EM_Ticket_Booking EM_Ticket_Booking */
+		    //divide price by spaces for per-ticket price
+		    //we divide this way rather than by $EM_Ticket because that can be changed by user in future, yet $EM_Ticket_Booking will change if booking itself is saved.
+		    $price = $EM_Ticket_Booking->get_price() / $EM_Ticket_Booking->get_spaces();
 			if( $price > 0 ){
 				$paypal_vars['item_name_'.$count] = wp_kses_data($EM_Ticket_Booking->get_ticket()->name);
 				$paypal_vars['quantity_'.$count] = $EM_Ticket_Booking->get_spaces();
-				$paypal_vars['amount_'.$count] = $price;
+				$paypal_vars['amount_'.$count] = round($price,2);
 				$count++;
 			}
+		}
+		//calculate discounts, if any:
+		$discount = $EM_Booking->get_price_discounts_amount('pre') + $EM_Booking->get_price_discounts_amount('post');
+		if( $discount > 0 ){
+			$paypal_vars['discount_amount_cart'] = $discount;
 		}
 		return apply_filters('em_gateway_paypal_get_paypal_vars', $paypal_vars, $EM_Booking, $this);
 	}
@@ -286,7 +293,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 						// case: successful payment
 						$this->record_transaction($EM_Booking, $amount, $currency, $timestamp, $_POST['txn_id'], $_POST['payment_status'], '');
 
-						if( $_POST['mc_gross'] >= $EM_Booking->get_price(false, false, true) && (!get_option('em_'.$this->gateway.'_manual_approval', false) || !get_option('dbem_bookings_approval')) ){
+						if( $_POST['mc_gross'] >= $EM_Booking->get_price() && (!get_option('em_'.$this->gateway.'_manual_approval', false) || !get_option('dbem_bookings_approval')) ){
 							$EM_Booking->approve(true, true); //approve and ignore spaces
 						}else{
 							//TODO do something if pp payment not enough

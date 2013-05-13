@@ -43,6 +43,8 @@ class EM_Multiple_Bookings{
 		//booking admin pages
 		add_action('em_bookings_admin_page', 'EM_Multiple_Bookings::bookings_admin_notices'); //add MB warnings if booking is part of a bigger booking
 		add_action('em_bookings_multiple_booking', 'EM_Multiple_Bookings::booking_admin',1,1); //handle page for showing a single multiple booking
+		//csv options
+		//add_action('em_bookings_table_export_options', 'EM_Multiple_Bookings::em_bookings_table_export_options'); //show booking form and ticket summary
     }
     
     public static function em_get_booking($EM_Booking){
@@ -53,6 +55,9 @@ class EM_Multiple_Bookings{
     }
     
     public static function em_wp_localize_script( $vars ){
+        if( get_option('dbem_multiple_bookings_redirect') ){
+		    $vars['mb_redirect'] = get_post_permalink(get_option('dbem_multiple_bookings_checkout_page'));
+        } 
 	    $vars['mb_empty_cart'] = get_option('dbem_multiple_bookings_feedback_empty_cart');
 	    return $vars;
     }
@@ -143,6 +148,7 @@ class EM_Multiple_Bookings{
         $EM_Multiple_Booking = self::get_multiple_booking();
 		if( !empty($_REQUEST['event_id']) && !empty($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]) ){
 		    unset($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]);
+		    if( count($EM_Multiple_Booking->bookings) == 0 ) self::empty_cart();
 		    $feedback = '';
 		    $result = true;
 		}else{
@@ -186,6 +192,7 @@ class EM_Multiple_Bookings{
 		//fire the equivalent of the em_booking_add action, but multiple variation 
 		do_action('em_multiple_booking_add', $EM_Multiple_Booking->get_event(), $EM_Multiple_Booking, $post_validation && $bookings_validation); //get_event returns blank, just for backwards-compatabaility
 		//proceed with saving bookings if all is well
+		$result = false; $feedback = '';
         if( $bookings_validation && $post_validation ){
 			//save user registration
        	    $registration = em_booking_add_registration($EM_Multiple_Booking);
@@ -197,7 +204,6 @@ class EM_Multiple_Bookings{
         		$feedback = $EM_Multiple_Booking->feedback_message;
         		unset($_SESSION['em_multiple_bookings']); //we're done with this checkout!
         	}else{
-        		$result = false;
         		$EM_Notices->add_error( $EM_Multiple_Booking->get_errors() );
         		$feedback = $EM_Multiple_Booking->feedback_message;
         	}
@@ -254,6 +260,7 @@ class EM_Multiple_Bookings{
     public static function em_booking_js_footer(){
         if( !defined('EM_CART_JS_LOADED') ){
 	        include('multiple-bookings.js');
+			do_action('em_cart_js_footer');
 			define('EM_CART_JS_LOADED',true);
         }
     }
@@ -305,10 +312,11 @@ class EM_Multiple_Bookings{
 				?>
 				<script type="text/javascript">
 					<?php include('multiple-bookings.js'); ?>
+					<?php do_action('em_cart_js_footer'); ?>
 				</script>
 				<?php
 			}
-			add_action('wp_footer','em_cart_js_footer');
+			add_action('wp_footer','em_cart_js_footer', 100);
 			add_action('admin_footer','em_cart_js_footer');
 			define('EM_CART_JS_LOADED',true);
 		}
@@ -359,6 +367,16 @@ class EM_Multiple_Bookings{
 			define('EM_CART_WIDGET_JS_LOADED',true);
 		}
 		return ob_get_clean();
+	}
+	
+	/* CSV export Stuff */
+
+
+	function em_bookings_table_export_options(){
+		?>
+		<p><?php _e('Include Multiple Booking Information','dbem')?> <input type="checkbox" name="mb_info" value="1" />
+		<a href="#" title="<?php _e('Each row will contain all extra information supplied in the multiple booking checkout form.'); ?>">?</a>
+		<?php
 	}
     
     /* Admin Stuff */

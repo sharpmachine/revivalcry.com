@@ -204,7 +204,7 @@ class EM_Gateways_Transactions{
 							$EM_Booking = em_get_booking($transaction->booking_id);
 							if( get_class($EM_Booking) == 'EM_Multiple_Booking' ){
 								$link = em_add_get_params($EM_Booking->get_admin_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null));
-								echo '<a href="'.$EM_Booking->get_admin_url().'">'.__('Multiple Events','em-pro').'</a>';
+								echo '<a href="'.$link.'">'.$EM_Booking->get_event()->event_name.'</a>';
 							}else{
 								echo '<a href="'.$EM_Booking->get_event()->get_bookings_url().'">'.$EM_Booking->get_event()->event_name.'</a>';
 							}
@@ -360,14 +360,15 @@ class EM_Gateways_Transactions{
 		return $template;
 	}
 }
-global $EM_Gateways_Transactions;
-$EM_Gateways_Transactions = new EM_Gateways_Transactions();
 }
 
 /**
  * Checks for any deletions requested 
  */
 function emp_transactions_init(){
+	global $EM_Gateways_Transactions;
+	$EM_Gateways_Transactions = new EM_Gateways_Transactions();
+	
 	if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'transaction_delete' && wp_verify_nonce($_REQUEST['_wpnonce'], 'transaction_delete_'.$_REQUEST['txn_id'].'_'.get_current_user_id()) ){
 		//get booking from transaction, ensure user can manage it before deleting
 		global $wpdb;

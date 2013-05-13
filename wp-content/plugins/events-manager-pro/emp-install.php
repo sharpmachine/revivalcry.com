@@ -92,6 +92,7 @@ function emp_create_coupons_table() {
 		  coupon_start datetime DEFAULT NULL,
 		  coupon_end datetime DEFAULT NULL,
 		  coupon_type varchar(20) DEFAULT NULL,
+		  coupon_tax varchar(4) DEFAULT NULL,
 		  coupon_discount decimal(8,2) NOT NULL,
 		  coupon_eventwide bool NOT NULL DEFAULT 0,
 		  coupon_sitewide bool NOT NULL DEFAULT 0,
@@ -192,7 +193,7 @@ function emp_add_options() {
 	//email reminders
 	add_option('dbem_cron_emails', 0);
 	add_option('dbem_emp_emails_reminder_subject', 'Reminder - #_EVENTNAME');
-	$email_footer = __('<br /><br />-------------------------------<br />Powered by Events Manager - http://wp-events-plugin.com','dbem');
+	$email_footer = '<br /><br />-------------------------------<br />Powered by Events Manager - http://wp-events-plugin.com';
 	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br />When : #_EVENTDATES @ #_EVENTTIMES<br />Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br />We look forward to seeing you there!<br />Yours faithfully,<br />#_CONTACTNAME",'dbem').$email_footer;
 	add_option('dbem_emp_emails_reminder_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	add_option('dbem_emp_emails_reminder_time', '12:00 AM');
@@ -285,7 +286,11 @@ function emp_add_options() {
 			        }
 			    }
 			}
-		}		
+		}
+		if( get_option('dbem_muliple_bookings_form') ){ //fix badly stored user dates and times
+			update_option('dbem_multiple_bookings_form', get_option('dbem_muliple_bookings_form'));
+			delete_option('dbem_muliple_bookings_form');
+		}
 	}else{
 		//Booking form stuff only run on install
 		$insert_result = $wpdb->insert(EM_META_TABLE, array('meta_value'=>serialize($booking_form_data), 'meta_key'=>'booking-form','object_id'=>0));

@@ -55,7 +55,7 @@ if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get
 					<?php } ?>
 				</td>
 				<td class="em-cart-table-spaces"><span><?php echo $EM_Booking->get_spaces(); ?></span></td>
-				<td class="em-cart-table-price"><span><?php echo $EM_Booking->get_price(false, true); ?></span></td>
+				<td class="em-cart-table-price"><span><?php echo $EM_Booking->get_price_base(true); ?></span></td>
 			</tr>
 			<!-- BEGIN Subtotal Tickets for Event -->
 			<?php $attendee_datas = EM_Attendees_Form::get_booking_attendees($EM_Booking); ?>
@@ -82,7 +82,7 @@ if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get
 					<?php //END Attendee Info ?>
 				</td>
 				<td class="em-cart-table-spaces"><?php echo $EM_Ticket_Booking->get_spaces(); ?></td>
-				<td class="em-cart-table-price"><?php echo $EM_Ticket_Booking->get_price(false, true); ?></td>
+				<td class="em-cart-table-price"><?php echo $EM_Ticket_Booking->get_price(true); ?></td>
 			</tr>
 			<?php endforeach; ?>
 			<!-- END Subtotal Tickets for Event -->
@@ -90,33 +90,40 @@ if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get
 		<?php do_action('em_multiple_bookings_table_after_events', $EM_Multiple_Booking); //do not delete ?>
 	</tbody>
 	<tbody class="em-cart-totals">
-		<?php do_action('em_multiple_bookings_table_before_totals', $EM_Multiple_Booking); //do not delete ?>
 		<?php 
-			$cols = 2;
-			$has_taxes = $EM_Multiple_Booking->has_taxes();
-			$has_discounts = !empty($EM_Multiple_Booking->booking_meta['discounts']) || !empty($EM_Multiple_Booking->booking_meta['coupon']); 
+			do_action('em_multiple_bookings_table_before_totals', $EM_Multiple_Booking); //do not delete 
+			$price_summary = $EM_Multiple_Booking->get_price_summary_array();
+			//we should now have an array of information including base price, taxes and post/pre tax discounts
 		?>
-		<?php if( $has_discounts || $has_taxes ): ?>
-		<tr class="em-cart-totals-sub">
-			<th colspan="<?php echo $cols; ?>"><?php _e('Sub Total','em-pro'); ?></th>
-			<td><?php echo $EM_Multiple_Booking->get_price(false,true,false); ?></td>
+		<tr>
+			<th colspan="2"><?php _e('Sub Total','em-pro'); ?></th>
+			<td><?php echo $EM_Booking->get_price_base(true); ?></td>
+		</tr>
+		<?php if( count($price_summary['discounts_pre_tax']) > 0 ): ?>
+			<?php foreach( $price_summary['discounts_pre_tax'] as $discount_summary ): ?>
+			<tr>
+				<th colspan="2"><?php echo $discount_summary['name']; ?></th>
+				<td>- <?php echo $discount_summary['amount']; ?></td>
+			</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		<?php if( !empty($price_summary['taxes']['amount'])  ): ?>
+		<tr>
+			<th colspan="2"><?php _e('Taxes','em-pro'); ?> ( <?php echo $price_summary['taxes']['rate']; ?> )</th>
+			<td><?php echo $price_summary['taxes']['amount']; ?></td>
 		</tr>
 		<?php endif; ?>
-		<?php if( $has_taxes ): ?>
-		<tr class="em-cart-totals-tax">
-			<th colspan="<?php echo $cols; ?>"><?php _e('Taxes','em-pro'); ?> ( <?php echo $EM_Multiple_Booking->get_tax_rate(); ?>% )</th>
-			<td><?php echo em_get_currency_formatted($EM_Multiple_Booking->get_price(false,false,false) * (get_option('dbem_bookings_tax')/100)); ?></td>
-		</tr>
+		<?php if( count($price_summary['discounts_post_tax']) > 0 ): ?>
+			<?php foreach( $price_summary['discounts_post_tax'] as $discount_summary ): ?>
+			<tr>
+				<th colspan="2"><?php echo $discount_summary['name']; ?></th>
+				<td>- <?php echo $discount_summary['amount']; ?></td>
+			</tr>
+			<?php endforeach; ?>
 		<?php endif; ?>
-		<?php if( $has_discounts ): ?>
-		<tr class="em-cart-totals-discount">
-			<th colspan="<?php echo $cols; ?>"><?php _e('Discounts','em-pro'); ?></th>
-			<td></td>
-		</tr>
-		<?php endif; ?>
-		<tr class="em-cart-totals-total">
-			<th colspan="<?php echo $cols; ?>"><?php _e('Total','em-pro'); ?></th>
-			<td><?php echo $EM_Multiple_Booking->get_price(false, true, true); ?></td>
+		<tr>
+			<th colspan="2"><?php _e('Total Price','dbem'); ?></th>
+			<td><?php echo $price_summary['total']; ?></td>
 		</tr>
 		<?php do_action('em_multiple_bookings_table_after_totals', $EM_Multiple_Booking); //do not delete ?>
 	</tbody>

@@ -534,7 +534,12 @@ class EM_Attendees_Form {
 				?>
 				<tr class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
 					<th><?php echo $field['label'] ?></th>
-					<td><?php echo str_replace('%T', $ticket_id, $EM_Form->output_field_input($field, $EM_Form->field_values[$fieldid])); ?></td>
+					<td>
+					<?php
+						$value = !empty($EM_Form->field_values[$fieldid]) ? $EM_Form->field_values[$fieldid]:''; 
+						echo str_replace('%T', $ticket_id, $EM_Form->output_field_input($field, $value)); 
+					?>
+					</td>
 				</tr>
 				<?php
 			}
@@ -707,7 +712,7 @@ class EM_Attendees_Form {
 					<?php do_action('em_booking_attendee_form_admin_page_header'); ?>
 					<div id="attendee-form-settings" class="stuffbox">
 						<h3 id="attendee-form">
-							<?php _e ( 'Attendee Form', 'em-pro' ); ?> <em>(Beta)</em>
+							<?php _e ( 'Attendee Form', 'em-pro' ); ?>
 						</h3>
 						<div class="inside">
 							<p><?php _e ( "If enabled, this form will be shown and required for every space booked.", 'em-pro' )?></p>
