@@ -278,6 +278,11 @@ class acf_field_relationship extends acf_field
 	
 	function create_field( $field )
 	{
+		// temp store the_post
+		global $post;
+		$the_post = $post;
+		
+		
 		// vars
 		$field = array_merge($this->defaults, $field);
 
@@ -459,9 +464,9 @@ class acf_field_relationship extends acf_field
 
 				
 				// filters
-				$title = apply_filters('acf/fields/relationship/result', $title, $post);
-				$title = apply_filters('acf/fields/relationship/result/name=' . $field['name'] , $title, $post);
-				$title = apply_filters('acf/fields/relationship/result/key=' . $field['key'], $title, $post);
+				$title = apply_filters('acf/fields/relationship/result', $title, $post, $field, $the_post);
+				$title = apply_filters('acf/fields/relationship/result/name=' . $field['name'] , $title, $post, $field, $the_post);
+				$title = apply_filters('acf/fields/relationship/result/key=' . $field['key'], $title, $post, $field, $the_post);
 				
 				
 				echo '<li>
@@ -503,6 +508,7 @@ class acf_field_relationship extends acf_field
 		$key = $field['name'];
 		
 		
+		
 		// validate taxonomy
 		if( !is_array($field['taxonomy']) )
 		{
@@ -511,11 +517,15 @@ class acf_field_relationship extends acf_field
 		
 		
 		// validate result_elements
+		if( !is_array( $field['result_elements'] ) )
+		{
+			$field['result_elements'] = array();
+		}
+		
 		if( !in_array('post_title', $field['result_elements']) )
 		{
 			$field['result_elements'][] = 'post_title';
 		}
-		
 		
 		?>
 <tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -722,6 +732,40 @@ class acf_field_relationship extends acf_field
 	function format_value_for_api( $value, $post_id, $field )
 	{
 		return $this->format_value( $value, $post_id, $field );
+	}
+	
+	
+	/*
+	*  update_value()
+	*
+	*  This filter is appied to the $value before it is updated in the db
+	*
+	*  @type	filter
+	*  @since	3.6
+	*  @date	23/01/13
+	*
+	*  @param	$value - the value which will be saved in the database
+	*  @param	$post_id - the $post_id of which the value will be saved
+	*  @param	$field - the field array holding all the field options
+	*
+	*  @return	$value - the modified value
+	*/
+	
+	function update_value( $value, $post_id, $field )
+	{
+		// array?
+		if( is_array($value) ){ foreach( $value as $k => $v ){
+			
+			// object?
+			if( is_object($v) && isset($v->ID) )
+			{
+				$value[ $k ] = $v->ID;
+			}
+			
+		}}
+				
+		
+		return $value;
 	}
 	
 }

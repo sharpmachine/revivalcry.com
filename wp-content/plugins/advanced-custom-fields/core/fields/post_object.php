@@ -2,6 +2,9 @@
 
 class acf_field_post_object extends acf_field
 {
+	// vars
+	var $defaults;
+	
 	
 	/*
 	*  __construct
@@ -18,6 +21,12 @@ class acf_field_post_object extends acf_field
 		$this->name = 'post_object';
 		$this->label = __("Post Object",'acf');
 		$this->category = __("Relational",'acf');
+		$this->defaults = array(
+			'post_type' => array('all'),
+			'taxonomy' => array('all'),
+			'multiple' => 0,
+			'allow_null' => 0,
+		);
 		
 		
 		// do not delete!
@@ -40,6 +49,11 @@ class acf_field_post_object extends acf_field
 	
 	function create_field( $field )
 	{
+		// temp store the_post
+		global $post;
+		$the_post = $post;
+		
+		
 		// vars
 		$args = array(
 			'numberposts' => -1,
@@ -50,25 +64,26 @@ class acf_field_post_object extends acf_field
 			'suppress_filters' => false,
 		);
 		
-		$defaults = array(
-			'multiple'		=>	0,
-			'post_type' 	=>	false,
-			'taxonomy' 		=>	array('all'),
-			'allow_null'	=>	0,
-		);
-		
 
-		$field = array_merge($defaults, $field);
+		$field = array_merge($this->defaults, $field);
 		
+		
+		// validate post_type
+		if( !$field['post_type'] || !is_array($field['post_type']) || in_array('', $field['post_type']) )
+		{
+			$field['post_type'] = array( 'all' );
+		}
+
 		
 		// validate taxonomy
-		if( !is_array($field['taxonomy']) )
+		if( !$field['taxonomy'] || !is_array($field['taxonomy']) || in_array('', $field['taxonomy']) )
 		{
-			$field['taxonomy'] = array('all');
+			$field['taxonomy'] = array( 'all' );
 		}
 		
+		
 		// load all post types by default
-		if( !$field['post_type'] || !is_array($field['post_type']) || $field['post_type'][0] == "" )
+		if( in_array('all', $field['post_type']) )
 		{
 			$field['post_type'] = apply_filters('acf/get_post_types', array());
 		}
@@ -126,11 +141,24 @@ class acf_field_post_object extends acf_field
 			
 			
 			// set order
+			$get_pages = false;
 			if( is_post_type_hierarchical($post_type) && !isset($args['tax_query']) )
 			{
 				$args['sort_column'] = 'menu_order, post_title';
 				$args['sort_order'] = 'ASC';
-
+				
+				$get_pages = true;
+			}
+			
+			
+			// filters
+			$args = apply_filters('acf/fields/post_object/query', $args, $field, $the_post);
+			$args = apply_filters('acf/fields/post_object/query/name=' . $field['name'], $args, $field, $the_post );
+			$args = apply_filters('acf/fields/post_object/query/key=' . $field['key'], $args, $field, $the_post );
+			
+			
+			if( $get_pages )
+			{
 				$posts = get_pages( $args );
 			}
 			else
@@ -167,6 +195,13 @@ class acf_field_post_object extends acf_field
 					{
 						$title .= ' (' . ICL_LANGUAGE_CODE . ')';
 					}
+					
+					
+					// filters
+					$title = apply_filters('acf/fields/post_object/result', $title, $post, $field, $the_post);
+					$title = apply_filters('acf/fields/post_object/result/name=' . $field['name'] , $title, $post, $field, $the_post);
+					$title = apply_filters('acf/fields/post_object/result/key=' . $field['key'], $title, $post, $field, $the_post);
+					
 					
 					// add to choices
 					if( count($field['post_type']) == 1 )
@@ -393,6 +428,44 @@ class acf_field_post_object extends acf_field
 		
 		
 		// return the value
+		return $value;
+	}
+	
+	
+	/*
+	*  update_value()
+	*
+	*  This filter is appied to the $value before it is updated in the db
+	*
+	*  @type	filter
+	*  @since	3.6
+	*  @date	23/01/13
+	*
+	*  @param	$value - the value which will be saved in the database
+	*  @param	$post_id - the $post_id of which the value will be saved
+	*  @param	$field - the field array holding all the field options
+	*
+	*  @return	$value - the modified value
+	*/
+	
+	function update_value( $value, $post_id, $field )
+	{
+		// object / array?
+		if( is_object($value) && isset($value->ID) )
+		{
+			$value = $value->ID;
+		}
+		elseif( is_array($value) ){ foreach( $value as $k => $v ){
+			
+			// object?
+			if( is_object($v) && isset($v->ID) )
+			{
+				$value[ $k ] = $v->ID;
+			}
+			
+		}}
+		
+		
 		return $value;
 	}
 	
