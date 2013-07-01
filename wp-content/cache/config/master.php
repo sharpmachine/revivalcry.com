@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'version' => '0.9.2.10',
+	'version' => '0.9.2.11',
 	'cluster.messagebus.debug' => false,
 	'cluster.messagebus.enabled' => false,
 	'cluster.messagebus.sns.region' => '',
@@ -442,7 +442,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => true,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '1368906846',
+	'browsercache.timestamp' => '1371562210',
 	'mobile.enabled' => true,
 	'mobile.rgroups' => array(
 		'high' => array(
@@ -657,6 +657,7 @@ return array(
 	'timelimit.domain_rename' => 120,
 	'timelimit.minify_recommendations' => 600,
 	'minify.auto.filename_length' => 150,
+	'minify.auto.disable_filename_length_test' => false,
 	'common.instance_id' => 429248192,
 	'common.force_master' => true,
 	'newrelic.enabled' => false,
