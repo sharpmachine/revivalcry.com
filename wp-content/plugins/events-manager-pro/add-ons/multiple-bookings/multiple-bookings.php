@@ -8,7 +8,7 @@ class EM_Multiple_Bookings{
 		include('multiple-booking.php');
 		include('multiple-bookings-widget.php');
 		if( is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX) ){ //admin stuff
-		    include('multiple-bookings-admin.php');
+		    //maybe for later use
 		}elseif( !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){ //not admin area or a manual booking
 			//modify traditional booking forms behaviour
 			add_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
@@ -16,6 +16,7 @@ class EM_Multiple_Bookings{
 	        //hooking into the booking process
 	        add_action('em_booking_add','EM_Multiple_Bookings::em_booking_add', 1, 3); //prevent booking being made and add to cart
 		}
+		add_filter('em_booking_save','EM_Multiple_Bookings::em_booking_save',100,2); //when saving bookings, we need to make sure MB objects update the total price
 		add_filter('em_get_booking','EM_Multiple_Bookings::em_get_booking'); //switch EM_Booking with EM_Multiple_Booking object if applicable
 		add_filter('em_wp_localize_script', 'EM_Multiple_Bookings::em_wp_localize_script');
 		//cart/checkout pages
@@ -43,8 +44,9 @@ class EM_Multiple_Bookings{
 		//booking admin pages
 		add_action('em_bookings_admin_page', 'EM_Multiple_Bookings::bookings_admin_notices'); //add MB warnings if booking is part of a bigger booking
 		add_action('em_bookings_multiple_booking', 'EM_Multiple_Bookings::booking_admin',1,1); //handle page for showing a single multiple booking
-		//csv options
-		//add_action('em_bookings_table_export_options', 'EM_Multiple_Bookings::em_bookings_table_export_options'); //show booking form and ticket summary
+		//booking table and csv filters
+		add_filter('em_bookings_table_rows_col', array('EM_Multiple_Bookings','em_bookings_table_rows_col'),10,5);
+		add_filter('em_bookings_table_cols_template', array('EM_Multiple_Bookings','em_bookings_table_cols_template'),10,2);
     }
     
     public static function em_get_booking($EM_Booking){
@@ -144,10 +146,28 @@ class EM_Multiple_Bookings{
 	    die();
     }
     
+    /**
+     * @param boolean $result
+     * @param EM_Booking $EM_Booking
+     */
+    public static function em_booking_save($result, $EM_Booking){
+        //only do this to a previously saved EM_Booking object, not newly added
+        if( $result && get_class($EM_Booking) == 'EM_Booking' && $EM_Booking->previous_status !== false ){
+            $EM_Multiple_Booking = self::get_main_booking( $EM_Booking );
+            //if part of multiple booking, recalculate and save mb object too
+            if( $EM_Multiple_Booking !== false ){
+                $EM_Multiple_Booking->calculate_price();
+                $EM_Multiple_Booking->save(false);
+            }
+        }
+        return $result;
+    }
+    
     public static function remove_booking(){
         $EM_Multiple_Booking = self::get_multiple_booking();
 		if( !empty($_REQUEST['event_id']) && !empty($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]) ){
 		    unset($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]);
+		    $EM_Multiple_Booking->calculate_price();
 		    if( count($EM_Multiple_Booking->bookings) == 0 ) self::empty_cart();
 		    $feedback = '';
 		    $result = true;
@@ -200,7 +220,7 @@ class EM_Multiple_Bookings{
         	//save master booking, which in turn saves the other bookings too
         	if( $registration && $EM_Multiple_Booking->save_bookings() ){
         	    $result = true;
-        		$EM_Notices->add_error( $EM_Multiple_Booking->feedback_message );
+        		$EM_Notices->add_confirm( $EM_Multiple_Booking->feedback_message );
         		$feedback = $EM_Multiple_Booking->feedback_message;
         		unset($_SESSION['em_multiple_bookings']); //we're done with this checkout!
         	}else{
@@ -368,18 +388,49 @@ class EM_Multiple_Bookings{
 		}
 		return ob_get_clean();
 	}
-	
-	/* CSV export Stuff */
 
-
-	function em_bookings_table_export_options(){
-		?>
-		<p><?php _e('Include Multiple Booking Information','dbem')?> <input type="checkbox" name="mb_info" value="1" />
-		<a href="#" title="<?php _e('Each row will contain all extra information supplied in the multiple booking checkout form.'); ?>">?</a>
-		<?php
-	}
+    /*
+     * ----------------------------------------------------------
+    * Booking Table and CSV Export
+    * ----------------------------------------------------------
+    */
     
-    /* Admin Stuff */
+    function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
+        if( preg_match('/^mb_/', $col) ){
+            $col = preg_replace('/^mb_/', '', $col);
+	    	if( !empty($EM_Booking) && get_class($EM_Booking) != 'EM_Multiple_Booking' ){
+				//is this part of a multiple booking?
+				$EM_Multiple_Booking = self::get_main_booking( $EM_Booking );
+				if( $EM_Multiple_Booking !== false ){
+                	$EM_Form = EM_Booking_Form::get_form(false, get_option('dbem_multiple_bookings_form'));
+                	if( array_key_exists($col, $EM_Form->form_fields) ){
+                		$field = $EM_Form->form_fields[$col];
+                		if( isset($EM_Multiple_Booking->booking_meta['booking'][$col]) ){
+                			$value = $EM_Form->get_formatted_value($field, $EM_Multiple_Booking->booking_meta['booking'][$col]);
+                		}
+                	}
+                }
+            }
+        }
+    	return $value;
+    }
+    
+    function em_bookings_table_cols_template($template, $EM_Bookings_Table){
+    	$EM_Form = EM_Booking_Form::get_form(false, get_option('dbem_multiple_bookings_form'));
+    	foreach($EM_Form->form_fields as $field_id => $field ){
+            if( $EM_Form->is_normal_field($field) ){ //user fields already handled, htmls shouldn't show
+                //prefix MB fields with mb_ to avoid clashes with normal booking forms
+        		$template['mb_'.$field_id] = $field['label'];
+        	}
+    	}
+    	return $template;
+    }
+
+    /*
+     * ----------------------------------------------------------
+    * Admin Stuff
+    * ----------------------------------------------------------
+    */
     public static function bookings_admin_notices(){
 		global $EM_Booking, $EM_Notices;
 		if( current_user_can('manage_others_bookings') ){

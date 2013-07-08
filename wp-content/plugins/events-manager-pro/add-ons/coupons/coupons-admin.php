@@ -29,31 +29,52 @@ class EM_Coupons_Admin {
 		//Get available coupons for user
 		global $wpdb;
 		$coupons = array();
-		//get owner's coupons
-		if( current_user_can('manage_others_bookings') && !empty($EM_Event->event_owner) ){
-			$coupons = EM_Coupons::get(array('owner'=>$EM_Event->event_owner));			
-		}elseif( $EM_Event->event_owner == get_current_user_id() || empty($EM_Event->event_owner) ){
-			$coupons = EM_Coupons::get(array('owner'=>get_current_user_id()));
-		}
-		$global_coupons = array();
+		//get event owner to search for
+		$owner = empty($EM_Event->event_owner) ? get_current_user_id() : $EM_Event->event_owner;
 		?>
 		<br style="clear" />
-		<p><strong><?php _e('Coupons','em-pro'); ?></strong></p>
-		<p><em><?php _e('Coupons selected here will be applied to bookings made for this event.','em-pro'); ?></em></p>
-		<div>
-		<?php if(count($coupons) > 0): foreach($coupons as $EM_Coupon): /* @var $EM_Coupon EM_Coupon */ ?> 
-			<?php if( !$EM_Coupon->coupon_eventwide && !$EM_Coupon->coupon_sitewide ): ?>  
-				<label>
-					<input type="checkbox" name="em_coupons[]" value="<?php echo $EM_Coupon->coupon_id; ?>" <?php if(in_array($EM_Coupon->coupon_id, EM_Coupons::event_get_coupon_ids($EM_Event))) echo 'checked="checked"'; ?>/>
-					<strong><?php echo $EM_Coupon->coupon_code; ?></strong> (<em><?php echo esc_html($EM_Coupon->coupon_name .' - '. $EM_Coupon->coupon_description); ?></em>) - <?php echo $EM_Coupon->get_discount_text(); ?>
-				</label><br />
-			<?php else: $global_coupons[] = $EM_Coupon; endif; ?>
-		<?php endforeach; else: ?>
-			<?php _e('No coupons created yet.','em-pro'); ?>
-		<?php endif; ?>
-		<?php if(count($global_coupons) > 0): ?>
-			<p><em><?php _e('The following codes will be automatically available to this event as well','em-pro')?></em></p> 
-			<?php foreach($global_coupons as $EM_Coupon): /* @var $EM_Coupon EM_Coupon */ ?>
+		<p><strong><?php _e('Coupons','em-pro'); ?></strong> [<a href="#" id="em-event-bookings-coupons-trigger"><?php _e('show coupons', 'em-pro'); ?></a>]</p>
+		<script type="text/javascript">
+		   jQuery(document).ready(function($){ 
+			   $('#em-event-bookings-coupons-trigger').click( function(e){
+				   e.preventDefault();
+				   el = $(this);
+				    if( el.text() == '<?php _e('show coupons', 'em-pro'); ?>' ){
+				    	el.text('<?php _e('hide coupons', 'em-pro'); ?>');
+					    $('#em-event-bookings-coupons').show();
+				    }else{
+				    	el.text('<?php _e('show coupons', 'em-pro'); ?>');
+					    $('#em-event-bookings-coupons').hide();
+				    }
+			   }); 
+		   });
+		</script>
+    	<div id="em-event-bookings-coupons" style="display:none;">
+		<?php
+		//show coupons that aren't event-wide or site-wide, if not in MB mode
+		if( !get_option('dbem_multiple_bookings') && current_user_can(EM_Coupons::$can_manage) ){ 
+        //not in multiple bookings mode and can create their own coupons 
+        ?>
+    		<p><em><?php _e('Coupons selected here will be applied to bookings made for this event.','em-pro'); ?></em></p>
+    		<?php
+    		//get event owner's coupons
+    		$coupons = EM_Coupons::get(array('owner'=>$owner, 'sitewide'=>0, 'eventwide'=>0 ));
+    		//loop through coupons and output checkboxes, or let user know no coupons were created.
+    		if(count($coupons) > 0): foreach($coupons as $EM_Coupon): /* @var $EM_Coupon EM_Coupon */ ?>  
+    			<label>
+    				<input type="checkbox" name="em_coupons[]" value="<?php echo $EM_Coupon->coupon_id; ?>" <?php if(in_array($EM_Coupon->coupon_id, EM_Coupons::event_get_coupon_ids($EM_Event))) echo 'checked="checked"'; ?>/>
+    				<strong><?php echo $EM_Coupon->coupon_code; ?></strong> (<em><?php echo esc_html($EM_Coupon->coupon_name .' - '. $EM_Coupon->coupon_description); ?></em>) - <?php echo $EM_Coupon->get_discount_text(); ?>
+    			</label><br />
+    		<?php endforeach; else: ?>
+    			<?php _e('No coupons created yet.','em-pro'); ?>
+    		<?php endif; ?>
+		<?php 
+		}
+    	//Show all coupons that are automatically applied, i.e. sitewide and eventwide 
+    	$coupons = EM_Coupons::get( array('owner'=>$owner, 'sitewide'=>1, 'eventwide'=>1) );
+        if( count($coupons) > 0 ): ?>
+			<p><em><?php _e('The following codes will be automatically available to this event.','em-pro')?></em></p> 
+			<?php foreach($coupons as $EM_Coupon): /* @var $EM_Coupon EM_Coupon */ ?>
 				<p style="margin:0px 0px 5px 0px">
 					<?php echo '<strong>'.esc_html($EM_Coupon->coupon_code).'</strong> - '. esc_html($EM_Coupon->get_discount_text()); ?><br />
 					<em><?php echo esc_html($EM_Coupon->coupon_name .' - '. $EM_Coupon->coupon_description); ?></em>
@@ -346,21 +367,27 @@ class EM_Coupons_Admin {
 				<input type='hidden' name='coupon_id' value='<?php echo $EM_Coupon->coupon_id ?>'/>
 				<table class="form-table">
 					<tbody>
-					<tr valign="top">
-						<th scope="row"><?php _e('Event-Wide Coupon?', 'em-pro') ?></th>
-							<td><input type="checkbox" name="coupon_eventwide" value="1" <?php if($EM_Coupon->coupon_eventwide) echo 'checked="checked"'; ?> />
-							<br />
-							<em><?php _e('If checked, all events belonging to you will accept this coupon.','em-pro'); ?></em>
-						</td>
-					</tr>
-					<?php if( current_user_can('manage_others_bookings') || is_super_admin() ): ?>
-					<tr valign="top">
-						<th scope="row"><?php _e('Site-Wide Coupon?', 'em-pro') ?></th>
-							<td><input type="checkbox" name="coupon_sitewide" value="1" <?php if($EM_Coupon->coupon_sitewide) echo 'checked="checked"'; ?> />
-							<br />
-							<em><?php _e('All events on this site will accept this coupon.','em-pro'); ?></em>
-						</td>
-					</tr>
+					<?php if( !get_option('dbem_multiple_bookings') ): ?>
+    					<tr valign="top">
+    						<th scope="row"><?php _e('Event-Wide Coupon?', 'em-pro') ?></th>
+    						<td>
+                                <input type="checkbox" name="coupon_eventwide" value="1" <?php if($EM_Coupon->coupon_eventwide) echo 'checked="checked"'; ?> />
+    							<br />
+    							<em><?php _e('If checked, all events belonging to you will accept this coupon.','em-pro'); ?></em>
+    						</td>
+    					</tr>
+    					<?php if( current_user_can('manage_others_bookings') || is_super_admin() ): ?>
+    					<tr valign="top">
+    						<th scope="row"><?php _e('Site-Wide Coupon?', 'em-pro') ?></th>
+    						<td>
+                                <input type="checkbox" name="coupon_sitewide" value="1" <?php if($EM_Coupon->coupon_sitewide) echo 'checked="checked"'; ?> />
+    							<br />
+    							<em><?php _e('All events on this site will accept this coupon.','em-pro'); ?></em>
+    						</td>
+    					</tr>
+    					<?php endif; ?>
+					<?php else: ?>
+					   <tr><td colspan="2"><p><?php _e('This coupon will be available for all bookings made and discount is applied to the total price before checking out.','em-pro'); ?></p>
 					<?php endif; ?>
 					<tr valign="top">
 						<th scope="row"><?php _e('Registered Users Only?', 'em-pro') ?></th>

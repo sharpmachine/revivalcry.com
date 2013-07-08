@@ -129,7 +129,8 @@ class EM_Gateway {
 			update_option('em_'.$this->gateway . "_button", $_REQUEST[ $this->gateway.'_button' ]);
 		}
 		update_option('em_'.$this->gateway . "_option_name", $_REQUEST[ $this->gateway.'_option_name' ]);
-		update_option('em_'.$this->gateway . "_form", $_REQUEST[ $this->gateway.'_form' ]);	
+		update_option('em_'.$this->gateway . "_form", $_REQUEST[ $this->gateway.'_form' ]);
+		do_action('em_gateway_update', $this);
 		return true;
 	}
 
@@ -266,6 +267,28 @@ class EM_Gateway {
 	 * PARENT FUNCTIONS - overriding not required, but could be done
 	 * --------------------------------------------------
 	 */
+	
+	/**
+	 * Gets the gateway option from the correct place. Does not require prefixing of em_gatewayname_
+	 * Will be particularly useful when restricting possible gateway settings in MultiSite mode and sharing accross networks, use this and you're future-proof.
+	 * @param string $name
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	function get_option( $name ){
+		return get_option('em_'.$this->gateway.'_'.$name);
+	}
+	
+	/**
+	 * Updates the gateway option to the correct place. Does not require prefixing of em_gatewayname_
+	 * Will be particularly useful when restricting possible gateway settings in MultiSite mode and sharing accross networks, use this and you're future-proof.
+	 * @param string $name
+	 * @param mixed $value
+	 * @return boolean
+	 */
+	function update_option( $name, $value ){
+		return update_option('em_'.$this->gateway.'_'.$name, $value);
+	}
 	
 	/**
 	 * Checks an EM_Booking object and returns whether or not this gateway is/was used in the booking.
@@ -432,6 +455,7 @@ class EM_Gateway {
 				</tbody>
 				</table>
 				<?php endif; ?>
+				<?php do_action('em_gateway_settings_footer', $this); ?>
 				<p class="submit">
 				<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
 				</p>

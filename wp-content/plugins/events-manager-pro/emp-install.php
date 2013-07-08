@@ -189,7 +189,7 @@ function emp_add_options() {
 	//authorize.net
 	add_option('em_authorize_aim_option_name', __('Credit Card', 'em-pro'));
 	add_option('em_authorize_aim_booking_feedback', __('Booking successful.', 'dbem'));
-	add_option('em_authorize_aim_booking_feedback_free', __('Booking successful. You have not been charged for this booking.', 'dbem'));
+	add_option('em_authorize_aim_booking_feedback_free', __('Booking successful. You have not been charged for this booking.', 'em-pro'));
 	//email reminders
 	add_option('dbem_cron_emails', 0);
 	add_option('dbem_emp_emails_reminder_subject', 'Reminder - #_EVENTNAME');
@@ -199,9 +199,15 @@ function emp_add_options() {
 	add_option('dbem_emp_emails_reminder_time', '12:00 AM');
 	add_option('dbem_emp_emails_reminder_days', 1);	
 	add_option('dbem_emp_emails_reminder_ical', 1);
+	//custom emails
+	add_option('dbem_custom_emails', 0);
+	add_option('dbem_custom_emails_events', 1);	
+	add_option('dbem_custom_emails_events_admins', 1);
+	add_option('dbem_custom_emails_gateways', 1);
+	add_option('dbem_custom_emails_gateways_admins', 1);	
 	//multiple bookings
-	add_option('dbem_multiple_bookings_feedback_added', __('Your booking was added to your shopping cart.'));
-	add_option('dbem_multiple_bookings_feedback_already_added', __('You have already booked a spot at this eventin your cart, please modify or delete your current booking.'));
+	add_option('dbem_multiple_bookings_feedback_added', __('Your booking was added to your shopping cart.','em-pro'));
+	add_option('dbem_multiple_bookings_feedback_already_added', __('You have already booked a spot at this eventin your cart, please modify or delete your current booking.','em-pro'));
 	add_option('dbem_multiple_bookings_feedback_no_bookings', __('You have not booked any events yet. Your cart is empty.','em-pro'));
 	add_option('dbem_multiple_bookings_feedback_loading_cart', __('Loading Cart Contents...','em-pro'));
 	add_option('dbem_multiple_bookings_feedback_empty_cart', __('Are you sure you want to empty your cart?','em-pro'));
@@ -211,9 +217,9 @@ function emp_add_options() {
 	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has made a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
 	add_option('dbem_multiple_bookings_contact_email_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
-	add_option('dbem_multiple_bookings_contact__email_cancelled_subject', __('Booking Cancelled','em-pro'));
+	add_option('dbem_multiple_bookings_contact_email_cancelled_subject', __('Booking Cancelled','em-pro'));
 	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has cancelled a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
-	add_option('dbem_multiple_bookings_contact__email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
+	add_option('dbem_multiple_bookings_contact_email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_email_confirmed_subject', __('Booking Confirmed','em-pro'));
 	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking has been confirmed. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY <br />We look forward to seeing you there!",'dbem').$email_footer;
@@ -286,6 +292,9 @@ function emp_add_options() {
 			        }
 			    }
 			}
+		}
+		if( get_option('em_pro_version') < 2.36 ){ //disable custom emails for upgrades, prevent unecessary features
+			add_option('dbem_custom_emails', 0);	
 		}
 		if( get_option('dbem_muliple_bookings_form') ){ //fix badly stored user dates and times
 			update_option('dbem_multiple_bookings_form', get_option('dbem_muliple_bookings_form'));

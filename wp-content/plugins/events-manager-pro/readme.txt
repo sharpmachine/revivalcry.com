@@ -2,8 +2,8 @@
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 2.3.5
+Tested up to: 3.6
+Stable tag: 2.3.6
 
 == Description ==
 
@@ -22,6 +22,52 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.6 =
+* fixed rejections being given a transaction record as if paid for offline bookings
+* fixed booking form not accepting blank values when editing (e.g. textboxes)
+* fixed newly added checkboxes showing as checked on previous bookings
+* fixed some _doing_it_wrong triggered functions in BuddyPress whilst in debug mode
+* prevented non-existent values for texboxes and textareas defaulting to n/a when editing a booking
+* updated German
+* fixed coupon-event associations not being deleted with event
+* fixed coupons being associated with event if event/site-wide (not necessary)
+* fixed text fields when editing booking showing n/a when originally empty
+* changed MB bookingsummary template file name to bookingsummary-multiple.php 
+* added excel hack to attendees csv form,
+* changed EM_Coupons functions to static to prevent php warning
+* fixed translations missing domains
+* fixed price breakdowns in MB mode
+* removed g preg modifier in authorize.net gateway for event name sanitizing
+* fixed conflicts with wpmudev membership
+* added em_gateawy_authorize_aim_sale_var filter before sending to AIM,
+* changed paypal ipn endpoint error message if user visits url
+* added showing coupons available to events in MB mode when editing event
+* changed available coupons in bookings are now hidden/collapsed
+* improved EM_Coupons::get() argument logic for site/event-wide searches 
+* changed MB mode coupon searches return all coupons since all are now site-wide 
+* changed saving coupons in MB mode automatically makes it event/site-side
+* changed #_BOOKINGTICKETS template file name to bookingtickets-multiple.php,
+* fixed confirmation notice being added as an error when saving mb booking
+* added 'total' text to MB mode cart widget
+* fixed coupon not applying discount to total price in MB mode cart/checkout
+* fixed MB mode admin cart showing  last ticket price as sub-total
+* corrected double underscore in MB cancelled email template option names
+* fixed mb mode single event emails not going to event owners if enabled in settings page
+* changed MB email options won't show until MB mode is enabled
+* fixed modifying a single booking not updating over multiple booking total price
+* added is_normal_field and is_user_field functions to EM_Form,
+* added MB mode fields to booking tables and export columns
+* fixed validation issues for select/country/radio fields and non-permitted values
+* changed - moved files containing main classes in add-on folder into sub-folders
+* changed - moved admin functions for email and mb mode to designated admin classes
+* changed - separated admin functions from EM_Gateways to EM_Gateways_Admin class
+* added custom emails functionality to events and gateways
+* fixed mb cart 'checkout' button pointing to homepage if not using permalinks
+* fixed MB bookings not sending email if total price equals 0
+* fixed non site/event-wide coupons not being applied to recurrences
+* fixed various missing translation domains for gettext functions
+* updated POT file
+
 = 2.3.5 =
 * revamp of coupons system, uses v5.4 discount system
 * coupons now support Multiple Bookings Mode

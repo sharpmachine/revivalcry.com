@@ -276,7 +276,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 
         //Order Info
 		$sale->invoice_num = $EM_Booking->booking_id;
-        $sale->description = preg_replace('/[^a-zA-Z0-9\s]/gi', "", $EM_Booking->get_event()->event_name); //clean event name
+        $sale->description = preg_replace('/[^a-zA-Z0-9\s]/i', "", $EM_Booking->get_event()->event_name); //clean event name
         
         //Customer Info
         $sale->email = $EM_Booking->get_person()->user_email;
@@ -313,6 +313,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 		}
 		
         //Get Payment
+        $sale = apply_filters('em_gateawy_authorize_aim_sale_var', $sale, $EM_Booking, $this);
         $response = $sale->authorizeAndCapture();
         
         //Handle result

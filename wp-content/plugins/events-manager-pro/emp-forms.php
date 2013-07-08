@@ -24,9 +24,9 @@ class EM_Forms {
 	}
 	
 	function admin_options(){
+		global $save_button;
 		if( current_user_can('list_users') ){
 		?>
-			<a name="pro-forms"></a>
 			<div  class="postbox " id="em-opt-pro-booking-form-options" >
 			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'PRO Booking Form Options', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
@@ -36,6 +36,7 @@ class EM_Forms {
 						em_options_radio_binary ( __( 'Make profile fields editable?', 'em-pro' ), 'dbem_emp_booking_form_reg_input', __( 'If profile fields are set to show to logged in users, you can also choose whether or not to make these fields editable or just for viewing reference.','em-pro' ) );
 					?>
 				</table>
+				<?php echo $save_button; ?> 
 			</div> <!-- . inside -->
 			</div> <!-- .postbox -->
 		<?php
@@ -92,16 +93,17 @@ class EM_Form extends EM_Object {
 		foreach($this->form_fields as $field){
 		    $fieldid = $field['fieldid'];
 			$value = '';
-			if( isset($_REQUEST[$fieldid]) && $_REQUEST[$fieldid] != '' ){
-				if( !is_array($_REQUEST[$fieldid])){
-					$this->field_values[$fieldid] = wp_kses_data(stripslashes($_REQUEST[$fieldid]));
-				}elseif( is_array($_REQUEST[$fieldid])){
-				    $array = array();
-				    foreach( $_REQUEST[$fieldid] as $key => $array_value ){
-				        $array[$key] = wp_kses_data(stripslashes($array_value));
-				    }
-					$this->field_values[$fieldid] = $array;
-				}
+			if( !isset($_REQUEST[$fieldid]) ){ //for things like checkboxes when editing
+			    $_REQUEST[$fieldid] = '';
+			}
+			if( !is_array($_REQUEST[$fieldid])){
+				$this->field_values[$fieldid] = wp_kses_data(stripslashes($_REQUEST[$fieldid]));
+			}elseif( is_array($_REQUEST[$fieldid])){
+			    $array = array();
+			    foreach( $_REQUEST[$fieldid] as $key => $array_value ){
+			        $array[$key] = wp_kses_data(stripslashes($array_value));
+			    }
+				$this->field_values[$fieldid] = $array;
 			}
 			//if this is a custom user field, change $filed to the original field so the right date/time info is retreived
 	    	if( array_key_exists($field['type'], $this->custom_user_fields) && array_key_exists($field['fieldid'], $custom_user_fields) ){
@@ -142,7 +144,7 @@ class EM_Form extends EM_Object {
 		//output formatted value for special fields
 		switch( $field['type'] ){
 			case 'checkbox':
-				$field_value = ($field_value) ? __('Yes','dbem'):__('No','dbem');
+				$field_value = ($field_value && $field_value != 'n/a') ? __('Yes','dbem'):__('No','dbem');
 				break;
 			case 'date':
 			    //split ranges (or create single array) and format, then re-implode
@@ -186,6 +188,26 @@ class EM_Form extends EM_Object {
 			    break;
 		}
 		return $field_value;
+	}
+	
+	/**
+	 * Returns true if this field is not a user field or an html field, meaning it is stored information not at a user-account level, false if not.
+	 * @param mixed $field_or_id
+	 * @return boolean
+	 */
+	public function is_normal_field( $field_or_id ){
+        $field_id = is_array($field_or_id) ? $field_or_id['fieldid'] : $field_or_id;
+	    return array_key_exists($field_id, $this->form_fields) && !array_key_exists($field_id, $this->user_fields) && !in_array($field_id, array('user_email','user_name')) && $this->form_fields[$field_id]['type'] != 'html';
+	}
+	
+	/**
+	 * Returns true if this is a field stored as at a user-account level, false if not.
+	 * @param mixed $field_or_id
+	 * @return boolean
+	 */
+	public function is_user_field( $field_or_id ){
+        $field_id = ( is_object($field_or_id) ) ? $field_or_id['fieldid'] : $field_or_id;
+	    return array_key_exists($field_id, $this->user_fields) || in_array($field_id, array('user_email','user_name'));
 	}
 	
 	/**
@@ -351,7 +373,7 @@ class EM_Form extends EM_Object {
 				break;
 			case 'checkbox':
 				?>
-				<input type="checkbox" name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" value="1" <?php if($default || $field['options_checkbox_checked']) echo 'checked="checked"'; ?> />
+				<input type="checkbox" name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" value="1" <?php if( ($default && $default != 'n/a') || $field['options_checkbox_checked']) echo 'checked="checked"'; ?> />
 				<?php
 				break;
 			case 'checkboxes':
@@ -548,7 +570,7 @@ class EM_Form extends EM_Object {
 					$values = explode("\r\n",$field['options_selection_values']);
 					array_walk($values,'trim');
 					//in-values
-					if( (!in_array($value, $values) || empty($value)) && !empty($field['required']) ){
+					if( (!empty($value) && !in_array($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_selection_error'])) ? $field['options_selection_error']:$err;
 						$this->add_error($this_err);
 						$result = false;
@@ -569,7 +591,7 @@ class EM_Form extends EM_Object {
 					$values = explode("\r\n",$field['options_select_values']);
 					array_walk($values,'trim');
 					//in-values
-					if( (!in_array($value, $values) || empty($value)) && !empty($field['required']) ){
+					if( (!empty($value) && !in_array($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_select_error'])) ? $field['options_select_error']:$err;
 						$this->add_error($this_err);
 						$result = false;
@@ -578,7 +600,7 @@ class EM_Form extends EM_Object {
 				case 'country':
 					$values = em_get_countries(__('none selected','dbem'));
 					//in-values
-					if( (!array_key_exists($value, $values) || empty($value)) && !empty($field['required']) ){
+					if( (!empty($value) && !array_key_exists($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_select_error'])) ? $field['options_select_error']:$err;
 						$this->add_error($this_err);
 						$result = false;

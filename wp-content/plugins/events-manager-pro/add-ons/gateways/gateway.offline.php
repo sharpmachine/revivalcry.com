@@ -104,11 +104,11 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 * @param int $status
 	 * @param EM_Booking $EM_Booking
 	 */
-	function em_booking_set_status($status, $EM_Booking){
-		if($status == 1 && $EM_Booking->previous_status == $this->status && $this->uses_gateway($EM_Booking) && (empty($_REQUEST['action']) || $_REQUEST['action'] != 'gateway_add_payment') ){
+	function em_booking_set_status($result, $EM_Booking){
+		if($EM_Booking->booking_status == 1 && $EM_Booking->previous_status == $this->status && $this->uses_gateway($EM_Booking) && (empty($_REQUEST['action']) || $_REQUEST['action'] != 'gateway_add_payment') ){
 			$this->record_transaction($EM_Booking, $EM_Booking->get_price(false,false,true), get_option('dbem_bookings_currency'), current_time('mysql'), '', 'Completed', '');								
 		}
-		return $status;
+		return $result;
 	}
 	
 	function em_bookings_pending_count($count){
@@ -159,7 +159,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 */
 	function event_booking_options_buttons(){
 		global $EM_Event;
-		?><a href="<?php echo em_add_get_params($EM_Event->get_bookings_url(), array('action'=>'manual_booking','event_id'=>$EM_Event->event_id)); ?>" class="button add-new-h2"><?php _e('Add Booking','dbem') ?></a><?php	
+		?><a href="<?php echo em_add_get_params($EM_Event->get_bookings_url(), array('action'=>'manual_booking','event_id'=>$EM_Event->event_id)); ?>" class="button add-new-h2"><?php _e('Add Booking','em-pro') ?></a><?php	
 	}
 	
 	/**

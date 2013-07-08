@@ -105,7 +105,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 			?>
 			<tr>
 				<th colspan="2"><?php _e('Sub Total','em-pro'); ?></th>
-				<td><?php echo $EM_Booking->get_price_base(true); ?></td>
+				<td><?php echo $EM_Multiple_Booking->get_price_base(true); ?></td>
 			</tr>
 			<?php if( count($price_summary['discounts_pre_tax']) > 0 ): ?>
 				<?php foreach( $price_summary['discounts_pre_tax'] as $discount_summary ): ?>

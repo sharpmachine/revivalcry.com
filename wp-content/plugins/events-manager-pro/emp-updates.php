@@ -74,6 +74,7 @@ class EM_Updates {
 	}
 	
 	function admin_options(){
+		global $save_button;
 		$api = !self::check_api_key();
 		if( is_super_admin() ){
 		?>
@@ -101,7 +102,7 @@ class EM_Updates {
 						?>
 					<?php endif; ?>
 				</table>
-				<p><em><?php _e('looking for dev mode options? we moved it into <em>Admin Tools</em>','em-pro')?></em></p>
+				<?php echo $save_button; ?>
 			</div> <!-- . inside -->
 			</div> <!-- .postbox -->
 		<?php

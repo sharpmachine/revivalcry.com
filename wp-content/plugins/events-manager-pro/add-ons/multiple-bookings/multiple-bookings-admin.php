@@ -2,8 +2,11 @@
 class EM_Multiple_Bookings_Admin {
 
     public static function init(){
+        add_action('em_options_page_footer_bookings', 'EM_Multiple_Bookings_Admin::settings');
+        if( !get_option('dbem_multiple_bookings') ) return false;
         add_action( 'admin_notices', 'EM_Multiple_Bookings_Admin::page_warning', 100 );
 		add_action( 'em_options_page_footer_emails', 'EM_Multiple_Bookings_Admin::emails', 1);
+		add_action('em_options_page_booking_email_templates_options_top', 'EM_Multiple_Bookings_Admin::single_booking_emails_tip');
     }
     
     public static function page_warning(){
@@ -18,6 +21,16 @@ class EM_Multiple_Bookings_Admin {
 	        	echo $notice;
             }
         }
+    }
+    
+    public static function single_booking_emails_tip(){
+        ?>
+        <p><em><?php _e('Since you are in Multiple Booking Mode, these emails will only be sent in these specific circumstances :', 'em-pro'); ?></em></p>
+        <ol>
+            <li><em><?php echo sprintf(__('You have enabled the option to email event owners in the %s section below.','em-pro'), '<code>'.__('Multiple Booking Email Templates','em-pro').'</code>'); ?></em></li>
+            <li><em><?php _e('When modifications are made to individual bookings which would normally trigger an email to be sent to the attendee.','em-pro'); ?></em></li>
+        </ol>
+        <?php
     }
     
     /**
@@ -43,7 +56,7 @@ class EM_Multiple_Bookings_Admin {
         				<tr>
 							<td><?php echo __( 'Checkout Page', 'em-pro'); ?></td>
 							<td>
-								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_checkout_page', 'selected'=>get_option('dbem_multiple_bookings_checkout_page'), 'show_option_none'=>sprintf(__('Select ...', 'dbem')) )); ?>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_checkout_page', 'selected'=>get_option('dbem_multiple_bookings_checkout_page'), 'show_option_none'=>'['.__('None', 'dbem').']' )); ?>
 								<br />
 								<em>
 									<?php
@@ -60,7 +73,7 @@ class EM_Multiple_Bookings_Admin {
         				<tr>
 							<td><?php echo __( 'Cart Page', 'em-pro'); ?></td>
 							<td>
-								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_cart_page', 'selected'=>get_option('dbem_multiple_bookings_cart_page'), 'show_option_none'=>sprintf(__('Select ...', 'dbem')) )); ?>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_cart_page', 'selected'=>get_option('dbem_multiple_bookings_cart_page'), 'show_option_none'=>'['.__('None', 'dbem').']' )); ?>
 								<br />
 								<em><?php 
 									echo __('This page will display the events the user has chosen to book and allow them to edit their bookings before checkout.','em-pro');
@@ -97,10 +110,14 @@ class EM_Multiple_Bookings_Admin {
     
 	public static function emails(){
 	    global $save_button;
+		$bookings_placeholders = '<a href="'.EM_ADMIN_URL .'&amp;page=events-manager-help#booking-placeholders">'. __('Booking Related Placeholders','dbem') .'</a>';
+		$bookings_placeholder_tip = " ". sprintf(__('This accepts %s placeholders.','dbem'), $bookings_placeholders);
 		?>
 		<div  class="postbox " id="em-opt-multiple-booking-emails" >
 		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e ( 'Multiple Booking Email Templates', 'em-pro' ); ?> </span></h3>
 		<div class="inside">
+            <p><?php echo sprintf(__( 'When users make a booking in Multiple Bookings Mode or cancels their booking, these emails get sent to the attendee and administrator emails you assign in the %s section above.', 'dbem' ), '<code>'.__( 'Booking Email Templates', 'dbem' ).'</code>'); ?></p>
+            <p><?php _e('When administrators modify a set of multiple bookings rather than individual events, these templates will be used to notify the attendee.','em-pro'); ?></p>
 			<table class='form-table'>
 				<?php
 				$email_subject_tip = __('You can disable this email by leaving the subject blank.','dbem');
@@ -120,8 +137,8 @@ class EM_Multiple_Bookings_Admin {
 					<em><?php echo __('An email will be sent to the event contact if someone cancels their booking.','dbem').$bookings_placeholder_tip ?></em>
 				</td></tr>
 				<?php
-				em_options_input_text ( __( 'Contact person cancellation subject', 'dbem' ), 'dbem_multiple_bookings_contact__email_cancelled_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Contact person cancellation email', 'dbem' ), 'dbem_multiple_bookings_contact__email_cancelled_body', '' );
+				em_options_input_text ( __( 'Contact person cancellation subject', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_subject', $email_subject_tip );
+				em_options_textarea ( __( 'Contact person cancellation email', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_body', '' );
 				?>
 				<tr><td colspan='2'><strong style="font-size:1.2em"><?php _e('Booked User Emails', 'dbem'); ?></strong></td></tr>
 				<tr><td colspan='2'>
@@ -161,7 +178,6 @@ class EM_Multiple_Bookings_Admin {
 		</div> <!-- . inside -->
 		</div> <!-- .postbox -->
 		<?php
-}
-
+	}
 }
 EM_Multiple_Bookings_Admin::init();

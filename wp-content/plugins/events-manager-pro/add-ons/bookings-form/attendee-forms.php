@@ -12,9 +12,8 @@ class EM_Attendees_Form {
 	
 	function init(){
 		//Menu/admin page
-		if( is_admin() && current_user_can(get_option('dbem_capability_forms_editor', 'list_users')) ){
-			add_action('admin_init',array('EM_Attendees_Form', 'admin_page_actions'), 10);
-			add_action('emp_forms_admin_page',array('EM_Attendees_Form', 'admin_page'),11);
+		if( is_admin() ){
+			add_action('admin_init',array('EM_Attendees_Form', 'admin_init'), 10);
 		}
 		if( get_option('em_attendee_fields_enabled') ){
 			//Booking Admin Pages
@@ -40,6 +39,13 @@ class EM_Attendees_Form {
 				'attendee_intro' => array ( 'label' => __('Title','dbem'), 'type' => 'html', 'fieldid'=>'attendee_intro', 'options_html_content'=>'<strong>'.sprintf(__('Attendee %s','em-pro'), '#NUM#'). '</strong>'),
 				'attendee_name' => array ( 'label' => __('Name','dbem'), 'type' => 'text', 'fieldid'=>'attendee_name', 'required'=>1 )
 			);
+		}
+	}
+	
+	function admin_init(){
+	    if( current_user_can(get_option('dbem_capability_forms_editor', 'list_users')) ){
+			self::admin_page_actions();
+			add_action('emp_forms_admin_page',array('EM_Attendees_Form', 'admin_page'),11);
 		}
 	}
 	
@@ -351,6 +357,7 @@ class EM_Attendees_Form {
 			header("Content-Type: application/octet-stream; charset=utf-8");
 			header("Content-Disposition: Attachment; filename=".sanitize_title(get_bloginfo())."-bookings-export.csv");
 			do_action('em_csv_header_output');
+			echo "\xEF\xBB\xBF"; // UTF-8 for MS Excel (a little hacky... but does the job)
 			if( !defined('EM_CSV_DISABLE_HEADERS') || !EM_CSV_DISABLE_HEADERS ){
 				if( !empty($_REQUEST['event_id']) ){
 					$EM_Event = em_get_event($_REQUEST['event_id']);

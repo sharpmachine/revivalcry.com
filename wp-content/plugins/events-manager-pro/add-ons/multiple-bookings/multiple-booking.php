@@ -6,6 +6,7 @@ class EM_Multiple_Booking extends EM_Booking{
      * @var array
      */
     public $bookings = array();
+    public $booking_status = 0;
     
     function __construct( $booking_data = false ){
         global $wpdb;
@@ -48,6 +49,7 @@ class EM_Multiple_Booking extends EM_Booking{
 			$this->bookings[$EM_Booking->event_id] = $EM_Booking;
 			$this->tickets_bookings = null; //so that this is done again
 			$this->tickets = null; //so that this is done again
+			$this->calculate_price();
             return true;            
         }else{
             //error, booking for event already exists
@@ -203,8 +205,21 @@ class EM_Multiple_Booking extends EM_Booking{
 		if($format){
 			return $this->format_price($this->booking_price);
 		}
-		return $this->booking_price;
+		return apply_filters('em_multiple_booking_get_price', $this->booking_price, $this);
 	}
+	
+	function get_price_base( $format=false ){
+	    $base_price = 0;
+	    foreach($this->get_bookings() as $EM_Booking){
+    		//get post-tax price and save it to booking_price
+    		$base_price += $EM_Booking->get_price_base();
+		}
+		//return booking_price, formatted or not
+		if($format){
+			return $this->format_price($base_price);
+		}
+		return $base_price;
+	}	
 
 	/**
 	 * Gets the event this booking belongs to and saves a refernece in the event property
@@ -326,13 +341,13 @@ class EM_Multiple_Booking extends EM_Booking{
 				case '#_BOOKINGTICKETS':
 				    //change how this placeholder displays, for backwards compatability
 					ob_start();
-					emp_locate_template('placeholders/bookingtickets.php', true, array('EM_Multiple_Booking'=>$this));
+					emp_locate_template('placeholders/bookingtickets-multiple.php', true, array('EM_Multiple_Booking'=>$this));
 					$replace = ob_get_clean();
 					break;
 				case '#_BOOKINGSUMMARY':
 				    //change how this placeholder displays, for backwards compatability
 					ob_start();
-					emp_locate_template('placeholders/bookingsummary.php', true, array('EM_Multiple_Booking'=>$this));
+					emp_locate_template('placeholders/bookingsummary-multiple.php', true, array('EM_Multiple_Booking'=>$this));
 					$replace = ob_get_clean();
 					break;
 				case '#_BOOKINGATTENDEES':
@@ -358,11 +373,14 @@ class EM_Multiple_Booking extends EM_Booking{
 	}
 
 	//since we're always dealing with a single email
-	/*
 	function email( $email_admin = true, $force_resend = false ){
-		return false;
+		if( get_option('dbem_multiple_bookings_contact_email') ){ //we also email individual booking emails to the individual event owners
+		    foreach($this->get_bookings() as $EM_Booking){
+		        $EM_Booking->email($email_admin, $force_resend, false);
+		    }
+		}
+		return parent::email( $email_admin, $force_resend );
 	}
-	*/
 
 	/**
 	 * Overrides the booking email content function and uses multiple booking templates

@@ -5,12 +5,12 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 2.3.5
+Version: 2.3.6
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 2.35);
-define('EM_MIN_VERSION', 5.4);
+define('EMP_VERSION', 2.36);
+define('EM_MIN_VERSION', 5.44);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
@@ -54,7 +54,7 @@ class EM_Pro {
 			add_action('admin_notices',array(&$this,'em_version_warning'));
 			add_action('network_admin_notices',array(&$this,'em_version_warning'));
 		}
-	    if( is_admin() && current_user_can('list_users') ){ //although activate_plugins would be beter here, superusers don't visit every single site on MS
+	    if( is_admin() ){ //although activate_plugins would be beter here, superusers don't visit every single site on MS
 			add_action('init', array($this, 'install'),2);
 	    }
 		//Add extra Styling/JS
@@ -73,10 +73,10 @@ class EM_Pro {
 		    include('emp-admin.php');
 		}
 		//add-ons
-		include('add-ons/gateways.php');
-		include('add-ons/bookings-form.php');
-		include('add-ons/coupons.php');
-		include('add-ons/emails.php');
+		include('add-ons/gateways/gateways.php');
+		include('add-ons/bookings-form/bookings-form.php');
+		include('add-ons/coupons/coupons.php');
+		include('add-ons/emails/emails.php');
 		include('add-ons/user-fields.php');
         if( get_option('dbem_multiple_bookings') ){
 		    include('add-ons/multiple-bookings/multiple-bookings.php');
@@ -88,12 +88,14 @@ class EM_Pro {
 	}
 	
 	function install(){
-	    //Upgrade/Install Routine
-    	$old_version = get_option('em_pro_version');
-    	if( EMP_VERSION > $old_version || $old_version == '' || (is_multisite() && !EM_MS_GLOBAL && get_option('emp_ms_global_install')) ){
-    		require_once('emp-install.php');
-    		emp_install();
-    	}
+	    if( current_user_can('list_users') ){
+		    //Upgrade/Install Routine
+	    	$old_version = get_option('em_pro_version');
+	    	if( EMP_VERSION > $old_version || $old_version == '' || (is_multisite() && !EM_MS_GLOBAL && get_option('emp_ms_global_install')) ){
+	    		require_once('emp-install.php');
+	    		emp_install();
+	    	}
+	    }
 	}
 
 	function em_ms_globals($globals){
@@ -169,9 +171,22 @@ class EM_Pro {
 	function admin_head(){
 		?>
 		<style type="text/css">
+			/* Event Custom Emails */
+			div.emp-cet h4 { font-size:1.2em; }
+			div.emp-cet h4 a, div.emp-cet h5 a { color:#333; text-decoration:none; }
+			div.emp-cet-group { margin-bottom:30px; }
+			div.emp-cet-group h5 { font-size:1.1em; }
+			div.emp-cet-subgroup { margin-bottom:20px; }
+			div.emp-cet .emp-enabled { color:green; }
+			div.emp-cet .emp-disabled { color:red; }
+			div.emp-cet .emp-default { color:#999; }			
+			div.emp-cet .emp-cet-vals { margin: 10px 10px 20px; }
+			div.emp-cet .emp-cet-val { margin-bottom:10px; }	
+			div.emp-cet .emp-cet-vals input { width:100%; }
+			div.emp-cet .emp-cet-vals textarea { width:100%; height:200px; }
+			/* Custom Form Editor CSS */
 			#em-booking-form-editor form { display:inline; }
 			#em-attendee-form-editor form { display:inline; }
-			 /* Custom Form Editor CSS */
 				/* structure */
 				.em-form-custom > div { max-width:810px; border:1px solid #ccc; padding:10px 0px 0px; }
 				.em-form-custom .booking-custom-head { font-weight:bold; }

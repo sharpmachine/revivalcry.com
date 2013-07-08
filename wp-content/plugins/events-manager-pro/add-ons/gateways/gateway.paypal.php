@@ -223,7 +223,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	}
 	
 	function say_thanks(){
-		if( $_REQUEST['thanks'] == 1 ){
+		if( !empty($_REQUEST['thanks']) ){
 			echo "<div class='em-booking-message em-booking-message-success'>".get_option('em_'.$this->gateway.'_booking_feedback_thanks').'</div>';
 		}
 	}
@@ -398,7 +398,7 @@ Events Manager
 		} else {
 			// Did not find expected POST variables. Possible access attempt from a non PayPal site.
 			//header('Status: 404 Not Found');
-			echo 'Error: Missing POST variables. Identification is not possible.';
+			echo 'Error: Missing POST variables. Identification is not possible. If you are not PayPal and are visiting this page directly in your browser, this error does not indicate a problem, but simply means EM is correctly set up and ready to receive IPNs from PayPal only.';
 			exit;
 		}
 	}
@@ -450,7 +450,7 @@ Events Manager
 		</table>
 		
 		<h3><?php echo sprintf(__('%s Options','em-pro'),'PayPal'); ?></h3>
-		<p><?php echo __('<strong>Important:</strong>In order to connect PayPal with your site, you need to enable IPN on your account.'); echo " ". sprintf(__('Your return url is %s','em-pro'),'<code>'.$this->get_payment_return_url().'</code>'); ?></p> 
+		<p><strong><?php _e('Important:','em-pro'); ?></strong> <?php echo __('In order to connect PayPal with your site, you need to enable IPN on your account.'); echo " ". sprintf(__('Your return url is %s','em-pro'),'<code>'.$this->get_payment_return_url().'</code>'); ?></p> 
 		<p><?php echo sprintf(__('Please visit the <a href="%s">documentation</a> for further instructions.','em-pro'), 'http://wp-events-plugin.com/documentation/'); ?></p>
 		<table class="form-table">
 		<tbody>

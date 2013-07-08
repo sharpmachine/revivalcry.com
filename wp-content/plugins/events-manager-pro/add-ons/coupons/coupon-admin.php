@@ -52,6 +52,10 @@ class EM_Coupon_Admin extends EM_Coupon {
 		if( !$this->can_manage('manage_bookings', 'manage_others_bookings') ){
 			return apply_filters('em_coupon_save', false, $this);
 		}
+		//if in MB mode, always save it as site/event-wide
+		if( get_option('dbem_multiple_bookings') ){
+		    $this->coupon_sitewide = $this->coupon_eventwide = 1;
+		}
 		//Set Blog ID
 		if( is_multisite() && empty($this->blog_id) ){
 			$this->blog_id = get_current_blog_id();

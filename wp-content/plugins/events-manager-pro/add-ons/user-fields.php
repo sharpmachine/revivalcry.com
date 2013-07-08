@@ -100,17 +100,15 @@ class EM_User_Fields {
 	 */
 	static function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
 		$EM_Form = self::get_form();
-		if( array_key_exists($col, $EM_Form->form_fields) ){
+		if( $EM_Form->is_user_field($col) ){
 			$field = $EM_Form->form_fields[$col];
 			$EM_Person = $EM_Booking->get_person();
 			$guest_user = get_option('dbem_bookings_registration_disable') && $EM_Person->ID == get_option('dbem_bookings_registration_user');
 			$value = !$guest_user ? get_user_meta($EM_Person->ID, $col, true):'';
-			if( empty($value) && !empty($EM_Booking->booking_meta['registration'][$col]) ){
-				$value = is_array($EM_Booking->booking_meta['registration'][$col]) ? explode(', ', $EM_Booking->booking_meta['registration'][$col]):$EM_Booking->booking_meta['registration'][$col];
-			}elseif( empty($value) ){
-			    $value = "";
+			if( empty($value) && isset($EM_Booking->booking_meta['registration'][$col]) ){
+				$value = $EM_Booking->booking_meta['registration'][$col];
 			}
-			if( is_array($value) ) $value = implode(', ', $value);
+			if( !empty($value) ) $value = $EM_Form->get_formatted_value($field, $value);
 		}
 		return $value;
 	}

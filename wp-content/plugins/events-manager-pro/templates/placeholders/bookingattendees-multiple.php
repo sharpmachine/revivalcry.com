@@ -1,6 +1,6 @@
 <?php
 /*
-* This displays the content of the #_BOOKINGATTENDEES placeholder.
+* This displays the content of the #_BOOKINGATTENDEES placeholder in Multiple Bookings mode.
 * You can override the default display settings pages by copying this file to yourthemefolder/plugins/events-manager-pro/placeholders/ and modifying it however you need.
 * For more information, see http://wp-events-plugin.com/documentation/using-template-files/
 */
