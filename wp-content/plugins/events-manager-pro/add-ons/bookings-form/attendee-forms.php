@@ -154,11 +154,17 @@ class EM_Attendees_Form {
 	 */
 	public static function get_booking_attendees( $EM_Booking ){
 		$attendee_data = array();
-		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){
+		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){ /* @var $EM_Ticket_Booking EM_Ticket_Booking */
 			//Display ticket info
 			if( !empty($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) && is_array($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ){
 			    $EM_Ticket_Booking->booking = $EM_Booking; //avoid extra loading in sub-function
 			    $attendee_data[$EM_Ticket_Booking->ticket_id] = self::get_ticket_attendees($EM_Ticket_Booking);
+			}else{
+				$attendee_data[$EM_Ticket_Booking->ticket_id] = array();
+				for($i=1; $i <= $EM_Ticket_Booking->ticket_booking_spaces; $i++){
+					$key = sprintf(__('Attendee %s','em-pro'), $i);
+					$attendee_data[$EM_Ticket_Booking->ticket_id][$key] = array();
+				}
 			}
 		}
 		return $attendee_data;

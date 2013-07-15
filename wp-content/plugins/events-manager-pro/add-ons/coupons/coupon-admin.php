@@ -21,8 +21,8 @@ class EM_Coupon_Admin extends EM_Coupon {
 		$this->coupon_tax = ( !empty($_POST['coupon_tax']) && in_array($_POST['coupon_tax'], array('pre','post')) ) ? $_POST['coupon_tax']:'';
 		$this->coupon_discount = ( !empty($_POST['coupon_discount']) ) ? $_POST['coupon_discount']:'';
 		if( !empty($this->coupon_discount) && $this->coupon_discount < 0 ){ $this->coupon_discount = $this->coupon_discount * -1 ; } //no negatives
-		$this->coupon_eventwide = ( !empty($_POST['coupon_eventwide']) ) ? 1:0;
-		$this->coupon_sitewide = ( !empty($_POST['coupon_sitewide']) ) ? 1:0;
+		$this->coupon_eventwide = ( !empty($_POST['coupon_availability']) && $_POST['coupon_availability'] == 'eventwide') ? 1:0;
+		$this->coupon_sitewide = ( !empty($_POST['coupon_availability']) && $_POST['coupon_availability'] == 'sitewide' && (current_user_can('manage_others_bookings') || is_super_admin()) ) ? 1:0;
 		$this->coupon_private = ( !empty($_POST['coupon_private']) ) ? 1:0;
 		$result = $validate ? $this->validate():true; //validate both post and meta, otherwise return true
 		return apply_filters('em_coupon_get_post', $result, $this);		

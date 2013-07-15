@@ -233,10 +233,10 @@ class EM_Multiple_Bookings{
         }
 		if( defined('DOING_AJAX') ){
 		    if( $result ){
-				$return = array('result'=>true, 'message'=>$feedback);
+				$return = array('result'=>true, 'message'=>$feedback, 'checkout'=>true);
 				echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Multiple_Booking));
 			}elseif( !$result ){
-				$return = array('result'=>false, 'message'=>$feedback, 'errors'=>$EM_Notices->get_errors());
+				$return = array('result'=>false, 'message'=>$feedback, 'errors'=>$EM_Notices->get_errors(), 'checkout'=>true);
 				echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Multiple_Booking));
 			}
 			die();

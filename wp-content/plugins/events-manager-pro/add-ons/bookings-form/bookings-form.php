@@ -148,10 +148,12 @@ class EM_Booking_Form {
 				}else{
 					//get results and put them into booking meta
 					if( array_key_exists($fieldid, $EM_Form->user_fields) || in_array($fieldid, array('user_email','user_name')) ){
-					    if( !(!empty($EM_Booking->booking_id) && $EM_Booking->can_manage()) || empty($EM_Booking->booking_id) ){ //only save reg fields on first go
-							//registration fields
-							$EM_Booking->booking_meta['registration'][$fieldid] = $value;
-					    }
+						if( !is_user_logged_in() ){ //ignore this if user is logged in, no need to save information each time
+						    if( !(!empty($EM_Booking->booking_id) && $EM_Booking->can_manage()) || empty($EM_Booking->booking_id) ){ //only save reg fields on first go
+								//registration fields
+								$EM_Booking->booking_meta['registration'][$fieldid] = $value;
+						    }
+						}
 					}elseif( $fieldid != 'captcha' ){ //ignore captchas, only for verification
 						//booking fields
 						$EM_Booking->booking_meta['booking'][$fieldid] = $value;

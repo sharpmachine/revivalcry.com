@@ -8,8 +8,8 @@ jQuery(document).ready(function($){
 		$('#em-cart-table-event-summary-'+event_id+' .em-cart-table-spaces span').hide();
 		$('#em-cart-table-event-summary-'+event_id+' .em-cart-table-price span').hide();
 	});
-	$(document).on('em_booking_success', function() {
-		if( EM.mb_redirect ){
+	$(document).on('em_booking_success', function( e, response ) {
+		if( EM.mb_redirect && !response.checkout ){
 			window.location.href = EM.mb_redirect;
 		}
 	});

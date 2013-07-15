@@ -1350,7 +1350,7 @@ class EM_Form extends EM_Object {
 				if( is_array($value) && in_array($key,$fields_map) ){
 					foreach($value as $item_index => $item_value){
 						if( !empty($_REQUEST['fieldid'][$item_index]) ){
-							$item_value = stripslashes(wp_kses($item_value, $allowedposttags));
+							$item_value = preg_replace('/  +/', ' ', stripslashes(wp_kses($item_value, $allowedposttags)));
 							$this->form_fields[$_REQUEST['fieldid'][$item_index]][$key] = $item_value;
 						}
 					}

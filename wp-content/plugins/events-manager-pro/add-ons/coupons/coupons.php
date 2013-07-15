@@ -84,10 +84,12 @@ class EM_Coupons extends EM_Object {
 	static function event_get_coupon($code, $EM_Event){
 	    global $wpdb;
 		//get coupons that are event and sitewide
-	    $coupons = EM_Coupons::get(array('code'=>$code,'event'=>$EM_Event->event_id));
-	    if( count($coupons) > 0 ){
-            return array_shift($coupons);
-	    }	
+		if( !empty($EM_Event->event_id) ){
+		    $coupons = EM_Coupons::get(array('code'=>$code,'event'=>$EM_Event->event_id));
+		    if( count($coupons) > 0 ){
+	            return array_shift($coupons);
+		    }
+		}
 		return false;
 	}
 	
@@ -98,7 +100,11 @@ class EM_Coupons extends EM_Object {
 	 */
 	static function event_get_coupons($EM_Event){
 	    if( empty($EM_Event->coupons) ){
-	        $EM_Event->coupons = EM_Coupons::get(array('event'=>$EM_Event->event_id));
+	    	if( !empty($EM_Event->event_id) ){
+	    		$EM_Event->coupons = EM_Coupons::get(array('event'=>$EM_Event->event_id));
+	    	}else{
+	    		$EM_Event->coupons = array();
+	    	}
 	    }
 	    return $EM_Event->coupons;
 	}
@@ -110,7 +116,11 @@ class EM_Coupons extends EM_Object {
 	 */
 	static function event_get_coupon_ids($EM_Event){
 	    if( empty($EM_Event->coupon_ids) ){
-	        $EM_Event->coupon_ids = EM_Coupons::get(array('event'=>$EM_Event->event_id, 'ids'=>true));
+	    	if( !empty($EM_Event->event_id) ){
+	    		$EM_Event->coupon_ids = EM_Coupons::get(array('event'=>$EM_Event->event_id, 'ids'=>true));
+	    	}else{
+	    		$EM_Event->coupon_ids = array();
+	    	}
 	    }
 	    return $EM_Event->coupon_ids;
 	}
@@ -121,7 +131,11 @@ class EM_Coupons extends EM_Object {
 	 */
 	static function event_has_coupons($EM_Event){
 	    if( !isset($EM_Event->coupon_count) ){
-	        $EM_Event->coupons_count = EM_Coupons::count(array('event'=>$EM_Event->event_id));
+	    	if( !empty($EM_Event->event_id) ){
+	    		$EM_Event->coupons_count = EM_Coupons::count(array('event'=>$EM_Event->event_id));
+	    	}else{
+	    		$EM_Event->coupons_count = array();
+	    	}
 	    }
 	    return $EM_Event->coupons_count > 0;
 	}
@@ -403,7 +417,7 @@ class EM_Coupons extends EM_Object {
 		if(!empty($_REQUEST['event_id'])){
 			$EM_Event = new EM_Event($_REQUEST['event_id']);
 			$EM_Coupon = self::event_get_coupon($_REQUEST['coupon_code'], $EM_Event);
-			if( is_object($EM_Coupon) ){
+			if( !empty($EM_Event->event_id) && is_object($EM_Coupon) ){
 				if( $EM_Coupon->is_valid() ){
 					$result['result'] = true;
 					$result['message'] = $EM_Coupon->get_discount_text();
@@ -426,9 +440,9 @@ class EM_Coupons extends EM_Object {
 	}
 	
 	/**
-	 * Returns an array of EM_Coupon objects
-	 * @param boolean $eventful
-	 * @param boolean $return_objects
+	 * Returns an array of EM_Coupon objects, accepts search arguments or a numeric array for ids to retreive
+	 * @param boolean $args
+	 * @param boolean $count
 	 * @return array
 	 */
 	static function get( $args = array(), $count=false ){
@@ -526,16 +540,27 @@ class EM_Coupons extends EM_Object {
             global $wpdb;
             $conditions['code'] = $wpdb->prepare("coupon_code = '%s'", array($args['code']));
         }
-		if( !empty($args['event']) && !get_option('dbem_multiple_bookings') ){ //if in MB mode, there are not event-specific coupons atm
+		if( !empty($args['event']) && is_numeric($args['event']) && !get_option('dbem_multiple_bookings') ){ //if in MB mode, there are not event-specific coupons atm
 			$conditions['event'] = "coupon_id IN (SELECT meta_value FROM ".EM_META_TABLE." WHERE object_id='{$args['event']}' AND meta_key='event-coupon')";
+			//search event-wide coupons by default
 			if( !empty($args['eventwide']) ){
 				$EM_Event = em_get_event($args['event']);
 				if( !empty($EM_Event->event_id) ){
-					$conditions['event'] .= " OR (coupon_eventwide=1 AND coupon_owner='{$EM_Event->event_owner}')";
+					if( $args['eventwide'] === 1 || $args['eventwide'] === true ){
+						//in this case, we explicitly want eventwide coupons
+						$conditions['eventwide'] = "coupon_eventwide=1 AND coupon_owner='{$EM_Event->event_owner}'";
+					}else{
+						//if not explicitly requested in args, then we just search for eventwide according to event owner
+						$conditions['event'] .= " OR (coupon_eventwide=1 AND coupon_owner='{$EM_Event->event_owner}')";
+					}
 				}
 			}
+			//search sitewide coupons by default or if requested
 			if( !empty($args['sitewide']) ){
+				//sitewide shouldn't have an event requested with it if you only want sitewide events
 				$conditions['event'] .= ' OR coupon_sitewide=1 ';
+			}else{
+				$conditions['sitewide'] = 'coupon_sitewide=1';
 			}
 			$conditions['event'] = '('.$conditions['event'].')';
 		}else{
@@ -553,27 +578,46 @@ class EM_Coupons extends EM_Object {
     			//owner lookup
     			if( !empty($args['owner']) && is_numeric($args['owner'])){
     				$conditions['owner'] = "coupon_owner=".$args['owner'];
-    			}
-    			//site/event-wide lookups - a little special compared to other object condition functions on EM
-    			if( !empty($args['eventwide']) ){
-    				if( !empty($conditions['owner']) ){ //if owner defined too then we only want event-wide coupons belonging to that owner
-                        $conditions['owner'] = '('. $conditions['owner'] . ' AND coupon_eventwide=1)';
-                    }else{
-                        $conditions['eventwide'] = "coupon_eventwide=1";
-                    }
-    			}elseif( $args['eventwide'] == 0 ){
-					$conditions['eventwide'] = "coupon_eventwide=0";
-				}
-    			if( !empty($args['sitewide']) ){
-    				if( !empty($conditions['owner'])){
-    					$conditions['owner'] .= " OR coupon_sitewide=1";
-    				}elseif( !empty($conditions['eventwide']) ){
-    					$conditions['eventwide'] .= " OR coupon_sitewide=1";
-    				}else{
-    					$conditions['sitewide'] = "coupon_sitewide=1";
-    				}
-    			}elseif( $args['sitewide'] == 0 ){
-					$conditions['sitewide'] = "coupon_sitewide=0";
+	    			//when an owner is set, event-wide and sitewide must be explicitly set to filter in/out only these types of coupons
+	    			if( $args['eventwide'] === 1 || $args['eventwide'] === true ){
+						//we explicitly want to check eventwide coupons, not along with owners because by default it'd include eventwide coupons in simple owner searches
+						$conditions['owner'] = '('.$conditions['owner']." AND coupon_eventwide=1)";
+	    			}elseif( !$args['eventwide'] ){
+						//only need to include eventwide searches if 0, since event-wide searches would also appear if owner is set to 1
+						$conditions['eventwide'] = "coupon_eventwide=0";
+					}
+	    			if( $args['sitewide'] === 1 || $args['sitewide'] === true ){
+						//include sitewide coupons
+						if( $args['eventwide'] === 1 || $args['eventwide'] === true ){
+							//we'll never do an AND search for site-wide/event-wide because it would just negate all coupons that are one or the other
+	    					$conditions['owner'] .= " OR coupon_sitewide=1";
+	    				}else{
+							$conditions['sitewide'] = "coupon_sitewide=1";
+						}
+	    			}elseif( !$args['sitewide'] ) {
+						//exclude sitewide coupons
+						$conditions['sitewide'] = "coupon_sitewide=0";
+					}
+    			}else{
+	    			//no owner, so we're looking for either event/site wide coupons
+	    			if( $args['eventwide'] === 1 || $args['eventwide'] === true ){
+						$conditions['eventwide'] = "coupon_eventwide=1";
+	    			}elseif( !$args['eventwide'] ){
+						//only need to include eventwide searches if 0, since event-wide searches would also appear if owner is set to 1
+						$conditions['eventwide'] = "coupon_eventwide=0";
+					}
+	    			if( $args['sitewide'] === 1 || $args['sitewide'] === true ){
+						//explicitly filter sitewide coupons
+	    				if( $args['eventwide'] === 1 || $args['eventwide'] === true ){
+							//we'll never do an AND search for site-wide/event-wide because it would just negate all coupons that are one or the other
+	    					$conditions['eventwide'] .= " OR coupon_sitewide=1";
+	    				}else{ 
+	    					$conditions['sitewide'] = "coupon_sitewide=1";
+	    				}
+	    			}elseif( !$args['sitewide'] ){
+						//must not be a sitewide coupon
+						$conditions['sitewide'] = "coupon_sitewide=0";
+					}
 				}
     		}
 		}
@@ -588,8 +632,9 @@ class EM_Coupons extends EM_Object {
 	 */
 	function get_default_search( $array = array() ){
 		$defaults = array(
-			'sitewide' => 1,
-			'eventwide' => 1,
+			//site/event-wide lookups - a little special compared to other object condition functions on EM
+			'sitewide' => 'enabled', //can be set to true (1) or false (0) whether to exclusively search for this or not
+			'eventwide' => 'enabled', //can be set to true (1) or false (0) whether to exclusively search for this or not
             'code' => false,
 			'ids'=>false
 		); //also accepts event, blog, array

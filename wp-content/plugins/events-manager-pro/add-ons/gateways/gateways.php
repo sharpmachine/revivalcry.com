@@ -15,6 +15,9 @@ class EM_Gateways {
 		// Payment return
 		add_action('wp_ajax_em_payment', array('EM_Gateways', 'handle_payment_gateways'), 10 );
 		add_action('wp_ajax_nopriv_em_payment', array('EM_Gateways', 'handle_payment_gateways'), 10 );
+		//Booking Tables UI
+		add_filter('em_bookings_table_rows_col', array('EM_Gateways','em_bookings_table_rows_col'),10,5);
+		add_filter('em_bookings_table_cols_template', array('EM_Gateways','em_bookings_table_cols_template'),10,2);
 		//Booking interception
 		if( get_option('dbem_multiple_bookings') && !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){
 		    //Multiple bookings mode (and not doing a manual booking)
@@ -266,8 +269,30 @@ class EM_Gateways {
 		}
 	}
 	
-
-
+	/*
+	 * ----------------------------------------------------------
+	 * Booking Table and CSV Export
+	 * ----------------------------------------------------------
+	 */
+	
+	function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
+		global $EM_Event;
+		if( $col == 'gateway' ){
+			//get latest transaction with an ID
+			if( !empty($EM_Booking->booking_meta['gateway']) ){
+				$gateway = EM_Gateways::get_gateway($EM_Booking->booking_meta['gateway']);
+				$value = $gateway->title;
+			}else{
+				$value = __('None','em-pro');
+			}
+		}
+		return $value;
+	}
+	
+	function em_bookings_table_cols_template($template, $EM_Bookings_Table){
+		$template['gateway'] = __('Gateway Used','em-pro');
+		return $template;
+	}
 
 	/*
 	 * --------------------------------------------------

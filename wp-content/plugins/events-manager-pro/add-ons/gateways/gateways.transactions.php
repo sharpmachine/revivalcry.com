@@ -212,12 +212,12 @@ class EM_Gateways_Transactions{
 					</td>
 					<td>
 						<?php
-							echo '<a href="'.add_query_arg(array('person_id'=>$EM_Booking->person_id)).'">'. $EM_Booking->person->get_name() .'</a>';
+							echo '<a href="'.$EM_Booking->get_person()->get_bookings_url().'">'. $EM_Booking->person->get_name() .'</a>';
 						?>
 					</td>
 					<td class="column-date">
 						<?php
-							echo mysql2date("d-m-Y", $transaction->transaction_timestamp);
+							echo mysql2date(get_option('dbem_date_format'), $transaction->transaction_timestamp);
 						?>
 					</td>
 					<td class="column-amount">
@@ -356,7 +356,7 @@ class EM_Gateways_Transactions{
 	}
 	
 	function em_bookings_table_cols_template($template, $EM_Bookings_Table){
-		$template['gateway_txn_id'] = __('Transaction ID');
+		$template['gateway_txn_id'] = __('Transaction ID','em-pro');
 		return $template;
 	}
 }

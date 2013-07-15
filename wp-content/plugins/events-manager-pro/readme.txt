@@ -3,7 +3,7 @@ Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 
 == Description ==
 
@@ -22,6 +22,17 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.7 =
+* fixed site/event-wide coupons not showing up in coupon manager in admin area
+* changed event/site wide choice to be one or the other, to avoid confusion
+* fixed user link problems on secondary ajax-loaded pages of transactions table
+* changed $EM_Booking->booking_meta['registration'] will not save user info if already logged in
+* fixed CSV export issues if exporting by attendee and booking has no attendee data (if not previously activated/used)
+* fixed bug where double-spaced option values fail required validation (saved form strips extra spaces, entities will still work and validate)
+* added gateway column to booking tables and exports
+* fixed date not being formatted in transactions table
+* fixed unwanted MB page refresh on checkout if redirect option enabled
+
 = 2.3.6 =
 * fixed rejections being given a transaction record as if paid for offline bookings
 * fixed booking form not accepting blank values when editing (e.g. textboxes)
