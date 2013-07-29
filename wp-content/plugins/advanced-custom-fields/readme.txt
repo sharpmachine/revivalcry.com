@@ -101,6 +101,17 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 4.1.8.1 =
+* Select field: Revert choices logic - http://support.advancedcustomfields.com/forums/topic/select-field-label-cut-off-at/#post-529
+* CSS: Revert metabox CSS - http://support.advancedcustomfields.com/forums/topic/standard-metabox-margins-reversed/#post-456
+* Core: Fixed save_post conflict with Shopp plugin - http://support.advancedcustomfields.com/forums/topic/no-data-is-saving-with-shopp-acf-4-1-8/
+
+= 4.1.8 =
+* Core: Fix issue with cache $found variable preventing values from being loaded
+* Select field: Improve choices textarea detection - http://old.support.advancedcustomfields.com/discussion/6598/select-on-repeater-field
+* Language: Added Swedish translation - https://github.com/elliotcondon/acf/pull/93
+* Language: Updated Russian translation - https://github.com/elliotcondon/acf/pull/94
+
 = 4.1.7 =
 * Language: Added Russian translation - Thanks to Alex Torscho
 * Core: Improved the save_post function to compare post_id and only run once.
