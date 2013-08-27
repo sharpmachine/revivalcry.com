@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'version' => '0.9.2.11',
+	'version' => '0.9.3',
 	'cluster.messagebus.debug' => false,
 	'cluster.messagebus.enabled' => false,
 	'cluster.messagebus.sns.region' => '',
@@ -443,6 +443,8 @@ return array(
 	'browsercache.other.w3tc' => true,
 	'browsercache.other.replace' => false,
 	'browsercache.timestamp' => '1375237839',
+	'browsercache.replace.exceptions' => array(
+	),
 	'mobile.enabled' => true,
 	'mobile.rgroups' => array(
 		'high' => array(
@@ -678,6 +680,36 @@ return array(
 	'newrelic.use_network_wide_id' => false,
 	'pgcache.late_init' => true,
 	'newrelic.include_rum' => true,
+	'extensions.settings' => array(
+		'genesis.theme' => array(
+			'wp_head' => '0',
+			'genesis_header' => '1',
+			'genesis_do_nav' => '1',
+			'genesis_do_subnav' => '1',
+			'loop_front_page' => '1',
+			'loop_single' => '1',
+			'loop_single_excluded' => '',
+			'loop_single_genesis_comments' => '0',
+			'loop_single_genesis_pings' => '0',
+			'sidebar' => '0',
+			'sidebar_excluded' => '',
+			'genesis_footer' => '1',
+			'wp_footer' => '0',
+			'fragment_reject_logged_roles' => '1',
+			'fragment_reject_logged_roles_on_actions' => array(
+				0 => 'genesis_loop',
+				1 => 'wp_head',
+				2 => 'wp_footer',
+			),
+			'fragment_reject_roles' => array(
+				0 => 'administrator',
+			),
+		),
+	),
+	'extensions.active' => array(
+	),
+	'plugin.license_key' => '',
+	'plugin.type' => '',
 	'wordpress.home' => 'http://revivalcry.com',
 	'pgcache.bad_behavior_path' => '',
 );
