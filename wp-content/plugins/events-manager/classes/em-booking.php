@@ -231,7 +231,7 @@ class EM_Booking extends EM_Object{
 		$conds = array(); 
 		foreach($search as $key => $value) {
 			if( array_key_exists($key, $this->fields) ){
-				$value = $wpdb->escape($value);
+				$value = esc_sql($value);
 				$conds[] = "`$key`='$value'";
 			} 
 		}
@@ -316,6 +316,11 @@ class EM_Booking extends EM_Object{
 		if( !$override_availability && $this->get_event()->get_bookings()->get_available_spaces() < $this->get_spaces() ){
 		    $result = false;
 		    $this->add_error(get_option('dbem_booking_feedback_full'));
+		}
+		//can we book this amount of spaces at once?
+		if( $this->get_event()->event_rsvp_spaces > 0 && $this->get_spaces() > $this->get_event()->event_rsvp_spaces ){
+		    $result = false;
+		    $this->add_error( sprintf(get_option('dbem_booking_feedback_spaces_limit'), $this->get_event()->event_rsvp_spaces));			
 		}
 		return apply_filters('em_booking_validate',$result,$this);
 	}
@@ -454,7 +459,7 @@ class EM_Booking extends EM_Object{
 	            $this->legacy_tax_rate = true;
 	        }else{
 	            //first time we're applying tax rate
-	            $this->booking_tax_rate = parent::get_tax_rate();
+	            $this->booking_tax_rate = $this->get_event()->get_tax_rate();
 	        }
 	    }
 	    return $this->booking_tax_rate;

@@ -480,16 +480,17 @@ class EM_Location extends EM_Object {
 			$this->post_status = 'trash'; //set post status in this instance
 		}else{
 			$set_status = $status ? 1:0;
+			$post_status = $set_status ? 'publish':'pending';
 			if($set_post_status){
-				if($this->post_status == 'pending'){
+				if($this->post_status == 'pending' && empty($this->post_name)){
 					$this->post_name = sanitize_title($this->post_title);
 				}
-				$wpdb->update( $wpdb->posts, array( 'post_status' => $this->post_status, 'post_name' => $this->post_name ), array( 'ID' => $this->post_id ) );
+				$wpdb->update( $wpdb->posts, array( 'post_status' => $post_status, 'post_name' => $this->post_name ), array( 'ID' => $this->post_id ) );
 			}
-			$this->post_status = $set_status ? 'publish':'pending';
+			$this->post_status = $post_status;
 		}
 		$this->previous_status = $wpdb->get_var('SELECT location_status FROM '.EM_LOCATIONS_TABLE.' WHERE location_id='.$this->location_id); //get status from db, not post_status, as posts get saved quickly
-		$result = $wpdb->query("UPDATE ".EM_LOCATIONS_TABLE." SET location_status=$set_status WHERE location_id={$this->location_id}");
+		$result = $wpdb->query($wpdb->prepare("UPDATE ".EM_LOCATIONS_TABLE." SET location_status=$set_status AND location_slug=%s WHERE location_id=%d", array($this->post_name, $this->location_id)));
 		$this->get_status();
 		return apply_filters('em_location_set_status', $result !== false, $status, $this);
 	}	
@@ -850,7 +851,7 @@ class EM_Location extends EM_Object {
 					else{ $scope = 'all'; }
 					$events_count = EM_Events::count( array('location'=>$this->location_id, 'scope'=>$scope) );
 					if ( $events_count > 0 ){
-					    $args = array('location'=>$this->location_id, 'scope'=>$scope, 'pagination'=>1);
+					    $args = array('location'=>$this->location_id, 'scope'=>$scope, 'pagination'=>1, 'ajax'=>0);
 					    $args['format_header'] = get_option('dbem_location_event_list_item_header_format');
 					    $args['format_footer'] = get_option('dbem_location_event_list_item_footer_format');
 					    $args['format'] = get_option('dbem_location_event_list_item_format');
