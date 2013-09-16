@@ -3,7 +3,7 @@
 /*
 Plugin Name: WP Remote
 Description: Manage your WordPress site with <a href="https://wpremote.com/">WP Remote</a>. <strong>Deactivate to clear your API Key.</strong>
-Version: 2.6.1
+Version: 2.6.2
 Author: Human Made Limited
 Author URI: http://hmn.md/
 */
@@ -257,7 +257,7 @@ function wprp_translations_init() {
 		/** Set filter for WordPress languages directory */
 		$wprp_wp_lang_dir = apply_filters(
 			'wprp_filter_wp_lang_dir',
-				trailingslashit( WP_LANG_DIR ) . trailingslashit( 'genesis-layout-extras' ) . $wprp_textdomain . '-' . $plugin_locale . '.mo'
+				trailingslashit( WP_LANG_DIR ) . trailingslashit( 'wp-remote' ) . $wprp_textdomain . '-' . $plugin_locale . '.mo'
 		);
 
 		/** Translations: First, look in WordPress' "languages" folder = custom & update-secure! */
