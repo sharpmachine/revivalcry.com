@@ -4,7 +4,7 @@
   width: 220px !important;
   margin-right: 20px;
 }
-.gallery-item:nth-child(5n) { margin-right: 0; }
+/*.gallery-item:nth-child(5n) { margin-right: 0; }*/
 .gallery-item a {
   display: block;
   position: relative;
