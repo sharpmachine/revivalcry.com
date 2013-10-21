@@ -159,8 +159,8 @@ class EM_Ticket extends EM_Object{
 		$this->ticket_end = ( !empty($post['ticket_end']) ) ? wp_kses_data($post['ticket_end']):'';
 		if( !empty($post['ticket_start_time']) && !empty($this->ticket_start) ) $this->ticket_start .= ' '. $this->sanitize_time($post['ticket_start_time']);
 		if( !empty($post['ticket_end_time']) && !empty($this->ticket_end) ) $this->ticket_end .= ' '. $this->sanitize_time($post['ticket_end_time']);
-		$this->start_timestamp = ( !empty($post['ticket_start']) ) ? strtotime($post['ticket_start']):'';
-		$this->end_timestamp = ( !empty($post['ticket_end']) ) ? strtotime($post['ticket_end']):'';
+		$this->start_timestamp = ( !empty($post['ticket_start']) ) ? strtotime($this->ticket_start):'';
+		$this->end_timestamp = ( !empty($post['ticket_end']) ) ? strtotime($this->ticket_end):'';
 		//sort out user availability restrictions
 		$this->ticket_members = ( !empty($post['ticket_type']) && $post['ticket_type'] == 'members' ) ? 1:0;
 		$this->ticket_guests = ( !empty($post['ticket_type']) && $post['ticket_type'] == 'guests' ) ? 1:0;
@@ -209,7 +209,7 @@ class EM_Ticket extends EM_Object{
 		$EM_Event = $this->get_event();
 		$available_spaces = $this->get_available_spaces();
 		$condition_1 = (empty($this->ticket_start) || $this->start_timestamp <= $timestamp);
-		$condition_2 = $this->end_timestamp + 86400 >= $timestamp || empty($this->ticket_end);
+		$condition_2 = $this->end_timestamp >= $timestamp || empty($this->ticket_end);
 		$condition_3 = $EM_Event->start > $timestamp || strtotime($EM_Event->event_rsvp_date. ' '. $EM_Event->event_rsvp_time) > $timestamp;
 		$condition_4 = !$this->ticket_members || ($this->ticket_members && is_user_logged_in()) || $include_members_only;
 		$condition_5 = true;
@@ -230,7 +230,8 @@ class EM_Ticket extends EM_Object{
 				$is_available = true;
 			}
 		}
-		return apply_filters('em_ticket_is_available', $is_available, $this);
+		$this->is_available = apply_filters('em_ticket_is_available', $is_available, $this);
+		return $this->is_available;
 	}
 	
 	/**
