@@ -1,41 +1,49 @@
 <?php
 abstract class ameMenu {
 	const format_name = 'Admin Menu Editor menu';
-	const format_version = '5.0';
+	const format_version = '5.1';
 
 	/**
 	 * Load an admin menu from a JSON string.
 	 *
 	 * @static
-	 * @throws InvalidMenuException when the supplied input is not a valid menu.
 	 *
 	 * @param string $json A JSON-encoded menu structure.
 	 * @param bool $assume_correct_format Skip the format header check and assume everything is fine. Defaults to false.
+	 * @param bool $always_normalize Always normalize the menu structure, even if format.is_normalized is true.
+	 * @throws InvalidMenuException
 	 * @return array
 	 */
-	public static function load_json($json, $assume_correct_format = false) {
+	public static function load_json($json, $assume_correct_format = false, $always_normalize = false) {
 		$arr = json_decode($json, true);
 		if ( !is_array($arr) ) {
 			throw new InvalidMenuException('The input is not a valid JSON-encoded admin menu.');
 		}
-		return self::load_array($arr, $assume_correct_format);
+		return self::load_array($arr, $assume_correct_format, $always_normalize);
 	}
 
 	/**
 	 * Load an admin menu structure from an associative array.
 	 *
 	 * @static
-	 * @throws InvalidMenuException when the supplied input is not a valid menu.
 	 *
 	 * @param array $arr
 	 * @param bool $assume_correct_format
+	 * @param bool $always_normalize
+	 * @throws InvalidMenuException
 	 * @return array
 	 */
-	public static function load_array($arr, $assume_correct_format = false){
+	public static function load_array($arr, $assume_correct_format = false, $always_normalize = false){
+		$is_normalized = false;
 		if ( !$assume_correct_format ) {
 			if ( isset($arr['format']) && ($arr['format']['name'] == self::format_name) ) {
-				if ( !version_compare($arr['format']['version'], self::format_version, '<=') ) {
+				$compared = version_compare($arr['format']['version'], self::format_version);
+				if ( $compared > 0 ) {
 					throw new InvalidMenuException("Can't load a menu created by a newer version of the plugin.");
+				}
+				//We can skip normalization if the version number matches exactly and the menu is already normalized.
+				if ( ($compared === 0) && isset($arr['format']['is_normalized']) ) {
+					$is_normalized = $arr['format']['is_normalized'];
 				}
 			} else {
 				return self::load_menu_40($arr);
@@ -49,8 +57,13 @@ abstract class ameMenu {
 		$menu = array('tree' => array());
 		$menu = self::add_format_header($menu);
 
-		foreach($arr['tree'] as $file => $item) {
-			$menu['tree'][$file] = ameMenuItem::normalize($item);
+		if ( $is_normalized && !$always_normalize ) {
+			$menu['tree'] = $arr['tree'];
+		} else {
+			foreach($arr['tree'] as $file => $item) {
+				$menu['tree'][$file] = ameMenuItem::normalize($item);
+			}
+			$menu['format']['is_normalized'] = true;
 		}
 
 		return $menu;
@@ -135,7 +148,7 @@ abstract class ameMenu {
 			$parent = $tree_item['defaults']['file'];
 			if ( isset($submenu[$parent]) ){
 				foreach($submenu[$parent] as $position => $subitem){
-					$tree_item['items'][$subitem[2]] = array_merge(
+					$tree_item['items'][] = array_merge(
 						ameMenuItem::blank_menu(),
 						array('defaults' => ameMenuItem::fromWpItem($subitem, $position, $parent))
 					);
@@ -148,6 +161,33 @@ abstract class ameMenu {
 		$tree = self::sort_menu_tree($tree);
 
 		return $tree;
+	}
+
+	/**
+	 * Check if a menu contains any items with the "hidden" flag set to true.
+	 *
+	 * @param array $menu
+	 * @return bool
+	 */
+	public static function has_hidden_items($menu) {
+		if ( !is_array($menu) || empty($menu) || empty($menu['tree']) ) {
+			return false;
+		}
+
+		foreach($menu['tree'] as $item) {
+			if ( ameMenuItem::get($item, 'hidden') ) {
+				return true;
+			}
+			if ( !empty($item['items']) ) {
+				foreach($item['items'] as $child) {
+					if ( ameMenuItem::get($child, 'hidden') ) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }
 

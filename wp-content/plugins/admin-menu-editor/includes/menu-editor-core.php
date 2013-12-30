@@ -69,6 +69,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	private $cached_custom_menu = null; //Cached, non-merged version of the custom menu. Used by load_custom_menu().
 	private $cached_virtual_caps = null;//List of virtual caps. Used by get_virtual_caps().
 
+	private $cached_user_caps = array(); //A cache of the current user's capabilities. Used only in very specific places.
+	private $user_cap_cache_enabled = false;
+
 	//Our personal copy of the request vars, without any "magic quotes".
 	private $post = array();
 	private $get = array();
@@ -96,6 +99,12 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'allowed_user_id' => null,
 			//The user who can see this plugin on the "Plugins" page. By default all admins can see it.
 			'plugins_page_allowed_user_id' => null,
+
+			'show_deprecated_hide_button' => null,
+			'dashboard_hiding_confirmation_enabled' => true,
+
+			//Enable/disable the admin notice that tells the user where the plugin settings menu is.
+			'show_plugin_menu_notice' => true,
 		);
 		$this->serialize_with_json = false; //(Don't) store the options in JSON format
 
@@ -105,10 +114,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$this->magic_hook_priority = 99999;
 		
 		//AJAXify screen options
-		add_action('wp_ajax_ws_ame_save_screen_options', array(&$this,'ajax_save_screen_options'));
+		add_action('wp_ajax_ws_ame_save_screen_options', array($this,'ajax_save_screen_options'));
 
-		//AJAXify hints
+		//AJAXify hints and warnings
 		add_action('wp_ajax_ws_ame_hide_hint', array($this, 'ajax_hide_hint'));
+		add_action(
+			'wp_ajax_ws_ame_disable_dashboard_hiding_confirmation',
+			array($this, 'ajax_disable_dashboard_hiding_confirmation')
+		);
 
 		//Make sure we have access to the original, un-mangled request data.
 		//This is necessary because WordPress will stupidly apply "magic quotes"
@@ -123,6 +136,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//User survey
 		add_action('admin_notices', array($this, 'display_survey_notice'));
+
+		//Tell first-time users where they can find the plugin settings page.
+		add_action('all_admin_notices', array($this, 'display_plugin_menu_notice'));
 	}
 	
 	function init_finish() {
@@ -182,7 +198,20 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	function hook_admin_menu(){
 		global $menu, $submenu;
 
-		//Menu reset (for emergencies). Executed by accessing http://example.com/wp-admin/?reset_admin_menu=1 
+		//Compatibility fix for Shopp 1.2.9. This plugin has an "admin_menu" hook (Flow::menu) that adds another
+		//"admin_menu" hook (AdminFlow::taxonomies) when it runs. Basically, it indirectly modifies the global
+		//$wp_filters['admin_menu'] array while WordPress is iterating it (nasty!). Due to how PHP arrays are
+		//implemented and how do_action() works, this second hook is the very last one to run, even after hooks
+		//with a lower priority.
+		//The only way we can see the changes made by the second hook is to do the same thing.
+		static $firstRunSkipped = false;
+		if ( !$firstRunSkipped && class_exists('Flow') ) {
+			add_action('admin_menu', array($this, 'hook_admin_menu'), $this->magic_hook_priority + 1);
+			$firstRunSkipped = true;
+			return;
+		}
+
+		//Menu reset (for emergencies). Executed by accessing http://example.com/wp-admin/?reset_admin_menu=1
 		$reset_requested = isset($this->get['reset_admin_menu']) && $this->get['reset_admin_menu'];
 		if ( $reset_requested && $this->current_user_can_edit_menu() ){
 			$this->set_custom_menu(null);
@@ -235,7 +264,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 			//Convert our custom menu to the $menu + $submenu structure used by WP.
 			//Note: This method sets up multiple internal fields and may cause side-effects.
+			$this->user_cap_cache_enabled = true;
 			$this->build_custom_wp_menu($this->merged_custom_menu['tree']);
+			$this->user_cap_cache_enabled = false;
 
 			if ( !$this->user_can_access_current_page() ) {
 				$this->log_security_note('DENY access.');
@@ -278,7 +309,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		$menu = $this->custom_wp_menu;
 		$submenu = $this->custom_wp_submenu;
+
+		$this->user_cap_cache_enabled = true;
 		list($menu, $submenu) = $this->filter_menu($menu, $submenu);
+		$this->user_cap_cache_enabled = false;
 
 		return $parent_file;
 	}
@@ -496,6 +530,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
                 'selectedActor' => isset($this->get['selected_actor']) ? strval($this->get['selected_actor']) : null,
 
 				'showHints' => $this->get_hint_visibility(),
+				'dashboardHidingConfirmationEnabled' => $this->options['dashboard_hiding_confirmation_enabled'],
+				'disableDashboardConfirmationNonce' => wp_create_nonce('ws_ame_disable_dashboard_hiding_confirmation'),
 
 			    'isDemoMode' => defined('IS_DEMO_MODE'),
 			    'isMasterMode' => defined('IS_MASTER_MODE'),
@@ -559,6 +595,17 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			array('menu-editor-base-style')
 		);
 
+		//WordPress introduced a new screen meta button style in WP 3.8.
+		//We have two different stylesheets - one for 3.8+ and one for backwards compatibility.
+		wp_register_auto_versioned_style('menu-editor-screen-meta', plugins_url('css/screen-meta.css', $this->plugin_file));
+		wp_register_auto_versioned_style('menu-editor-screen-meta-old', plugins_url('css/screen-meta-old-wp.css', $this->plugin_file));
+
+		if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '3.8-RC1', '<') ) {
+			wp_enqueue_style('menu-editor-screen-meta-old');
+		} else {
+			wp_enqueue_style('menu-editor-screen-meta');
+		}
+
 		wp_enqueue_style('menu-editor-colours-classic');
 	}
 
@@ -585,6 +632,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		$this->cached_custom_menu = null;
 		$this->cached_virtual_caps = null;
+		$this->cached_user_caps = array();
 	}
 
 	/**
@@ -746,6 +794,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
    */
 	function menu_merge($tree){
 		//Iterate over all menus and submenus and look up default values
+		//Also flag used and missing items.
+		$orphans = array();
 		foreach ($tree as &$topmenu){
 
 			if ( !ameMenuItem::get($topmenu, 'custom') ) {
@@ -779,6 +829,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 							//Yes, load defaults from that item
 							$item['defaults'] = $this->item_templates[$template_id]['defaults'];
 							$this->item_templates[$template_id]['used'] = true;
+							//We must move orphaned items elsewhere. Use the default location if possible.
+							if ( isset($topmenu['missing']) && $topmenu['missing'] ) {
+								$orphans[] = $item;
+							}
 						} else if ( empty($item['separator']) ) {
 							//Record as missing, unless it's a menu separator
 							$item['missing'] = true;
@@ -787,6 +841,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 							$temp = $this->set_final_menu_capability($temp);
 							$this->add_access_lookup($temp, 'submenu', true);
                         }
+					} else {
+						//What if the parent of this custom item is missing?
+						//Right now the custom item will just disappear.
 					}
 				}
 			}
@@ -838,10 +895,22 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					$tree[$template['defaults']['parent']]['items'][] = $entry;
 				} else {
 					//This can happen if the original parent menu has been moved to a submenu.
-					//Todo: Handle this unusual situation.
+					$tree[$template['defaults']['file']] = $entry;
 				}
 			} else {
 				$tree[$template['defaults']['file']] = $entry;
+			}
+		}
+
+		//Move orphaned items back to their original parents.
+		foreach($orphans as $item) {
+			$defaultParent = !empty($item['defaults']['parent']) ? $item['defaults']['parent'] : null;
+			if ( isset($defaultParent) && isset($tree[$defaultParent]) ) {
+				$tree[$defaultParent]['items'][] = $item;
+			} else {
+				//This can happen if the parent has been moved to a submenu.
+				//Just put the orphan at the bottom of the menu.
+				$tree[$item['defaults']['file']] = $item;
 			}
 		}
 
@@ -976,9 +1045,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Convert the prepared tree to the internal WordPress format.
 		foreach($new_tree as $topmenu) {
 			$trueAccess = isset($this->page_access_lookup[$topmenu['url']]) ? $this->page_access_lookup[$topmenu['url']] : null;
-			if ( $trueAccess === 'do_not_allow' ) {
+			if ( ($trueAccess === 'do_not_allow') && ($topmenu['access_level'] !== $trueAccess) ) {
 				$topmenu['access_level'] = $trueAccess;
+				if ( isset($topmenu['access_check_log']) ) {
+					$topmenu['access_check_log'][] = sprintf(
+						'+ Override: There is a hidden menu item with the same URL (%1$s) but a higher priority.' .
+						' Setting the capability to "%2$s".',
+						$topmenu['url'],
+						$trueAccess
+					);
+					$topmenu['access_check_log'][] = str_repeat('=', 79);
+				}
 			}
+
 			if ( !isset($this->reverse_item_lookup[$topmenu['url']]) ) { //Prefer sub-menus.
 				$this->reverse_item_lookup[$topmenu['url']] = $topmenu;
 			}
@@ -987,9 +1066,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 			foreach($topmenu['items'] as $item) {
 				$trueAccess = isset($this->page_access_lookup[$item['url']]) ? $this->page_access_lookup[$item['url']] : null;
-				if ( $trueAccess === 'do_not_allow' ) {
+				if ( ($trueAccess === 'do_not_allow') && ($item['access_level'] !== $trueAccess) ) {
 					$item['access_level'] = $trueAccess;
+					if ( isset($item['access_check_log']) ) {
+						$item['access_check_log'][] = sprintf(
+							'+ Override: There is a hidden menu item with the same URL (%1$s) but a higher priority.' .
+							' Setting the capability to "%2$s".',
+							$item['url'],
+							$trueAccess
+						);
+						$item['access_check_log'][] = str_repeat('=', 79);
+					}
 				}
+
 				$this->reverse_item_lookup[$item['url']] = $item;
 				$new_submenu[$topmenu['file']][] = $this->convert_to_wp_format($item);
 			}
@@ -1083,7 +1172,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		//Used later to determine the current page based on URL.
-		$item['url'] = ameMenuItem::generate_url($item['file'], $parent);
+		if ( empty($item['url']) ) {
+			$original_parent = !empty($item['defaults']['parent']) ? $item['defaults']['parent'] : $parent;
+			$item['url'] = ameMenuItem::generate_url($item['file'], $original_parent);
+		}
 
 		//Convert relative URls to fully qualified ones. This prevents problems with WordPress
 		//incorrectly converting "index.php?page=xyz" to, say, "tools.php?page=index.php?page=xyz"
@@ -1136,15 +1228,30 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$user_has_access = true;
 		$cap_to_use = '';
 		if ( !empty($item['access_level']) ) {
-			$user_has_cap = $this->current_user_can($item['access_level']);
-			$user_has_access = $user_has_access && $user_has_cap;
 			$cap_to_use = $item['access_level'];
 
-			$item['access_check_log'][] = sprintf(
-				'Required capability: %1$s. User %2$s this capability.',
-				htmlentities($cap_to_use),
-				$user_has_cap ? 'HAS' : 'DOES NOT have'
-			);
+			if ( isset($item['user_has_access_level']) ) {
+				//The "custom_admin_menu_capability" filter has already determined whether this user should
+				//have the required capability, so checking it again would be redundant. This usually only
+				//applies to the Pro version which uses that filter in extras.php.
+				$user_has_cap = $item['user_has_access_level'];
+
+				$item['access_check_log'][] = sprintf(
+					'Skipping a "%1$s" capability check because we\'ve already determined that the current user %2$s access.',
+					htmlentities($cap_to_use),
+					$user_has_cap ? 'should have' : 'should not have'
+				);
+			} else {
+				$user_has_cap = $this->current_user_can($cap_to_use);
+				$item['access_check_log'][] = sprintf(
+					'Required capability: %1$s. User %2$s this capability.',
+					htmlentities($cap_to_use),
+					$user_has_cap ? 'HAS' : 'DOES NOT have'
+				);
+			}
+
+			$user_has_access = $user_has_access && $user_has_cap;
+
 		} else {
 			$item['access_check_log'][] = '- No required capability set.';
 		}
@@ -1189,6 +1296,18 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		if ( !empty($action) ) {
 			$this->handle_form_submission($this->post, $action);
+		}
+
+		//By default, show the "Hide" button only if the user has already hidden something with it,
+		//or if they're using the free version. Pro users should use role permissions instead, but can
+		//explicitly enable the button if they want.
+		if ( !isset($this->options['show_deprecated_hide_button']) ) {
+			if ( $this->is_pro_version() ) {
+				$this->options['show_deprecated_hide_button'] = ameMenu::has_hidden_items($this->merged_custom_menu);
+				$this->save_options();
+			} else {
+				$this->options['show_deprecated_hide_button'] = true;
+			}
 		}
 
 		$sub_section = isset($this->get['sub_section']) ? $this->get['sub_section'] : null;
@@ -1281,6 +1400,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Hide some menu options by default.
 			$this->options['hide_advanced_settings'] = !empty($this->post['hide_advanced_settings']);
 
+			//Enable the now-obsolete "Hide" button.
+			if ( $this->is_pro_version() ) {
+				$this->options['show_deprecated_hide_button'] = !empty($this->post['show_deprecated_hide_button']);
+			}
+
 			$this->save_options();
 			wp_redirect(add_query_arg('updated', 1, $this->get_settings_page_url()));
 		}
@@ -1293,6 +1417,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'images_url' => plugins_url('images', $this->plugin_file),
 			'hide_advanced_settings' => $this->options['hide_advanced_settings'],
 			'settings_page_url' => $this->get_settings_page_url(),
+			'show_deprecated_hide_button' => $this->options['show_deprecated_hide_button'],
 		);
 
 		//Build a tree struct. for the default menu
@@ -1346,8 +1471,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 */
 	private function display_plugin_settings_ui() {
 		//These variables are used by settings-page.php.
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$settings = $this->options;
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$settings_page_url = $this->get_settings_page_url();
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$editor_page_url = admin_url($this->settings_link);
 
 		require dirname(__FILE__) . '/settings-page.php';
@@ -1408,7 +1536,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		foreach($custom_menu['tree'] as $item) {
-			$caps = array_merge_recursive($caps, $this->get_virtual_caps_for($item));
+			$caps = self::array_replace_recursive($caps, $this->get_virtual_caps_for($item));
 		}
 
 		$this->cached_virtual_caps = $caps;
@@ -1431,10 +1559,23 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		foreach($item['items'] as $sub_item) {
-			$caps = array_merge_recursive($caps, $this->get_virtual_caps_for($sub_item));
+			$caps = self::array_replace_recursive($caps, $this->get_virtual_caps_for($sub_item));
 		}
 
 		return $caps;
+	}
+
+	private static function array_replace_recursive($array1, $array2) {
+		if ( function_exists('array_replace_recursive') ) {
+			return array_replace_recursive($array1, $array2);
+		}
+		foreach($array2 as $key => $value) {
+			if ( is_array($value) && isset($array1[$key]) && is_array($array1[$key]) ) {
+				$value = self::array_replace_recursive($array1[$key], $value);
+			}
+			$array1[$key] = $value;
+		}
+		return $array1;
 	}
 
 	/**
@@ -1509,6 +1650,17 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	}
 
 	/**
+	 * AJAX callback for permanently hiding the "are you sure you want to hide the Dashboard?" warning.
+	 */
+	public function ajax_disable_dashboard_hiding_confirmation() {
+		if (!check_ajax_referer('ws_ame_disable_dashboard_hiding_confirmation', false, false) || !$this->current_user_can_edit_menu()){
+			die("You don't have sufficient permissions to do that.");
+		}
+		$this->options['dashboard_hiding_confirmation_enabled'] = false;
+		$this->save_options();
+	}
+
+	/**
 	 * Enqueue a script that fixes a bug where pages moved to a different menu
 	 * would not be highlighted properly when the user visits them.
 	 */
@@ -1561,7 +1713,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @return bool
 	 */
 	private function current_user_can($capability) {
-		return apply_filters('admin_menu_editor-current_user_can', current_user_can($capability), $capability);
+		//WP core uses a special "do_not_allow" capability in a dozen or so places to explicitly deny access.
+		//Even multisite super admins do not have this cap. We can return early here.
+		if ( $capability === 'do_not_allow' ) {
+			return false;
+		}
+
+		if ( $this->user_cap_cache_enabled && isset($this->cached_user_caps[$capability]) ) {
+			return $this->cached_user_caps[$capability];
+		}
+
+		$user_can = apply_filters('admin_menu_editor-current_user_can', current_user_can($capability), $capability);
+		$this->cached_user_caps[$capability] = $user_can;
+		return $user_can;
 	}
 
 	/**
@@ -1600,6 +1764,12 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$base_site_url = $matches[1];
 		}
 
+		//Calling admin_url() once and then manually appending each page's path is measurably faster than calling it
+		//for each menu, but it means the "admin_url" filter is only called once. If there is a plugin that changes
+		//the admin_url for some pages but not others, this could lead to bugs (no such plugins are known at this time).
+		$base_admin_url = admin_url();
+		$admin_url_is_filtered = has_filter('admin_url');
+
 		$current_url = $base_site_url . remove_query_arg('___ame_dummy_param___');
 		$this->log_security_note(sprintf('Current URL: "%s"', htmlentities($current_url)));
 
@@ -1612,7 +1782,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				if ( substr($item_url, 0, 1) == '/' ) {
 					$item_url = $base_site_url . $item_url;
 				} else {
-					$item_url = admin_url($item_url);
+					if ( $admin_url_is_filtered ) {
+						$item_url = admin_url($item_url);
+					} else {
+						$item_url = $base_admin_url . ltrim( $item_url, '/' );
+					}
 				}
 			}
 			$item_url = $this->parse_url($item_url);
@@ -1735,7 +1909,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		$display_notice = $this->options['display_survey_notice'] && $this->current_user_can_edit_menu();
 		if ( isset($this->options['first_install_time']) ) {
-			$minimum_usage_period = 3*24*3600;
+			$minimum_usage_period = 7*24*3600;
 			$display_notice = $display_notice && ((time() - $this->options['first_install_time']) > $minimum_usage_period);
 		}
 
@@ -1753,7 +1927,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$free_survey_url = 'https://docs.google.com/spreadsheet/viewform?formkey=dERyeDk0OWhlbkxYcEY4QTNaMnlTQUE6MQ';
 			$pro_survey_url =  'https://docs.google.com/spreadsheet/viewform?formkey=dHl4MnlHaVI3NE5JdVFDWG01SkRKTWc6MA';
 
-			if ( apply_filters('admin_menu_editor_is_pro', false) ) {
+			if ( $this->is_pro_version() ) {
 				$survey_url = $pro_survey_url;
 			} else {
 				$survey_url = $free_survey_url;
@@ -1950,6 +2124,51 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$name = $name . '[' . $field. ']';
 		}
 		return $name;
+	}
+
+	/**
+	 * Tell new users how to access the plugin settings page.
+	 */
+	public function display_plugin_menu_notice() {
+		//Display the notice only if it's enabled, the current user can access our settings page,
+		//and there is no custom menu (if a custom menu already exists, chances are the user knows
+		//where the settings page is).
+		$showNotice = $this->options['show_plugin_menu_notice'] && ($this->load_custom_menu() === null);
+		$showNotice = $showNotice && $this->current_user_can_edit_menu();
+		if ( !$showNotice ) {
+			return;
+		}
+
+		//Disable the notice when the user hides it or visits any of our admin pages.
+		$hideNoticeParameter = 'ame-plugin-menu-notice';
+		if ( !empty($_GET[$hideNoticeParameter]) || $this->is_editor_page() || $this->is_settings_page() ) {
+			$this->options['show_plugin_menu_notice'] = false;
+			$this->save_options();
+			return;
+		}
+
+		$dismissUrl = add_query_arg($hideNoticeParameter, 'hide');
+		$dismissUrl = remove_query_arg(array('message', 'activate'), $dismissUrl);
+
+		if ( is_multisite() && is_network_admin() ) {
+			$message = 'Tip: Go to any subsite to access Admin Menu Editor. It will not show up in the network admin.';
+		} else {
+			$message = 'Tip: Go to <a href="%1$s">Settings -&gt; %2$s</a> to start customizing the admin menu.';
+		}
+		printf(
+			'<div class="updated" id="ame-plugin-menu-notice">
+				<p>' . $message . '</p>
+				<p><a href="%3$s" id="ame-hide-plugin-menu-notice">Hide this message</a></p>
+			 </div>',
+			esc_attr(admin_url($this->settings_link)),
+			apply_filters('admin_menu_editor-self_menu_title', 'Menu Editor'),
+			esc_attr($dismissUrl)
+		);
+
+	}
+
+	private function is_pro_version() {
+		return apply_filters('admin_menu_editor_is_pro', false);
 	}
 
 } //class

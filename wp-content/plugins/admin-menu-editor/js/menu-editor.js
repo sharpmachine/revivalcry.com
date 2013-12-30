@@ -1358,7 +1358,18 @@ $(document).ready(function(){
 		var checked = $(this).is(':checked');
 		var containerNode = $(this).closest('.ws_container');
 
-		setActorAccessForTreeAndUpdateUi(containerNode, selectedActor, checked);
+		var menu = containerNode.data('menu_item');
+		//Ask for confirmation if the user tries to hide Dashboard -> Home.
+		if ( !checked && ((menu.template_id == 'index.php>index.php') || (menu.template_id == '>index.php')) ) {
+			updateItemEditor(containerNode); //Resets the checkbox back to the old value.
+			confirmDashboardHiding(function(ok) {
+				if (ok) {
+					setActorAccessForTreeAndUpdateUi(containerNode, selectedActor, checked);
+				}
+			});
+		} else {
+			setActorAccessForTreeAndUpdateUi(containerNode, selectedActor, checked);
+		}
 	});
 
 	/**
@@ -1387,6 +1398,58 @@ $(document).ready(function(){
 		updateItemEditor(containerNode);
 		updateParentAccessUi(containerNode);
 	}
+
+	/**
+	 * Confirm with the user that they want to hide "Dashboard -> Home".
+	 *
+	 * This particular menu is important because hiding it can cause an "insufficient permissions" error
+	 * to be displayed right when someone logs in, making it look like login failed.
+	 */
+	var permissionConfirmationDialog = $('#ws-ame-dashboard-hide-confirmation').dialog({
+		autoOpen: false,
+		modal: true,
+		closeText: ' ',
+		width: 380,
+		title: 'Warning'
+	});
+	var currentConfirmationCallback = function(ok) {};
+
+	/**
+	 * Confirm hiding "Dashboard -> Home".
+	 *
+	 * @param callback Called when the user selects an option. True = confirmed.
+	 */
+	function confirmDashboardHiding(callback) {
+		//The user can disable the confirmation dialog.
+		if (!wsEditorData.dashboardHidingConfirmationEnabled) {
+			callback(true);
+			return;
+		}
+
+		currentConfirmationCallback = callback;
+		permissionConfirmationDialog.dialog('open');
+	}
+
+	$('#ws_confirm_menu_hiding, #ws_cancel_menu_hiding').click(function() {
+		var confirmed = $(this).is('#ws_confirm_menu_hiding');
+		var dontShowAgain = permissionConfirmationDialog.find('.ws_dont_show_again input[type="checkbox"]').is(':checked');
+
+		currentConfirmationCallback(confirmed);
+		permissionConfirmationDialog.dialog('close');
+
+		if (dontShowAgain) {
+			wsEditorData.dashboardHidingConfirmationEnabled = false;
+			//Run an AJAX request to disable the dialog for this user.
+			$.post(
+				wsEditorData.adminAjaxUrl,
+				{
+					'action' : 'ws_ame_disable_dashboard_hiding_confirmation',
+					'_ajax_nonce' : wsEditorData.disableDashboardConfirmationNonce
+				}
+			);
+		}
+	});
+
 
 	/*************************************************************************
 	                  Access editor dialog
@@ -1460,7 +1523,7 @@ $(document).ready(function(){
 		accessEditorState.menuItem = menuItem;
 
 		//Show/hide the hint about sub menus overriding menu permissions.
-		var itemHasSubmenus = containerNode.data('submenu_id') &&
+		var itemHasSubmenus = !!(containerNode.data('submenu_id')) &&
 			$('#' + containerNode.data('submenu_id')).find('.ws_item').length > 0;
 		var hintIsEnabled = !wsEditorData.showHints.hasOwnProperty('ws_hint_menu_permissions') || wsEditorData.showHints['ws_hint_menu_permissions'];
 		$('#ws_hint_menu_permissions').toggle(hintIsEnabled && itemHasSubmenus);
@@ -1479,7 +1542,8 @@ $(document).ready(function(){
 
 	$('#ws_save_access_settings').click(function() {
 		//Save the new settings.
-		accessEditorState.menuItem.extra_capability = $('#ws_extra_capability').val();
+		var extraCapability = jsTrim($('#ws_extra_capability').val());
+		accessEditorState.menuItem.extra_capability = (extraCapability === '') ? null : extraCapability;
 
 		var grantAccess = accessEditorState.menuItem.grant_access;
 		if (!$.isPlainObject(grantAccess)) {

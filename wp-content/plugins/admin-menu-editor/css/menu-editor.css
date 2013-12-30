@@ -102,7 +102,7 @@
 	clear: both;
 	display: block;
 	margin: 4px;
-	width: 120px;
+	width: 130px;
 }
 
 #ws_menu_editor #ws_save_menu {
@@ -289,7 +289,7 @@
 #ws_menu_access_editor .ws_dropdown_button
 {
 	width: 20px;
-	height: 20px;
+	height: 23px;
 	
 	margin: 1px 1px 1px 0;
 	padding: 0;
@@ -561,6 +561,9 @@ select.ws_dropdown optgroup option {
 	margin: 0;
 	padding: 0;
 	position: relative;
+
+    box-sizing: border-box;
+    height: 25px;
 }
 
 /* Current icon node (CSS class version, for the built-in WP icon sprites) */
@@ -611,12 +614,19 @@ select.ws_dropdown optgroup option {
 
 .ui-widget-overlay {
 	background-color: black;
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	opacity: 0.70;
 	-moz-opacity: 0.70;
-	filter: alpha(opacity=70); 
+	filter: alpha(opacity=70);
+
+    width: 100%;
+    height: 100%;
+}
+
+.ui-front {
+    z-index: 100;
 }
 
 .ui-dialog {
@@ -689,6 +699,8 @@ select.ws_dropdown optgroup option {
 	height: 23px;
 	text-align: right;
 	margin-top: 20px;
+    margin-bottom: 1px;
+    clear: both;
 }
 
 .ws_dialog_buttons .button-primary {
@@ -716,6 +728,11 @@ select.ws_dropdown optgroup option {
 	text-align: center;
 	font-size: large;
 	padding-top: 25px;
+}
+
+.ws_dont_show_again {
+    display: inline-block;
+    margin-top: 1em;
 }
 
 /************************************
@@ -886,6 +903,8 @@ select.ws_dropdown optgroup option {
 }
 
 #ws_sidebar_pro_ad {
+    min-width: 225px;
+
 	margin-top: 5px;
 	margin-left: 3px;
 
@@ -893,57 +912,4 @@ select.ws_dropdown optgroup option {
 	right: 20px;
 	bottom: 40px;
 	z-index: 100;
-}
-
-/************************************
-        Screen meta buttons
-*************************************/
-
-/* All buttons */
-#ws-pro-version-notice {
-	float: right;
-	height: 22px;
-	padding: 0;
-	margin: 0 0 0 6px;
-	font-family: sans-serif;
-
-	-moz-border-radius-bottomleft: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-
-	background: #e3e3e3;
-
-	border-right: 1px solid transparent;
-	border-left: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	background-image: -ms-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* IE10 */
-	background-image: -moz-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* Firefox */
-	background-image: -o-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* Opera */
-	background-image: -webkit-gradient(linear, left bottom, left top, from(#dfdfdf), to(#f1f1f1)); /* old Webkit */
-	background-image: -webkit-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* new Webkit */
-	background-image: linear-gradient(bottom, #dfdfdf, #f1f1f1); /* proposed W3C Markup */
-}
-
-#ws-pro-version-notice a.show-settings {
-	background-image: none;
-	padding:0 6px 0 6px;
-}
-
-/* "Upgrade to Pro" */
-#ws-pro-version-notice {
-	background: #00C31F none;
-}
-
-
-#ws-pro-version-notice a.show-settings {
-	font-weight: bold;
-	color: #DEFFD8;
-	text-shadow: none;
-}
-
-#ws-pro-version-notice a.show-settings:hover {
-	color: white;
 }

@@ -24,8 +24,8 @@ if ( !apply_filters('admin_menu_editor_is_pro', false) ){
 	<script type="text/javascript">
 	(function($){
 		$('#screen-meta-links').append(
-			'<div id="ws-pro-version-notice">' +
-				'<a href="http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=top_upgrade_link&utm_campaign=Plugins" id="ws-pro-version-notice-link" class="show-settings" target="_blank" title="View Pro version details">Upgrade to Pro</a>' +
+			'<div id="ws-pro-version-notice" class="custom-screen-meta-link-wrap">' +
+				'<a href="http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=top_upgrade_link&utm_campaign=Plugins" id="ws-pro-version-notice-link" class="show-settings custom-screen-meta-link" target="_blank" title="View Pro version details">Upgrade to Pro</a>' +
 			'</div>'
 		);
 	})(jQuery);
@@ -104,7 +104,11 @@ endif;
 				<div class="ws_separator">&nbsp;</div>
 
 				<a id='ws_new_menu' class='ws_button' href='javascript:void(0)' title='New menu'><img src='<?php echo $icons['new']; ?>' alt="New menu" /></a>
-				<a id='ws_hide_menu' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $icons['hide']; ?>' alt="Show/Hide" /></a>
+
+				<?php if ( $editor_data['show_deprecated_hide_button'] ): ?>
+					<a id='ws_hide_menu' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $icons['hide']; ?>' alt="Show/Hide" /></a>
+				<?php endif; ?>
+
 				<a id='ws_delete_menu' class='ws_button' href='javascript:void(0)' title='Delete menu'><img src='<?php echo $icons['delete']; ?>' alt="Delete menu" /></a>
 
 				<div class="ws_separator">&nbsp;</div>
@@ -136,7 +140,9 @@ endif;
 				<div class="ws_separator">&nbsp;</div>
 
 				<a id='ws_new_item' class='ws_button' href='javascript:void(0)' title='New menu item'><img src='<?php echo $icons['new']; ?>' alt="New menu item" /></a>
-				<a id='ws_hide_item' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $icons['hide']; ?>' alt="Show/Hide" /></a>
+				<?php if ( $editor_data['show_deprecated_hide_button'] ): ?>
+					<a id='ws_hide_item' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $icons['hide']; ?>' alt="Show/Hide" /></a>
+				<?php endif; ?>
 				<a id='ws_delete_item' class='ws_button' href='javascript:void(0)' title='Delete menu item'><img src='<?php echo $icons['delete']; ?>' alt="Delete menu item" /></a>
 
 				<div class="ws_separator">&nbsp;</div>
@@ -315,6 +321,41 @@ endif;
 	?> /> Hide advanced options
 </label>
 </span>
+
+
+<!-- Confirmation dialog when hiding "Dashboard -> Home" -->
+<div id="ws-ame-dashboard-hide-confirmation" style="display: none;">
+	<span>
+		Hiding <em>Dashboard -> Home</em> may prevent users with the selected role from logging in!
+		Are you sure you want to do it?
+	</span>
+
+	<h4>Explanation</h4>
+	<p>
+		WordPress automatically redirects users to the <em>Dashboard -> Home</em> page upon successful login.
+		If you hide this page, users will get an "insufficient permissions" error when they log in
+		due to being redirected to a hidden page. As a result, it will look like their login failed.
+	</p>
+
+	<h4>Recommendations</h4>
+	<p>
+		You can use a plugin like <a href="http://wordpress.org/plugins/peters-login-redirect/">Peter's Login Redirect</a>
+		to redirect specific roles to different pages.
+	</p>
+
+	<div class="ws_dialog_buttons">
+		<?php
+		submit_button('Hide the menu', 'primary', 'ws_confirm_menu_hiding', false);
+		submit_button('Leave it visible', 'secondary', 'ws_cancel_menu_hiding', false);
+		?>
+	</div>
+
+	<label class="ws_dont_show_again">
+		<input type="checkbox" id="ws-ame-disable-dashboard-hide-confirmation">
+		Don't show this message again
+	</label>
+</div>
+
 
 <script type='text/javascript'>
 var defaultMenu = <?php echo $editor_data['default_menu_js']; ?>;
