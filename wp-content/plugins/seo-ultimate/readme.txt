@@ -2,8 +2,8 @@
 Contributors: SEO Design Solutions, JohnLamansky
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate, Open Graph, og, microdata, Facebook, Twitter, Schema.org
 Requires at least: 3.5
-Tested up to: 3.5
-Stable tag: 7.6.1
+Tested up to: 3.8.1
+Stable tag: 7.6.3.1
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, Open Graph, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -243,6 +243,18 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.6.3.1 (March 24, 2014) =
+* Bugfix: Added rel="nofollow" to all author attribution links, whitepapers module SDS Blog links and banner ads
+
+= Version 7.6.3 (March 24, 2014) =
+* Bugfix: Title Tag Rewriter Fix for Data Loss on Update from 7.6.1
+* Bugfix: Code Inserter Fix for Data Loss on Update from 7.6.1
+* Feature: Added Media Upload Button in Metabox Social Networks Listing Image and Open Graph Integrator Module Image input fields
+
+= Version 7.6.2 (March 19, 2014) =
+* Bugfix: Fixed PHP 5.3 Strict Errors/Notices
+* Feature: Added Twitter Bootstrap Assets and updated Markup
 
 = Version 7.6.1 (January 1, 2013) =
 * Bugfix: Fixed a bug that prevented the "Dampener" column from appearing on the Deeplink Juggernaut Content Links tab

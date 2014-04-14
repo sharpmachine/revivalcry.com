@@ -1,0 +1,15 @@
+sdfbanners({
+"enabled":true,
+"slides": [
+{"banner_img":"https://s3.amazonaws.com/sdfimages/seoultimatebanner/02_1.png", "banner_link":"http://www.seodesignframework.com", "slide_cap":"<h3>Download Jeffrey’s Brain</h3><p>Get Equipped for Success - Tips from Our Founder. Download: 20 SEO Tips, SEO for Large Websites and the Organic SEO EBook today.</p>", "slide_link":"http://www.seodesignframework.com/ebooks/"},
+{"banner_img":"https://s3.amazonaws.com/sdfimages/seoultimatebanner/01_1.png", "banner_link":"http://www.seodesignframework.com/features/", "slide_cap":"<h3>Got Design?</h3><p>Unleash Your Best Design Concepts with Drag-n-Drop Controls that Give You the Power to Implement Complex Designs Quickly and Easily</p>", "slide_link":"http://www.seodesignframework.com/sdf-drag-and-drop-page-builder/"},
+{"banner_img":"https://s3.amazonaws.com/sdfimages/seoultimatebanner/06.png", "banner_link":"http://www.seodesignframework.com/sdf-overview/", "slide_cap":"<h3>Silos Made Easy</h3><p>Deploy Perfect Website Silo Architecture Quickly and Easily with the SEO Design Framework.</p>", "slide_link":"http://www.seodesignframework.com/website-silo-architecture/"},
+{"banner_img":"https://s3.amazonaws.com/sdfimages/seoultimatebanner/07.png", "banner_link":"http://www.seodesignframework.com/seo-design-solutions-launches-the-seo-design-framework/", "slide_cap":"<h3>What, No Control?</h3><p>Become Master of your Blog with Page-Level Controls that Liberate Designs and Crush Limitations of other Themes and Frameworks.</p>", "slide_link":"http://www.seodesignframework.com/page-level-controls/"}
+]
+})
+
+ 
+
+ 
+
+

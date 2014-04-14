@@ -223,7 +223,7 @@ class SEO_Ultimate {
 			add_action('admin_head', array(&$this, 'admin_help'), 11);
 			
 			//Postmeta box hooks
-			add_action('admin_menu', array(&$this, 'add_postmeta_box'));
+			add_action('do_meta_boxes', array(&$this, 'add_postmeta_box'));
 			add_action('save_post',  array(&$this, 'save_postmeta_box'), 10, 2);
 			
 			//Display info on new versions
@@ -239,18 +239,10 @@ class SEO_Ultimate {
 			
 			//JLSuggest AJAX
 			add_action('wp_ajax_su-jlsuggest-autocomplete', array(&$this, 'jlsuggest_autocomplete'));
+			
+			// add dashboart widget
+			add_action( 'wp_dashboard_setup', array(&$this, 'su_add_dashboard_widgets'));
 		}
-	}
-	
-	/**
-	 * PHP4 constructor that redirects to the PHP5 constructor.
-	 * 
-	 * @since 0.1
-	 * @uses __construct()
-	 */
-	function SEO_Ultimate($plugin_file) {
-	
-		$this->__construct($plugin_file);
 	}
 	
 	
@@ -999,6 +991,50 @@ class SEO_Ultimate {
 		}
 		
 		return false;
+	}	
+	 
+	/**
+	* Tests if the SDF Theme is the active theme
+	* @since 7.6.3
+	* @return bool
+	*/
+	public function is_sdf_active() {
+		$current_theme = wp_get_theme();
+		$required_theme = wp_get_theme( 'seodesign' );
+		 
+		// If SDF is installed and current theme is a SDF child theme or SDF is active theme
+		if ( $required_theme->exists() && ( ( $this->is_sdf_child() ) || ( 'seodesign' == $current_theme ) ) ) {
+			return true;
+		}
+		return false;
+	}
+	 
+	/**
+	* Tests if current theme is a child theme of SDF
+	* @since 7.6.3
+	* @return bool
+	*/
+	public function is_sdf_child() {
+		$current_theme = wp_get_theme();
+		if ( 'seodesign' !== $current_theme->get_template() ) {
+			return false;
+		}
+		return true;
+	}
+	 
+	/**
+	* Tests if required version of SDF is available
+	* @since 7.6.3
+	* @return bool
+	*/
+	public function is_sdf_version_compatible() {
+		$version_required = '1.0.0';
+		$theme = wp_get_theme( 'seodesign' );
+		$version_installed = $theme->Version;
+		if ( version_compare( $version_installed, $version_required, '<' ) ) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -1015,9 +1051,55 @@ class SEO_Ultimate {
 	 */
 	function admin_includes() {
 		
+		
 		//Global CSS/JS
 		$this->queue_css('plugin', 'global');
-		$this->queue_js ('plugin', 'global');
+		$this->queue_js('plugin', 'global');
+			
+		//SDF Styling
+		if ($this->is_plugin_admin_page()) {
+			$this->queue_js('modules', 'sdf-ads');
+			$this->queue_css('modules', 'sdf-ads');
+			// white background
+			$this->queue_css('plugin/sdf', 'sdf.wp');
+			// overwrite submenu on wp 3.8+ with "light" color style
+			global $_wp_admin_css_colors, $wp_version;
+			if ( $wp_version >= 3.8 ) {
+				$color_scheme = get_user_option( 'admin_color' );	
+				if ( empty( $_wp_admin_css_colors[ $color_scheme ] ) ) {
+					$color_scheme = 'light';
+				}
+				if ( 'light' == $color_scheme ) {
+					$this->queue_css('plugin/sdf', 'sdf.wp-color');
+				}
+			}
+		}
+		
+		//load if SDF is not active
+		global $pagenow;
+		$current = (isset($_GET['page'])) ? $_GET['page'] : '';
+		$pages = array( 'edit.php', 'post.php', 'post-new.php' );
+		$sdf_admin_pages = array('sdf','sdf-settings','sdf-silo','sdf-silo-manual-builder','sdf-header','sdf-layout','sdf-shortcode','sdf-styles','revslider','sdf-footer','seo', 'su-fofs', 'su-misc', 'su-user-code', 'su-autolinks', 'su-files', 'su-internal-link-aliases', 'su-meta-descriptions', 'su-meta-keywords', 'su-meta-robots', 'su-opengraph', 'seo-ultimate', 'su-wp-settings', 'su-titles', 'su-sds-blog');
+		if( in_array( $pagenow, $pages ) || in_array( $current, $sdf_admin_pages )) {
+			// admin styles 	 	
+			wp_register_style('sdf-bootstrap-admin',  $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap.admin.css', array(), '3.0.3', 'screen');
+			wp_register_style('sdf-bootstrap-admin-theme',  $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap-theme.admin.css', array(), '3.0.3', 'screen');		
+			wp_register_style('sdf-font-awesome', 'https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', array(), '4.0.3', 'screen');
+			wp_register_style('sdf-css-admin',  $this->plugin_dir_url.'plugin/sdf/sdf.admin.css', array(), '3.0.3', 'screen');
+			wp_enqueue_style('sdf-bootstrap-admin');
+			wp_enqueue_style('sdf-bootstrap-admin-theme');
+			wp_enqueue_style('sdf-font-awesome');
+			wp_enqueue_style('sdf-css-admin');
+		}
+		
+		wp_register_script('sdf_bs_js', 'https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array('jquery'), '3.0.3', false);	
+		wp_register_script('sdf_admin_js', $this->plugin_dir_url.'plugin/sdf/sdf.admin.js', array('jquery'), '');
+		wp_enqueue_script('sdf_bs_js');
+		wp_enqueue_script('sdf_admin_js');
+		wp_enqueue_media();
+		
+		// load dashboard widget
+		if($pagenow == 'index.php') $this->queue_js('modules', 'sdf-ads');
 		
 		//Figure out what plugin admin page we're on
 		global $plugin_page;
@@ -1410,21 +1492,6 @@ class SEO_Ultimate {
 		echo "</p></div>";
 	}
 	
-	/**
-	 * @since 7.6
-	 */
-	function should_show_wp_ultimate_promo() {
-		return $this->is_wp_ultimate_promo_applicable() && $this->get_setting('wp_ultimate', true, 'settings');
-	}
-	
-	/**
-	 * @since 7.6
-	 */
-	function is_wp_ultimate_promo_applicable() {
-		//If the current user can install themes and if WP Ultimate isn't already uploaded...
-		return current_user_can('install_themes') && (wp_get_theme('wpultimate')->errors() !== false);
-	}
-	
 	/********** MODULE FUNCTIONS ***********/
 	
 	/**
@@ -1527,6 +1594,7 @@ class SEO_Ultimate {
 		$tabs = $this->get_postmeta_tabs();
 		
 		$module_fields = array();
+		$fields = array();
 		
 		foreach ($this->modules as $key => $module) {
 			
@@ -1603,13 +1671,15 @@ class SEO_Ultimate {
 		$this->tabs($tabs);
 		
 		//Meta box footer
-		echo '<p class="su-postmeta-box-footer">';
-		printf(__('%1$s %2$s by %3$s', 'seo-ultimate'),
-			'<a href="'.SU_PLUGIN_URI.'" target="_blank">'.__(SU_PLUGIN_NAME, 'seo-ultimate').'</a>',
-			SU_VERSION,
-			'<a href="'.SU_AUTHOR_URI.'" target="_blank">'.__(SU_AUTHOR, 'seo-ultimate').'</a>'
-		);
-		echo '</p>';
+		if ( !$this->is_sdf_active() ) {
+			echo '<p class="su-postmeta-box-footer">';
+			printf(__('%1$s %2$s by %3$s', 'seo-ultimate'),
+				'<a href="'.SU_PLUGIN_URI.'" target="_blank">'.__(SU_PLUGIN_NAME, 'seo-ultimate').'</a>',
+				SU_VERSION,
+				'<a href="'.SU_AUTHOR_URI.'" target="_blank">'.__(SU_AUTHOR, 'seo-ultimate').'</a>'
+			);
+			echo '</p>';
+		}
 		
 		//End box
 		echo "</div>\n";
@@ -1920,8 +1990,10 @@ class SEO_Ultimate {
 		
 		if ($c = count($tabs)) {
 			
-			if ($c > 1)
-				echo "\n\n<div id='su-tabset' class='su-tabs'>\n";
+			if ($c > 1) {
+				echo "\n\n<div class='sdf-meta-wrap sdf-admin'>\n";
+				echo "\n\n<ul class='nav nav-tabs' id='su-tabset'>\n";
+			}
 			
 			foreach ($tabs as $tab) {
 				
@@ -1930,11 +2002,29 @@ class SEO_Ultimate {
 				if (isset($tab['callback']))$function = $tab['callback']; else return;
 				
 				if ($c > 1) {
+					$active = ( $tab === reset($tabs) ) ? " class='active'" : "";
 					//$id = 'su-' . sustr::preg_filter('a-z0-9', strtolower($title));
-					echo "<fieldset id='$id'>\n<h3>$title</h3>\n<div class='su-tab-contents'>\n";
+					echo "<li$active><a href='#$id' data-toggle='tab'>$title</a></li>\n";
 				}
+			}
+			
+			if ($c > 1) {
+				echo "</ul>\n";
+				echo "<div class='tab-content'>\n";
+			}
+			
+			foreach ($tabs as $tab) {
 				
-				if ($table) echo "<table class='form-table'>\n";
+				if (isset($tab['title']))	$title	  = $tab['title'];	  else return;
+				if (isset($tab['id']))		$id		  = $tab['id'];		  else return;
+				if (isset($tab['callback']))$function = $tab['callback']; else return;
+				
+				if ($c > 1) {
+					$active = ( $tab === reset($tabs) ) ? ' in active' : '';
+					echo "<div class='tab-pane fade$active su-tab-contents' id='$id'>\n";
+					echo "<div class='wpu-group'>\n";
+					echo "<span class='wpu-meta-title'>$title</span>\n";
+				}
 				
 				$call = $args = array();
 				
@@ -1955,18 +2045,55 @@ class SEO_Ultimate {
 				}
 				if (is_callable($call)) call_user_func_array($call, $args);
 				
-				if ($table) echo "</table>";
-				
 				if ($c > 1)
-					echo "</div>\n</fieldset>\n";
+					echo "</div>\n";
+					echo "</div>\n";
 			}
 			
 			if ($c > 1) {
-				echo "</div>\n";
-				
-				echo '<script type="text/javascript" src="'.$this->plugin_dir_url.'includes/tabs.js?v='.SU_VERSION.'"></script>';
+				echo "\n\n</div>\n";
+				echo "\n\n</div>\n";
 			}
 		}
 	}
+	
+	/**
+	* Add a widget to the wp dashboard.
+	*
+	* This function is hooked into the 'wp_dashboard_setup' action below.
+	*
+	* @since 7.6.2
+	*/
+	function su_add_dashboard_widgets() {
+
+	wp_add_dashboard_widget( 'su_dashboard_widget', 'From the Creators of SEO Ultimate', array(&$this, 'su_dashboard_widget_function') );
+	
+	// Globalize the metaboxes array, this holds all the widgets for wp-admin
+	global $wp_meta_boxes;
+
+	// Get the regular dashboard widgets array 
+	// (which has our new widget already but at the end)
+	$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+	// Backup and delete our new dashboard widget from the end of the array
+	$su_widget_backup = array( 'su_dashboard_widget' => $normal_dashboard['su_dashboard_widget'] );
+	unset( $normal_dashboard['su_dashboard_widget'] );
+
+	// Merge the two arrays together so our widget is at the beginning
+	$sorted_dashboard = array_merge( $su_widget_backup, $normal_dashboard );
+
+	// Save the sorted array back into the original metaboxes 
+	$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+		
+	}
+
+	/**
+	 * Create the function to output the contents of our Dashboard Widget.
+	 */
+	function su_dashboard_widget_function() {
+
+		// Display whatever it is you want to show.
+		echo "<p>If you like SEO Ultimate, then help their creators give more. Show your support and buy their paid products.</p><a rel=\"home\" title=\"SEO Design Framework\" href=\"http://www.seodesignframework.com/\"><img src=\"https://s3.amazonaws.com/sdfimages/seoultimatebanner/02_1.png\" alt=\"SEO Design Framework\" /></a>";
+	} 
 }
 ?>

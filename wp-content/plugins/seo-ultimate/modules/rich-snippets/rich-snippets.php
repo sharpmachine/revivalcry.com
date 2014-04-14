@@ -11,9 +11,9 @@ class SU_RichSnippets extends SU_Module {
 	
 	var $apply_subproperty_markup_args = array();
 	
-	function get_module_title() { return __('Rich Snippet Creator', 'seo-ultimate'); }
+	static function get_module_title() { return __('Rich Snippet Creator', 'seo-ultimate'); }
 	
-	function get_parent_module() { return 'misc'; }
+	static function get_parent_module() { return 'misc'; }
 	function get_settings_key() { return 'rich-snippets'; }
 	
 	function init() {
@@ -41,8 +41,7 @@ class SU_RichSnippets extends SU_Module {
 	function get_supported_snippet_types() {
 
 		return array(
-			//REVIEW
-			  'review' => array(
+			'review' => array(
 				  'label' => __('Review', 'seo-ultimate')
 				, 'tags' => 'Review'
 				, 'content_tags' => '<div itemprop="reviewBody">%s</div>'
@@ -340,7 +339,7 @@ class SU_RichSnippets extends SU_Module {
 		return $content;
 	}
 	
-	function postmeta_fields($fields) {
+	function postmeta_fields($fields, $screen) {
 		$fields['serp'][40]['rich_snippet_type'] = $this->get_postmeta_dropdown('rich_snippet_type', array(
 			  'none' => __('Standard', 'seo-ultimate')
 			, 'review' => __('Review', 'seo-ultimate')

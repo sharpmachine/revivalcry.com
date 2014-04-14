@@ -9,9 +9,9 @@ if (class_exists('SU_Module')) {
 
 class SU_Canonical extends SU_Module {
 
-	function get_module_title() { return __('Canonicalizer', 'seo-ultimate'); }
+	static function get_module_title() { return __('Canonicalizer', 'seo-ultimate'); }
 	
-	function get_parent_module() { return 'misc'; }
+	static function get_parent_module() { return 'misc'; }
 	function get_settings_key() { return 'canonical'; }
 	
 	function init() {

@@ -15,7 +15,8 @@ add_filter('su_settings_export_array', 'su_titles_export_filter');
 
 class SU_Titles extends SU_Module {
 	
-	function get_module_title() { return __('Title Tag Rewriter', 'seo-ultimate'); }
+	static function get_module_title() { return __('Title Tag Rewriter', 'seo-ultimate'); }
+	static function get_menu_title() { return __('Title Tag Rewriter', 'seo-ultimate'); }
 	
 	function init() {
 		
@@ -49,9 +50,9 @@ class SU_Titles extends SU_Module {
 	}
 	
 	function formats_tab() {
-		echo "<table class='form-table'>\n";
+		//echo "<table class='form-table'>\n";
 		$this->textboxes($this->get_supported_settings(), $this->get_default_settings());
-		echo "</table>";
+		//echo "</table>";
 	}
 	
 	function settings_tab() {
@@ -147,7 +148,7 @@ class SU_Titles extends SU_Module {
 		if (!$title) return $head;
 		
 		//Replace the old title with the new and return
-		return eregi_replace('<title>[^<]*</title>', '<title>'.$title.'</title>', $head);
+		return preg_replace('/<title>[^<]*<\/title>/i', '<title>'.$title.'</title>', $head);
 	}
 	
 	function get_title() {
@@ -330,17 +331,15 @@ class SU_Titles extends SU_Module {
 		return $url;
 	}
 	
-	function postmeta_fields($fields) {
+	function postmeta_fields($fields, $screen) {
 		$id = "_su_title";
 		$value = su_esc_attr($this->get_postmeta('title'));
-		
 		$fields['serp'][10]['title'] =
-			  "<tr class='su textbox' valign='top'>\n<th scope='row' class='su'><label for='$id'>".__('Title Tag:', 'seo-ultimate')."</label></th>\n"
-			. "<td class='su'><input name='$id' id='$id' type='text' value='$value' class='regular-text' tabindex='2'"
+			"<div class='form-group su textbox'>\n<label class='col-sm-4 col-md-4 control-label' for='$id'>".__('Title Tag:', 'seo-ultimate')."</label>\n<div class='col-sm-4 col-md-4'><input name='$id' id='$id' type='text' value='$value' class='form-control input-sm regular-text' tabindex='2'"
 			. " onkeyup=\"javascript:document.getElementById('su_title_charcount').innerHTML = document.getElementById('_su_title').value.length\" />"
-			. "<br />".sprintf(__('You&#8217;ve entered %s characters. Most search engines use up to 70.', 'seo-ultimate'), "<strong id='su_title_charcount'>".strlen($value)."</strong>")
-			. "</td>\n</tr>\n"
-		;
+			. "</div>\n<div class='col-sm-4 col-md-4 help-text'>".sprintf(__('You&#8217;ve entered %s characters. Most search engines use up to 70.', 'seo-ultimate'), "<strong id='su_title_charcount'>".strlen($value)."</strong>")
+			. "</div>\n</div>\n";
+		
 		
 		return $fields;
 	}

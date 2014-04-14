@@ -9,11 +9,11 @@ if (class_exists('SU_Module')) {
 
 class SU_SettingsData extends SU_Module {
 
-	function get_parent_module() { return 'settings'; }
-	function get_child_order() { return 20; }
-	function is_independent_module() { return false; }
+	static function get_parent_module() { return 'settings'; }
+	static function get_child_order() { return 20; }
+	static function is_independent_module() { return false; }
 	
-	function get_module_title() { return __('Settings Data Manager', 'seo-ultimate'); }
+	static function get_module_title() { return __('Settings Data Manager', 'seo-ultimate'); }
 	function get_module_subtitle() { return __('Manage Settings Data', 'seo-ultimate'); }
 	
 	function get_admin_page_tabs() {
