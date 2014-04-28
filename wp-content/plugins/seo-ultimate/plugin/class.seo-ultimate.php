@@ -192,9 +192,13 @@ class SEO_Ultimate {
 			add_filter('wp_redirect', array(&$this, 'log_redirect'), 10, 2);
 			add_filter('status_header', array(&$this, 'log_hit'), 10, 2);
 		}
+
 		
 		//Admin-only hooks
 		if (is_admin()) {
+		
+			// Fully Disable Autosave
+			//add_action( 'admin_init', array(&$this, 'disableAutosave'));
 			
 			//Hook to include JavaScript and CSS
 			add_action('admin_enqueue_scripts', array(&$this, 'admin_includes'));
@@ -1058,8 +1062,11 @@ class SEO_Ultimate {
 			
 		//SDF Styling
 		if ($this->is_plugin_admin_page()) {
-			$this->queue_js('modules', 'sdf-ads');
-			$this->queue_css('modules', 'sdf-ads');
+			$sdf_ads_localized_data = array(
+				'sdf_banners_url' => $this->plugin_dir_url.'modules/sdf-ads/banners/'
+			);
+			$this->queue_js('modules/sdf-ads', 'sdf-ads', '', $sdf_ads_localized_data);
+			$this->queue_css('modules/sdf-ads', 'sdf-ads');
 			// white background
 			$this->queue_css('plugin/sdf', 'sdf.wp');
 			// overwrite submenu on wp 3.8+ with "light" color style
@@ -1099,7 +1106,10 @@ class SEO_Ultimate {
 		wp_enqueue_media();
 		
 		// load dashboard widget
-		if($pagenow == 'index.php') $this->queue_js('modules', 'sdf-ads');
+		$sdf_ads_localized_data = array(
+			'sdf_banners_url' => $this->plugin_dir_url.'modules/sdf-ads/banners/'
+		);
+		if($pagenow == 'index.php') $this->queue_js('modules/sdf-ads', 'sdf-ads', '', $sdf_ads_localized_data);
 		
 		//Figure out what plugin admin page we're on
 		global $plugin_page;
@@ -1183,8 +1193,9 @@ class SEO_Ultimate {
 		if (file_exists($this->plugin_dir_path.$relurl.$file))
 			$func("su-$dirid-$filename", $this->plugin_dir_url.$relurl.$file, $deps, SU_VERSION);
 		
-		if (count($l10n))
+		if (count($l10n)) {
 			wp_localize_script("su-$dirid-$filename", sustr::camel_case("su $dirid $filename l10n"), $l10n);
+		}
 	}
 	
 	/**
@@ -1657,7 +1668,7 @@ class SEO_Ultimate {
 	function show_postmeta_box($screen) {
 		
 		//Begin box
-		echo "<div id='su-postmeta-box'>\n";
+		echo "<div id='su-postmeta-box' class='sdf-admin'>\n";
 		wp_nonce_field('su-update-postmeta', '_su_wpnonce');
 		
 		//Output postmeta tabs
@@ -1990,8 +2001,8 @@ class SEO_Ultimate {
 		
 		if ($c = count($tabs)) {
 			
-			if ($c > 1) {
-				echo "\n\n<div class='sdf-meta-wrap sdf-admin'>\n";
+			if ($c >= 1) {
+				echo "\n\n<div class='sdf-meta-wrap'>\n";
 				echo "\n\n<ul class='nav nav-tabs' id='su-tabset'>\n";
 			}
 			
@@ -2001,14 +2012,14 @@ class SEO_Ultimate {
 				if (isset($tab['id']))		$id		  = $tab['id'];		  else return;
 				if (isset($tab['callback']))$function = $tab['callback']; else return;
 				
-				if ($c > 1) {
+				if ($c >= 1) {
 					$active = ( $tab === reset($tabs) ) ? " class='active'" : "";
 					//$id = 'su-' . sustr::preg_filter('a-z0-9', strtolower($title));
 					echo "<li$active><a href='#$id' data-toggle='tab'>$title</a></li>\n";
 				}
 			}
 			
-			if ($c > 1) {
+			if ($c >= 1) {
 				echo "</ul>\n";
 				echo "<div class='tab-content'>\n";
 			}
@@ -2019,7 +2030,7 @@ class SEO_Ultimate {
 				if (isset($tab['id']))		$id		  = $tab['id'];		  else return;
 				if (isset($tab['callback']))$function = $tab['callback']; else return;
 				
-				if ($c > 1) {
+				if ($c >= 1) {
 					$active = ( $tab === reset($tabs) ) ? ' in active' : '';
 					echo "<div class='tab-pane fade$active su-tab-contents' id='$id'>\n";
 					echo "<div class='wpu-group'>\n";
@@ -2045,17 +2056,27 @@ class SEO_Ultimate {
 				}
 				if (is_callable($call)) call_user_func_array($call, $args);
 				
-				if ($c > 1)
+				if ($c >= 1)
 					echo "</div>\n";
 					echo "</div>\n";
 			}
 			
-			if ($c > 1) {
+			if ($c >= 1) {
 				echo "\n\n</div>\n";
 				echo "\n\n</div>\n";
 			}
 		}
 	}
+	
+	/**
+	*
+	* This function fully disables autosave
+	*
+	* @since 7.6.4
+	*/
+	function disableAutosave(){
+		wp_deregister_script('autosave');
+	}	
 	
 	/**
 	* Add a widget to the wp dashboard.
@@ -2066,7 +2087,7 @@ class SEO_Ultimate {
 	*/
 	function su_add_dashboard_widgets() {
 
-	wp_add_dashboard_widget( 'su_dashboard_widget', 'From the Creators of SEO Ultimate', array(&$this, 'su_dashboard_widget_function') );
+	wp_add_dashboard_widget( 'sdf_dashboard_widget', 'From the Creators of SEO Ultimate', array(&$this, 'sdf_dashboard_widget_function') );
 	
 	// Globalize the metaboxes array, this holds all the widgets for wp-admin
 	global $wp_meta_boxes;
@@ -2076,8 +2097,8 @@ class SEO_Ultimate {
 	$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
 	// Backup and delete our new dashboard widget from the end of the array
-	$su_widget_backup = array( 'su_dashboard_widget' => $normal_dashboard['su_dashboard_widget'] );
-	unset( $normal_dashboard['su_dashboard_widget'] );
+	$su_widget_backup = array( 'sdf_dashboard_widget' => $normal_dashboard['sdf_dashboard_widget'] );
+	unset( $normal_dashboard['sdf_dashboard_widget'] );
 
 	// Merge the two arrays together so our widget is at the beginning
 	$sorted_dashboard = array_merge( $su_widget_backup, $normal_dashboard );
@@ -2090,10 +2111,10 @@ class SEO_Ultimate {
 	/**
 	 * Create the function to output the contents of our Dashboard Widget.
 	 */
-	function su_dashboard_widget_function() {
+	function sdf_dashboard_widget_function() {
 
-		// Display whatever it is you want to show.
-		echo "<p>If you like SEO Ultimate, then help their creators give more. Show your support and buy their paid products.</p><a rel=\"home\" title=\"SEO Design Framework\" href=\"http://www.seodesignframework.com/\"><img src=\"https://s3.amazonaws.com/sdfimages/seoultimatebanner/02_1.png\" alt=\"SEO Design Framework\" /></a>";
+		// Display whatever it is you want to show in widget content.
+		//echo "";
 	} 
 }
 ?>

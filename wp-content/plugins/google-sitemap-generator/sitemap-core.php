@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-core.php 885074 2014-03-31 13:24:09Z arnee $
+ $Id: sitemap-core.php 891809 2014-04-12 11:06:34Z arnee $
 
 */
 
@@ -908,6 +908,20 @@ final class GoogleSitemapGenerator {
 		return (class_exists("DomDocument") && class_exists("XSLTProcessor"));
 	}
 
+	/**
+	 * Returns if Nginx is used as the server software
+	 * @since 4.0.3
+	 *
+	 * @return bool
+	 */
+	function IsNginx() {
+		if ( isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'nginx' ) !== false ) {
+			return true;
+		}
+		return false;
+	}
+
+
 
 	/*************************************** TAXONOMIES AND CUSTOM POST TYPES ***************************************/
 
@@ -1109,7 +1123,7 @@ final class GoogleSitemapGenerator {
 		$this->options = array();
 		$this->options["sm_b_prio_provider"] = "GoogleSitemapGeneratorPrioByCountProvider"; //Provider for automatic priority calculation
 		$this->options["sm_b_ping"] = true; //Auto ping Google
-		$this->options["sm_b_stats"] = true; //Send anonymous stats
+		$this->options["sm_b_stats"] = false; //Send anonymous stats
 		$this->options["sm_b_pingmsn"] = true; //Auto ping MSN
 		$this->options["sm_b_memory"] = ''; //Set Memory Limit (e.g. 16M)
 		$this->options["sm_b_time"] = -1; //Set time limit in seconds, 0 for unlimited, -1 for disabled
@@ -1333,6 +1347,18 @@ final class GoogleSitemapGenerator {
 	}
 
 	/**
+	 * Returns of Permalinks are used
+	 *
+	 * @return bool
+	 */
+	public function IsUsingPermalinks() {
+		/** @var $wp_rewrite WP_Rewrite */
+		global $wp_rewrite;
+
+		return $wp_rewrite->using_mod_rewrite_permalinks();
+	}
+
+	/**
 	 * Returns the URL for the sitemap file
 	 *
 	 * @since 3.0
@@ -1344,7 +1370,7 @@ final class GoogleSitemapGenerator {
 	public function GetXmlUrl($type = "", $params = "", $buildOptions = array()) {
 		global $wp_rewrite;
 
-		$pl = $wp_rewrite->using_mod_rewrite_permalinks();
+		$pl = $this->IsUsingPermalinks();
 		$options = "";
 		if(!empty($type)) {
 			$options .= $type;
@@ -1519,19 +1545,35 @@ final class GoogleSitemapGenerator {
 		//This avoids that the XML sitemaps show up in the search results.
 		if(!headers_sent()) header('X-Robots-Tag: noindex', true);
 
-		$pack = (isset($options['zip']) ? $options['zip'] : true);
-		if(empty($_SERVER['HTTP_ACCEPT_ENCODING']) || strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') === false || !$this->IsGzipEnabled() || headers_sent()) $pack = false;
-		if($pack) ob_start('ob_gzhandler');
-
 		$this->Initate();
+
+		$html = (isset($options["html"]) ? $options["html"] : false) && $this->IsXslEnabled();
+		if($html && !$this->GetOption('b_html')) {
+			$GLOBALS['wp_query']->is_404 = true;
+			return;
+		}
+
+		//Don't zip if anything happened before which could break the output or if the client does not support gzip
+		$pack = (isset($options['zip']) ? $options['zip'] : true);
+		if(
+			empty($_SERVER['HTTP_ACCEPT_ENCODING'])
+			|| strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') === false
+			|| !$this->IsGzipEnabled()
+			|| headers_sent()
+			|| ob_get_contents()
+			|| in_array('ob_gzhandler', ob_list_handlers())
+			|| in_array(strtolower(ini_get("zlib.output_compression")),array('yes', 'on', 'true', 1, true))
+		) $pack = false;
+
+		$packed = false;
+
+		if($pack) $packed = @ob_start('ob_gzhandler');
 
 		$builders = array('sitemap-builder.php');
 		foreach($builders AS $b) {
 			$f = trailingslashit(dirname(__FILE__)) . $b;
 			if(file_exists($f)) require_once($f);
 		}
-
-		$html = (isset($options["html"]) ? $options["html"] : false) && $this->IsXslEnabled();
 
 		if($html) {
 			ob_start();
@@ -1589,7 +1631,7 @@ final class GoogleSitemapGenerator {
 			foreach($domTranObj->childNodes as $node) echo $domTranObj->saveXML($node) . "\n";
 		}
 
-		if($pack) ob_end_flush();
+		if($packed) ob_end_flush();
 		$this->isActive = false;
 		exit;
 	}

@@ -62,7 +62,7 @@ class SU_ContentAutolinksSettings extends SU_Module {
 			)
 		), __('Additional Dampening Effect', 'seo-ultimate'));
 		
-		$this->textbox('linkfree_tags', __('Don&#8217;t add autolinks to text within these HTML tags <em>(separate with commas)</em>:', 'seo-ultimate'), $this->get_default_setting('linkfree_tags'), __('Tag Restrictions', 'seo-ultimate'));
+		$this->textbox('linkfree_tags', __('Tag Restrictions', 'seo-ultimate'), $this->get_default_setting('linkfree_tags'), false, array('help_text' => __('Don&#8217;t add autolinks to text within these HTML tags <em>(separate with commas)</em>:', 'seo-ultimate')));
 		
 		$siloing_checkboxes = array();
 		$post_types = get_post_types(array('public' => true), 'objects');

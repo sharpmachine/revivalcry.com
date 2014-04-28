@@ -39,13 +39,10 @@ class SU_GlobalSettings extends SU_Module {
 		
 		$checkboxes = array(
 			  'mark_code' => __('Identify the plugin&#8217;s HTML code insertions with HTML comment tags', 'seo-ultimate')
+			, 'sdf_theme' => __('Show the promo slider for SEO Design Framework on plugin pages', 'seo-ultimate')
 			//, 'attribution_link' => __('Enable nofollow&#8217;d attribution link on my site', 'seo-ultimate')
 			//, 'attribution_link_css' => array('description' => __('Add CSS styles to the attribution link', 'seo-ultimate'), 'indent' => true)
 		);
-		
-		if ($this->is_sdf_theme_promo_applicable()) {
-			$checkboxes['sdf_theme'] = __('Show the promo slider for SEO Design Framework on plugin pages', 'seo-ultimate');
-		}
 		
 		$this->checkboxes($checkboxes);
 		$this->admin_form_end();

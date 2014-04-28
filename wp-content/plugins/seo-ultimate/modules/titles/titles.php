@@ -81,7 +81,6 @@ class SU_Titles extends SU_Module {
 			, 'title_search' => __('Search Results for {query} | {blog}', 'seo-ultimate')
 			, 'title_404' => __('404 Not Found | {blog}', 'seo-ultimate')
 			, 'title_paged' => __('{title} - Page {num}', 'seo-ultimate')
-			
 			, 'terms_ucwords' => true
 			, 'rewrite_method' => 'ob'
 		);
@@ -146,7 +145,8 @@ class SU_Titles extends SU_Module {
 		
 		$title = $this->get_title();
 		if (!$title) return $head;
-		
+		// Pre-parse the title replacement text to escape the $ ($n backreferences) when followed by a number 0-99 because of preg_replace issue
+		$title = preg_replace('/\$(\d)/', '\\\$$1', $title);
 		//Replace the old title with the new and return
 		return preg_replace('/<title>[^<]*<\/title>/i', '<title>'.$title.'</title>', $head);
 	}

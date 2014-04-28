@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the SEO Ultimate package.
 msgid ""
 msgstr ""
-"Project-Id-Version: SEO Ultimate v7.6.2\n"
+"Project-Id-Version: SEO Ultimate v7.6.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/seo-ultimate\n"
-"POT-Creation-Date: 2014-03-13 17:33+0100\n"
-"PO-Revision-Date: 2014-03-13 17:34+0100\n"
+"POT-Creation-Date: 2014-04-11 15:17+0100\n"
+"PO-Revision-Date: 2014-04-11 15:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: SEO Design Solutions <support@seodesignsolutions.com>\n"
 "Language: en_US\n"
@@ -149,7 +149,7 @@ msgstr ""
 
 #: modules/404s/fofs-settings.php:17
 #: modules/internal-link-aliases/internal-link-aliases.php:43
-#: modules/opengraph/opengraph.php:379 modules/titles/titles.php:41
+#: modules/opengraph/opengraph.php:351 modules/titles/titles.php:41
 msgid "Settings"
 msgstr ""
 
@@ -202,7 +202,7 @@ msgstr ""
 #: modules/meta/meta-keywords.php:178 modules/meta/meta-robots.php:52
 #: modules/meta/webmaster-verify.php:95 modules/meta/webmaster-verify.php:101
 #: modules/more-links/more-links.php:104 modules/more-links/more-links.php:111
-#: modules/opengraph/opengraph.php:573
+#: modules/opengraph/opengraph.php:545
 #: modules/rich-snippets/rich-snippets.php:412
 #: modules/rich-snippets/rich-snippets.php:419
 #: modules/settings/settings.php:63
@@ -777,13 +777,13 @@ msgid "Additional Dampening Effect"
 msgstr ""
 
 #: modules/autolinks/content-autolinks-settings.php:65
-msgid ""
-"Don&#8217;t add autolinks to text within these HTML tags <em>(separate with "
-"commas)</em>:"
+msgid "Tag Restrictions"
 msgstr ""
 
 #: modules/autolinks/content-autolinks-settings.php:65
-msgid "Tag Restrictions"
+msgid ""
+"Don&#8217;t add autolinks to text within these HTML tags <em>(separate with "
+"commas)</em>:"
 msgstr ""
 
 #: modules/autolinks/content-autolinks-settings.php:73
@@ -1198,63 +1198,63 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: modules/class.su-module.php:2668 modules/class.su-module.php:2680
+#: modules/class.su-module.php:2776 modules/class.su-module.php:2788
 #, php-format
 msgid "A Deleted %s"
 msgstr ""
 
-#: modules/class.su-module.php:2670
+#: modules/class.su-module.php:2778
 msgid "A Deleted Post"
 msgstr ""
 
-#: modules/class.su-module.php:2685
+#: modules/class.su-module.php:2793
 msgid "A Deleted Term"
 msgstr ""
 
-#: modules/class.su-module.php:2691 modules/meta/meta-descriptions.php:31
-#: modules/meta/meta-keywords.php:40 modules/opengraph/opengraph.php:380
-#: plugin/class.seo-ultimate.php:1856
+#: modules/class.su-module.php:2799 modules/meta/meta-descriptions.php:31
+#: modules/meta/meta-keywords.php:40 modules/opengraph/opengraph.php:352
+#: plugin/class.seo-ultimate.php:1876
 msgid "Blog Homepage"
 msgstr ""
 
-#: modules/class.su-module.php:2696 plugin/class.seo-ultimate.php:1932
+#: modules/class.su-module.php:2804 plugin/class.seo-ultimate.php:1952
 msgid "Author"
 msgstr ""
 
-#: modules/class.su-module.php:2698
+#: modules/class.su-module.php:2806
 msgid "A Deleted User"
 msgstr ""
 
-#: modules/class.su-module.php:2713 plugin/class.seo-ultimate.php:1962
+#: modules/class.su-module.php:2821 plugin/class.seo-ultimate.php:1982
 msgid "Link Mask"
 msgstr ""
 
-#: modules/class.su-module.php:2715
+#: modules/class.su-module.php:2823
 msgid "Link Mask (Disabled)"
 msgstr ""
 
-#: modules/class.su-module.php:2720
+#: modules/class.su-module.php:2828
 msgid "A Deleted Link Mask"
 msgstr ""
 
-#: modules/class.su-module.php:2750
+#: modules/class.su-module.php:2858
 msgid "Type a URL or start typing the name of an item on your site"
 msgstr ""
 
-#: modules/class.su-module.php:2763
+#: modules/class.su-module.php:2871
 msgid "Remove this location from this textbox"
 msgstr ""
 
-#: modules/class.su-module.php:2763
+#: modules/class.su-module.php:2871
 msgid "X"
 msgstr ""
 
-#: modules/class.su-module.php:2872
+#: modules/class.su-module.php:2980 modules/sds-blog/sds-blog.php:138
 #, php-format
 msgid "<strong>RSS Error</strong>: %s"
 msgstr ""
 
-#: modules/class.su-module.php:2888
+#: modules/class.su-module.php:2996 modules/sds-blog/sds-blog.php:154
 msgid ""
 "An error has occurred, which probably means the feed is down. Try again "
 "later."
@@ -1883,12 +1883,12 @@ msgid "Meta Keywords"
 msgstr ""
 
 #: modules/meta/meta-keywords.php:38 modules/meta/meta-robots.php:22
-#: modules/opengraph/opengraph.php:377
+#: modules/opengraph/opengraph.php:349
 msgid "Sitewide Values"
 msgstr ""
 
 #: modules/meta/meta-keywords.php:39 modules/noindex/noindex.php:50
-#: modules/opengraph/opengraph.php:378
+#: modules/opengraph/opengraph.php:350
 msgid "Default Values"
 msgstr ""
 
@@ -2160,11 +2160,11 @@ msgid ""
 msgstr ""
 
 #: modules/misc/misc.php:11 modules/misc/misc.php:12
-#: plugin/class.seo-ultimate.php:1567
+#: plugin/class.seo-ultimate.php:1586
 msgid "Miscellaneous"
 msgstr ""
 
-#: modules/misc/misc.php:21
+#: modules/misc/misc.php:25
 msgid ""
 "The Miscellaneous page contains modules that don&#8217;t have enough "
 "settings to warrant their own separate admin pages."
@@ -2348,8 +2348,8 @@ msgid "Noindex"
 msgstr ""
 
 #: modules/noindex/noindex.php:69 modules/noindex/noindex.php:80
-#: modules/opengraph/opengraph.php:348 modules/opengraph/opengraph.php:479
-#: modules/opengraph/opengraph.php:480
+#: modules/opengraph/opengraph.php:320 modules/opengraph/opengraph.php:451
+#: modules/opengraph/opengraph.php:452
 msgid "Use default"
 msgstr ""
 
@@ -2440,348 +2440,348 @@ msgstr ""
 msgid "Open Graph"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:350
+#: modules/opengraph/opengraph.php:322
 msgid "Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:355
+#: modules/opengraph/opengraph.php:327
 msgid "Title"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:360
+#: modules/opengraph/opengraph.php:332
 msgid "Description"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:365
+#: modules/opengraph/opengraph.php:337
 msgid "Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:388
+#: modules/opengraph/opengraph.php:360
 msgid "Site Name"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:389
+#: modules/opengraph/opengraph.php:361
 msgid "Facebook App ID"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:390
+#: modules/opengraph/opengraph.php:362
 msgid "@username of website"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:391
+#: modules/opengraph/opengraph.php:363
 msgid "Same as twitter:site, but the user&#8217;s Twitter ID"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:392
+#: modules/opengraph/opengraph.php:364
 msgid "@username of content creator"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:393
+#: modules/opengraph/opengraph.php:365
 msgid "Twitter user ID of content creator"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:394
+#: modules/opengraph/opengraph.php:366
 msgid "Description of content (maximum 200 characters)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:395
+#: modules/opengraph/opengraph.php:367
 msgid "Title of content (maximum 70 characters)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:396
+#: modules/opengraph/opengraph.php:368
 msgid "URL of image to use in the card. Image must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:397
+#: modules/opengraph/opengraph.php:369
 msgid "Width of image in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:398
+#: modules/opengraph/opengraph.php:370
 msgid "Height of image in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:399
+#: modules/opengraph/opengraph.php:371
 msgid ""
 "Top customizable data field, can be a relatively short string (ie \"$3.99\")"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:400 modules/opengraph/opengraph.php:402
+#: modules/opengraph/opengraph.php:372 modules/opengraph/opengraph.php:374
 msgid ""
 "Customizable label or units for the information in twitter:data1 (best "
 "practice: use all caps)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:401
+#: modules/opengraph/opengraph.php:373
 msgid ""
 "Bottom customizable data field, can be a relatively short string (ie "
 "\"Seattle, WA\")"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:403
+#: modules/opengraph/opengraph.php:375
 msgid "1st image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:404
+#: modules/opengraph/opengraph.php:376
 msgid "2nd image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:405
+#: modules/opengraph/opengraph.php:377
 msgid "3rd image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:406
+#: modules/opengraph/opengraph.php:378
 msgid "4th image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:407
+#: modules/opengraph/opengraph.php:379
 msgid " \tHTTPS URL of player iframe"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:408
+#: modules/opengraph/opengraph.php:380
 msgid "Width of iframe in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:409
+#: modules/opengraph/opengraph.php:381
 msgid "Height of iframe in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:410
+#: modules/opengraph/opengraph.php:382
 msgid "URL to raw video or audio stream"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:411
+#: modules/opengraph/opengraph.php:383
 msgid "Name of your iPhone app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:412
+#: modules/opengraph/opengraph.php:384
 msgid "Your app ID in the iTunes App Store (Note: NOT your bundle ID)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:413
+#: modules/opengraph/opengraph.php:385
 msgid ""
 "Your app&#8217;s custom URL scheme (you must include \"://\" after your "
 "scheme name)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:414
+#: modules/opengraph/opengraph.php:386
 msgid "Name of your iPad optimized app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:415
+#: modules/opengraph/opengraph.php:387
 msgid "Your app ID in the iTunes App Store"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:416
+#: modules/opengraph/opengraph.php:388
 msgid "Your app&#8217;s custom URL scheme"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:417
+#: modules/opengraph/opengraph.php:389
 msgid "Name of your Android app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:418
+#: modules/opengraph/opengraph.php:390
 msgid "Your app ID in the Google Play Store"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:419
+#: modules/opengraph/opengraph.php:391
 msgid "Your app#8217;s custom URL scheme"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:426
+#: modules/opengraph/opengraph.php:398
 msgid "Default Types"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:428
+#: modules/opengraph/opengraph.php:400
 msgid "Post Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:429
+#: modules/opengraph/opengraph.php:401
 msgid "Open Graph Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:430
+#: modules/opengraph/opengraph.php:402
 msgid "Twitter Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:445 modules/opengraph/opengraph.php:450
+#: modules/opengraph/opengraph.php:417 modules/opengraph/opengraph.php:422
 msgid "Default Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:448
+#: modules/opengraph/opengraph.php:420
 msgid ""
 "In the box below, you can specify an image URL or an image from your media "
 "library to use as a default image in the event that there is no image "
 "otherwise specified for a given webpage on your site."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:457
+#: modules/opengraph/opengraph.php:429
 msgid "Include author data for posts"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:457
+#: modules/opengraph/opengraph.php:429
 msgid "Open Graph Data"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:459
+#: modules/opengraph/opengraph.php:431
 msgid "Use the non-validating code prescribed by Open Graph and Twitter"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:460
+#: modules/opengraph/opengraph.php:432
 msgid "Alter the code to validate as XHTML"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:461
+#: modules/opengraph/opengraph.php:433
 msgid "Alter the code to validate as HTML5"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:462
+#: modules/opengraph/opengraph.php:434
 msgid "HTML Validation"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:468 modules/titles/titles.php:92
+#: modules/opengraph/opengraph.php:440 modules/titles/titles.php:91
 msgid "Blog Homepage Title"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:469
+#: modules/opengraph/opengraph.php:441
 msgid "Blog Homepage Description"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:470
+#: modules/opengraph/opengraph.php:442
 msgid "Blog Homepage Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:476 modules/widgets/widgets.php:140
+#: modules/opengraph/opengraph.php:448 modules/widgets/widgets.php:140
 msgid "Title:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:477
+#: modules/opengraph/opengraph.php:449
 msgid "Description:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:478
+#: modules/opengraph/opengraph.php:450
 msgid "Image:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:479
+#: modules/opengraph/opengraph.php:451
 msgid "Open Graph Type:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:480
+#: modules/opengraph/opengraph.php:452
 msgid "Twitter Type:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:505
+#: modules/opengraph/opengraph.php:477
 #, php-format
 msgid "Featured Image: %s"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:513
+#: modules/opengraph/opengraph.php:485
 #: modules/rich-snippets/rich-snippets.php:357
 msgid "None"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:514
+#: modules/opengraph/opengraph.php:486
 msgid "Internet"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:515
+#: modules/opengraph/opengraph.php:487
 msgid "Article"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:516
+#: modules/opengraph/opengraph.php:488
 msgid "Blog"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:517
+#: modules/opengraph/opengraph.php:489
 msgid "Profile"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:518
+#: modules/opengraph/opengraph.php:490
 msgid "Website"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:519
+#: modules/opengraph/opengraph.php:491
 msgid "Products"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:520
+#: modules/opengraph/opengraph.php:492
 msgid "Book"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:521
+#: modules/opengraph/opengraph.php:493
 msgid "Music"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:522
+#: modules/opengraph/opengraph.php:494
 msgid "Album"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:523
+#: modules/opengraph/opengraph.php:495
 msgid "Playlist"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:524
+#: modules/opengraph/opengraph.php:496
 msgid "Radio Station"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:525
+#: modules/opengraph/opengraph.php:497
 msgid "Song"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:526
+#: modules/opengraph/opengraph.php:498
 msgid "Videos"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:527
+#: modules/opengraph/opengraph.php:499
 msgid "Movie"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:528
+#: modules/opengraph/opengraph.php:500
 msgid "TV Episode"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:529
+#: modules/opengraph/opengraph.php:501
 msgid "TV Show"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:530
+#: modules/opengraph/opengraph.php:502
 msgid "Video"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:537
+#: modules/opengraph/opengraph.php:509
 msgid "Summary"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:538
+#: modules/opengraph/opengraph.php:510
 msgid "Product"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:539
+#: modules/opengraph/opengraph.php:511
 #: modules/rich-snippets/rich-snippets.php:120
 msgid "Photo"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:540
+#: modules/opengraph/opengraph.php:512
 msgid "Summary Large Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:541
+#: modules/opengraph/opengraph.php:513
 msgid "Gallery"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:542
+#: modules/opengraph/opengraph.php:514
 msgid "Player"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:543
+#: modules/opengraph/opengraph.php:515
 msgid "App"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:565
+#: modules/opengraph/opengraph.php:537
 msgid "Twitter Handle"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:574
+#: modules/opengraph/opengraph.php:546
 msgid ""
 "\n"
 "<ul>\n"
@@ -3102,6 +3102,10 @@ msgid ""
 "an article&#8217;s title to read it."
 msgstr ""
 
+#: modules/sds-blog/sds-blog.php:168
+msgid "Untitled"
+msgstr ""
+
 #: modules/settings/global-settings.php:18 modules/settings/settings.php:70
 msgid "Global Settings"
 msgstr ""
@@ -3110,7 +3114,7 @@ msgstr ""
 msgid "Identify the plugin&#8217;s HTML code insertions with HTML comment tags"
 msgstr ""
 
-#: modules/settings/global-settings.php:47
+#: modules/settings/global-settings.php:42
 msgid "Show the promo slider for SEO Design Framework on plugin pages"
 msgstr ""
 
@@ -3405,7 +3409,7 @@ msgstr ""
 msgid "SEO Ultimate Plugin Settings"
 msgstr ""
 
-#: modules/settings/settings.php:26 plugin/class.seo-ultimate.php:847
+#: modules/settings/settings.php:26 plugin/class.seo-ultimate.php:854
 msgid "SEO Ultimate"
 msgstr ""
 
@@ -3457,7 +3461,7 @@ msgid "Uninstaller"
 msgstr ""
 
 #: modules/settings/uninstall.php:18 modules/settings/uninstall.php:22
-#: plugin/class.seo-ultimate.php:1395
+#: plugin/class.seo-ultimate.php:1414
 msgid "Uninstall"
 msgstr ""
 
@@ -3697,47 +3701,47 @@ msgstr ""
 msgid "{title} - Page {num}"
 msgstr ""
 
-#: modules/titles/titles.php:93
+#: modules/titles/titles.php:92
 msgid "Post Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:94
+#: modules/titles/titles.php:93
 msgid "Page Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:95
+#: modules/titles/titles.php:94
 msgid "Category Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:96
+#: modules/titles/titles.php:95
 msgid "Tag Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:97
+#: modules/titles/titles.php:96
 msgid "Day Archive Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:98
+#: modules/titles/titles.php:97
 msgid "Month Archive Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:99
+#: modules/titles/titles.php:98
 msgid "Year Archive Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:100
+#: modules/titles/titles.php:99
 msgid "Author Archive Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:101
+#: modules/titles/titles.php:100
 msgid "Search Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:102
+#: modules/titles/titles.php:101
 msgid "404 Title Format"
 msgstr ""
 
-#: modules/titles/titles.php:103
+#: modules/titles/titles.php:102
 msgid "Pagination Title Format"
 msgstr ""
 
@@ -4190,102 +4194,102 @@ msgstr ""
 msgid "Go to setting &raquo;"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:847
+#: plugin/class.seo-ultimate.php:854
 msgid "SEO"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1117
+#: plugin/class.seo-ultimate.php:1135
 msgid ""
 "It looks like you made changes to the settings of this SEO Ultimate module. "
 "If you leave before saving, those changes will be lost."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1211 plugin/class.seo-ultimate.php:1636
+#: plugin/class.seo-ultimate.php:1230 plugin/class.seo-ultimate.php:1656
 msgid "SEO Settings"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1250
+#: plugin/class.seo-ultimate.php:1269
 #, php-format
 msgid ""
 "%1$s is known to cause conflicts with SEO Ultimate. Please deactivate %1$s "
 "if you wish to continue using SEO Ultimate."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1294
+#: plugin/class.seo-ultimate.php:1313
 msgid "new module"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1294
+#: plugin/class.seo-ultimate.php:1313
 msgid "new modules"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1295
+#: plugin/class.seo-ultimate.php:1314
 msgid "new feature"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1295
+#: plugin/class.seo-ultimate.php:1314
 msgid "new features"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1296
+#: plugin/class.seo-ultimate.php:1315
 msgid "bugfix"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1296
+#: plugin/class.seo-ultimate.php:1315
 msgid "bugfixes"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1297
+#: plugin/class.seo-ultimate.php:1316
 msgid "improvement"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1297
+#: plugin/class.seo-ultimate.php:1316
 msgid "improvements"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1298
+#: plugin/class.seo-ultimate.php:1317
 msgid "security fix"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1298
+#: plugin/class.seo-ultimate.php:1317
 msgid "security fixes"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1299
+#: plugin/class.seo-ultimate.php:1318
 msgid "new language pack"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1299
+#: plugin/class.seo-ultimate.php:1318
 msgid "new language packs"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1300
+#: plugin/class.seo-ultimate.php:1319
 msgid "language pack update"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1300
+#: plugin/class.seo-ultimate.php:1319
 msgid "language pack updates"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1331
+#: plugin/class.seo-ultimate.php:1350
 #, php-format
 msgid "%d %s"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1337
+#: plugin/class.seo-ultimate.php:1356
 #, php-format
 msgid "Upgrade now to get %s. %s."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1339
+#: plugin/class.seo-ultimate.php:1358
 msgid "View changelog"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1416
+#: plugin/class.seo-ultimate.php:1435
 msgid "Active Modules: "
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1483
+#: plugin/class.seo-ultimate.php:1502
 msgid ""
 "<strong>SEO Ultimate Notice:</strong> Your blog is configured to block "
 "search engine spiders. To resolve this, <a href=\"options-reading.php\" "
@@ -4293,32 +4297,32 @@ msgid ""
 "discourage search engines&#8221; option."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1564
+#: plugin/class.seo-ultimate.php:1583
 msgid "Search Engine Listing"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1565
+#: plugin/class.seo-ultimate.php:1584
 msgid "Social Networks Listing"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1566
+#: plugin/class.seo-ultimate.php:1585
 msgid "Links"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1667
+#: plugin/class.seo-ultimate.php:1687
 #, php-format
 msgid "%1$s %2$s by %3$s"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1855
+#: plugin/class.seo-ultimate.php:1875
 msgid "Home"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1926
+#: plugin/class.seo-ultimate.php:1946
 msgid "Author Archives"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1955
+#: plugin/class.seo-ultimate.php:1975
 msgid "Link Masks"
 msgstr ""
 

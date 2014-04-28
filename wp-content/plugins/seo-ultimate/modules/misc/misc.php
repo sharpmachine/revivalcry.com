@@ -13,9 +13,13 @@ class SU_Misc extends SU_Module {
 	static function get_menu_pos() { return 30; }
 	function admin_page_contents() {
 		
+		echo "\n\n<div class='row'>\n";
+			
 		if ($this->should_show_sdf_theme_promo()) {
-			echo "\n\n<div class='row'>\n";
 			echo "\n\n<div class='col-sm-8 col-md-9'>\n";
+		}
+		else {
+			echo "\n\n<div class='col-md-12'>\n";
 		}
 		
 		echo '<p>' . __('The Miscellaneous page contains modules that don&#8217;t have enough settings to warrant their own separate admin pages.', 'seo-ultimate') . '</p>';

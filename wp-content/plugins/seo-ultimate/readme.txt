@@ -1,9 +1,9 @@
 === SEO Ultimate ===
-Contributors: SEO Design Solutions, JohnLamansky
+Contributors: SEO Design Solutions, JohnLamansky, djalexandar
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate, Open Graph, og, microdata, Facebook, Twitter, Schema.org
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 7.6.3.1
+Stable tag: 7.6.4.3
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, Open Graph, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -243,6 +243,20 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.6.4.3 (April 14, 2014) =
+* Bugfix: Rich Snippet Creator's "Place” search result type address fields appearance fix
+
+= Version 7.6.4.2 (April 11, 2014) =
+* Bugfix: Twitter Card Tags Handle Fix
+
+= Version 7.6.4.1 (April 10, 2014) =
+* Bugfix: Layout Fix on Miscellaneous page
+
+= Version 7.6.4 (April 9, 2014) =
+* Bugfix: Title tag issue with $ sign when followed by a number 0-99 (Pre-parse the title replacement text to escape the $n backreferences because of preg_replace issue)
+* Bugfix: Post Metabox Single Tab layout issue
+* Bugfix: SDF Promo Ads option on settings page
 
 = Version 7.6.3.1 (March 24, 2014) =
 * Bugfix: Added rel="nofollow" to all author attribution links, whitepapers module SDS Blog links and banner ads

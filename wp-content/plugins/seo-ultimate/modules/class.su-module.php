@@ -2345,14 +2345,9 @@ class SU_Module {
 			
 			$e_title = su_esc_attr($title);
 			
-			if ($grouptext)
-				$html = "<div class='form-group su textbox'>\n<label class='col-sm-4 col-md-4 control-label' for='$id'>$title</label>\n<div class='col-sm-4 col-md-4'><input name='$id' id='$id' type='$type' value='$value' class='"
-				.$input_clss."form-control regular-text' tabindex='2' />\n"
-				. "</div>\n<div class='col-sm-4 col-md-4 help-text'>\n</div>\n</div>\n";
-			else
-				$html = "<div class='form-group su textbox'>\n<label class='col-sm-4 col-md-4 control-label' for='$id'>$title</label>\n<div class='col-sm-4 col-md-4'><input name='$id' id='$id' type='$type' value='$value' class='"
-				.$input_clss."form-control regular-text' tabindex='2' />\n"
-				. "</div>\n<div class='col-sm-4 col-md-4 help-text'>\n</div>\n</div>\n";
+			$html = "<div class='form-group su textbox'>\n<label class='col-sm-4 col-md-4 control-label' for='$id'>$title</label>\n<div class='col-sm-4 col-md-4'><input name='$id' id='$id' type='$type' value='$value' class='"
+			. $input_clss."form-control regular-text' tabindex='2' />\n"
+			. "</div>\n<div class='col-sm-4 col-md-4 help-text'>\n</div>\n</div>\n";
 		}
 		
 		if ($grouptext) {

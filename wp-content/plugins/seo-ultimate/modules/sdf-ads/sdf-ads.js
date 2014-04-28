@@ -4,10 +4,10 @@
 jQuery(document).ready(function($) {
 	
 	$('#sdf-promo-carousel').hide();
-	$('#su_dashboard_widget .inside').hide();
+	$('#sdf_dashboard_widget .inside').hide();
 	var sds_promo_blog_post = $('#sds_promo_blog_post').html();
-	var banners_remote = 'https://s3.amazonaws.com/sdfimages/seoultimatebanner/seo_ultimate_banners_jsonp_763.json';
-	
+	var banners_remote = 'https://s3.amazonaws.com/sdfimages/seoultimatebanner/seo_ultimate_banners_jsonp_764.json';
+
 	$.ajax({
 		url: banners_remote,
 		dataType: 'jsonp',
@@ -19,7 +19,10 @@ jQuery(document).ready(function($) {
 		if (data.enabled === true) {
 			var shuffled_banners = shuffleArray(data.banners);
 			var shuffled_slides = shuffleArray(data.slides);
-			sdf_carousel = sdf_carousel + "<a href=\"" + shuffled_banners[0].banner_link + "\" rel=\"nofollow\" target=\"_blank\"><img src=\"" + shuffled_banners[0].banner_img + "\" alt=\"Slide "+ i +"\"></a>";
+			// check if it's cloud hosted banner
+			var banner_img = shuffled_banners[0].banner_img
+			if(banner_img.indexOf('https://') == -1) banner_img = suModulesSdfAdsSdfAdsL10n.sdf_banners_url + banner_img;
+			sdf_carousel = sdf_carousel + "<a href=\"" + shuffled_banners[0].banner_link + "\" rel=\"nofollow\" target=\"_blank\"><img src=\"" + banner_img + "\" alt=\"Slide "+ i +"\"></a>";
 			sdf_carousel = sdf_carousel + "<div id=\"sdfCarousel\" class=\"carousel slide\"><ol class=\"carousel-indicators\">";
 					
 			var active_indicator = '';
@@ -43,15 +46,15 @@ jQuery(document).ready(function($) {
 			$('#sdf-promo-carousel').html(sdf_carousel).delay(500).fadeIn(600).carousel({ interval:8000 });
 			
 			// dashboard widget
-			$('#su_dashboard_widget h3.hndle span').html(data.dashboard_widget[0].title);
-			$('#su_dashboard_widget .inside').html(data.dashboard_widget[0].content);
+			$('#sdf_dashboard_widget h3.hndle span').html(data.dashboard_widget[0].title);
+			$('#sdf_dashboard_widget .inside').html(data.dashboard_widget[0].content);
 			setTimeout(function(){
-				$('#su_dashboard_widget .inside').fadeIn(600);
+				$('#sdf_dashboard_widget .inside').fadeIn(600);
 			},800);
 		}	
 	})
 	.fail(function (data) {
-		$('#sdf-promo-carousel').delay(500).fadeIn(600).carousel({ interval:4000 });
+		$('#sdf-promo-carousel').delay(500).fadeIn(600).carousel({ interval:8000 });
 	});	
 
 });

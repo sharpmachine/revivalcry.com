@@ -31,35 +31,7 @@ class SU_OpenGraph extends SU_Module {
 		add_action('su_head', array(&$this, 'head_tag_output'));
 		add_filter('su_get_setting-opengraph-twitter_site_handle', array(&$this, 'sanitize_twitter_handle'));
 		add_filter('user_contactmethods', array(&$this, 'add_twitter_field'));
-		add_filter('su_get_setting-opengraph-twitter_site_id_handle', array(&$this, 'sanitize_twitter_handle'));
 		add_filter('su_get_setting-opengraph-twitter_creator_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_creator_id_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_description_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_title_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image_src_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image_width_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image_height_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_data1_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_label1_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_data2_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_label2_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image0_src_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image1_src_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image2_src_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_image3_src_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_player_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_player_width_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_player_height_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_player_stream_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_name_iphone_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_id_iphone_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_url_iphone_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_name_ipad_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_id_ipad_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_url_ipad_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_name_googleplay_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_id_googleplay_handle', array(&$this, 'sanitize_twitter_handle'));
-		add_filter('su_get_setting-opengraph-twitter_app_url_googleplay_handle', array(&$this, 'sanitize_twitter_handle'));
 	}
 	
 	function html_tag_attrs($attrs) {

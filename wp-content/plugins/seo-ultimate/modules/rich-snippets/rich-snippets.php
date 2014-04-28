@@ -370,14 +370,12 @@ class SU_RichSnippets extends SU_Module {
 		
 		$fields['serp'][46]['rich_snippet_place_address_street|rich_snippet_place_address_po_box|rich_snippet_place_address_city|rich_snippet_place_address_state|rich_snippet_place_address_country|rich_snippet_place_address_postal_code|rich_snippet_place_map_url|rich_snippet_place_tel_number|rich_snippet_place_fax_number|rich_snippet_place_photo'] =
 			$this->get_postmeta_subsection('rich_snippet_type', 'place',
-				  $this->get_postmeta_textboxes(array(
-					  'rich_snippet_place_address_street'  => __('Street Address:', 'seo-ultimate')
-					, 'rich_snippet_place_address_po_box'  => __('Post Office Box Number:', 'seo-ultimate')
-					, 'rich_snippet_place_address_city'    => __('City:', 'seo-ultimate')
-					, 'rich_snippet_place_address_state'   => __('State or Region:', 'seo-ultimate')
-					, 'rich_snippet_place_address_country' => __('Country:', 'seo-ultimate')
-					, 'rich_snippet_place_address_postal_code' => __('Postal Code:', 'seo-ultimate')
-				), array(), __('Address:', 'seo-ultimate'))
+				$this->get_postmeta_textbox('rich_snippet_place_address_street', __('Street Address:', 'seo-ultimate'), array('type' => 'text'))
+				. $this->get_postmeta_textbox('rich_snippet_place_address_po_box', __('Post Office Box Number:', 'seo-ultimate'), array('type' => 'text'))
+				. $this->get_postmeta_textbox('rich_snippet_place_address_city', __('City:', 'seo-ultimate'), array('type' => 'text'))
+				. $this->get_postmeta_textbox('rich_snippet_place_address_state', __('State or Region:', 'seo-ultimate'), array('type' => 'text'))
+				. $this->get_postmeta_textbox('rich_snippet_place_address_country', __('Country:', 'seo-ultimate'), array('type' => 'text'))
+				. $this->get_postmeta_textbox('rich_snippet_place_address_postal_code', __('Postal Code:', 'seo-ultimate'), array('type' => 'text'))
 				. $this->get_postmeta_jlsuggest_box('rich_snippet_place_map_url', __('Map Page:', 'seo-ultimate'), 'types=posttype')
 				. $this->get_postmeta_textbox('rich_snippet_place_tel_number', __('Phone Number:', 'seo-ultimate'), array('type' => 'tel'))
 				. $this->get_postmeta_textbox('rich_snippet_place_fax_number', __('Fax Number:', 'seo-ultimate'), array('type' => 'tel'))

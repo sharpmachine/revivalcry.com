@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-ui.php 884328 2014-03-29 19:07:26Z arnee $
+ $Id: sitemap-ui.php 891809 2014-04-12 11:06:34Z arnee $
 
 */
 
@@ -730,6 +730,25 @@ class GoogleSitemapGeneratorUI {
 							</ul>
 						</div>
 					<?php $this->HtmlPrintBoxFooter(); ?>
+
+
+
+					<?php if($this->sg->IsNginx() && $this->sg->IsUsingPermalinks()): ?>
+						<?php $this->HtmlPrintBoxHeader('ngin_x',__('Webserver Configuration', 'sitemap')); ?>
+						<?php _e('Since you are using Nginx as your web-server, please configure the following rewrite rules in case you get 404 Not Found errors for your sitemap:','sitemap'); ?>
+						<p>
+							<code style="display:block; overflow-x:auto; white-space: nowrap;">
+								<?php
+								$rules = GoogleSitemapGeneratorLoader::GetNginXRules();
+								foreach($rules AS $rule) {
+									echo $rule . "<br />";
+								}
+								?>
+							</code>
+						</p>
+						<?php $this->HtmlPrintBoxFooter(); ?>
+					<?php endif; ?>
+
 
 					<!-- Basic Options -->
 					<?php $this->HtmlPrintBoxHeader('sm_basic_options',__('Basic Options', 'sitemap')); ?>
