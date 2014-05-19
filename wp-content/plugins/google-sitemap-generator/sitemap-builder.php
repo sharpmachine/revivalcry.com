@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-builder.php 885074 2014-03-31 13:24:09Z arnee $
+ $Id: sitemap-builder.php 899565 2014-04-21 16:30:49Z arnee $
 
 */
 /**
@@ -207,7 +207,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 	 */
 	public function BuildArchives($gsg) {
 		global $wpdb, $wp_version;
-		$now = current_time('mysql');
+		$now = current_time('mysql', true);
 
 		$arcresults = $wpdb->get_results("
 			SELECT DISTINCT
@@ -218,7 +218,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 			FROM
 				$wpdb->posts
 			WHERE
-				post_date < '$now'
+				post_date_gmt < '$now'
 				AND post_status = 'publish'
 				AND post_type = 'post'
 			GROUP BY
@@ -251,6 +251,8 @@ class GoogleSitemapGeneratorStandardBuilder {
 	 */
 	public function BuildMisc($gsg) {
 
+		$lm = get_lastpostmodified('gmt');
+
 		if($gsg->GetOption("in_home")) {
 			$home = get_bloginfo('url');
 			$homePid = 0;
@@ -258,7 +260,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 			if($gsg->GetOption("in_home")) {
 				if('page' == get_option('show_on_front') && get_option('page_on_front')) {
 					$pageOnFront = get_option('page_on_front');
-					$p = get_page($pageOnFront);
+					$p = get_post($pageOnFront);
 					if($p) {
 						$homePid = $p->ID;
 						$gsg->AddUrl(trailingslashit($home), $gsg->GetTimestampFromMySql(($p->post_modified_gmt && $p->post_modified_gmt != '0000-00-00 00:00:00'
@@ -266,7 +268,6 @@ class GoogleSitemapGeneratorStandardBuilder {
 								: $p->post_date_gmt)), $gsg->GetOption("cf_home"), $gsg->GetOption("pr_home"));
 					}
 				} else {
-					$lm = get_lastpostmodified('GMT');
 					$gsg->AddUrl(trailingslashit($home), ($lm ? $gsg->GetTimestampFromMySql($lm)
 							: time()), $gsg->GetOption("cf_home"), $gsg->GetOption("pr_home"));
 				}
@@ -274,7 +275,6 @@ class GoogleSitemapGeneratorStandardBuilder {
 		}
 
 		if($gsg->IsXslEnabled() && $gsg->GetOption("b_html") === true) {
-			$lm = get_lastpostmodified('GMT');
 			$gsg->AddUrl($gsg->GetXmlUrl("", "", array("html" => true)), ($lm ? $gsg->GetTimestampFromMySql($lm)
 					: time()));
 		}
@@ -430,7 +430,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 		global $wpdb, $wp_version;
 
 
-		$blogUpdate = strtotime(get_lastpostdate('blog'));
+		$blogUpdate = strtotime(get_lastpostmodified('gmt'));
 
 		$gsg->AddSitemap("misc", null, $blogUpdate);
 
@@ -464,10 +464,10 @@ class GoogleSitemapGeneratorStandardBuilder {
 			foreach($enabledPostTypes AS $postType) {
 				$q = "
 					SELECT
-						YEAR(p.post_date) AS `year`,
-						MONTH(p.post_date) AS `month`,
+						YEAR(p.post_date_gmt) AS `year`,
+						MONTH(p.post_date_gmt) AS `month`,
 						COUNT(p.ID) AS `numposts`,
-						MAX(p.post_date) as `last_mod`
+						MAX(p.post_modified_gmt) as `last_mod`
 					FROM
 						{$wpdb->posts} p
 					WHERE
@@ -477,10 +477,10 @@ class GoogleSitemapGeneratorStandardBuilder {
 						$exPostSQL
 						$exCatSQL
 					GROUP BY
-						YEAR(p.post_date),
-						MONTH(p.post_date)
+						YEAR(p.post_date_gmt),
+						MONTH(p.post_date_gmt)
 					ORDER BY
-						p.post_date DESC";
+						p.post_date_gmt DESC";
 
 				$posts = $wpdb->get_results($q);
 
