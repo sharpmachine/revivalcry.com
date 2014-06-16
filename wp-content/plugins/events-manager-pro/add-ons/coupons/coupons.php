@@ -533,7 +533,7 @@ class EM_Coupons extends EM_Object {
 	/* Overrides EM_Object method to apply a filter to result
 	 * @see wp-content/plugins/events-manager/classes/EM_Object#build_sql_conditions()
 	 */
-	function build_sql_conditions( $args = array() ){
+	public static function build_sql_conditions( $args = array() ){
 		$conditions = array();
 		//search specific event
 		if( !empty($args['code']) ){
@@ -630,7 +630,7 @@ class EM_Coupons extends EM_Object {
 	 * @return array
 	 * @uses EM_Object#get_default_search()
 	 */
-	function get_default_search( $array = array() ){
+	public static function get_default_search( $array = array() ){
 		$defaults = array(
 			//site/event-wide lookups - a little special compared to other object condition functions on EM
 			'sitewide' => 'enabled', //can be set to true (1) or false (0) whether to exclusively search for this or not

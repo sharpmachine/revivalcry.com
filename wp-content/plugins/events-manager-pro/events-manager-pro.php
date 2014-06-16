@@ -9,7 +9,7 @@ Version: 2.3.7
 
 Copyright (C) 2011 NetWebLogic LLC
 */
-define('EMP_VERSION', 2.36);
+define('EMP_VERSION', '2.38');
 define('EM_MIN_VERSION', 5.44);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
