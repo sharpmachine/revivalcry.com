@@ -295,6 +295,12 @@ Release History:
                       Added function to manually start ping for main-sitemap or all sub-sitemaps
                       Better checking for empty externals
                       Updated Japanese Translation, thanks to Daisuke Takahashi
+2014-06-03     4.0.6  Added option to disable automatic gzipping
+                      Fixed bug with duplicated external sitemap entries
+                      Updated language file template
+                      Don't gzip if behind Varnish
+                      Improved compatibility with caches
+                      Ping on post edit
 
 Todo:
 ==============================================================================

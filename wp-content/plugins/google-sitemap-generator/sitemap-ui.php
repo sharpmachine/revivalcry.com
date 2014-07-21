@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-ui.php 912228 2014-05-11 18:24:30Z arnee $
+ $Id: sitemap-ui.php 925850 2014-06-03 19:06:48Z arnee $
 
 */
 
@@ -159,21 +159,6 @@ class GoogleSitemapGeneratorUI {
 		$snl = false; //SNL
 
 		$this->sg->Initate();
-
-
-
-		//Hopefully this fixes the caching issues after upgrade. Redirect incl. the versions, but only if no POST data.
-		if(count($_POST) == 0 && count($_GET) == 1 && isset($_GET["page"])) {
-			$redirURL = $this->sg->GetBackLink() . '&sm_fromidx=true';
-
-			//Redirect so the sm_rebuild GET parameter no longer exists.
-			@header("location: " . $redirURL);
-			//If there was already any other output, the header redirect will fail
-			echo '<script type="text/javascript">location.replace("' . $redirURL . '");</script>';
-			echo '<noscript><a href="' . $redirURL . '">Click here to continue</a></noscript>';
-			exit;
-		}
-
 
 		$message="";
 
@@ -677,30 +662,6 @@ HTML;
 			<form method="post" action="<?php echo $this->sg->GetBackLink() ?>">
 				<h2><?php _e('XML Sitemap Generator for WordPress', 'sitemap'); echo " " . $this->sg->GetVersion() ?> </h2>
 				<?php
-				if(function_exists("wp_update_plugins") && (!defined('SM_NO_UPDATE') || SM_NO_UPDATE == false)) {
-
-					wp_update_plugins();
-
-					$file = GoogleSitemapGeneratorLoader::GetBaseName();
-
-					$plugin_data = get_plugin_data(GoogleSitemapGeneratorLoader::GetPluginFile());
-
-					$current = get_site_transient( 'update_plugins' );
-
-					if(isset($current->response[$file])) {
-						$r = $current->response[$file];
-						?><div class="updated"><p><?php
-						if ( !current_user_can('edit_plugins'))
-							printf( __('There is a new version of %1$s available. <a href="%2$s">Download version %3$s here</a>.','default'), $plugin_data['Name'], $r->url, $r->new_version);
-						else if ( empty($r->package) )
-							printf( __('There is a new version of %1$s available. <a href="%2$s">Download version %3$s here</a> <em>automatic upgrade unavailable for this plugin</em>.','default'), $plugin_data['Name'], $r->url, $r->new_version);
-						else
-							printf( __('There is a new version of %1$s available. <a href="%2$s">Download version %3$s here</a> or <a href="%4$s">upgrade automatically</a>.','default'), $plugin_data['Name'], $r->url, $r->new_version, wp_nonce_url("update.php?action=upgrade-plugin&amp;plugin=$file", 'upgrade-plugin_' . $file) );
-
-						?></p></div><?php
-					}
-				}
-
 
 				if(get_option('blog_public')!=1) {
 					?><div class="error"><p><?php echo str_replace("%s","options-privacy.php",__('Your blog is currently blocking search engines! Visit the <a href="%s">privacy settings</a> to change this.','sitemap')); ?></p></div><?php
@@ -783,7 +744,7 @@ HTML;
 						$this->HtmlPrintBoxHeader('sm_rebuild',$head); ?>
 
 
-						<div style="border-left: 1px #DFDFDF solid; float:right; padding-left:15px; margin-left:10px; width:35%; min-height:150px;">
+						<div style="border-left: 1px #DFDFDF solid; float:right; padding-left:15px; margin-left:10px; width:35%;">
 							<strong><?php _e('Recent Support Topics / News','sitemap'); ?></strong>
 							<?php
 							if($this->sg->GetOption('i_supportfeed')) {
@@ -854,9 +815,10 @@ HTML;
 								<?php endif; ?>
 
 								<?php if(is_super_admin()) echo "<li>" . str_replace("%d",wp_nonce_url($this->sg->GetBackLink() . "&sm_rebuild=true&sm_do_debug=true",'sitemap'),__('If you encounter any problems with your sitemap you can use the <a href="%d">debug function</a> to get more information.','sitemap')) . "</li>"; ?>
-
+							</ul>
+							<ul>
 								<li>
-									<?php _e('Version 4 of the XML Sitemap Generator introduces a new, more efficient format for your sitemap.','sitemap'); ?> <a href="<?php echo $this->sg->GetRedirectLink('sitemap-newformat'); ?>"><?php _e('Learn more','sitemap'); ?></a>
+									<?php echo sprintf(__('If you like the plugin, please <a target="_blank" href="%s">rate it 5 stars</a> or <a href="%s">donate</a> via PayPal! I\'m supporting this plugin since over 9 years! Thanks a lot! :)','sitemap'),$this->sg->GetRedirectLink('sitemap-works-note'),$this->sg->GetRedirectLink('sitemap-paypal')); ?>
 								</li>
 
 							</ul>
@@ -913,6 +875,13 @@ HTML;
 							</li>
 							<li>
 								<label for="sm_b_time"><?php _e('Try to increase the execution time limit to:', 'sitemap') ?> <input type="text" name="sm_b_time" id="sm_b_time" style="width:40px;" value="<?php echo esc_attr(($this->sg->GetOption("b_time")===-1?'':$this->sg->GetOption("b_time"))); ?>" /></label> (<?php echo htmlspecialchars(__('in seconds, e.g. "60" or "0" for unlimited', 'sitemap')) ?>)
+							</li>
+							<li>
+								<label for="sm_b_autozip">
+									<input type="checkbox" id="sm_b_autozip" name="sm_b_autozip" <?php echo ($this->sg->GetOption("b_autozip")==true?"checked=\"checked\"":"") ?> />
+									<?php _e('Try to automatically compress the sitemap if the requesting client supports it.', 'sitemap') ?>
+								</label><br />
+								<small><?php _e('Disable this option if you get garbled content or encoding errors in your sitemap.','sitemap'); ?></small>
 							</li>
 							<li>
 								<?php $useDefStyle = ($this->sg->GetDefaultStyle() && $this->sg->GetOption('b_style_default')===true); ?>
@@ -1150,7 +1119,6 @@ HTML;
 
 						<b><?php _e('Excluded categories', 'sitemap') ?>:</b>
 
-						<cite style="display:block; margin-left:40px;"><?php _e("Note","sitemap") ?>: <?php _e("Using this feature will increase build time and memory usage!","sitemap"); ?></cite>
 						<div style="border-color:#CEE1EF; border-style:solid; border-width:2px; height:10em; margin:5px 0px 5px 40px; overflow:auto; padding:0.5em 0.5em;">
 							<ul>
 								<?php wp_category_checklist(0,0,$this->sg->GetOption("b_exclude_cats"),false); ?>

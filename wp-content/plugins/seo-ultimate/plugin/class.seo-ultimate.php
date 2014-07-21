@@ -1085,7 +1085,7 @@ class SEO_Ultimate {
 		//load if SDF is not active
 		global $pagenow;
 		$current = (isset($_GET['page'])) ? $_GET['page'] : '';
-		$pages = array( 'edit.php', 'post.php', 'post-new.php' );
+		$pages = array( 'index.php', 'edit.php', 'post.php', 'post-new.php' );
 		$sdf_admin_pages = array('sdf','sdf-settings','sdf-silo','sdf-silo-manual-builder','sdf-header','sdf-layout','sdf-shortcode','sdf-styles','revslider','sdf-footer','seo', 'su-fofs', 'su-misc', 'su-user-code', 'su-autolinks', 'su-files', 'su-internal-link-aliases', 'su-meta-descriptions', 'su-meta-keywords', 'su-meta-robots', 'su-opengraph', 'seo-ultimate', 'su-wp-settings', 'su-titles', 'su-sds-blog');
 		if( in_array( $pagenow, $pages ) || in_array( $current, $sdf_admin_pages )) {
 			// admin styles 	 	
@@ -1097,13 +1097,13 @@ class SEO_Ultimate {
 			wp_enqueue_style('sdf-bootstrap-admin-theme');
 			wp_enqueue_style('sdf-font-awesome');
 			wp_enqueue_style('sdf-css-admin');
-		}
 		
-		wp_register_script('sdf_bs_js', 'https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array('jquery'), '3.0.3', false);	
-		wp_register_script('sdf_admin_js', $this->plugin_dir_url.'plugin/sdf/sdf.admin.js', array('jquery'), '');
-		wp_enqueue_script('sdf_bs_js');
-		wp_enqueue_script('sdf_admin_js');
-		wp_enqueue_media();
+			wp_register_script('sdf_bs_js', 'https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array('jquery'), '3.0.3', false);	
+			wp_register_script('sdf_admin_js', $this->plugin_dir_url.'plugin/sdf/sdf.admin.js', array('jquery'), '');
+			wp_enqueue_script('sdf_bs_js');
+			wp_enqueue_script('sdf_admin_js');
+			wp_enqueue_media();
+		}
 		
 		// load dashboard widget
 		$sdf_ads_localized_data = array(

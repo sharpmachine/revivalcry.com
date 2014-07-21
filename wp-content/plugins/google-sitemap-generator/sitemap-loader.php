@@ -15,7 +15,7 @@ class GoogleSitemapGeneratorLoader {
 	/**
 	 * @var string Version of the generator in SVN
 	 */
-	private static $svnVersion = '$Id: sitemap-loader.php 912228 2014-05-11 18:24:30Z arnee $';
+	private static $svnVersion = '$Id: sitemap-loader.php 925789 2014-06-03 17:03:07Z arnee $';
 
 
 	/**
@@ -45,9 +45,10 @@ class GoogleSitemapGeneratorLoader {
 		add_action('sm_ping_daily', array(__CLASS__, 'CallSendPingDaily'), 10, 1);
 
 		//Existing page was published
-		add_action('publish_post', array(__CLASS__, 'SchedulePing'), 999, 1);
+		add_action('publish_post', array(__CLASS__, 'SchedulePing'), 9999, 1);
 		add_action('publish_page', array(__CLASS__, 'SchedulePing'), 9999, 1);
 		add_action('delete_post', array(__CLASS__, 'SchedulePing'), 9999, 1);
+		add_action('post_updated', array(__CLASS__, 'SchedulePing'), 9999, 1);
 
 		//Robots.txt request
 		add_action('do_robots', array(__CLASS__, 'CallDoRobots'), 100, 0);
@@ -101,6 +102,8 @@ class GoogleSitemapGeneratorLoader {
 
 	/**
 	 * Registers the plugin specific rewrite rules
+	 *
+	 * Combined: sitemap(-+([a-zA-Z0-9_-]+))?\.(xml|html)(.gz)?$
 	 *
 	 * @since 4.0
 	 * @param $wpRules Array of existing rewrite rules
@@ -275,8 +278,8 @@ class GoogleSitemapGeneratorLoader {
 	 * @return void
 	 */
 	public static function SchedulePing($postID) {
-		set_transient('sm_ping_post_id',$postID,60);
-		wp_schedule_single_event(time(),'sm_ping');
+		set_transient('sm_ping_post_id', $postID, 60);
+		wp_schedule_single_event(time(), 'sm_ping');
 	}
 
 	/**

@@ -108,7 +108,7 @@ class suwp {
 			return false;
 	}
 	
-	function get_term_slug($term_obj) {
+	static function get_term_slug($term_obj) {
 		$tax_name = $term_obj->taxonomy;
 		$tax_obj = get_taxonomy($tax_name);
 		if ($tax_obj->rewrite['hierarchical']) {

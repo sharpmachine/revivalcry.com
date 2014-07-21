@@ -180,7 +180,7 @@ class SU_Titles extends SU_Module {
 			$post_id = $post->ID;
 			
 			if ($parent = $post->post_parent) {
-				$parent = &get_post($parent);
+				$parent = get_post($parent);
 				$parent_title = strip_tags( apply_filters( 'single_post_title', $parent->post_title ) );
 			}
 		}

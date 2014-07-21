@@ -14,7 +14,7 @@ jQuery( document ).ready( function( $ ) {
 	
 	if ( typeof tags !== 'undefined' && wpaqToolbar ) {
 		
-		var wpaqBut;
+		var wpaqBut, wpaqNr;
 		
 		for ( var i = 0; i < tags.length; i++ ) {
 			if ( typeof tags[i].title  == 'undefined' ) tags[i].title = ' ';
@@ -35,7 +35,7 @@ jQuery( document ).ready( function( $ ) {
 			wpaqBut._idx    = wpaqNr; //store our current index at element itself
 			wpaqBut.value   = tags[i].text;
 			wpaqBut.title   = tags[i].title;
-			wpaqBut.onclick = function() { edInsertTag( edCanvas, this._idx ); return false; }
+			wpaqBut.onclick = function() { edInsertTag( edCanvas, this._idx ); return false; };
 			wpaqToolbar.appendChild( wpaqBut );
 		}
 		
