@@ -6,7 +6,7 @@
  * Text Domain: addquicktag
  * Domain Path: /languages
  * Description: Allows you to easily add custom Quicktags to the html- and visual-editor.
- * Version:     2.3.0-RC1
+ * Version:     2.3.3
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de
  * License:     GPLv2+
@@ -68,7 +68,7 @@ class Add_Quicktag {
 	 *
 	 * @var array
 	 */
-	static private $post_types_for_js = array( 'widgets' );
+	static private $post_types_for_js = array( 'comment', 'edit-comments', 'widgets' );
 
 	/**
 	 * @var string
@@ -150,17 +150,17 @@ class Add_Quicktag {
 	 *
 	 * @since   08/15/2013
 	 *
-	 * @param   array $qtInit the Buttons
+	 * @param   array $qtags_init the Buttons
 	 *
 	 * @type    string   id
 	 * @type    array    buttons, default: 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close,fullscreen'
-	 * @return  array    $qtInit  the Buttons
+	 * @return  array    $qtags_init  the Buttons
 	 */
-	public function remove_quicktags( $qtInit ) {
+	public function remove_quicktags( $qtags_init ) {
 
 		// No core buttons, not necessary to filter
-		if ( empty( $qtInit[ 'buttons' ] ) ) {
-			return $qtInit;
+		if ( empty( $qtags_init[ 'buttons' ] ) ) {
+			return $qtags_init;
 		}
 
 		if ( is_multisite() && is_plugin_active_for_network( self::$plugin ) ) {
@@ -171,26 +171,33 @@ class Add_Quicktag {
 
 		// No settings, not necessary to filter
 		if ( empty( $options[ 'core_buttons' ] ) ) {
-			return $qtInit;
+			return $qtags_init;
 		}
 
-		// get only the keys
-		$remove_these = array_keys( $options[ 'core_buttons' ] );
+		// get current screen, post type
+		$screen = get_current_screen();
 
-		// Convert string to array
-		$buttons = explode( ',', $qtInit[ 'buttons' ] );
-		// Loop over items to remove and unset them from the buttons
-		for ( $i = 0; $i < count( $remove_these ); $i ++ ) {
-			if ( FALSE !== ( $key = array_search( $remove_these[ $i ], $buttons ) ) ) {
-				unset( $buttons[ $key ] );
+		// Convert string to array from default core buttons
+		$buttons = explode( ',', $qtags_init[ 'buttons' ] );
+
+		// loop about the options to check for each post type
+		foreach ( $options[ 'core_buttons' ] as $button => $post_type ) {
+
+			// if the post type is inside the settings array active, the remove qtags
+			if ( is_array( $post_type ) && array_key_exists( $screen->id, $post_type ) ) {
+
+				// If settings have key inside, then unset this button
+				if ( FALSE !== ( $key = array_search( $button, $buttons ) ) ) {
+					unset( $buttons[ $key ] );
+				}
 			}
 		}
 
 		// Convert new buttons array back into a comma-separated string
-		$qtInit[ 'buttons' ] = implode( ',', $buttons );
-		$qtInit[ 'buttons' ] = apply_filters( 'addquicktag_remove_buttons', $qtInit[ 'buttons' ] );
+		$qtags_init[ 'buttons' ] = implode( ',', $buttons );
+		$qtags_init[ 'buttons' ] = apply_filters( 'addquicktag_remove_buttons', $qtags_init[ 'buttons' ] );
 
-		return $qtInit;
+		return $qtags_init;
 	}
 
 	/**
@@ -211,14 +218,13 @@ class Add_Quicktag {
 	 * @return  void
 	 */
 	public function get_json() {
-
 		global $current_screen;
 
-		if ( isset( $current_screen->id ) &&
-		     ! in_array(
-			     $current_screen->id,
-			     $this->get_post_types_for_js()
-		     )
+		if ( ! in_array(
+				$current_screen->id,
+				$this->get_post_types_for_js()
+			) &&
+			isset( $current_screen->id )
 		) {
 			return NULL;
 		}
@@ -267,21 +273,21 @@ class Add_Quicktag {
 	/**
 	 * Enqueue Scripts for plugin
 	 *
-	 * @param   $where  string
+	 * @internal param string $where
 	 *
-	 * @since   2.0.0
-	 * @access  public
+	 * @since    2.0.0
+	 * @access   public
 	 * @return  void
 	 */
-	public function admin_enqueue_scripts( $where ) {
+	public function admin_enqueue_scripts() {
 
 		global $current_screen;
 
-		if ( isset( $current_screen->id ) &&
-		     ! in_array(
-			     $current_screen->id,
-			     $this->get_post_types_for_js()
-		     )
+		if ( ! in_array(
+				$current_screen->id,
+				$this->get_post_types_for_js()
+			) &&
+			isset( $current_screen->id )
 		) {
 			return NULL;
 		}

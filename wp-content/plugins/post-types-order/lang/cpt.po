@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Post Types Order\n"
-"POT-Creation-Date: 2014-02-21 16:44+0200\n"
-"PO-Revision-Date: 2014-02-21 16:44+0200\n"
+"POT-Creation-Date: 2014-05-30 15:18+0200\n"
+"PO-Revision-Date: 2014-05-30 15:18+0200\n"
 "Last-Translator: Nsp-Code <electronice_delphi@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13,37 +13,37 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: post-types-order.php:119
+#: post-types-order.php:124
 msgid "Post Types Order must be configured. Please go to"
 msgstr ""
 
-#: post-types-order.php:119
+#: post-types-order.php:124
 msgid "Settings Page"
 msgstr ""
 
-#: post-types-order.php:119
+#: post-types-order.php:124
 msgid "make the configuration and save"
 msgstr ""
 
-#: post-types-order.php:457 post-types-order.php:461 post-types-order.php:472
+#: post-types-order.php:468 post-types-order.php:472 post-types-order.php:483
 msgid "Re-Order"
 msgstr ""
 
-#: post-types-order.php:480
+#: post-types-order.php:491
 msgid ""
 "This plugin can't work without javascript, because it's use drag and drop "
 "and AJAX."
 msgstr ""
 
-#: post-types-order.php:493
+#: post-types-order.php:504
 msgid "Update"
 msgstr ""
 
-#: post-types-order.php:509
+#: post-types-order.php:520
 msgid "Items Order Updated"
 msgstr ""
 
-#: post-types-order.php:526
+#: post-types-order.php:537
 msgid "Pages"
 msgstr ""
 
