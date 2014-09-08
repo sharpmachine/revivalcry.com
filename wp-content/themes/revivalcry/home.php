@@ -35,10 +35,7 @@
 				
 				<section class="span-8 last">
 
-<iframe src="http://www.xpmedia.com/embed/11909" frameborder="0" width="620" height="345"></iframe>
-
-
-	<!--<?php query_posts("post_type=videos&posts_per_page=1"); ?>
+	<?php query_posts("post_type=videos&posts_per_page=1"); ?>
 
 		<?php if (have_posts()) : ?>
 
@@ -52,7 +49,7 @@
 
 		<?php // No Posts Found ?>
 
-	<?php endif; ?> -->
+	<?php endif; ?>
 </section>
 				
 			</section><!-- #content -->
