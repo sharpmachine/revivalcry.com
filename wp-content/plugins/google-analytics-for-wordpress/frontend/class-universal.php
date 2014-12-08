@@ -9,8 +9,8 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 		public $link_regex;
 
 		public function __construct() {
-			parent::__construct();
 
+			$this->options    = Yoast_GA_Options::instance()->options;
 			$this->link_regex = '`<a (.*?)href=[\'\"](.*?):/*([^\'\"]+)[\'\"](.*?)>(.*?)</a>`i';
 
 			add_action( 'wp_head', array( $this, 'tracking' ), 8 );
@@ -19,6 +19,8 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 				// Check for outbound option
 				add_filter( 'the_content', array( $this, 'the_content' ), 99 );
 				add_filter( 'widget_text', array( $this, 'widget_content' ), 99 );
+				add_filter( 'wp_list_bookmarks', array( $this, 'widget_content' ), 99 );
+				add_filter( 'wp_nav_menu', array( $this, 'widget_content' ), 99 );
 				add_filter( 'the_excerpt', array( $this, 'the_content' ), 99 );
 				add_filter( 'comment_text', array( $this, 'comment_text' ), 99 );
 			}
@@ -29,11 +31,14 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 		 *
 		 * @todo, add the tracking code and remove this test output
 		 */
-		public function tracking() {
+		public function tracking( $return_array = false ) {
 			global $wp_query;
 
 			if ( $this->do_tracking() && ! is_preview() ) {
 				$gaq_push = array();
+
+				// Running action for adding possible code
+				do_action( 'yst_tracking' );
 
 				if ( isset( $this->options['subdomain_tracking'] ) && $this->options['subdomain_tracking'] != '' ) {
 					$domain = $this->options['subdomain_tracking'];
@@ -46,19 +51,19 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 				}
 
 				$ua_code = $this->get_tracking_code();
-				if ( is_null( $ua_code ) ) {
+				if ( is_null( $ua_code ) && $return_array == false ) {
 					return;
 				}
 
 				// Set tracking code here
 				if ( ! empty( $ua_code ) ) {
-					if ( $this->options['add_allow_linker'] && ! $this->options['allowanchor'] ) {
+					if ( $this->options['add_allow_linker'] && ! $this->options['allow_anchor'] ) {
 						$gaq_push[] = "'create', '" . $ua_code . "', '" . $domain . "', {'allowLinker': true}";
 					} else {
-						if ( $this->options['allowanchor'] && ! $this->options['add_allow_linker'] ) {
+						if ( $this->options['allow_anchor'] && ! $this->options['add_allow_linker'] ) {
 							$gaq_push[] = "'create', '" . $ua_code . "', '" . $domain . "', {'allowAnchor': true}";
 						} else {
-							if ( $this->options['allowanchor'] && $this->options['add_allow_linker'] ) {
+							if ( $this->options['allow_anchor'] && $this->options['add_allow_linker'] ) {
 								$gaq_push[] = "'create', '" . $ua_code . "', '" . $domain . "', {'allowAnchor': true, 'allowLinker': true}";
 							} else {
 								$gaq_push[] = "'create', '" . $ua_code . "', '" . $domain . "'";
@@ -73,7 +78,7 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 					// Add custom code to the view
 					$gaq_push[] = array(
 						'type'  => 'custom_code',
-						'value' => $this->options['custom_code'],
+						'value' => stripslashes( $this->options['custom_code'] ),
 					);
 				}
 
@@ -119,6 +124,10 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 				 *
 				 * @api array $gaq_push
 				 */
+				if ( true == $return_array ) {
+					return $gaq_push;
+				}
+
 				$gaq_push = apply_filters( 'yoast-ga-push-array-universal', $gaq_push );
 
 				$ga_settings = $this->options; // Assign the settings to the javascript include view
@@ -156,14 +165,14 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 			switch ( $link['type'] ) {
 				case 'download':
 					if ( $this->options['track_download_as'] == 'pageview' ) {
-						$onclick = "ga('send', 'pageview', '" . esc_attr( $full_url ) . "');";
+						$onclick = "__gaTracker('send', 'pageview', '" . esc_attr( $full_url ) . "');";
 					} else {
-						$onclick = "ga('send', 'event', 'download', '" . esc_attr( $full_url ) . "');";
+						$onclick = "__gaTracker('send', 'event', 'download', '" . esc_attr( $full_url ) . "');";
 					}
 
 					break;
 				case 'email':
-					$onclick = "ga('send', 'event', 'mailto', '" . esc_attr( $link['original_url'] ) . "');";
+					$onclick = "__gaTracker('send', 'event', 'mailto', '" . esc_attr( $link['original_url'] ) . "');";
 
 					break;
 				case 'internal-as-outbound':
@@ -173,12 +182,12 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 						$label = 'int';
 					}
 
-					$onclick = "ga('send', 'event', '" . esc_attr( $link['category'] ) . '-' . esc_attr( $label ) . "', '" . esc_attr( $full_url ) . "', '" . esc_attr( strip_tags( $link['link_text'] ) ) . "');";
+					$onclick = "__gaTracker('send', 'event', '" . esc_attr( $link['category'] ) . '-' . esc_attr( $label ) . "', '" . esc_attr( $full_url ) . "', '" . esc_attr( strip_tags( $link['link_text'] ) ) . "');";
 
 					break;
 				case 'outbound':
 					if ( $this->options['track_outbound'] == 1 ) {
-						$onclick = "ga('send', 'event', '" . esc_attr( $link['category'] ) . "', '" . esc_attr( $full_url ) . "', '" . esc_attr( strip_tags( $link['link_text'] ) ) . "');";
+						$onclick = "__gaTracker('send', 'event', '" . esc_attr( $link['category'] ) . "', '" . esc_attr( $full_url ) . "', '" . esc_attr( strip_tags( $link['link_text'] ) ) . "');";
 					}
 
 					break;
@@ -307,7 +316,4 @@ if ( ! class_exists( 'Yoast_GA_Universal' ) ) {
 			return $text;
 		}
 	}
-
-	global $yoast_ga_universal;
-	$yoast_ga_universal = new Yoast_GA_Universal;
 }

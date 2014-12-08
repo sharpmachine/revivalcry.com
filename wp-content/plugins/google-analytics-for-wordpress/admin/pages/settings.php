@@ -13,12 +13,14 @@ settings_errors( 'yoast_google_analytics' );
 	<a class="nav-tab" id="general-tab" href="#top#general"><?php _e( 'General', 'google-analytics-for-wordpress' ); ?></a>
 	<a class="nav-tab" id="universal-tab" href="#top#universal"><?php _e( 'Universal', 'google-analytics-for-wordpress' ); ?></a>
 	<a class="nav-tab" id="advanced-tab" href="#top#advanced"><?php _e( 'Advanced', 'google-analytics-for-wordpress' ); ?></a>
+	<?php do_action( 'yst_ga_custom_tabs-tab' ); ?>
 	<a class="nav-tab" id="debugmode-tab" href="#top#debugmode"><?php _e( 'Debug mode', 'google-analytics-for-wordpress' ); ?></a>
 </h2>
 
 <?php
 echo $yoast_ga_admin->create_form( 'settings' );
 ?>
+<input type="hidden" name="return_tab" id="return_tab" value="general" />
 <div class="tabwrapper">
 	<div id="general" class="gatab">
 		<?php
@@ -90,8 +92,11 @@ echo $yoast_ga_admin->create_form( 'settings' );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Allow anchor', 'google-analytics-for-wordpress' ), 'allow_anchor', null, __( 'This adds a <code><a href="http://code.google.com/apis/analytics/docs/gaJSApiCampaignTracking.html#_gat.GA_Tracker_._setAllowAnchor" target="_blank">_setAllowAnchor</a></code> call to your tracking code, and makes RSS link tagging use a # as well.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Add <code>_setAllowLinker</code>', 'google-analytics-for-wordpress' ), 'add_allow_linker', null, __( 'This adds a <code><a href="http://code.google.com/apis/analytics/docs/gaJS/gaJSApiDomainDirectory.html#_gat.GA_Tracker_._setAllowLinker" target="_blank">_setAllowLinker</a></code> call to your tracking code,  allowing you to use <code>_link</code> and related functions.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->textarea( 'Custom code', 'custom_code', __( 'Not for the average user: this allows you to add a line of code, to be added before the <code>trackPageview</code> call.', 'google-analytics-for-wordpress' ) );
+
+		do_action( 'yst_ga_advanced-tab' );
 		?>
 	</div>
+	<?php do_action( 'yst_ga_custom_tabs-content' ); ?>
 	<div id="debugmode" class="gatab">
 		<?php
 		echo '<h2>' . __( 'Debug settings', 'google-analytics-for-wordpress' ) . '</h2>';
