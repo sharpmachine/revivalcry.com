@@ -576,24 +576,19 @@ class EM_Location extends EM_Object {
 	
 	function get_permalink(){	
 		if( EM_MS_GLOBAL ){
+			//if no blog id defined, assume it belongs to the main blog
+			$blog_id = empty($this->blog_id) ? get_current_site()->blog_id:$this->blog_id;
 			if( get_site_option('dbem_ms_mainblog_locations') ){
+				//all locations belong to the main blog
 				$link = get_blog_permalink( get_current_site()->blog_id, $this->post_id);
-			}else{
-				if( get_site_option('dbem_ms_global_locations_links') ){
-					//linking directly to the blog, we should be on the main blog here
-					if( !empty($this->blog_id) && $this->blog_id != get_current_blog_id() ){
-						$link = get_blog_permalink( $this->blog_id, $this->post_id);
-					}else{
-						//if no blog_id is given, we assume it's the main site
-						$link = get_blog_permalink( get_current_site()->blog_id, $this->post_id);
-					}
-				}elseif( !empty($this->blog_id) && is_main_site() && $this->blog_id != get_current_blog_id() ){
+			}elseif( $blog_id != get_current_blog_id() ){
+				//decide whether to give a link to the blog the location originates from or to show it on the main site
+				if( !get_site_option('dbem_ms_global_locations_links') && is_main_site() && get_option('dbem_locations_page') ){
 					//showing subsite locations on main site, create a custom link
-					if( get_option('dbem_locations_page') ){
-						$link = trailingslashit(get_permalink(get_option('dbem_locations_page')).get_site_option('dbem_ms_locations_slug',EM_LOCATION_SLUG).'/'.$this->location_slug.'-'.$this->location_id);
-					}else{
-						$link = trailingslashit(home_url()).EM_POST_TYPE_LOCATION_SLUG.'/'.get_site_option('dbem_ms_events_slug',EM_LOCATION_SLUG).'/'.$this->location_slug.'-'.$this->location_id;
-					}
+					$link = trailingslashit(get_permalink(get_option('dbem_locations_page')).get_site_option('dbem_ms_locations_slug',EM_LOCATION_SLUG).'/'.$this->location_slug.'-'.$this->location_id);
+				}else{
+					//if location doesn't belong to current blog and/or if main blog doesn't have a locations page, link directly to the blog it belongs to
+					$link = get_blog_permalink( $blog_id, $this->post_id);					
 				}
 			}
 		}
@@ -822,26 +817,33 @@ class EM_Location extends EM_Object {
 							}else{
 								$image_size = explode(',', $placeholders[3][$key]);
 								if( self::array_is_numeric($image_size) && count($image_size) > 1 ){
-								    if( get_option('dbem_disable_timthumb') ){
-									    if( EM_MS_GLOBAL && get_current_blog_id() != $this->blog_id ){
-									        //location belongs to another blog, so switch blog then call the default wp fucntion
-									        switch_to_blog($this->blog_id);
-								    		$replace = get_the_post_thumbnail($this->ID, $image_size);
-								    		restore_current_blog();
-									    }else{
-									    	$replace = get_the_post_thumbnail($this->ID, $image_size);
-									    }
+								    if( EM_MS_GLOBAL && get_current_blog_id() != $this->blog_id ){
+    								    //get a thumbnail
+    								    if( get_option('dbem_disable_thumbnails') ){
+        								    $image_attr = '';
+        								    $image_args = array();
+        								    if( empty($image_size[1]) && !empty($image_size[0]) ){    
+        								        $image_attr = 'width="'.$image_size[0].'"';
+        								        $image_args['w'] = $image_size[0];
+        								    }elseif( empty($image_size[0]) && !empty($image_size[1]) ){
+        								        $image_attr = 'height="'.$image_size[1].'"';
+        								        $image_args['h'] = $image_size[1];
+        								    }elseif( !empty($image_size[0]) && !empty($image_size[1]) ){
+        								        $image_attr = 'width="'.$image_size[0].'" height="'.$image_size[1].'"';
+        								        $image_args = array('w'=>$image_size[0], 'h'=>$image_size[1]);
+        								    }
+    								        $replace = "<img src='".esc_url(em_add_get_params($image_url, $image_args))."' alt='".esc_attr($this->location_name)."' $image_attr />";
+    								    }else{
+    								        //location belongs to another blog, so switch blog then call the default wp fucntion
+        								    if( EM_MS_GLOBAL && get_current_blog_id() != $this->blog_id ){
+        								        switch_to_blog($this->blog_id);
+        								        $switch_back = true;
+        								    }
+    								        $replace = get_the_post_thumbnail($this->ID, $image_size);
+    								        if( !empty($switch_back) ){ restore_current_blog(); }
+    								    }
 								    }else{
-										global $blog_id;
-										if ( is_multisite() && $blog_id > 0) {
-											$imageParts = explode('/blogs.dir/', $image_url);
-											if (isset($imageParts[1])) {
-												$image_url = network_site_url('/wp-content/blogs.dir/'. $blog_id. '/' . $imageParts[1]);
-											}
-										}
-										$width = ($image_size[0]) ? 'width="'.esc_attr($image_size[0]).'"':'';
-										$height = ($image_size[1]) ? 'height="'.esc_attr($image_size[1]).'"':'';
-									    $replace = "<img src='".esc_url(em_get_thumbnail_url($image_url, $image_size[0], $image_size[1]))."' alt='".esc_attr($this->location_name)."' $width $height />";
+								    	$replace = get_the_post_thumbnail($this->ID, $image_size);
 								    }
 								}else{
 									$replace = "<img src='".$image_url."' alt='".esc_attr($this->location_name)."'/>";
@@ -902,7 +904,7 @@ class EM_Location extends EM_Object {
 						$args['page'] = (!empty($_REQUEST['pno']) && is_numeric($_REQUEST['pno']) )? $_REQUEST['pno'] : 1;
 					    $replace = EM_Events::output($args);
 					} else {
-						$replace = get_option('dbem_location_event_list_item_header_format').get_option('dbem_location_no_events_message').get_option('dbem_location_event_list_item_footer_format');
+						$replace = get_option('dbem_location_no_events_message');
 					}
 					break;
 				case '#_LOCATIONNEXTEVENT':

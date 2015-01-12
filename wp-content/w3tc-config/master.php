@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'version' => '0.9.4',
+	'version' => '0.9.4.1',
 	'cluster.messagebus.debug' => false,
 	'cluster.messagebus.enabled' => false,
 	'cluster.messagebus.sns.region' => '',
@@ -408,7 +408,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => true,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '1410222622',
+	'browsercache.timestamp' => '1419282544',
 	'mobile.enabled' => true,
 	'mobile.rgroups' => array(
 		'high' => array(

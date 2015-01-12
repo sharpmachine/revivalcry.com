@@ -1,16 +1,18 @@
 === WP-Paginate ===
-Contributors: emartin24 
-Donate link: http://www.ericmmartin.com/donate/
+Contributors: StudioFuel, emartin24
 Tags: paginate, pagination, navigation, page, wp-paginate, comments, rtl, seo, usability
 Requires at least: 2.6.0 (2.7.0 for comments pagination)
-Tested up to: 3.9.1
-Stable tag: 1.2.5
+Tested up to: 4.1
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
 WP-Paginate is a simple and flexible pagination plugin which provides users with better navigation on your WordPress site.
 
 == Description ==
+
+= Latest News =
+> I am happy to announce that, effective December 15, 2014, Noah Cinquini and the team at Studio Fuel (studiofuel.com) have offered to take over maintenance, support, and development of WP-Paginate! A huge thanks to Noah and all of the people that have used WP-Paginate over the last 5 years! 
 
 WP-Paginate is a simple and flexible pagination plugin which provides users with better navigation on your WordPress site.
 
@@ -150,6 +152,20 @@ This allows you to use the `.wp-paginate-comments` styles, already in `wp-pagina
 N/A
 
 == Changelog ==
+
+= 1.3.1 =
+* Fixed bug that prevented a wp-paginate.css stylesheet from loading from a child theme (reported by sunamumaya)
+* Tested plugin against WordPress 4.1
+
+= 1.3 =
+* Plugin ownership transfered to Studio Fuel (http://studiofuel.com) - no functional changes were made
+* Tested plugin against WordPress 4.0.1
+
+= 1.2.6 =
+* Removed final closing PHP tag
+  Github pull request via DeanMarkTaylor
+* Do not add the title element if the title is empty
+  Github pull request via Claymm / chaika-design
 
 = 1.2.5 =
 * Remove PHP4 support to resolve PHP Strict warning

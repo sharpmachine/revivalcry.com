@@ -57,8 +57,10 @@
 	<tr class="totals">
 		<td colspan="3" rowspan="5">
 			<?php if (shopp('cart','needs-shipping-estimates')): ?>
+			<div style="display:none;">
 			<strong>Enter Your Zip Code:</strong>
 			<?php shopp('cart','shipping-estimates'); ?>
+			</div>
 			<?php endif; ?>
 			<?php shopp('cart','promo-code'); ?>
 		</td>
