@@ -14,9 +14,9 @@ foreach( $EM_Multiple_Booking->get_bookings() as $EM_Booking ): ?>
 echo $EM_Ticket_Booking->get_ticket()->ticket_name; 
 ?>
 
-Quantity: <?php echo $EM_Ticket_Booking->get_spaces(); ?>
+<?php _e_emp('Quantity','dbem'); ?>: <?php echo $EM_Ticket_Booking->get_spaces(); ?>
 
-Price: <?php echo em_get_currency_formatted($EM_Ticket_Booking->get_price()); ?>
+<?php _e_emp('Price','dbem'); ?>: <?php echo em_get_currency_formatted($EM_Ticket_Booking->get_price()); ?>
 
 
 <?php endforeach; ?>

@@ -40,10 +40,10 @@ class EM_Multiple_Bookings_Admin {
         global $save_button;
         ?>
         <div  class="postbox " id="em-opt-multiple-bookings" >
-        	<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Beta)</em></span></h3>
+        	<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e('Multiple Bookings Mode','em-pro'); ?> <em>(Beta)</em></span></h3>
         	<div class="inside">
         		<table class='form-table'>
-        			<tr><td colspan='2'>
+        			<tr class="em-boxheader"><td colspan='2'>
         				<p>
         					<?php _e('Multiple Bookings Mode enables your visitors to make bookings follow a flow similar to that of a shopping cart, meaning users can book multiple events and pay for them in one go.','em-pro'); ?>
         					<a href="http://wp-events-plugin.com/documentation/multiple-booking-mode/"><?php echo sprintf(__('More about %s.','em-pro'), __('Multiple Bookings Mode','em-pro')); ?></a>
@@ -54,9 +54,9 @@ class EM_Multiple_Bookings_Admin {
         			?>
         			<tbody id="dbem-js-multiple-bookings">
         				<tr>
-							<td><?php echo __( 'Checkout Page', 'em-pro'); ?></td>
+							<th><?php echo __( 'Checkout Page', 'em-pro'); ?></th>
 							<td>
-								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_checkout_page', 'selected'=>get_option('dbem_multiple_bookings_checkout_page'), 'show_option_none'=>'['.__('None', 'dbem').']' )); ?>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_checkout_page', 'selected'=>get_option('dbem_multiple_bookings_checkout_page'), 'show_option_none'=>'['.esc_html__emp('None', 'dbem').']' )); ?>
 								<br />
 								<em>
 									<?php
@@ -71,9 +71,9 @@ class EM_Multiple_Bookings_Admin {
 	        				em_options_select( __('Checkout Page Booking Form','em-pro'), 'dbem_multiple_bookings_form', EM_Booking_Form::get_forms_names(), __('This form will be shown on the checkout page, which should include user fields you may want when registering new users. Any non-user fields will be added as supplementary information to every booking, if you have identical Field IDs on the individual event booking form, that field value will be saved to the individual booking instead.','em-pro'));
 	        			?>
         				<tr>
-							<td><?php echo __( 'Cart Page', 'em-pro'); ?></td>
+							<th><?php echo __( 'Cart Page', 'em-pro'); ?></th>
 							<td>
-								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_cart_page', 'selected'=>get_option('dbem_multiple_bookings_cart_page'), 'show_option_none'=>'['.__('None', 'dbem').']' )); ?>
+								<?php wp_dropdown_pages(array('name'=>'dbem_multiple_bookings_cart_page', 'selected'=>get_option('dbem_multiple_bookings_cart_page'), 'show_option_none'=>'['.esc_html__emp('None', 'dbem').']' )); ?>
 								<br />
 								<em><?php 
 									echo __('This page will display the events the user has chosen to book and allow them to edit their bookings before checkout.','em-pro');
@@ -110,69 +110,75 @@ class EM_Multiple_Bookings_Admin {
     
 	public static function emails(){
 	    global $save_button;
-		$bookings_placeholders = '<a href="'.EM_ADMIN_URL .'&amp;page=events-manager-help#booking-placeholders">'. __('Booking Related Placeholders','dbem') .'</a>';
-		$bookings_placeholder_tip = " ". sprintf(__('This accepts %s placeholders.','dbem'), $bookings_placeholders);
+		$bookings_placeholders = '<a href="'.EM_ADMIN_URL .'&amp;page=events-manager-help#booking-placeholders">'. esc_html__emp('Booking Related Placeholders','dbem') .'</a>';
+		$bookings_placeholder_tip = " ". sprintf(esc_html__emp('This accepts %s placeholders.','dbem'), $bookings_placeholders);
 		?>
 		<div  class="postbox " id="em-opt-multiple-booking-emails" >
-		<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e ( 'Multiple Booking Email Templates', 'em-pro' ); ?> </span></h3>
+		<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3><span><?php _e ( 'Multiple Booking Email Templates', 'em-pro' ); ?> </span></h3>
 		<div class="inside">
-            <p><?php echo sprintf(__( 'When users make a booking in Multiple Bookings Mode or cancels their booking, these emails get sent to the attendee and administrator emails you assign in the %s section above.', 'dbem' ), '<code>'.__( 'Booking Email Templates', 'dbem' ).'</code>'); ?></p>
-            <p><?php _e('When administrators modify a set of multiple bookings rather than individual events, these templates will be used to notify the attendee.','em-pro'); ?></p>
+		    <div class="em-boxheader">
+                <p><?php echo sprintf(__( 'When users make a booking in Multiple Bookings Mode or cancels their booking, these emails get sent to the attendee and administrator emails you assign in the %s section above.', 'em-pro' ), '<code>'.esc_html__emp( 'Booking Email Templates', 'dbem' ).'</code>'); ?></p>
+                <p><?php _e('When administrators modify a set of multiple bookings rather than individual events, these templates will be used to notify the attendee.','em-pro'); ?></p>
+            </div>
 			<table class='form-table'>
 				<?php
-				$email_subject_tip = __('You can disable this email by leaving the subject blank.','dbem');
-				em_options_radio_binary ( __( 'Email event owners?', 'dbem' ), 'dbem_multiple_bookings_contact_email', sprintf(__( 'If enabled, additional emails will be sent to administrators and event owners for EVERY event booked based on the above %s settings.', 'dbem' ), '<code>'.__( 'Booking Email Templates', 'dbem' ).'</code>') );
+				$email_subject_tip = esc_html__emp('You can disable this email by leaving the subject blank.','dbem');
+				em_options_radio_binary ( __( 'Email event owners?', 'em-pro' ), 'dbem_multiple_bookings_contact_email', sprintf(__( 'If enabled, additional emails will be sent to administrators and event owners for EVERY event booked based on the above %s settings.', 'em-pro' ), '<code>'.esc_html__emp( 'Booking Email Templates', 'dbem' ).'</code>') );
 				?>
-				<tr><td colspan='2'><strong style="font-size:1.2em"><?php _e('Event Admin/Owner Emails', 'dbem'); ?></strong></td></tr>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Contact person booking confirmed','dbem'); ?></strong></p>
-					<em><?php echo __('An email will be sent to the event contact when a booking is first made.','dbem').$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Contact person email subject', 'dbem' ), 'dbem_multiple_bookings_contact_email_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Contact person email', 'dbem' ), 'dbem_multiple_bookings_contact_email_body', '' );
-				?>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Contact person booking cancelled','dbem') ?></strong></p>
-					<em><?php echo __('An email will be sent to the event contact if someone cancels their booking.','dbem').$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Contact person cancellation subject', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Contact person cancellation email', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_body', '' );
-				?>
-				<tr><td colspan='2'><strong style="font-size:1.2em"><?php _e('Booked User Emails', 'dbem'); ?></strong></td></tr>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Confirmed booking email','dbem') ?></strong></p>
-					<em><?php echo __('This is sent when a person\'s booking is confirmed. This will be sent automatically if approvals are required and the booking is approved. If approvals are disabled, this is sent out when a user first submits their booking.','dbem').$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Booking confirmed email subject', 'dbem' ), 'dbem_multiple_bookings_email_confirmed_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Booking confirmed email', 'dbem' ), 'dbem_multiple_bookings_email_confirmed_body', '' );
-				?>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Pending booking email','dbem') ?></strong></p>
-					<em><?php echo __( 'This will be sent to the person when they first submit their booking. Not relevant if bookings don\'t require approval.', 'dbem' ).$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Booking pending email subject', 'dbem' ), 'dbem_multiple_bookings_email_pending_subject', $email_subject_tip);
-				em_options_textarea ( __( 'Booking pending email', 'dbem' ), 'dbem_multiple_bookings_email_pending_body','') ;
-				?>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Rejected booking email','dbem') ?></strong></p>
-					<em><?php echo __( 'This will be sent automatically when a booking is rejected. Not relevant if bookings don\'t require approval.', 'dbem' ).$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Booking rejected email subject', 'dbem' ), 'dbem_multiple_bookings_email_rejected_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Booking rejected email', 'dbem' ), 'dbem_multiple_bookings_email_rejected_body', '' );
-				?>
-				<tr><td colspan='2'>
-					<p><strong><?php _e('Booking cancelled','dbem') ?></strong></p>
-					<em><?php echo __('This will be sent when a user cancels their booking.','dbem').$bookings_placeholder_tip ?></em>
-				</td></tr>
-				<?php
-				em_options_input_text ( __( 'Booking cancelled email subject', 'dbem' ), 'dbem_multiple_bookings_email_cancelled_subject', $email_subject_tip );
-				em_options_textarea ( __( 'Booking cancelled email', 'dbem' ), 'dbem_multiple_bookings_email_cancelled_body', '' );
-				?>
+				<tr class="em-header"><td colspan='2'><h4><?php esc_html_e_emp('Event Admin/Owner Emails', 'dbem'); ?></h4></td></tr>
+				<tbody class="em-subsection">
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Contact person booking confirmed','dbem'); ?></h5>
+    					<em><?php esc_html_e_emp('An email will be sent to the event contact when a booking is first made.','dbem').$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Contact person email subject', 'dbem' ), 'dbem_multiple_bookings_contact_email_subject', $email_subject_tip );
+    				em_options_textarea ( esc_html__emp( 'Contact person email', 'dbem' ), 'dbem_multiple_bookings_contact_email_body', '' );
+    				?>
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Contact person booking cancelled','dbem') ?></h5>
+    					<em><?php esc_html_e_emp('An email will be sent to the event contact if someone cancels their booking.','dbem').$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Contact person cancellation subject', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_subject', $email_subject_tip );
+    				em_options_textarea ( esc_html__emp( 'Contact person cancellation email', 'dbem' ), 'dbem_multiple_bookings_contact_email_cancelled_body', '' );
+    				?>
+				</tbody>
+				<tbody class="em-subsection">
+    				<tr class="em-header"><td colspan='2'><h4><?php esc_html_e_emp('Booked User Emails', 'dbem'); ?></h4></td></tr>
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Confirmed booking email','dbem') ?></h5>
+    					<em><?php esc_html_e_emp('This is sent when a person\'s booking is confirmed. This will be sent automatically if approvals are required and the booking is approved. If approvals are disabled, this is sent out when a user first submits their booking.','dbem').$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Booking confirmed email subject', 'dbem' ), 'dbem_multiple_bookings_email_confirmed_subject', $email_subject_tip );
+    				em_options_textarea ( esc_html__emp( 'Booking confirmed email', 'dbem' ), 'dbem_multiple_bookings_email_confirmed_body', '' );
+    				?>
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Pending booking email','dbem') ?></h5>
+    					<em><?php esc_html_e_emp( 'This will be sent to the person when they first submit their booking. Not relevant if bookings don\'t require approval.', 'dbem' ).$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Booking pending email subject', 'dbem' ), 'dbem_multiple_bookings_email_pending_subject', $email_subject_tip);
+    				em_options_textarea ( esc_html__emp( 'Booking pending email', 'dbem' ), 'dbem_multiple_bookings_email_pending_body','') ;
+    				?>
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Rejected booking email','dbem') ?></h5>
+    					<em><?php esc_html_e_emp( 'This will be sent automatically when a booking is rejected. Not relevant if bookings don\'t require approval.', 'dbem' ).$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Booking rejected email subject', 'dbem' ), 'dbem_multiple_bookings_email_rejected_subject', $email_subject_tip );
+    				em_options_textarea ( esc_html__emp( 'Booking rejected email', 'dbem' ), 'dbem_multiple_bookings_email_rejected_body', '' );
+    				?>
+    				<tr class="em-subheader"><td colspan='2'>
+    					<h5><?php esc_html_e_emp('Booking cancelled','dbem') ?></h5>
+    					<em><?php esc_html_e_emp('This will be sent when a user cancels their booking.','dbem').$bookings_placeholder_tip ?></em>
+    				</td></tr>
+    				<?php
+    				em_options_input_text ( esc_html__emp( 'Booking cancelled email subject', 'dbem' ), 'dbem_multiple_bookings_email_cancelled_subject', $email_subject_tip );
+    				em_options_textarea ( esc_html__emp( 'Booking cancelled email', 'dbem' ), 'dbem_multiple_bookings_email_cancelled_body', '' );
+    				?>
+    			</tbody>
 				<?php echo $save_button; ?>
 			</table>
 		</div> <!-- . inside -->

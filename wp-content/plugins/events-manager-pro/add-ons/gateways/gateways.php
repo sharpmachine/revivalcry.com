@@ -25,10 +25,7 @@ class EM_Gateways {
 			add_filter('em_multiple_booking_get_post',array('EM_Gateways', 'em_booking_get_post'), 10, 2);
 			add_filter('em_action_emp_checkout', array('EM_Gateways','em_action_booking_add'),10,2); //adds gateway var to feedback
 			//Booking Form Modifications
-				//buttons only way, oudated but still possible, will eventually depreciated this once an API is out, so use the latter pls
-				add_filter('em_checkout_form_buttons', array('EM_Gateways','booking_form_buttons'),10,2); //Replace button with booking buttons
-				//new way, with payment selector
-				add_action('em_checkout_form_footer', array('EM_Gateways','booking_form_footer'),10,2);
+			add_action('em_checkout_form_footer', array('EM_Gateways','mb_booking_form_footer'),10,2);
 		}else{
 		    //Normal Bookings mode, or manual booking
 			add_action('em_booking_add', array('EM_Gateways', 'em_booking_add'), 10, 3);
@@ -180,6 +177,13 @@ class EM_Gateways {
 		}
 	}
 	
+	static function mb_booking_form_footer(){
+	    $EM_Multiple_Booking = EM_Multiple_Bookings::get_multiple_booking();
+	    if( $EM_Multiple_Booking->get_price() > 0 ){
+	        self::booking_form_footer();
+	    }
+	}
+	
 	/**
 	 * Gets called at the bottom of the form before the submit button. 
 	 * Outputs a gateway selector and allows gateways to hook in and provide their own payment information to be submitted.
@@ -275,7 +279,7 @@ class EM_Gateways {
 	 * ----------------------------------------------------------
 	 */
 	
-	function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
+	public static function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
 		global $EM_Event;
 		if( $col == 'gateway' ){
 			//get latest transaction with an ID
@@ -289,7 +293,7 @@ class EM_Gateways {
 		return $value;
 	}
 	
-	function em_bookings_table_cols_template($template, $EM_Bookings_Table){
+	public static function em_bookings_table_cols_template($template, $EM_Bookings_Table){
 		$template['gateway'] = __('Gateway Used','em-pro');
 		return $template;
 	}
@@ -315,6 +319,7 @@ class EM_Gateways {
 			$associated_fields = get_option('emp_gateway_customer_fields');
 			$form_field_id = $associated_fields[$field_name];
 		}
+		if( empty($form_field_id) ) return '';
 		//if no-user mode, discard the $user_id, we only deal with the booking object
 		if( get_option('dbem_bookings_registration_disable') && $user_id == get_option('dbem_bookings_registration_user') ) $user_id = false;
 		//determine field value

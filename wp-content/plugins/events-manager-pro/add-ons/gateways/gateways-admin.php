@@ -14,7 +14,7 @@ class EM_Gateways_Admin{
 		?>
 			<a name="pro-api"></a>
 			<div  class="postbox " id="em-opt-gateway-options">
-			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Payment Gateway Options', 'em-pro' ); ?> </span></h3>
+			<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Payment Gateway Options', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table'>
 					<?php 
@@ -52,22 +52,17 @@ class EM_Gateways_Admin{
 				break;
 		}
 		$messages = array();
-		$messages[1] = __('Gateway updated.');
-		$messages[2] = __('Gateway not updated.');
-		$messages[3] = __('Gateway activated.');
-		$messages[4] = __('Gateway not activated.');
-		$messages[5] = __('Gateway deactivated.');
-		$messages[6] = __('Gateway not deactivated.');
-		$messages[7] = __('Gateway activation toggled.');
+		$messages[1] = __('Gateway activated.', 'em-pro');
+		$messages[2] = __('Gateway not activated.', 'em-pro');
+		$messages[3] = __('Gateway deactivated.', 'em-pro');
+		$messages[4] = __('Gateway not deactivated.', 'em-pro');
+		$messages[5] = __('Gateway activation toggled.', 'em-pro');
 		?>
 		<div class='wrap'>
 			<div class="icon32" id="icon-plugins"><br></div>
 			<h2><?php _e('Edit Gateways','em-pro'); ?></h2>
 			<?php
-			if ( isset($_GET['msg']) ) {
-				echo '<div id="message" class="updated fade"><p>' . $messages[(int) $_GET['msg']] . '</p></div>';
-				$_SERVER['REQUEST_URI'] = remove_query_arg(array('message'), $_SERVER['REQUEST_URI']);
-			}
+			if ( isset($_GET['msg']) && !empty($messages[$_GET['msg']]) ) echo '<div id="message" class="updated fade"><p>' . $messages[$_GET['msg']] . '</p></div>';
 			?>
 			<form method="post" action="" id="posts-filter">
 				<div class="tablenav">
@@ -191,9 +186,9 @@ class EM_Gateways_Admin{
 					$key = addslashes ( $_REQUEST ['gateway'] );
 					if (isset ( $EM_Gateways [$key] )) {
 						if ($EM_Gateways [$key]->deactivate ()) {
-							wp_safe_redirect ( add_query_arg ( 'msg', 5, wp_get_referer () ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 3, wp_get_referer () ) );
 						} else {
-							wp_safe_redirect ( add_query_arg ( 'msg', 6, wp_get_referer () ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 4, wp_get_referer () ) );
 						}
 					}
 					break;		
@@ -201,9 +196,9 @@ class EM_Gateways_Admin{
 					$key = addslashes ( $_REQUEST ['gateway'] );
 					if (isset ( $EM_Gateways[$key] )) {
 						if ($EM_Gateways[$key]->activate ()) {
-							wp_safe_redirect ( add_query_arg ( 'msg', 3, wp_get_referer () ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 1, wp_get_referer () ) );
 						} else {
-							wp_safe_redirect ( add_query_arg ( 'msg', 4, wp_get_referer () ) );
+							wp_safe_redirect ( add_query_arg ( 'msg', 2, wp_get_referer () ) );
 						}
 					}
 					break;		
@@ -214,15 +209,15 @@ class EM_Gateways_Admin{
 							$EM_Gateways [$key]->toggleactivation ();				
 						}
 					}
-					wp_safe_redirect ( add_query_arg ( 'msg', 7, wp_get_referer () ) );
+					wp_safe_redirect ( add_query_arg ( 'msg', 5, wp_get_referer () ) );
 					break;		
 				case 'updated' :
 					$gateway = addslashes ( $_REQUEST ['gateway'] );		
 					check_admin_referer ( 'updated-'.$EM_Gateways[$gateway]->gateway );
 					if ($EM_Gateways[$gateway]->update ()) {
-						wp_safe_redirect ( add_query_arg ( 'msg', 1, EM_ADMIN_URL.'&page=' . $page ) );
+						wp_safe_redirect ( add_query_arg ( 'msg', 'updated', wp_get_referer () ) );
 					} else {
-						wp_safe_redirect ( add_query_arg ( 'msg', 2, EM_ADMIN_URL.'&page=' . $page ) );
+						wp_safe_redirect ( add_query_arg ( 'msg', 'error', wp_get_referer () ) );
 					}			
 					break;
 			}

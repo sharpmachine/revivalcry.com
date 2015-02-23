@@ -11,21 +11,20 @@ if( empty($EM_Multiple_Booking->bookings) ){
 	return;
 }
 ?>
-<div id="em-booking" class="em-booking">
-	<form id='em-booking-form' class="em-booking-form" name='booking-form' method='post' action='<?php echo apply_filters('em_checkout_form_action_url',$_SERVER['REQUEST_URI']); ?>#em-booking'>
-		<?php
-			global $EM_Notices;
-			echo $EM_Notices;
-		?>
+<div id="em-booking" class="em-booking <?php if( get_option('dbem_css_rsvp') ) echo 'css-booking'; ?>">
+	<?php
+		global $EM_Notices;
+		echo $EM_Notices;
+		do_action('em_checkout_form_before_summary', $EM_Multiple_Booking); //do not delete 
+	?>
+	<div class="em-cart-table-contents">
+		<?php emp_locate_template('multiple-bookings/cart-table.php',true); ?>
+	</div>
+	<?php do_action('em_checkout_form_after_summary', $EM_Multiple_Booking); //do not delete ?>
+		
+	<form id='em-booking-form' class="em-booking-form" name='booking-form' method='post' action='<?php echo apply_filters('em_checkout_form_action_url',''); ?>#em-booking'>
 	 	<input type='hidden' name='action' value='emp_checkout'/>
 	 	<input type='hidden' name='_wpnonce' value='<?php echo wp_create_nonce('emp_checkout'); ?>'/>
-	 	
-		<?php do_action('em_checkout_form_before_summary', $EM_Multiple_Booking); //do not delete ?>
-		<div class="em-cart-table-contents">
-			<?php emp_locate_template('multiple-bookings/cart-table.php',true); ?>
-		</div>
-		<?php do_action('em_checkout_form_after_summary', $EM_Multiple_Booking); //do not delete ?>
-		
 		<div class='em-booking-form-details'>
 			<?php echo EM_Booking_Form::get_form(false, $EM_Multiple_Booking); ?>
 			<?php do_action('em_checkout_form_footer', $EM_Multiple_Booking); //do not delete ?>

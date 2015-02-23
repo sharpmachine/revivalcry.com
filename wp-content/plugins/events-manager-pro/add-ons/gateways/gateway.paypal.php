@@ -147,9 +147,9 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	 */
 	function bookings_table_actions( $actions, $EM_Booking ){
 		return array(
-			'approve' => '<a class="em-bookings-approve em-bookings-approve-offline" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->booking_id)).'">'.__('Approve','dbem').'</a>',
-			'delete' => '<span class="trash"><a class="em-bookings-delete" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->booking_id)).'">'.__('Delete','dbem').'</a></span>',
-			'edit' => '<a class="em-bookings-edit" href="'.em_add_get_params($EM_Booking->get_event()->get_bookings_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null)).'">'.__('Edit/View','dbem').'</a>',
+			'approve' => '<a class="em-bookings-approve em-bookings-approve-offline" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->booking_id)).'">'.esc_html__emp('Approve','dbem').'</a>',
+			'delete' => '<span class="trash"><a class="em-bookings-delete" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->booking_id)).'">'.esc_html__emp('Delete','dbem').'</a></span>',
+			'edit' => '<a class="em-bookings-edit" href="'.em_add_get_params($EM_Booking->get_event()->get_bookings_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null)).'">'.esc_html__emp('Edit/View','dbem').'</a>',
 		);
 	}
 	
@@ -173,13 +173,25 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			'currency_code' => get_option('dbem_bookings_currency', 'USD'),
 			'notify_url' =>$notify_url,
 			'custom' => $EM_Booking->booking_id.':'.$EM_Booking->event_id,
-			'charset' => 'UTF-8'
+			'charset' => 'UTF-8',
+		    'bn'=>'NetWebLogic_SP'
 		);
 		if( get_option('em_'. $this->gateway . "_lc" ) ){
 		    $paypal_vars['lc'] = get_option('em_'. $this->gateway . "_lc" );
 		}
+		//address fields`and name/email fields to prefill on checkout page (if available)
+		$paypal_vars['email'] = $EM_Booking->get_person()->user_email;
+		$paypal_vars['first_name'] = $EM_Booking->get_person()->first_name;
+		$paypal_vars['last_name'] = $EM_Booking->get_person()->last_name;
+        if( EM_Gateways::get_customer_field('address', $EM_Booking) != '' ) $paypal_vars['address1'] = EM_Gateways::get_customer_field('address', $EM_Booking);
+        if( EM_Gateways::get_customer_field('address_2', $EM_Booking) != '' ) $paypal_vars['address2'] = EM_Gateways::get_customer_field('address_2', $EM_Booking);
+        if( EM_Gateways::get_customer_field('city', $EM_Booking) != '' ) $paypal_vars['city'] = EM_Gateways::get_customer_field('city', $EM_Booking);
+        if( EM_Gateways::get_customer_field('state', $EM_Booking) != '' ) $paypal_vars['state'] = EM_Gateways::get_customer_field('state', $EM_Booking);
+        if( EM_Gateways::get_customer_field('zip', $EM_Booking) != '' ) $paypal_vars['zip'] = EM_Gateways::get_customer_field('zip', $EM_Booking);
+        if( EM_Gateways::get_customer_field('country', $EM_Booking) != '' ) $paypal_vars['country'] = EM_Gateways::get_customer_field('country', $EM_Booking);
+        
 		//tax is added regardless of whether included in ticket price, otherwise we can't calculate post/pre tax discounts
-		if( $EM_Booking->get_price_taxes() > 0 ){ 
+		if( $EM_Booking->get_price_taxes() > 0 && !get_option('em_'. $this->gateway . "_inc_tax" ) ){ 
 			$paypal_vars['tax_cart'] = round($EM_Booking->get_price_taxes(), 2);
 		}
 		if( get_option('em_'. $this->gateway . "_return" ) != "" ){
@@ -198,7 +210,11 @@ class EM_Gateway_Paypal extends EM_Gateway {
 		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){ /* @var $EM_Ticket_Booking EM_Ticket_Booking */
 		    //divide price by spaces for per-ticket price
 		    //we divide this way rather than by $EM_Ticket because that can be changed by user in future, yet $EM_Ticket_Booking will change if booking itself is saved.
-		    $price = $EM_Ticket_Booking->get_price() / $EM_Ticket_Booking->get_spaces();
+		    if( !get_option('em_'. $this->gateway . "_inc_tax" ) ){
+		    	$price = $EM_Ticket_Booking->get_price() / $EM_Ticket_Booking->get_spaces();
+		    }else{
+		    	$price = $EM_Ticket_Booking->get_price_with_taxes() / $EM_Ticket_Booking->get_spaces();
+		    }
 			if( $price > 0 ){
 				$paypal_vars['item_name_'.$count] = wp_kses_data($EM_Ticket_Booking->get_ticket()->name);
 				$paypal_vars['quantity_'.$count] = $EM_Ticket_Booking->get_spaces();
@@ -245,8 +261,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			$req = 'cmd=_notify-validate';
 			if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 			foreach ($_POST as $k => $v) {
-				if (get_magic_quotes_gpc()) $v = stripslashes($v);
-				$req .= '&' . $k . '=' . urlencode($v);
+				$req .= '&' . $k . '=' . urlencode(stripslashes($v));
 			}
 			
 			@set_time_limit(60);
@@ -254,7 +269,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			//add a CA certificate so that SSL requests always go through
 			add_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			//using WP's HTTP class
-			$ipn_verification_result = wp_remote_get($domain.'?'.$req);	
+			$ipn_verification_result = wp_remote_get($domain.'?'.$req, array('httpversion', '1.1'));
 			remove_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			
 			if ( !is_wp_error($ipn_verification_result) && $ipn_verification_result['body'] == 'VERIFIED' ) {
@@ -262,7 +277,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 				EM_Pro::log( $_POST['payment_status']." successfully received for {$_POST['mc_gross']} {$_POST['mc_currency']} (TXN ID {$_POST['txn_id']}) - Custom Info: {$_POST['custom']}", 'paypal');
 			}else{
 			    //log error if needed, send error header and exit
-				EM_Pro::log( array('IPN Verification Error', 'WP_Error'=> $ipn_verification_result, '$_POST'=> $_POST), 'paypal' );
+				EM_Pro::log( array('IPN Verification Error', 'WP_Error'=> $ipn_verification_result, '$_POST'=> $_POST, '$req'=>$domain.'?'.$req), 'paypal' );
 			    header('HTTP/1.0 502 Bad Gateway');
 			    exit;
 			}
@@ -361,13 +376,17 @@ class EM_Gateway_Paypal extends EM_Gateway {
 						// case: various error cases		
 				}
 			}else{
-				if( $_POST['payment_status'] == 'Completed' || $_POST['payment_status'] == 'Processed' ){
+				if( is_numeric($event_id) && is_numeric($booking_id) && ($_POST['payment_status'] == 'Completed' || $_POST['payment_status'] == 'Processed') ){
 					$message = apply_filters('em_gateway_paypal_bad_booking_email',"
 A Payment has been received by PayPal for a non-existent booking. 
 
 Event Details : %event%
 
-It may be that this user's booking has timed out yet they proceeded with payment at a later stage.
+It may be that this user's booking has timed out yet they proceeded with payment at a later stage. 
+							
+In some cases, it could be that other payments not related to Events Manager are triggering this error. If that's the case, you can prevent this from happening by changing the URL in your IPN settings to:
+
+". get_home_url() ." 
 
 To refund this transaction, you must go to your PayPal account and search for this transaction:
 
@@ -381,10 +400,8 @@ If there is still space available, the user must book again.
 Sincerely,
 Events Manager
 					", $booking_id, $event_id);
-					if( !empty($event_id) ){
-						$EM_Event = new EM_Event($event_id);
-						$event_details = $EM_Event->name . " - " . date_i18n(get_option('date_format'), $EM_Event->start);
-					}else{ $event_details = __('Unknown','em-pro'); }
+					$EM_Event = new EM_Event($event_id);
+					$event_details = $EM_Event->name . " - " . date_i18n(get_option('date_format'), $EM_Event->start);
 					$message  = str_replace(array('%transaction_id%','%payer_email%', '%event%'), array($_POST['txn_id'], $_POST['payer_email'], $event_details), $message);
 					wp_mail(get_option('em_'. $this->gateway . "_email" ), __('Unprocessed payment needs refund'), $message);
 				}else{
@@ -462,8 +479,10 @@ Events Manager
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Paypal Currency', 'em-pro') ?></th>
-			  <td><?php echo esc_html(get_option('dbem_bookings_currency','USD')); ?><br /><i><?php echo sprintf(__('Set your currency in the <a href="%s">settings</a> page.','dbem'),EM_ADMIN_URL.'&amp;page=events-manager-options#bookings'); ?></i></td>
+			  <td><?php echo esc_html(get_option('dbem_bookings_currency','USD')); ?><br /><i><?php echo sprintf(__('Set your currency in the <a href="%s">settings</a> page.','em-pro'),EM_ADMIN_URL.'&amp;page=events-manager-options#bookings'); ?></i></td>
 		  </tr>
+		  
+		  <?php em_options_radio_binary(__('Include Taxes In Itemized Prices', 'em-pro'), 'em_'. $this->gateway .'_inc_tax', __('If set to yes, taxes are not included in individual item prices and total tax is shown at the bottom. If set to no, taxes are included within the individual prices.','em-pro'). ' '. __('We strongly recommend setting this to No.','em-pro') .' <a href="http://wp-events-plugin.com/documentation/events-with-paypal/paypal-displaying-taxes/">'. __('Click here for more information.','em-pro')) .'</a>'; ?>
 		  
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Language', 'em-pro') ?></th>
@@ -554,9 +573,9 @@ Events Manager
 			$this->gateway . "_email" => $_REQUEST[ $this->gateway.'_email' ],
 			$this->gateway . "_site" => $_REQUEST[ $this->gateway.'_site' ],
 			$this->gateway . "_currency" => $_REQUEST[ 'currency' ],
+			$this->gateway . "_inc_tax" => $_REQUEST[ 'em_'.$this->gateway.'_inc_tax' ],
 			$this->gateway . "_lc" => $_REQUEST[ $this->gateway.'_lc' ],
 			$this->gateway . "_status" => $_REQUEST[ $this->gateway.'_status' ],
-			$this->gateway . "_tax" => $_REQUEST[ $this->gateway.'_button' ],
 			$this->gateway . "_format_logo" => $_REQUEST[ $this->gateway.'_format_logo' ],
 			$this->gateway . "_format_border" => $_REQUEST[ $this->gateway.'_format_border' ],
 			$this->gateway . "_manual_approval" => $_REQUEST[ $this->gateway.'_manual_approval' ],
@@ -566,7 +585,6 @@ Events Manager
 			$this->gateway . "_booking_timeout" => $_REQUEST[ $this->gateway.'_booking_timeout' ],
 			$this->gateway . "_return" => $_REQUEST[ $this->gateway.'_return' ],
 			$this->gateway . "_cancel_return" => $_REQUEST[ $this->gateway.'_cancel_return' ],
-			$this->gateway . "_form" => $_REQUEST[ $this->gateway.'_form' ]
 		);
 		foreach($gateway_options as $key=>$option){
 			update_option('em_'.$key, stripslashes($option));
@@ -587,14 +605,15 @@ function em_gateway_paypal_booking_timeout(){
 	$minutes_to_subtract = absint(get_option('em_paypal_booking_timeout'));
 	if( $minutes_to_subtract > 0 ){
 		//get booking IDs without pending transactions
-		$booking_ids = $wpdb->get_col('SELECT b.booking_id FROM '.EM_BOOKINGS_TABLE.' b LEFT JOIN '.EM_TRANSACTIONS_TABLE." t ON t.booking_id=b.booking_id  WHERE booking_date < TIMESTAMPADD(MINUTE, -{$minutes_to_subtract}, NOW()) AND booking_status=4 AND transaction_id IS NULL" );
+		$cut_off_time = date('Y-m-d H:i:s', current_time('timestamp') - ($minutes_to_subtract * 60));
+		$booking_ids = $wpdb->get_col('SELECT b.booking_id FROM '.EM_BOOKINGS_TABLE.' b LEFT JOIN '.EM_TRANSACTIONS_TABLE." t ON t.booking_id=b.booking_id  WHERE booking_date < '{$cut_off_time}' AND booking_status=4 AND transaction_id IS NULL AND booking_meta LIKE '%s:7:\"gateway\";s:6:\"paypal\";%'" );
 		if( count($booking_ids) > 0 ){
 			//first delete ticket_bookings with expired bookings
-			$sql = "DELETE FROM ".EM_TICKETS_BOOKINGS_TABLE." WHERE booking_id IN (".implode(',',$booking_ids).");";
-			$wpdb->query($sql);
-			//then delete the bookings themselves
-			$sql = "DELETE FROM ".EM_BOOKINGS_TABLE." WHERE booking_id IN (".implode(',',$booking_ids).");";
-			$wpdb->query($sql);
+			foreach( $booking_ids as $booking_id ){
+			    $EM_Booking = em_get_booking($booking_id);
+			    $EM_Booking->manage_override = true;
+			    $EM_Booking->delete();
+			}
 		}
 	}
 }

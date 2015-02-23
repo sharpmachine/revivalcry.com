@@ -48,8 +48,7 @@ class EM_Gateways_Transactions{
 		global $page, $action, $wp_query;
 		?>
 		<div class="wrap">
-		<div class="icon32" id="icon-bookings"><br></div>
-		<h2><?php echo __('Transactions','dbem'); ?></h2>
+		<h2><?php _e('Transactions','em-pro'); ?></h2>
 		<?php $this->mytransactions($context); ?>
 		<script type="text/javascript">
 			jQuery(document).ready( function($){
@@ -123,7 +122,7 @@ class EM_Gateways_Transactions{
 			<div class="tablenav">
 				<div class="alignleft actions">
 					<select name="limit">
-						<option value="<?php echo $this->limit ?>"><?php echo sprintf(__('%s Rows','dbem'),$this->limit); ?></option>
+						<option value="<?php echo $this->limit ?>"><?php echo sprintf(esc_html__emp('%s Rows','dbem'),$this->limit); ?></option>
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="25">25</option>
@@ -141,9 +140,9 @@ class EM_Gateways_Transactions{
 					</select>
 					<input id="post-query-submit" class="button-secondary" type="submit" value="<?php _e ( 'Filter' )?>" />
 					<?php if( is_object($context) && get_class($context)=="EM_Event" ): ?>
-					<?php _e('Displaying Event','dbem'); ?> : <?php echo $context->event_name; ?>
+					<?php esc_html_e_emp('Displaying Event','dbem'); ?> : <?php echo $context->event_name; ?>
 					<?php elseif( is_object($context) && get_class($context)=="EM_Person" ): ?>
-					<?php _e('Displaying User','dbem'); echo ' : '.$context->get_name(); ?>
+					<?php esc_html_e_emp('Displaying User','dbem'); echo ' : '.$context->get_name(); ?>
 					<?php endif; ?>
 				</div>
 				<?php 
@@ -265,7 +264,7 @@ class EM_Gateways_Transactions{
 					</td>
 					<td class="column-trans-note-id">
 						<?php if( $EM_Booking->can_manage() ): ?>
-						<span class="trash"><a class="em-transaction-delete" href="<?php echo em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'transaction_delete', 'txn_id'=>$transaction->transaction_id, '_wpnonce'=>wp_create_nonce('transaction_delete_'.$transaction->transaction_id.'_'.get_current_user_id()))); ?>"><?php _e('Delete','dbem'); ?></a></span>
+						<span class="trash"><a class="em-transaction-delete" href="<?php echo em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'transaction_delete', 'txn_id'=>$transaction->transaction_id, '_wpnonce'=>wp_create_nonce('transaction_delete_'.$transaction->transaction_id.'_'.get_current_user_id()))); ?>"><?php esc_html_e_emp('Delete','dbem'); ?></a></span>
 						<?php endif; ?>
 					</td>
 			    </tr>
@@ -293,10 +292,23 @@ class EM_Gateways_Transactions{
 		$table = EM_BOOKINGS_TABLE;
 		//we can determine what to search for, based on if certain variables are set.
 		if( is_object($context) && (get_class($context)=="EM_Booking" || get_class($context)=="EM_Multiple_Booking" ) && $context->can_manage('manage_bookings','manage_others_bookings') ){
-			$conditions[] = "tx.booking_id = ".$context->booking_id;
+			$booking_condition = "tx.booking_id = ".$context->booking_id;
+			if( get_option('dbem_multiple_bookings') && $context->can_manage('manage_others_bookings') ){
+				//in MB mode, if the user can manage others bookings, they can view information about the transaction for a group of bookings
+				$EM_Multiple_Booking = EM_Multiple_Bookings::get_main_booking($context);
+				if( $EM_Multiple_Booking !== false ){
+					$booking_condition = 'tx.booking_id = '.$EM_Multiple_Booking->booking_id;
+				}
+			}
+			$conditions[] = $booking_condition;
 		}elseif( is_object($context) && get_class($context)=="EM_Event" && $context->can_manage('manage_bookings','manage_others_bookings') ){
-			$join = " JOIN $table ON $table.booking_id=tx.booking_id";	
-			$conditions[] = "event_id = ".$context->event_id;		
+			$join = " JOIN $table ON $table.booking_id=tx.booking_id";
+			$booking_condition = "event_id = ".$context->event_id;
+			if( get_option('dbem_multiple_bookings') && $context->can_manage('manage_others_bookings') ){
+				//in MB mode, if the user can manage others bookings, they can view information about the transaction for a group of bookings
+				$booking_condition = "( $booking_condition OR tx.booking_id IN (SELECT booking_main_id FROM ".EM_BOOKINGS_RELATIONSHIPS_TABLE." WHERE event_id={$context->event_id}))";
+			}
+			$conditions[] = $booking_condition;		
 		}elseif( is_object($context) && get_class($context)=="EM_Person" ){
 			//FIXME peole could potentially view other's txns like this
 			$join = " JOIN $table ON $table.booking_id=tx.booking_id";
@@ -340,10 +352,18 @@ class EM_Gateways_Transactions{
 	function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
 		global $EM_Event;
 		if( $col == 'gateway_txn_id' ){
+			//check if this isn't a multiple booking, otherwise look for info from main booking
+			if( get_option('dbem_multiple_bookings') ){
+				$EM_Multiple_Booking = EM_Multiple_Bookings::get_main_booking($EM_Booking);
+				if( $EM_Multiple_Booking !== false ){
+					$EM_Booking = $EM_Multiple_Booking;
+				}
+			}
 			//get latest transaction with an ID
 			$old_limit = $this->limit;
 			$old_orderby = $this->orderby;
-			$this->limit = 1;
+			$old_page = $this->page;
+			$this->limit = $this->page = 1;
 			$this->orderby = 'booking_date';
 			$transactions = $this->get_transactions($EM_Booking);
 			if(count($transactions) > 0){
@@ -351,12 +371,17 @@ class EM_Gateways_Transactions{
 			}
 			$this->limit = $old_limit;
 			$this->orderby = $old_orderby;
+			$this->page = $old_page;
 		}
 		return $value;
 	}
 	
 	function em_bookings_table_cols_template($template, $EM_Bookings_Table){
-		$template['gateway_txn_id'] = __('Transaction ID','em-pro');
+		if( get_option('dbem_multiple_bookings') ){
+			$template['gateway_txn_id'] = '[MB] '. __('Transaction ID','em-pro');
+		}else{
+			$template['gateway_txn_id'] = __('Transaction ID','em-pro');
+		}
 		return $template;
 	}
 }

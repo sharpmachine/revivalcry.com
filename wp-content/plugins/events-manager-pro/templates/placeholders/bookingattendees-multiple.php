@@ -5,6 +5,6 @@
 * For more information, see http://wp-events-plugin.com/documentation/using-template-files/
 */
 foreach( $EM_Multiple_Booking->get_bookings() as $EM_Booking ){ /* @var $EM_Booking EM_Booking */
-	echo "\r\n". __('Event','em-pro').' - '. $EM_Booking->get_event()->event_name ."\r\n". '==============================';
+	echo "\r\n". __emp('Event','dbem').' - '. $EM_Booking->get_event()->event_name ."\r\n". '==============================';
 	emp_locate_template('placeholders/bookingattendees.php', true, array('EM_Booking'=>$EM_Booking));
 }

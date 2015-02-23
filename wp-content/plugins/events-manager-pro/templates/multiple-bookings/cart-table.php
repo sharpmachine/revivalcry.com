@@ -18,32 +18,32 @@ if( empty($EM_Multiple_Booking->bookings) ){
 		<tbody class="em-cart-summary">
 			<?php do_action('em_cart_form_before_events', $EM_Multiple_Booking); //do not delete ?>
 			<tr class="em-cart-title">
-				<th class="em-cart-title-event">Event</th>
-				<th class="em-cart-title-spaces">Spaces</th>
-				<th class="em-cart-title-price">Price</th>
+				<th class="em-cart-title-event"><?php esc_html_e_emp('Event','dbem'); ?></th>
+				<th class="em-cart-title-spaces"><?php esc_html_e_emp('Spaces','dbem'); ?></th>
+				<th class="em-cart-title-price"><?php esc_html_e_emp('Price','dbem'); ?></th>
 			</tr>
 			<?php foreach($EM_Multiple_Booking->get_bookings() as $EM_Booking): /* @var $EM_Booking EM_Booking */ ?>
 				<tr class="em-cart-table-event-summary" id="em-cart-table-event-summary-<?php echo $EM_Booking->get_event()->event_id; ?>">
 					<td>
 						<?php ob_start(); ?>
 						<span class="em-cart-table-event-title">#_EVENTLINK</span><br/>
-						<?php _e('When','em-pro'); ?> : #_EVENTDATES @ #_EVENTTIMES<br />
-						<?php _e('Where','em-pro'); ?> : #_LOCATIONFULLLINE
+						<?php esc_html_e_emp('When','dbem'); ?> : #_EVENTDATES @ #_EVENTTIMES<br />
+						<?php esc_html_e_emp('Where','dbem'); ?> : #_LOCATIONFULLLINE
 						<?php echo $EM_Booking->output(ob_get_clean()); ?><br />
 						<div class="em-cart-table-details-actions">
 							<!-- <a href="#" class="em-cart-table-actions-edit" rel="<?php echo $EM_Booking->get_event()->event_id; ?>" id="em-cart-table-actions-edit-<?php echo $EM_Booking->get_event()->event_id; ?>">
-								<?php _e('edit','em-pro'); ?>
+								<?php esc_html_e('edit','em-pro'); ?>
 							</a>&nbsp; --->
 							<a href="#" class="em-cart-table-actions-remove" rel="<?php echo $EM_Booking->get_event()->event_id; ?>" id="em-cart-table-actions-remove-<?php echo $EM_Booking->get_event()->event_id; ?>">
-								<?php _e('remove','em-pro'); ?>
+								<?php esc_html_e('remove','em-pro'); ?>
 							</a>
 						</div>
 						<div class="em-cart-table-details-triggers">
 							<a href="#" class="em-cart-table-details-show" rel="<?php echo $EM_Booking->get_event()->event_id; ?>" id="em-cart-table-details-show-<?php echo $EM_Booking->get_event()->event_id; ?>">
-								+ <?php _e('details','em-pro'); ?>
+								+ <?php esc_html_e('details','em-pro'); ?>
 							</a>
 							<a href="#" class="em-cart-table-details-hide" rel="<?php echo $EM_Booking->get_event()->event_id; ?>" id="em-cart-table-details-hide-<?php echo $EM_Booking->get_event()->event_id; ?>">
-								- <?php _e('details','em-pro'); ?>
+								- <?php esc_html_e('details','em-pro'); ?>
 							</a>
 						</div>
 						<?php
@@ -52,7 +52,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 							if( count($booking_data['booking']) ){ 
 							?>
 							<div class="em-cart-table-event-details em-cart-table-event-details-<?php echo $EM_Booking->get_event()->event_id; ?> em-cart-info">
-								<div class="em-cart-info-booking-title"><?php echo __('Booking Information','em-pro') ?></div>
+								<div class="em-cart-info-booking-title"><?php esc_html_e('Booking Information','em-pro') ?></div>
 								<div class="em-cart-info-values">
 									<?php foreach( $booking_data['booking'] as $booking_label => $booking_value ): ?>
 									<label><?php echo $booking_label; ?> :</label>
@@ -104,7 +104,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 				//we should now have an array of information including base price, taxes and post/pre tax discounts
 			?>
 			<tr>
-				<th colspan="2"><?php _e('Sub Total','em-pro'); ?></th>
+				<th colspan="2"><?php esc_html_e('Sub Total','em-pro'); ?></th>
 				<td><?php echo $EM_Multiple_Booking->get_price_base(true); ?></td>
 			</tr>
 			<?php if( count($price_summary['discounts_pre_tax']) > 0 ): ?>
@@ -117,7 +117,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 			<?php endif; ?>
 			<?php if( !empty($price_summary['taxes']['amount'])  ): ?>
 			<tr>
-				<th colspan="2"><?php _e('Taxes','em-pro'); ?> ( <?php echo $price_summary['taxes']['rate']; ?> )</th>
+				<th colspan="2"><?php esc_html_e('Taxes','em-pro'); ?> ( <?php echo $price_summary['taxes']['rate']; ?> )</th>
 				<td><?php echo $price_summary['taxes']['amount']; ?></td>
 			</tr>
 			<?php endif; ?>
@@ -130,7 +130,7 @@ if( empty($EM_Multiple_Booking->bookings) ){
 				<?php endforeach; ?>
 			<?php endif; ?>
 			<tr>
-				<th colspan="2"><?php _e('Total Price','dbem'); ?></th>
+				<th colspan="2"><?php esc_html_e('Total Price','dbem'); ?></th>
 				<td><?php echo $price_summary['total']; ?></td>
 			</tr>
 			<?php do_action('em_cart_form_after_totals', $EM_Multiple_Booking); //do not delete ?>

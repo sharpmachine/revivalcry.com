@@ -9,7 +9,7 @@ class EM_Multiple_Bookings{
 		include('multiple-bookings-widget.php');
 		if( is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX) ){ //admin stuff
 		    //maybe for later use
-		}elseif( !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){ //not admin area or a manual booking
+		}elseif( (empty($_REQUEST['action']) || $_REQUEST['action'] != 'manual_booking') && !(!empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id'])) ){ //not admin area or a manual booking
 			//modify traditional booking forms behaviour
 			add_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
 			add_filter('em_booking_validate', 'EM_Multiple_Bookings::prevent_user_validation', 1); //prevent user fields validation
@@ -29,7 +29,7 @@ class EM_Multiple_Bookings{
 		//ajax calls for cart checkout
 		add_action('wp_ajax_emp_checkout','EM_Multiple_Bookings::checkout');
 		add_action('wp_ajax_nopriv_emp_checkout','EM_Multiple_Bookings::checkout');
-		//ajax calls for cart contents		
+		//ajax calls for cart contents
 		add_action('wp_ajax_em_cart_page_contents','EM_Multiple_Bookings::cart_page_contents_ajax');
 		add_action('wp_ajax_nopriv_em_cart_page_contents','EM_Multiple_Bookings::cart_page_contents_ajax');
 		add_action('wp_ajax_em_checkout_page_contents','EM_Multiple_Bookings::checkout_page_contents_ajax');
@@ -44,9 +44,15 @@ class EM_Multiple_Bookings{
 		//booking admin pages
 		add_action('em_bookings_admin_page', 'EM_Multiple_Bookings::bookings_admin_notices'); //add MB warnings if booking is part of a bigger booking
 		add_action('em_bookings_multiple_booking', 'EM_Multiple_Bookings::booking_admin',1,1); //handle page for showing a single multiple booking
+			//no user booking mode
+			add_filter('em_booking_get_person_editor', 'EM_Multiple_Bookings::em_booking_get_person_editor', 100, 2); 
+			if( !empty($_REQUEST['emp_no_user_mb_global_change']) && !empty($_REQUEST['action']) && $_REQUEST['action'] == 'booking_modify_person'){ //only hook in if we're editing a no-user booking
+				add_filter('em_booking_get_person_post', 'EM_Multiple_Bookings::em_booking_get_person_post', 100, 2);
+			}
 		//booking table and csv filters
 		add_filter('em_bookings_table_rows_col', array('EM_Multiple_Bookings','em_bookings_table_rows_col'),10,5);
 		add_filter('em_bookings_table_cols_template', array('EM_Multiple_Bookings','em_bookings_table_cols_template'),10,2);
+		add_action('shutdown', 'EM_Multiple_Bookings::session_save');
     }
     
     public static function em_get_booking($EM_Booking){
@@ -71,7 +77,7 @@ class EM_Multiple_Bookings{
     public static function session_start(){
         global $EM_Notices;
         if( !self::$session_started ){
-            self::$session_started = @session_start();
+            self::$session_started = !session_id() ? @session_start() : true;
         }
         return self::$session_started;
     }
@@ -83,18 +89,23 @@ class EM_Multiple_Bookings{
     public static function get_multiple_booking(){
         if( empty(self::$booking_data) ){
 	        self::session_start();
-	        if( !empty($_SESSION['em_multiple_bookings']) && get_class($_SESSION['em_multiple_bookings']) == 'EM_Multiple_Booking' ){
-	            self::$booking_data = $_SESSION['em_multiple_bookings'];
-	        }else{
-	            self::$booking_data = $_SESSION['em_multiple_bookings'] = new EM_Multiple_Booking();
+	        //load and unserialize EM_Multiple_Booking from session
+	        if( !empty($_SESSION['em_multiple_bookings']) && is_serialized($_SESSION['em_multiple_bookings']) ){
+	            $obj = unserialize( $_SESSION['em_multiple_bookings'] );
+				if ( get_class( $obj ) == 'EM_Multiple_Booking' ) {
+					self::$booking_data = $obj;
+				}
 	        }
+	        //create new EM_Multiple_Booking object if one wasn't created
+            if ( !is_object(self::$booking_data) || get_class( self::$booking_data ) != 'EM_Multiple_Booking' ){
+    			self::$booking_data = new EM_Multiple_Booking();
+    		}
         }
         return self::$booking_data; 
     }
     
-    public static function save_multiple_booking(){
-        //probably won't be used due to object referencing in PHP5
-        $_SESSION['em_multiple_bookings'] = self::get_multiple_booking();
+    public static function session_save(){
+        if( !empty(self::$booking_data) ) $_SESSION['em_multiple_bookings'] = serialize(self::$booking_data);
     }
     
     public static function prevent_user_fields(){
@@ -152,7 +163,7 @@ class EM_Multiple_Bookings{
      */
     public static function em_booking_save($result, $EM_Booking){
         //only do this to a previously saved EM_Booking object, not newly added
-        if( $result && get_class($EM_Booking) == 'EM_Booking' && $EM_Booking->previous_status !== false ){
+    	if( $result && get_class($EM_Booking) == 'EM_Booking' && $EM_Booking->previous_status !== false ){
             $EM_Multiple_Booking = self::get_main_booking( $EM_Booking );
             //if part of multiple booking, recalculate and save mb object too
             if( $EM_Multiple_Booking !== false ){
@@ -165,10 +176,8 @@ class EM_Multiple_Bookings{
     
     public static function remove_booking(){
         $EM_Multiple_Booking = self::get_multiple_booking();
-		if( !empty($_REQUEST['event_id']) && !empty($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]) ){
-		    unset($EM_Multiple_Booking->bookings[$_REQUEST['event_id']]);
-		    $EM_Multiple_Booking->calculate_price();
-		    if( count($EM_Multiple_Booking->bookings) == 0 ) self::empty_cart();
+        if( !empty($_REQUEST['event_id']) && $EM_Multiple_Booking->remove_booking($_REQUEST['event_id']) ){
+		    if( count($EM_Multiple_Booking->bookings) == 0 ) self::empty_cart(); 
 		    $feedback = '';
 		    $result = true;
 		}else{
@@ -187,10 +196,12 @@ class EM_Multiple_Bookings{
     public static function empty_cart(){
 	    self::session_start();
         unset($_SESSION['em_multiple_bookings']);
+        self::$booking_data = null;
     }
     
     public static function empty_cart_ajax(){
 	    self::empty_cart();
+        header( 'Content-Type: application/javascript; charset=UTF-8', true ); //add this for HTTP -> HTTPS requests which assume it's a cross-site request
 	    echo EM_Object::json_encode(array('success'=>true));
 	    die();
     }
@@ -222,7 +233,7 @@ class EM_Multiple_Bookings{
         	    $result = true;
         		$EM_Notices->add_confirm( $EM_Multiple_Booking->feedback_message );
         		$feedback = $EM_Multiple_Booking->feedback_message;
-        		unset($_SESSION['em_multiple_bookings']); //we're done with this checkout!
+        		self::empty_cart(); //we're done with this checkout!
         	}else{
         		$EM_Notices->add_error( $EM_Multiple_Booking->get_errors() );
         		$feedback = $EM_Multiple_Booking->feedback_message;
@@ -232,6 +243,7 @@ class EM_Multiple_Bookings{
             $EM_Notices->add_error( $EM_Multiple_Booking->get_errors() );
         }
 		if( defined('DOING_AJAX') ){
+        	header( 'Content-Type: application/javascript; charset=UTF-8', true ); //add this for HTTP -> HTTPS requests which assume it's a cross-site request
 		    if( $result ){
 				$return = array('result'=>true, 'message'=>$feedback, 'checkout'=>true);
 				echo EM_Object::json_encode(apply_filters('em_action_'.$_REQUEST['action'], $return, $EM_Multiple_Booking));
@@ -255,10 +267,10 @@ class EM_Multiple_Bookings{
     	$checkout_page_id = get_option( 'dbem_multiple_bookings_checkout_page' );
     	if( in_array($post->ID, array($cart_page_id, $checkout_page_id)) ){
     		ob_start();
-    		if( $post->ID == $cart_page_id && $cart_page_id != 0 ){
-    			self::cart_page();
-    		}elseif( $post->ID == $checkout_page_id && $checkout_page_id != 0 ){
+    		if( $post->ID == $checkout_page_id && $checkout_page_id != 0 ){
     			self::checkout_page();
+    		}elseif( $post->ID == $cart_page_id && $cart_page_id != 0 ){
+    			self::cart_page();
     		}
     		$content = ob_get_clean();
     		//Now, we either replace CONTENTS or just replace the whole page
@@ -291,9 +303,9 @@ class EM_Multiple_Bookings{
 	}
 
 	public static function checkout_page(){
-	    if( !EM_Multiple_Bookings::get_multiple_booking()->validate_bookings_spaces() ){
+	    if( !self::get_multiple_booking()->validate_bookings_spaces() ){
 	        global $EM_Notices;
-	        $EM_Notices->add_error(EM_Multiple_Bookings::get_multiple_booking()->get_errors());
+	        $EM_Notices->add_error(self::get_multiple_booking()->get_errors());
 	    }
 		//load contents if not using caching, do not alter this conditional structure as it allows the cart to work with caching plugins
 		echo '<div class="em-checkout-page-contents" style="position:relative;">';
@@ -337,7 +349,7 @@ class EM_Multiple_Bookings{
 				<?php
 			}
 			add_action('wp_footer','em_cart_js_footer', 100);
-			add_action('admin_footer','em_cart_js_footer');
+			add_action('admin_footer','em_cart_js_footer', 100);
 			define('EM_CART_JS_LOADED',true);
 		}
 	}
@@ -395,7 +407,7 @@ class EM_Multiple_Bookings{
     * ----------------------------------------------------------
     */
     
-    function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
+    public static function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
         if( preg_match('/^mb_/', $col) ){
             $col = preg_replace('/^mb_/', '', $col);
 	    	if( !empty($EM_Booking) && get_class($EM_Booking) != 'EM_Multiple_Booking' ){
@@ -415,7 +427,7 @@ class EM_Multiple_Bookings{
     	return $value;
     }
     
-    function em_bookings_table_cols_template($template, $EM_Bookings_Table){
+     public static function em_bookings_table_cols_template($template, $EM_Bookings_Table){
     	$EM_Form = EM_Booking_Form::get_form(false, get_option('dbem_multiple_bookings_form'));
     	foreach($EM_Form->form_fields as $field_id => $field ){
             if( $EM_Form->is_normal_field($field) ){ //user fields already handled, htmls shouldn't show
@@ -428,11 +440,77 @@ class EM_Multiple_Bookings{
 
     /*
      * ----------------------------------------------------------
+    * No-User Bookings Admin Stuff
+    * ----------------------------------------------------------
+    */
+    public static  function em_booking_get_person_editor($summary, $EM_Person){
+		global $EM_Booking;
+		if( !empty($EM_Booking) && current_user_can('manage_others_bookings') ){
+			$EM_Multiple_Booking = self::get_main_booking( $EM_Booking );
+			if( !empty($EM_Multiple_Booking) ){
+				ob_start();
+				?>
+				<p>
+					<em>
+						<?php 
+						if($EM_Multiple_Booking->booking_id == $EM_Booking->booking_id ){
+							esc_html_e('This booking makes part of multiple bookings made at once.','em-pro');
+							esc_html_e('Since this is part of multiple booking, you can also change these values for all individual bookings.', 'em-pro');
+						}else{
+							esc_html_e('This booking contains multiple individual bookings made at once.', 'em-pro');
+						} 
+						esc_html_e('You can sync this modification with all other related bookings.','em-pro');
+						?>
+					</em><br />
+					<?php _e('Make these changes to all bookings?','em-pro'); ?> </th><td><input type="checkbox" name="emp_no_user_mb_global_change" value="1" checked="checked" />
+				</p>
+				<?php
+				$notice = ob_get_clean();
+				$summary = $summary . $notice;
+			}
+		}
+		//if this is an MB booking or part of one, add a note mentioning that all bookings made will get modified
+		return $summary;
+	}
+	
+	/**
+	 * Saves personal booking information to all bookings if user has permission
+	 * @return boolean
+	 */
+	public static  function em_booking_get_person_post( $result, $EM_Booking ){
+		if( $result && current_user_can('manage_others_bookings') ){
+			//if this is an MB booking or part of one, edit all the other records too
+			$EM_Multiple_Booking = self::get_main_booking( $EM_Booking );
+			if( !empty($EM_Multiple_Booking) ){
+				//save personal info to main booking if this isn't the main booking
+				if( get_class($EM_Booking) != 'EM_Multiple_Booking' ){
+					$EM_Multiple_Booking->booking_meta['registration'] = $EM_Booking->booking_meta['registration'];
+					$EM_Multiple_Booking->save(false);
+				}
+				//save other sub-bookings
+				$EM_Bookings = $EM_Multiple_Booking->get_bookings();
+				foreach($EM_Bookings as $booking){ /* @var $booking EM_Booking */
+					if($EM_Booking->booking_id != $booking->booking_id ){
+						//save data
+						$booking->booking_meta['registration'] = $EM_Booking->booking_meta['registration'];
+						$booking->save(false);
+					}
+				}
+				//FIXME - we shouldn't have to overwrite actions this way, need better way for booking admin pages
+				$_REQUEST['action'] = 'multiple_booking';
+			}
+		}
+		return $result;
+	}
+
+    /*
+     * ----------------------------------------------------------
     * Admin Stuff
     * ----------------------------------------------------------
     */
     public static function bookings_admin_notices(){
-		global $EM_Booking, $EM_Notices;
+		global $EM_Booking;
+		$EM_Notices = new EM_Notices(false); //not global because we'll get repeated printing of errors here, this is just a notice
 		if( current_user_can('manage_others_bookings') ){
 	    	if( !empty($EM_Booking) && get_class($EM_Booking) != 'EM_Multiple_Booking' ){
 				//is this part of a multiple booking?
@@ -450,6 +528,8 @@ class EM_Multiple_Bookings{
     
     public static function get_main_booking( $EM_Booking ){
 		global $wpdb;
+		if( get_class($EM_Booking) == 'EM_Multiple_Booking' ) return $EM_Booking; //If already main booking, return that
+		if( get_class($EM_Booking) != 'EM_Booking' ) return false; //if this is not an EM_Booking object, just return false
 		$main_booking_id = $wpdb->get_var($wpdb->prepare('SELECT booking_main_id FROM '.EM_BOOKINGS_RELATIONSHIPS_TABLE.' WHERE booking_id=%d', $EM_Booking->booking_id));
 		if( !empty($main_booking_id) ){
 			return new EM_Multiple_Booking($main_booking_id);
@@ -468,8 +548,8 @@ class EM_Multiple_Bookings{
 				</script>
 				<?php
 			}
-			add_action('wp_footer','em_cart_js_footer');
-			add_action('admin_footer','em_cart_js_footer');
+			add_action('wp_footer','em_cart_js_footer', 20);
+			add_action('admin_footer','em_cart_js_footer', 20);
 			define('EM_CART_JS_LOADED',true);
 		}
 	}

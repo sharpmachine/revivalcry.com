@@ -9,7 +9,7 @@ $attendee_datas = EM_Attendees_Form::get_booking_attendees($EM_Booking);
 foreach( $EM_Tickets_Bookings->tickets_bookings as $EM_Ticket_Booking ){
 	//Display ticket info
 	if( !empty($attendee_datas[$EM_Ticket_Booking->ticket_id]) ){
-		echo "\r\n". __('Ticket','em-pro').' - '. $EM_Ticket_Booking->get_ticket()->ticket_name ."\r\n". '-----------------------------';
+		echo "\r\n". __emp('Ticket','dbem').' - '. $EM_Ticket_Booking->get_ticket()->ticket_name ."\r\n". '-----------------------------';
 		//display a row for each space booked on this ticket
 		foreach( $attendee_datas[$EM_Ticket_Booking->ticket_id] as $attendee_title => $attendee_data ){
 		    echo "\r\n". $attendee_title ."\r\n". '------------';

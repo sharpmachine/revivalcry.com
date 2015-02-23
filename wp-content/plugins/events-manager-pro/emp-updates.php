@@ -2,7 +2,7 @@
 define( 'EM_PRO_ALT_API', 'http://api.wp-events-plugin.com/pro/' );
 define( 'EM_PRO_ALT_API_2', 'http://api.wp-events-plugin.com/pro/' );
 class EM_Updates {
-	function init(){
+	public static function init(){
 		// For testing purpose, the site transient will be reset on each page load
 		//add_action( 'init', array('EM_Updates','delete_transient') );
 		// Hook into the plugin update check
@@ -26,14 +26,14 @@ class EM_Updates {
 	/**
 	 * Add an extra update message to the update plugin notification. Thanks BP!
 	 */
-	function update_notices() {
+	public static function update_notices() {
 		if( !self::check_api_key()){
 			$admin_url = ( is_multisite() ) ? network_admin_url('admin.php?page=events-manager-options'):admin_url('edit.php?post_type='.EM_POST_TYPE_EVENT.'&page=events-manager-options');
 			echo '<p style="font-style:italic; border-top: 1px solid #ddd; padding-top: 3px">'.sprintf(__('Please enter a valid API key in your <a href="%s">settings page</a>.','em-pro'), $admin_url).'</p>';
 		}
 	}
 	
-	function admin_notices(){
+	public static function admin_notices(){
 		if( is_super_admin() && !empty($_REQUEST['page']) && ('events-manager-options' == $_REQUEST['page']) ){
 			if( !self::check_api_key() ){
 				?>
@@ -52,13 +52,14 @@ class EM_Updates {
 		}
 	}
 	
-	function admin_options_save(){
+	public static function admin_options_save(){
 		/*
 		 * Here's the idea, we have an array of all options that need super admin approval if in multi-site mode
 		 * since options are only updated here, its one place fit all
 		 */
 		if( is_super_admin() && !empty($_POST['em-submitted']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'events-manager-options') ){
 			//Build the array of options here
+			if( is_multisite() && !is_network_admin() ) return; //if MultiSite, only save this on network admin area
 			$request_api_key = !empty($_REQUEST['dbem_pro_api_key']) ? $_REQUEST['dbem_pro_api_key']:'';
 			if( $request_api_key != get_site_option('dbem_pro_api_key') || !self::check_api_key()){
 				//update the option here
@@ -73,18 +74,18 @@ class EM_Updates {
 		}
 	}
 	
-	function admin_options(){
+	public static function admin_options(){
 		global $save_button;
 		$api = !self::check_api_key();
 		if( is_super_admin() ){
 		?>
 			<a name="pro-api"></a>
 			<div  class="postbox " id="em-opt-pro-key" >
-			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Pro Membership Key', 'em-pro' ); ?> </span></h3>
+			<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'Pro Membership Key', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table' <?php echo ( $api ) ? 'style="background-color:#ffece8;"':'' ?>>
 					<?php
-					em_options_input_text ( __( 'Pro Member Key', 'em-pro' ), 'dbem_pro_api_key', sprintf( __("Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>.", 'em-pro'), 'http://wp-events-plugin.com/wp-admin/profile.php' ));
+					em_options_input_text ( __( 'Pro Member Key', 'em-pro' ), 'dbem_pro_api_key', sprintf( __("Insert your Pro Member Key to access automatic updates you can get your membership key from <a href=\"%s\">here</a>.", 'em-pro'), 'http://eventsmanagerpro.com/account/' ));
 					?>
 					<?php if( !self::check_api_key() && get_option('dbem_pro_api_key') != '' ):?>
 						<?php
@@ -109,12 +110,12 @@ class EM_Updates {
 		}
 	}
 	
-	function delete_transient() {
+	public static function delete_transient() {
 		delete_site_transient( 'update_plugins' );
 	}
 
 	// Send a request to the alternative API, return an object
-	function request( $args ) {
+	public static function request( $args ) {
 	
 	    // Send request
 	    $request = wp_remote_post( EM_PRO_ALT_API, array( 'body' => $args ) );
@@ -140,7 +141,7 @@ class EM_Updates {
 	    }
 	}
 	
-	function check_response($response){
+	public static function check_response($response){
 	    // Make sure the request was successful
 	    if( is_wp_error( $response ) ){ //wp erro object
 	    	return false;
@@ -153,7 +154,7 @@ class EM_Updates {
 	
 	/* request types */
 		
-	function check_api_key($force = false){
+	public static function check_api_key($force = false){
 		$result = get_site_transient('dbem_pro_api_key_check');
 		if( is_object($result) && $result->valid && !$force ){
 			return true;
@@ -193,7 +194,7 @@ class EM_Updates {
 	}
 
 	//latest version
-	function check( $transient ) {
+	public static function check( $transient ) {
 	    // Check if the transient contains the 'checked' information
 	    // If no, just return its value without hacking it
 	    if( empty( $transient->checked ) )
@@ -229,10 +230,10 @@ class EM_Updates {
 	}
 	
 	//plugin info pane
-	function info( $false, $action, $args ) {
+	public static function info( $false, $action, $args ) {
 	
 	    // Check if this plugins API is about this plugin
-	    if( $args->slug != 'events-manager-pro' ) {
+	    if( empty($args->slug) || $args->slug != 'events-manager-pro' ) {
 	        return false;
 	    }
 	        

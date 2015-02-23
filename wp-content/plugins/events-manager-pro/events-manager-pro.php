@@ -5,12 +5,14 @@ Plugin URI: http://wp-events-plugin.com
 Description: Supercharge the Events Manager free plugin with extra feature to make your events even more successful!
 Author: NetWebLogic
 Author URI: http://wp-events-plugin.com/
-Version: 2.3.7
+Version: 2.3.9
 
-Copyright (C) 2011 NetWebLogic LLC
+Copyright (C) 2014 NetWebLogic LLC
 */
-define('EMP_VERSION', '2.38');
-define('EM_MIN_VERSION', 5.44);
+
+define('EMP_VERSION', 2.383);
+define('EM_MIN_VERSION', 5.5312);
+define('EM_MIN_VERSION_CRITICAL', 5.523);
 define('EMP_SLUG', plugin_basename( __FILE__ ));
 class EM_Pro {
 
@@ -34,6 +36,7 @@ class EM_Pro {
 	 */
 	function init(){
 		global $wpdb;
+		//check that an incompatible version of EM is not running
 		//Define some tables
 		if( EM_MS_GLOBAL ){
 			$prefix = $wpdb->base_prefix;
@@ -49,6 +52,11 @@ class EM_Pro {
 			add_action('admin_notices',array(&$this,'em_install_warning'));
 			add_action('network_admin_notices',array(&$this,'em_install_warning'));
 			return false; //don't load EMP further
+		}elseif( EM_MIN_VERSION_CRITICAL > EM_VERSION ){
+			//add notice and prevent further loading
+			add_action('admin_notices',array(&$this,'em_version_warning_critical'));
+			add_action('network_admin_notices',array(&$this,'em_version_warning_critical'));
+			return false;
 		}elseif( EM_MIN_VERSION > EM_VERSION ){
 			//check that EM is up to date
 			add_action('admin_notices',array(&$this,'em_version_warning'));
@@ -60,8 +68,9 @@ class EM_Pro {
 		//Add extra Styling/JS
 		if( !get_option('dbem_disable_css') ){
 			add_action('wp_head', array(&$this,'wp_head'));
-			add_action('admin_head', array(&$this,'admin_head'));
 		}
+		add_action('admin_head', array(&$this,'admin_head'));
+		
 		add_action('em_public_script_deps', array(&$this,'enqueue_script_dependencies'));
 		add_action('em_enqueue_scripts', array(&$this,'enqueue_script'), 1); //added only when EM adds its own scripts
 		add_action('em_enqueue_admin_scripts', array(&$this,'enqueue_script'), 1); //added only when EM adds its own scripts
@@ -249,6 +258,15 @@ class EM_Pro {
 		<?php
 	}
 	
+	function em_version_warning_critical(){
+		?>
+		<div class="error">
+			<p><?php _e('Please make sure you have the <a href="http://wordpress.org/extend/plugins/events-manager/">latest version</a> of Events Manager installed, as this may prevent Pro from functioning properly.','em-pro'); ?> <em><?php _e('Only admins see this message.','em-pro'); ?></em></p>
+			<p><?php _e('Until it is updated, Events Manager Pro will remain inactive to prevent further errors.', 'em-pro'); ?>
+		</div>
+		<?php
+	}
+	
 	static function log($log_text, $log_name = 'general', $force_logging = false){
 		if( get_option('dbem_enable_logging') || $force_logging ){
 			if( !class_exists('EMP_Logs') ){
@@ -330,5 +348,63 @@ function emp_locate_template( $template_name, $load=false, $args = array() ) {
 		include($located);
 	}
 	return $located;
+}
+
+//Translation shortcut functions for times where WP translation shortcuts for strings in the dbem domain.
+/**
+ * Shortcut for the __ function
+ * @param string $text
+ * @param string $domain
+ */
+function __emp($text, $domain='dbem'){
+    return translate($text, $domain);
+}
+/**
+ * Shortcut for the _e function
+ * @param string $text
+ * @param string $domain
+ */
+function _e_emp($text, $domain='dbem'){
+    echo __emp($text, $domain);
+}
+/**
+ * Shortcut for the esc_html__ function
+ * @param string $text
+ * @param string $domain
+ */
+function esc_html__emp($text, $domain='dbem'){
+    return esc_html( translate($text, $domain) );
+}
+/**
+ * Shortcut for the esc_html_e function
+ * @param string $text
+ * @param string $domain
+ */
+function esc_html_e_emp($text, $domain='dbem'){
+    echo esc_html__emp($text, $domain);
+}
+/**
+ * Shortcut for the esc_attr__ function
+ * @param string $text
+ * @param string $domain
+ */
+function esc_attr__emp($text, $domain='dbem'){
+    return esc_attr( translate( $text, $domain ) );
+}
+/**
+ * Shortcut for the esc_attr_e function
+ * @param string $text
+ * @param string $domain
+ */
+function esc_attr_e_emp($text, $domain='dbem'){
+    echo esc_attr__emp($text, $domain);
+}
+/**
+ * Shortcut for the esc_html_x function
+ * @param string $text
+ * @param string $domain
+ */
+function esc_html_x_emp($text, $context, $domain='dbem'){
+    return esc_html( translate_with_gettext_context( $text, $context, $domain ) );
 }
 ?>

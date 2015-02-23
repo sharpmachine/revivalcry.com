@@ -15,8 +15,10 @@ class EM_Pro_Admin{
     /* START Logging */
 	public static function logging_settings(){
 	    ?>
-	    <h4 style="font-size:1.1em;"><?php _e ( 'Logging', 'dbem' ); ?></h4>
 		<table class="form-table">
+		    <tr class="em-header"><td colspan="2">
+		        <h4><?php _e ( 'Logging', 'dbem' ); ?></h4>
+		    </td></tr>
 			<?php em_options_radio_binary ( __( 'Enable Logging?', 'em-pro' ), 'dbem_enable_logging', sprintf(__('If enabled, a folder called %s will be created. Please ensure that your wp-contents folder is writable by the server.','em-pro'), '<code>'.WP_PLUGIN_DIR.'/events-manager-logs'.'</code>')); ?>
 		</table>
 		<?php

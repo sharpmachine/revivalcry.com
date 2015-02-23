@@ -74,6 +74,7 @@ class EM_Gateway {
 			add_filter('em_bookings_get_pending_spaces', array(&$this, 'em_bookings_get_pending_spaces'),1,2);
 			add_filter('em_ticket_get_pending_spaces', array(&$this, 'em_ticket_get_pending_spaces'),1,2);
 			add_filter('em_booking_is_reserved', array(&$this, 'em_booking_is_reserved'),1,2);
+			add_filter('em_booking_is_pending', array(&$this, 'em_booking_is_pending'),1,2);
 		}
 	}
 
@@ -216,6 +217,13 @@ class EM_Gateway {
 	 */
 	function em_booking_is_reserved( $result, $EM_Booking ){
 		if($EM_Booking->booking_status == $this->status && $this->uses_gateway($EM_Booking) && get_option('dbem_bookings_approval_reserved')){
+			return true;
+		}
+		return $result;
+	}
+	
+	function em_booking_is_pending( $result, $EM_Booking ){
+		if( $EM_Booking->booking_status == $this->status  && $this->uses_gateway($EM_Booking) && $this->count_pending_spaces ){
 			return true;
 		}
 		return $result;
@@ -404,17 +412,26 @@ class EM_Gateway {
 	 * @uses EM_Gateway::mysettings()
 	 */
 	function settings() {
-		global $page, $action;
+		global $page, $action, $EM_Notices;
 		$gateway_link = admin_url('edit.php?post_type='.EM_POST_TYPE_EVENT.'&page=events-manager-options#bookings');
+		$messages['updated'] = esc_html__('Gateway updated.', 'em-pro');
+		$messages['error'] = esc_html__('Gateway not updated.', 'em-pro');
 		?>
 		<div class='wrap nosubsub'>
 			<div class="icon32" id="icon-plugins"><br></div>
 			<h2><?php echo sprintf(__('Edit &quot;%s&quot; settings','em-pro'), esc_html($this->title) ); ?></h2>
+			<?php
+			if ( isset($_GET['msg']) && !empty($messages[$_GET['msg']]) ){ 
+				echo '<div id="message" class="'.$_GET['msg'].' fade"><p>' . $messages[$_GET['msg']] . 
+				' <a href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>null,'gateway'=>null, 'msg' => null)).'">'.esc_html__('Back to gateways','em-pro').'</a>'.
+				'</p></div>';
+			}
+			?>
 			<form action='' method='post' name='gatewaysettingsform'>
 				<input type='hidden' name='action' id='action' value='updated' />
 				<input type='hidden' name='gateway' id='gateway' value='<?php echo $this->gateway; ?>' />
 				<?php wp_nonce_field('updated-' . $this->gateway); ?>
-				<h3><?php echo sprintf(__( '%s Options', 'dbem' ),__('Booking Form','dbem')); ?></h3>
+				<h3><?php echo sprintf(esc_html__emp( '%s Options', 'dbem' ),esc_html__emp('Booking Form','dbem')); ?></h3>
 				<table class="form-table">
 				<tbody>
 				  <tr valign="top">

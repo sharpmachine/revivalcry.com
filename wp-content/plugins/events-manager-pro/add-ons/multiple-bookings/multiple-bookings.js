@@ -26,7 +26,7 @@ jQuery(document).ready(function($){
 		var event_id = $(this).attr('rel');
 		container = $(this).parents('.em-cart-table').first().parent();
 		$.ajax({
-			url: EM.bookingajaxurl,
+			url: EM.ajaxurl,
 			data: { 'action':'emp_checkout_remove_item', 'event_id':event_id },
 			dataType: 'jsonp',
 			type:'post',
@@ -52,7 +52,7 @@ jQuery(document).ready(function($){
 		e.preventDefault();
 		container = $(this).parent();
 		$.ajax({
-			url: EM.bookingajaxurl,
+			url: EM.ajaxurl,
 			data: { 'action':'emp_empty_cart'},
 			dataType: 'jsonp',
 			type:'post',

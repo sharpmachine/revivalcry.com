@@ -1,12 +1,16 @@
 <?php
 class EM_Custom_Emails{
 	
+	/**
+	 * Initializes custom emails by hooking into booking email filters and modifying the recpipients and message content accordingly 
+	 */
 	public static function init(){
-		//custom email bookings
+		//hooks for event-specific email addresses and templates
 		add_filter('em_booking_email_messages', 'EM_Custom_Emails::em_booking_email_messages',100,2);
 		if( get_option('dbem_custom_emails_events_admins')){
 			add_filter('em_booking_admin_emails','EM_Custom_Emails::event_admin_emails', 100, 2);
 		}
+		//hooks for gateway-specific emails, which take precedence over custom gateway emails
 		if( get_option('dbem_custom_emails_gateways') ){
 			add_filter('em_multiple_booking_email_messages', 'EM_Custom_Emails::em_multiple_booking_email_messages',100,2);
 			if( get_option('dbem_custom_emails_gateways_admins')){
@@ -25,6 +29,11 @@ class EM_Custom_Emails{
      * --------------------------------------------
      */
 	
+	/**
+	 * Returns an array of email templates specific to the supplied event
+	 * @param EM_Event $EM_Event the event object which may contain custom emails
+	 * @return array
+	 */
 	public static function get_event_emails( $EM_Event ){
 		global $wpdb;
 		$custom_email_values = array();
@@ -38,6 +47,11 @@ class EM_Custom_Emails{
 		return $custom_email_values;
 	}
 	
+	/**
+	 * Returns an array of additional admin emails specific to the supplied event
+	 * @param EM_Event $EM_Event the event object which may contain custom emails
+	 * @return array
+	 */
 	public static function get_event_admin_emails( $EM_Event ){
 		global $wpdb;
 		$custom_admin_emails = array();
@@ -52,14 +66,15 @@ class EM_Custom_Emails{
 	}
 	
 	/**
+	 * Hooks into the em_booking_email_messages filter to modify email templates if the relevant custom email template exists for the event or gateway if events don't exist
 	 * @param array $msg
-	 * @param EM_Booking $EM_Booking
+	 * @param EM_Booking $EM_Booking contains event information used to retrieve custom email templates
 	 */
 	public static function em_booking_email_messages( $msg, $EM_Booking ){
 		//get the event object and custom emails array
 		$EM_Event = $EM_Booking->get_event();
 		$custom_emails = self::get_event_emails($EM_Event);
-		$users_to_check = array();
+		$users_to_check = $gateway_users = array();
 		if( get_option('dbem_custom_emails_events') ){
 			$users_to_check = array('admin'=>'admin','user'=>'user');
 		}
@@ -72,30 +87,34 @@ class EM_Custom_Emails{
 		}
 		//set both admin and user email messages according to settings in custom emails
 		foreach( $users_to_check as $user => $email_type ){
-			if( !empty($custom_emails[$user][$EM_Booking->booking_status]) ){
-				if( $custom_emails[$user][$EM_Booking->booking_status]['status'] == 1 ){
-					//override default email with custom email
-			    	$msg[$email_type]['subject'] = $custom_emails[$user][$EM_Booking->booking_status]['subject'];
-			    	$msg[$email_type]['body'] = $custom_emails[$user][$EM_Booking->booking_status]['message'];
-				}elseif( $custom_emails[$user][$EM_Booking->booking_status]['status'] == 2 ){
-					//disable the email entirely
-	    			$msg[$email_type]['subject'] = $msg[$user]['body'] = '';		
-				}elseif( !empty($EM_Booking->booking_meta['gateway']) && array_key_exists($user, $gateway_users) ){
-					//we requested the default for this gateway, so check if there's a overriden default for this gateway
-					if( $gateway_emails[$user][$EM_Booking->booking_status]['status'] == 1 ){
-						//override default gateway email with custom email
-				    	$msg[$email_type]['subject'] = $gateway_emails[$user][$EM_Booking->booking_status]['subject'];
-				    	$msg[$email_type]['body'] = $gateway_emails[$user][$EM_Booking->booking_status]['message'];
-					}elseif( $gateway_emails[$user][$EM_Booking->booking_status]['status'] == 2 ){
-						//disable the gateway email entirely
-		    			$msg[$email_type]['subject'] = $msg[$email_type]['body'] = '';
-					}
+			if( !empty($custom_emails[$user][$EM_Booking->booking_status]) && $custom_emails[$user][$EM_Booking->booking_status]['status'] == 1 ){
+				//override default email with custom email
+		    	$msg[$email_type]['subject'] = $custom_emails[$user][$EM_Booking->booking_status]['subject'];
+		    	$msg[$email_type]['body'] = $custom_emails[$user][$EM_Booking->booking_status]['message'];
+			}elseif( !empty($custom_emails[$user][$EM_Booking->booking_status]) && $custom_emails[$user][$EM_Booking->booking_status]['status'] == 2 ){
+				//disable the email entirely
+    			$msg[$email_type]['subject'] = $msg[$user]['body'] = '';		
+			}elseif( !empty($EM_Booking->booking_meta['gateway']) && array_key_exists($user, $gateway_users) && !empty($gateway_emails[$user][$EM_Booking->booking_status]['status']) ){
+				//we requested the default for this gateway, so check if there's a overriden default for this gateway
+				if( $gateway_emails[$user][$EM_Booking->booking_status]['status'] == 1 ){
+					//override default gateway email with custom email
+			    	$msg[$email_type]['subject'] = $gateway_emails[$user][$EM_Booking->booking_status]['subject'];
+			    	$msg[$email_type]['body'] = $gateway_emails[$user][$EM_Booking->booking_status]['message'];
+				}elseif( $gateway_emails[$user][$EM_Booking->booking_status]['status'] == 2 ){
+					//disable the gateway email entirely
+	    			$msg[$email_type]['subject'] = $msg[$email_type]['body'] = '';
 				}
-		    }
+			}
 		}
 		return $msg;
 	}
 	
+	/**
+	 * Hooks into em_booking_admin_emails filter and adds additional admin email addresses specific for this event
+	 * @param array $emails array of current email addresses that will be sent to
+	 * @param EM_Booking $EM_Booking contains event information, used to retrieve the relevant emails
+	 * @return array
+	 */
 	public static function event_admin_emails( $emails, $EM_Booking ){
 		$admin_emails = array();
 		if( get_class($EM_Booking) == 'EM_Booking' ){ //prevent MB bookings from possibly sending individual event emails

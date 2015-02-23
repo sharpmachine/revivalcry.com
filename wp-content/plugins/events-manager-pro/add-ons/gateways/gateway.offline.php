@@ -18,7 +18,10 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 */
 	function __construct() {
 		parent::__construct();
-		add_action('init',array(&$this, 'actions'),1);
+		add_action('init',array(&$this, 'actions'),10);
+		if( !empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id']) ){
+		    add_action('pre_option_dbem_bookings_double',create_function('','return true;')); //so we don't get a you're already booked here message
+		}
 		//Booking Interception
 		add_filter('em_booking_set_status',array(&$this,'em_booking_set_status'),1,2);
 		add_filter('em_bookings_pending_count', array(&$this, 'em_bookings_pending_count'),1,1);
@@ -61,14 +64,12 @@ class EM_Gateway_Offline extends EM_Gateway {
 					unset($_POST['action']);
 				}
 			}
-		}elseif( !empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id']) ){
-		    add_action('pre_option_dbem_bookings_double',create_function('','return true;')); //so we don't get a you're already booked here message
 		}
 	}
 	
 	function em_wp_localize_script($vars){
 		if( is_user_logged_in() && get_option('dbem_rsvp_enabled') ){
-			$vars['offline_confirm'] = __('Be aware that by approving a booking awaiting payment, a full payment transaction will be registered against this booking, meaning that it will be considered as paid.','dbem');
+			$vars['offline_confirm'] = __('Be aware that by approving a booking awaiting payment, a full payment transaction will be registered against this booking, meaning that it will be considered as paid.','em-pro');
 		}
 		return $vars;
 	}
@@ -147,10 +148,10 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 */
 	function bookings_table_actions( $actions, $EM_Booking ){
 		return array(
-			'approve' => '<a class="em-bookings-approve em-bookings-approve-offline" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->booking_id)).'">'.__('Approve','dbem').'</a>',
-			'reject' => '<a class="em-bookings-reject" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_reject', 'booking_id'=>$EM_Booking->booking_id)).'">'.__('Reject','dbem').'</a>',
-			'delete' => '<span class="trash"><a class="em-bookings-delete" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->booking_id)).'">'.__('Delete','dbem').'</a></span>',
-			'edit' => '<a class="em-bookings-edit" href="'.em_add_get_params($EM_Booking->get_event()->get_bookings_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null)).'">'.__('Edit/View','dbem').'</a>',
+			'approve' => '<a class="em-bookings-approve em-bookings-approve-offline" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_approve', 'booking_id'=>$EM_Booking->booking_id)).'">'.esc_html__emp('Approve','dbem').'</a>',
+			'reject' => '<a class="em-bookings-reject" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_reject', 'booking_id'=>$EM_Booking->booking_id)).'">'.esc_html__emp('Reject','dbem').'</a>',
+			'delete' => '<span class="trash"><a class="em-bookings-delete" href="'.em_add_get_params($_SERVER['REQUEST_URI'], array('action'=>'bookings_delete', 'booking_id'=>$EM_Booking->booking_id)).'">'.esc_html__emp('Delete','dbem').'</a></span>',
+			'edit' => '<a class="em-bookings-edit" href="'.em_add_get_params($EM_Booking->get_event()->get_bookings_url(), array('booking_id'=>$EM_Booking->booking_id, 'em_ajax'=>null, 'em_obj'=>null)).'">'.esc_html__emp('Edit/View','dbem').'</a>',
 		);
 	}
 	
@@ -167,7 +168,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 */
 	function event_booking_options(){
 		global $EM_Event;
-		?><a href="<?php echo em_add_get_params($EM_Event->get_bookings_url(), array('action'=>'manual_booking','event_id'=>$EM_Event->event_id)); ?>"><?php _e('add booking','dbem') ?></a><?php	
+		?><a href="<?php echo em_add_get_params($EM_Event->get_bookings_url(), array('action'=>'manual_booking','event_id'=>$EM_Event->event_id)); ?>"><?php _e('add booking','em-pro') ?></a><?php	
 	}
 	
 	/**
@@ -177,7 +178,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 		?>
 		<div id="em-gateway-payment" class="stuffbox">
 			<h3>
-				<?php _e('Add Offline Payment', 'dbem'); ?>
+				<?php _e('Add Offline Payment', 'em-pro'); ?>
 			</h3>
 			<div class="inside">
 				<div>
@@ -202,7 +203,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 						<input type="hidden" name="action" value="gateway_add_payment" />
 						<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('gateway_add_payment'); ?>" />
 						<input type="hidden" name="redirect_to" value="<?php echo (!empty($_REQUEST['redirect_to'])) ? $_REQUEST['redirect_to']:wp_get_referer(); ?>" />
-						<input type="submit" value="<?php _e('Add Offline Payment', 'dbem'); ?>" />
+						<input type="submit" value="<?php _e('Add Offline Payment', 'em-pro'); ?>" />
 					</form>
 				</div>					
 			</div>
@@ -223,7 +224,9 @@ class EM_Gateway_Offline extends EM_Gateway {
 		/* @var $EM_Event EM_Event */   
 		global $EM_Notices, $EM_Event;
 		if( !is_object($EM_Event) ) { return; }
-		if( !defined('EM_FORCE_REGISTRATION') ) define('EM_FORCE_REGISTRATION', true);
+		//force all user fields to be loaded
+		EM_Bookings::$force_registration = EM_Bookings::$disable_restrictions = true;
+		//remove unecessary footer payment stuff and add our own 
 		remove_action('em_booking_form_footer', array('EM_Gateways','booking_form_footer'),10,2);
 		remove_action('em_booking_form_footer', array('EM_Gateways','event_booking_form_footer'),10,2);
 		add_action('em_booking_form_footer', array($this,'em_booking_form_footer'),10,2);
@@ -279,7 +282,9 @@ class EM_Gateway_Offline extends EM_Gateway {
 			//add em_event_save filter to log transactions etc.
 			add_filter('em_booking_save', array(&$this, 'em_booking_save'), 10, 2);
 			//set flag that we're manually booking here, and set gateway to offline
-			if( !defined('EM_FORCE_REGISTRATION') && (empty($_REQUEST['person_id']) || $_REQUEST['person_id'] < 0) ) define('EM_FORCE_REGISTRATION', true);
+			if( empty($_REQUEST['person_id']) || $_REQUEST['person_id'] < 0 ){
+				EM_Bookings::$force_registration = EM_Bookings::$disable_restrictions = true;
+			}
 		}
 		parent::booking_add($EM_Event, $EM_Booking, $post_validation);
 	}

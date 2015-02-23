@@ -1,18 +1,18 @@
 <?php
 class EM_Forms {
-	function init(){
+	public static function init(){
 		if( is_admin() ){
 			add_action('em_create_events_submenu',array('EM_Forms', 'admin_menu'),1,1);
 			add_action('em_options_page_footer_bookings',array('EM_Forms', 'admin_options'),10);
 		}
 	}
 	
-	function admin_menu($plugin_pages){
+	public static function admin_menu($plugin_pages){
 		$plugin_pages[] = add_submenu_page('edit.php?post_type='.EM_POST_TYPE_EVENT, __('Forms Editor','em-pro'),__('Forms Editor','em-pro'),get_option('dbem_capability_forms_editor', 'list_users'),'events-manager-forms-editor',array('EM_Forms','admin_page'));
 		return $plugin_pages; //use wp action/filters to mess with the menus
 	}
 	
-	function admin_page(){
+	public static function admin_page(){
 		?>
 		<div class='wrap'>
 			<div class="icon32" id="icon-plugins"><br></div>
@@ -23,16 +23,18 @@ class EM_Forms {
 		<?php
 	}
 	
-	function admin_options(){
+	public static function admin_options(){
 		global $save_button;
 		if( current_user_can('list_users') ){
 		?>
 			<div  class="postbox " id="em-opt-pro-booking-form-options" >
-			<div class="handlediv" title="<?php __('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'PRO Booking Form Options', 'em-pro' ); ?> </span></h3>
+			<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3 class='hndle'><span><?php _e ( 'PRO Booking Form Options', 'em-pro' ); ?> </span></h3>
 			<div class="inside">
 				<table class='form-table'>
 					<?php 
-						em_options_radio_binary ( __( 'Show profile fields to logged in users?', 'em-pro' ), 'dbem_emp_booking_form_reg_show', __( 'When logged in, users usually don\'t see their profile fields, with this enabled, users will be able to update their profile fields alongside their booking. This is particularly useful if the user is missing key information. Note that this does not include usernames, name, passwords and emails, these must be modified from their user profile page.','em-pro' ) );
+						em_options_radio_binary ( __( 'Show profile fields to logged in users?', 'em-pro' ), 'dbem_emp_booking_form_reg_show', __( 'When logged in, users usually don\'t see their profile fields, with this enabled, users will be able to update their profile fields alongside their booking. This is particularly useful if the user is missing key information.','em-pro' ), '', '#dbem_emp_booking_form_reg_show_name_row, #dbem_emp_booking_form_reg_show_email_row, #dbem_emp_booking_form_reg_input_row' );
+						em_options_radio_binary ( __( 'Show name profile fields?', 'em-pro' ), 'dbem_emp_booking_form_reg_show_name', sprintf(__( 'If fields are editable users will be able to change their %s whilst making a booking.', 'em-pro' ), esc_html__emp('Name','dbem')) );
+						em_options_radio_binary ( __( 'Show email profile fields?', 'em-pro' ), 'dbem_emp_booking_form_reg_show_email', sprintf(__( 'If fields are editable users will be able to change their %s whilst making a booking.', 'em-pro' ), esc_html__emp('Email','dbem')) );
 						em_options_radio_binary ( __( 'Make profile fields editable?', 'em-pro' ), 'dbem_emp_booking_form_reg_input', __( 'If profile fields are set to show to logged in users, you can also choose whether or not to make these fields editable or just for viewing reference.','em-pro' ) );
 					?>
 				</table>
@@ -144,7 +146,7 @@ class EM_Form extends EM_Object {
 		//output formatted value for special fields
 		switch( $field['type'] ){
 			case 'checkbox':
-				$field_value = ($field_value && $field_value != 'n/a') ? __('Yes','dbem'):__('No','dbem');
+				$field_value = ($field_value && $field_value != 'n/a') ? __emp('Yes','dbem'):__emp('No','dbem');
 				break;
 			case 'date':
 			    //split ranges (or create single array) and format, then re-implode
@@ -249,7 +251,7 @@ class EM_Form extends EM_Object {
 				<p class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
 					<label for='<?php echo $field['fieldid'] ?>'>
 						<?php if( !empty($field['options_'.$tip_type.'_tip']) ): ?>
-							<span class="form-tip" title="<?php echo $field['options_'.$tip_type.'_tip']; ?>">
+							<span class="form-tip" title="<?php echo esc_attr($field['options_'.$tip_type.'_tip']); ?>">
 								<?php echo $field['label'] ?> <?php echo $required  ?>
 							</span>
 						<?php else: ?>
@@ -271,23 +273,14 @@ class EM_Form extends EM_Object {
 				}
 				break;
 			default:
-			    $is_hidden_reg = is_user_logged_in() && in_array($field['type'], array('first_name','last_name', 'user_email','user_login', 'name', 'user_password'));
-				if( array_key_exists($field['type'], $this->user_fields) && self::show_reg_fields() && !(!defined('EM_FORCE_REGISTRATION') && $is_hidden_reg) ){
-					if( empty($_REQUEST[$field['fieldid']]) && is_user_logged_in() && !defined('EM_FORCE_REGISTRATION') ){
-						if( $field['type'] == 'name' ){
-							$EM_Person = new EM_Person(get_current_user_id());
-							$post = $EM_Person->get_name();
-						}else{
-							$post = get_user_meta(get_current_user_id(), $field['fieldid'], true);
-						}
-					}
+				if( array_key_exists($field['type'], $this->user_fields) && self::show_reg_fields($field) ){
 					if( array_key_exists($field['type'], $this->core_user_fields) ){
 						if( $field['type'] == 'user_password' ){
 							?>
 							<p class="input-<?php echo $field['type']; ?> input-user-field">
 								<label for='<?php echo $field['fieldid'] ?>'>
 									<?php if( !empty($field['options_reg_tip']) ): ?>
-										<span class="form-tip" title="<?php echo $field['options_reg_tip']; ?>">
+										<span class="form-tip" title="<?php echo esc_attr($field['options_reg_tip']); ?>">
 											<?php echo $field['label'] ?> <?php echo $required  ?>
 										</span>
 									<?php else: ?>
@@ -299,11 +292,14 @@ class EM_Form extends EM_Object {
 							<?php
 						}else{
 							//registration fields
+							if( empty($_REQUEST[$field['fieldid']]) && is_user_logged_in() && get_option('dbem_emp_booking_form_reg_show') && !EM_Bookings::$force_registration ){
+								$post = EM_User_Fields::get_user_meta(get_current_user_id(), $field['type']);
+							}
 							?>
 							<p class="input-<?php echo $field['type']; ?> input-user-field">
 								<label for='<?php echo $field['fieldid'] ?>'>
 									<?php if( !empty($field['options_reg_tip']) ): ?>
-										<span class="form-tip" title="<?php echo $field['options_reg_tip']; ?>">
+										<span class="form-tip" title="<?php echo esc_attr($field['options_reg_tip']); ?>">
 											<?php echo $field['label'] ?> <?php echo $required  ?>
 										</span>
 									<?php else: ?>
@@ -319,7 +315,7 @@ class EM_Form extends EM_Object {
 						<p class="input-<?php echo $field['type']; ?> input-user-field">
 							<label for='<?php echo $field['fieldid'] ?>'>
 								<?php if( !empty($field['options_reg_tip']) ): ?>
-									<span class="form-tip" title="<?php echo $field['options_reg_tip']; ?>">
+									<span class="form-tip" title="<?php echo esc_attr($field['options_reg_tip']); ?>">
 										<?php echo $field['label'] ?> <?php echo $required  ?>
 									</span>
 								<?php else: ?>
@@ -342,10 +338,10 @@ class EM_Form extends EM_Object {
 		$default_html = '';
 		if($post === true && !empty($_REQUEST[$field['fieldid']])) {
 			$default = is_array($_REQUEST[$field['fieldid']]) ? $_REQUEST[$field['fieldid']]:esc_attr($_REQUEST[$field['fieldid']]);
-			$default_html = esc_attr($_REQUEST[$field['fieldid']]);
+			$default_html = is_array($_REQUEST[$field['fieldid']]) ? $_REQUEST[$field['fieldid']] : esc_attr($_REQUEST[$field['fieldid']]);
 		}elseif( $post !== true && !empty($post) ){
 			$default = is_array($post) ? $post:esc_attr($post);
-			$default_html = esc_attr($post);
+			$default_html = is_array($post) ? $post : esc_attr($post);
 		}
 		$field_name = !empty($field['name']) ? $field['name']:$field['fieldid'];
 		switch($field['type']){
@@ -412,9 +408,7 @@ class EM_Form extends EM_Object {
 					$count = 0;
 				?>
 				<?php foreach($values as $value): $value = trim($value); $count++; ?>
-					<option <?php echo (($count == 1 && $field['options_select_default']) || ($multi && in_array($value, $default)) || ($value == $default) )?'selected="selected"':''; ?>>
-						<?php echo esc_html($value) ?>
-					</option>
+					<option <?php echo (($count == 1 && $field['options_select_default']) || ($multi && in_array($value, $default)) || ($value == $default) )?'selected="selected"':''; ?>><?php echo esc_html($value) ?></option>
 				<?php endforeach; ?>
 				</select>
 				<?php
@@ -422,7 +416,7 @@ class EM_Form extends EM_Object {
 			case 'country':
 				?>
 				<select name="<?php echo $field_name ?>" class="<?php echo $field['fieldid'] ?>">
-				<?php foreach(em_get_countries(__('none selected','dbem')) as $country_key => $country_name): ?>
+				<?php foreach(em_get_countries(__('none selected','em-pro')) as $country_key => $country_name): ?>
 					<option value="<?php echo $country_key; ?>"  <?php echo ($country_key == $default) ?'selected="selected"':''; ?>><?php echo $country_name; ?></option>
 					<?php endforeach; ?>
 				</select>
@@ -436,7 +430,7 @@ class EM_Form extends EM_Object {
 						$default[] = $_REQUEST[$field_name]['end'];
 					}
 				}else{
-					$default = explode(',',$default);
+					if( is_string($default) ) $default = explode(',',$default);
 					if( !empty($default[0]) && !preg_match('/\d{4}-\d{2}-\d{2}/', $default[0]) ) $default = ''; //make sure the value is a date
 				}
 				//we're adding a [%s] to the field id and replacing this for the start-end field names because this way other bits (e.g. attendee forms) can manipulate where the [start] and [end] are placed in the element name. 
@@ -489,7 +483,7 @@ class EM_Form extends EM_Object {
 			default:
 				if( array_key_exists($field['type'], $this->user_fields) && self::show_reg_fields() ){
 					//registration fields
-				    if( get_option('dbem_emp_booking_form_reg_input') || !is_user_logged_in() || defined('EM_FORCE_REGISTRATION') ){
+				    if( get_option('dbem_emp_booking_form_reg_input') || !is_user_logged_in() || EM_Bookings::$force_registration ){
 						?>
 						<input type="text" name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" class="input" value="<?php echo $default; ?>"  />
 						<?php
@@ -598,7 +592,7 @@ class EM_Form extends EM_Object {
 					}				
 					break;
 				case 'country':
-					$values = em_get_countries(__('none selected','dbem'));
+					$values = em_get_countries(__emp('none selected','dbem'));
 					//in-values
 					if( (!empty($value) && !array_key_exists($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_select_error'])) ? $field['options_select_error']:$err;
@@ -618,20 +612,20 @@ class EM_Form extends EM_Object {
 									$this->add_error($this_err);
 									$result = false;
 								}elseif( !preg_match('/\d{4}-\d{2}-\d{2}/', $end_date) ){
-									$this_err = (!empty($field['options_date_error_format'])) ? $field['options_date_error_format']:__('Dates must have correct formatting. Please use the date picker provided.','dbem');
+									$this_err = (!empty($field['options_date_error_format'])) ? $field['options_date_error_format']:__emp('Dates must have correct formatting. Please use the date picker provided.','dbem');
 									$this->add_error($this_err);
 									$result = false;
 								}else{
 									//valid end date, check for date order
 									if( strtotime($start_date) > strtotime($end_date) ){
-										$this_err = (!empty($field['options_date_range_order'])) ? $field['options_date_range_order']:__('Please provide a later end date.','dbem');
+										$this_err = (!empty($field['options_date_range_order'])) ? $field['options_date_range_order']:__emp('Please provide a later end date.','dbem');
 										$this->add_error($this_err);
 										$result = false;
 									}
 								}
 							}
 						}else{
-							$this_err = (!empty($field['options_date_error_format'])) ? $field['options_date_error_format']:__('Dates must have correct formatting. Please use the date picker provided.','dbem');
+							$this_err = (!empty($field['options_date_error_format'])) ? $field['options_date_error_format']:__emp('Dates must have correct formatting. Please use the date picker provided.','dbem');
 							$this->add_error($this_err);
 							$result = false;
 						}
@@ -682,29 +676,41 @@ class EM_Form extends EM_Object {
 					}
 					break;		
 				case 'captcha':
+					if( empty($this->ignore_captcha) ){
 					if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptchalib.php'); }
 					if( function_exists('recaptcha_check_answer') && !is_user_logged_in() && !defined('EMP_CHECKED_CAPTCHA') ){
-						$resp = recaptcha_check_answer($field['options_captcha_key_priv'], $_SERVER['REMOTE_ADDR'], $_REQUEST['recaptcha_challenge_field'], $_REQUEST['recaptcha_response_field']);
-						$result = $resp->is_valid;
+						if( !empty($_REQUEST['recaptcha_challenge_field']) && !empty($_REQUEST['recaptcha_response_field']) ){
+							$resp = recaptcha_check_answer($field['options_captcha_key_priv'], $_SERVER['REMOTE_ADDR'], $_REQUEST['recaptcha_challenge_field'], $_REQUEST['recaptcha_response_field']);
+							$result = $resp->is_valid;
+						}else{
+							$result = false; //no request vars submitted
+						}
 						if(!$result){
 							$err = !empty($field['options_captcha_error']) ? $field['options_captcha_error']:$err;
 							$this->add_error($err);
 						}
 						define('EMP_CHECKED_CAPTCHA', true); //captchas can only be checked once, and since we only need one captcha per submission....
 					}
+					}
 					break;
 				default:
 					//Registration and custom fields
-					$is_manual_booking_new_user = ( !empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id']) && $_REQUEST['person_id'] == -1 );
-				    $is_hidden_reg = (is_user_logged_in() && !$is_manual_booking_new_user) && in_array($field['type'], array('first_name','last_name', 'user_email','user_login', 'name', 'user_password'));
-					if( array_key_exists($field['type'], $this->user_fields) && self::validate_reg_fields() && !(!defined('EM_FORCE_REGISTRATION') && $is_hidden_reg) ){
+					$is_manual_booking_new_user = (is_user_logged_in() && !empty($_REQUEST['manual_booking']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$_REQUEST['event_id']) && $_REQUEST['person_id'] == -1 );
+    			    if( array_key_exists($field['type'], $this->user_fields) && self::validate_reg_fields() && self::show_reg_fields($field) ){
 						//preliminary checks/exceptions
-						if( in_array($field['type'], array('user_login','first_name','last_name')) && (is_user_logged_in() && !$is_manual_booking_new_user) && !defined('EM_FORCE_REGISTRATION') ) break;
 						if( is_user_logged_in() && !get_option('dbem_emp_booking_form_reg_input') ) break;
 						//add field-specific validation
-						if ( $field['type'] == 'user_email' && ! is_email( $value ) ) {
-							$this->add_error( __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.', 'dbem') );
-							$result = false;
+						if ( $field['type'] == 'user_email' ) {
+							if( ! is_email( $value ) ){
+								$this->add_error( __emp( '<strong>ERROR</strong>: The email address isn&#8217;t correct.', 'dbem') );
+								$result = false;
+							}elseif( is_user_logged_in() ){
+								$email_exists = email_exists($value);
+								if( $email_exists && $email_exists != get_current_user_id() ){
+									$this->add_error( get_option('dbem_booking_feedback_email_exists') );
+									$result = false;	
+								}
+							}
 						}
 						//regex
 						if( trim($value) != '' && !empty($field['options_reg_regex']) && !@preg_match('/'.$field['options_reg_regex'].'/',$value) ){
@@ -782,14 +788,37 @@ class EM_Form extends EM_Object {
 	function input_default($key, $fields, $type = 'text', $value=""){ echo self::get_input_default($key, $fields, $type, $value); }
 
 	
-	private static function show_reg_fields(){
-		$show_reg = ((!is_user_logged_in() || defined('EM_FORCE_REGISTRATION')) && get_option('dbem_bookings_anonymous')) || (is_user_logged_in() && get_option('dbem_emp_booking_form_reg_show'));
-		return apply_filters('emp_form_show_reg_fields', $show_reg); 
+	/**
+	 * Returns whether or not to show registration fields, and if a field type or field object is passed it'll check whether that specific field should be shown in this instance.
+	 * Takes into account whether a user is logged in and fields like email and name should be shown.
+	 * @param string $field
+	 * @return mixed
+	 */
+	public static function show_reg_fields( $field = false ){
+		$show_reg = (!is_user_logged_in() && get_option('dbem_bookings_anonymous')) || EM_Bookings::$force_registration || (is_user_logged_in() && get_option('dbem_emp_booking_form_reg_show'));
+		$is_hidden_reg = false;
+		if( !empty($field) ){
+			$field_type = !empty($field['type']) ? $field['type'] : (string) $field;
+			$hidden_fields = array('user_password','user_login'); //usernameas and passwords are always hidden once a user exists
+			if( is_user_logged_in() && !EM_Bookings::$force_registration ){
+				if( !get_option('dbem_emp_booking_form_reg_show_email') ){
+					$hidden_fields = array_merge($hidden_fields, array('user_email'));
+				}
+				if( !get_option('dbem_emp_booking_form_reg_show_name') ){
+					$hidden_fields = array_merge($hidden_fields, array('first_name','last_name', 'name'));
+				}
+				$hidden_fields = apply_filters('emp_hidden_reg_fields', $hidden_fields);
+				$is_hidden_reg = in_array($field_type, $hidden_fields);
+			}elseif( (!is_user_logged_in() || EM_Bookings::$force_registration) && get_option('dbem_bookings_registration_disable') ){
+				$is_hidden_reg = in_array($field_type, apply_filters('emp_hidden_reg_fields', $hidden_fields));
+			}
+		}
+		return apply_filters('emp_form_show_reg_fields', $show_reg && !$is_hidden_reg); 
 	}
 
-	private static function validate_reg_fields(){
+	public static function validate_reg_fields( $field = false ){
 		$validate = is_user_logged_in() ? get_option('dbem_emp_booking_form_reg_show') && get_option('dbem_emp_booking_form_reg_input') : true;
-		return self::show_reg_fields() && $validate;
+		return self::show_reg_fields( $field ) && $validate;
 	}
 	
 	function editor($user_fields = true, $custom_fields = true, $captcha_fields = true){
@@ -1333,7 +1362,7 @@ class EM_Form extends EM_Object {
 		if( !empty($_REQUEST['form_action']) && $_REQUEST['form_action'] == 'form_fields' && wp_verify_nonce($_REQUEST['_wpnonce'], 'form_fields') ){
 			//Booking form fields
 			$fields_map = self::get_fields_map();
-			//extract request info back into item lists, but first assign fieldids to new items
+			//extract request info back into item lists, but first assign fieldids to new items and sanitize old ones
 			foreach( $_REQUEST['fieldid'] as $fieldid_key => $fieldid ){
 				if( $_REQUEST['type'][$fieldid_key] == 'name' ){ //name field
 					$_REQUEST['fieldid'][$fieldid_key] = 'user_name';
@@ -1342,6 +1371,7 @@ class EM_Form extends EM_Object {
 				}elseif( empty($fieldid) ){
 					$_REQUEST['fieldid'][$fieldid_key] = sanitize_title($_REQUEST['label'][$fieldid_key]); //assign unique id
 				}
+				$_REQUEST['fieldid'][$fieldid_key] = str_replace('.','_',$_REQUEST['fieldid'][$fieldid_key]);
 			}
 			//get field values
 			$this->form_fields = array();

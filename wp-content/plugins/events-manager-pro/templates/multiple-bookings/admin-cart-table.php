@@ -1,11 +1,11 @@
 <?php
 /*
-* WARNING -This is a recently added template (2013-01-30), and is likly to change as we fine-tune things over the coming weeks/months, if at all possible try to use our hooks or CSS/jQuery to acheive your customizations
+* WARNING -This is a relatively new feature and is likly to change as we fine-tune things over the coming weeks/months, if at all possible try to use our hooks or CSS/jQuery to acheive your customizations
 * This displays the booking cart showing the persons bookings, attendees and a breakdown of pricing.
 * You can override the default display settings pages by copying this file to yourthemefolder/plugins/events-manager-pro/multiple-bookings/ and modifying it however you need.
 * For more information, see http://wp-events-plugin.com/documentation/using-template-files/
 */
-if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get_multiple_booking();
+$EM_Multiple_Booking = empty($EM_Multiple_Booking) ? EM_Multiple_Bookings::get_multiple_booking() : $EM_Multiple_Booking; /* @var $EM_Multiple_Booking EM_Multiple_Booking */
 //TODO add delete booking from cart
 //TODO make bookings editable
 ?>
@@ -22,8 +22,8 @@ if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get
 				<td>
 					<?php ob_start(); ?>
 					<span class="em-cart-table-event-title"><a href="<?php echo $EM_Booking->get_event()->get_bookings_url(); ?>">#_EVENTNAME</a></span><br/>
-					<?php _e('When','em-pro'); ?> : #_EVENTDATES @ #_EVENTTIMES<br />
-					<?php _e('Where','em-pro'); ?> : #_LOCATIONFULLLINE
+					<?php _e_emp('When','dbem'); ?> : #_EVENTDATES @ #_EVENTTIMES<br />
+					<?php _e_emp('Where','dbem'); ?> : #_LOCATIONFULLLINE
 					<?php echo $EM_Booking->output(ob_get_clean()); ?><br />
 					<div class="em-cart-table-details-actions">
 						<a href="<?php echo $EM_Booking->get_admin_url(); ?>" class="em-cart-table-actions-edit">
@@ -122,7 +122,7 @@ if(empty($EM_Multiple_Booking)) $EM_Multiple_Booking = EM_Multiple_Bookings::get
 			<?php endforeach; ?>
 		<?php endif; ?>
 		<tr>
-			<th colspan="2"><?php _e('Total Price','dbem'); ?></th>
+			<th colspan="2"><?php esc_html_e_emp('Total Price','dbem'); ?></th>
 			<td><?php echo $price_summary['total']; ?></td>
 		</tr>
 		<?php do_action('em_multiple_bookings_table_after_totals', $EM_Multiple_Booking); //do not delete ?>

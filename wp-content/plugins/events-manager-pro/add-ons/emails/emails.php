@@ -3,7 +3,7 @@ class EM_Emails {
 	/**
 	 * Sets up email cron and filters/actions
 	 */
-	function init() {
+	public static function init() {
 		//enable custom emails
 		if( get_option('dbem_custom_emails') ){
 			include('custom-emails.php');
@@ -13,9 +13,10 @@ class EM_Emails {
 		if( get_option('dbem_cron_emails', 1) ) {
 			//set up cron for addint to email queue
 			if( !wp_next_scheduled('emp_cron_emails_queue') ){
-			    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'));
-			    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'));
+			    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'), current_time('timestamp'));
+			    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'), current_time('timestamp'));
 			    $time = $todays_time_to_run > current_time('timestamp') ? $todays_time_to_run:$tomorrows_time_to_run;
+			    $time -= ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ); //offset time to run at UTC time for WP Cron
 				$result = wp_schedule_event( $time,'daily','emp_cron_emails_queue');
 			}
 			add_action('emp_cron_emails_queue', array('EM_Emails','queue_emails') );
@@ -27,9 +28,10 @@ class EM_Emails {
 			if( get_option('dbem_emp_emails_reminder_ical') ){
 				//set up emails for ical cleaning
 				if( !wp_next_scheduled('emp_cron_emails_ical_cleanup') ){
-				    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'));
-				    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'));
+				    $todays_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')).' '.  get_option('dbem_emp_emails_reminder_time'), current_time('timestamp'));
+				    $tomorrows_time_to_run = strtotime(date('Y-m-d', current_time('timestamp')+(86400)).' '. get_option('dbem_emp_emails_reminder_time'), current_time('timestamp'));
 				    $time = $todays_time_to_run > current_time('timestamp') ? $todays_time_to_run:$tomorrows_time_to_run;
+				    $time -= ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ); //offset time to run at UTC time for WP Cron
 					$result = wp_schedule_event( $time,'daily','emp_cron_emails_ical_cleanup');
 				}
 				add_action('emp_cron_emails_ical_cleanup', array('EM_Emails','clean_icals') );
@@ -48,7 +50,7 @@ class EM_Emails {
 		}
 	}
 	
-	function clear_crons(){
+	public static function clear_crons(){
 	    wp_clear_scheduled_hook('emp_cron_emails_queue');
 	    wp_clear_scheduled_hook('emp_cron_emails_ical_cleanup');
 	}
@@ -56,9 +58,10 @@ class EM_Emails {
 	/**
 	 * Run on cron and prep emails to go out
 	 */
-	function queue_emails(){
+	public static function queue_emails(){
 	    global $EM_Event, $wpdb;
-	    $old_EM_Event = !empty($EM_Event) ? clone($EM_Event):null; //save old event in case already set
+	    //save old event in case already set
+	    $old_EM_Event = !empty($EM_Event) ? clone($EM_Event):null;
 		//disable the current events are past rule
 	    add_filter('option_pre_dbem_events_current_are_past', 'em_emails_return_false', create_function('$a', 'return false;'));
 	    //For each event x days on
@@ -68,7 +71,7 @@ class EM_Emails {
 	    $events_are_past = get_option('dbem_events_current_are_past');
 	    update_option('dbem_events_current_are_past', true);
 		$output_type = get_option('dbem_smtp_html') ? 'html':'email';
-	    foreach( EM_Events::get(array('scope'=>$scope,'private'=>1,'blog'=>false)) as $EM_Event ){
+	    foreach( EM_Events::get(array('scope'=>$scope,'private'=>1,'blog'=>get_current_blog_id())) as $EM_Event ){
 	        /* @var $EM_Event EM_Event */
 	        $emails = array();
 	    	//get ppl attending
@@ -85,23 +88,24 @@ class EM_Emails {
 	    	    if( get_option('dbem_emp_emails_reminder_ical') ){
 		    	    //create invite ical
 		    	    $upload_dir = wp_upload_dir();
+		    	    if( file_exists(trailingslashit($upload_dir['basedir'])."em-cache") || mkdir(trailingslashit($upload_dir['basedir'])."em-cache") ){
 		    	    $icalfilename = trailingslashit($upload_dir['basedir'])."em-cache/invite_".$EM_Event->event_id.".ics";
 		    	    $icalfile = fopen($icalfilename,'w+');
 		    	    if( $icalfile ){
 						ob_start();
-						em_locate_template('templates/ical-event.php', true);
+						em_locate_template('templates/ical.php', true, array('args'=>array('event'=>$EM_Event->event_id)));
 						$icalcontent = preg_replace("/([^\r])\n/", "$1\r\n", ob_get_clean());
 						fwrite($icalfile, $icalcontent);
 						fclose($icalfile);
 						$ical_file_array = array('name'=>'invite.ics', 'type'=>'text/calendar','path'=>$icalfilename);
 						$attachments = serialize(array($ical_file_array));
 		    	    }
+		    	    }
 	    	    }
 	    	    foreach($emails as $email){
 			    	$wpdb->insert(EM_EMAIL_QUEUE_TABLE, array('email'=>$email[0],'subject'=>$email[1],'body'=>$email[2],'attachment'=>$attachments,'event_id'=>$EM_Event->event_id,'booking_id'=>$email[3]));
 	    	    }
 	    	}
-	    	
 	    }
 	    //cleanup
 	    update_option('dbem_events_current_are_past', $events_are_past); //reset previous current events are past setting
@@ -109,34 +113,53 @@ class EM_Emails {
 	    remove_filter('option_pre_dbem_events_current_are_past', 'em_emails_return_false');
 	}
 	
-	function process_queue(){
+	public static function process_queue(){
+		//check that this isn't doing cron already - if this is MultiSite Global, then we place a lock at Network level
+		$doing_emails = EM_MS_GLOBAL ? get_site_option('em_cron_doing_emails') : get_option('em_cron_doing_emails');
+		if( $doing_emails ){
+			//if process has been running for over 15 minutes or 900 seconds (e.g. likely due to a php error or timeout), let it proceed
+			if( $doing_emails > (time() - 900 ) ){
+				return false;
+			}
+		}
+		EM_MS_GLOBAL ? update_site_option('em_cron_doing_emails', time()) : update_option('em_cron_doing_emails', time());
 	    //init phpmailer
 		global $EM_Mailer, $wpdb;
 		if( !is_object($EM_Mailer) ){
 			$EM_Mailer = new EM_Mailer();
 		}
-    	add_action('em_mailer', array('EM_Emails','em_mailer_mod'), 10, 1);
-    	add_action('em_mailer_sent', array('EM_Emails','em_mailer_mod_cleanup'), 10, 1);
 		//get queue
-		$limit = get_option('emp_cron_emails_limit', 100);
-		$results = $wpdb->get_results("SELECT * FROM ".EM_EMAIL_QUEUE_TABLE." ORDER BY queue_id  ASC LIMIT $limit");
-		$ids_to_delete = array();
-		foreach($results as $email){
-		    $ids_to_delete[] = $email->queue_id;
-		    $EM_Mailer->send($email->subject, $email->body, $email->email, unserialize($email->attachment));
+		$limit = get_option('dbem_cron_emails_limit', 100);
+		$count = 0;
+		$sql = "SELECT * FROM ".EM_EMAIL_QUEUE_TABLE." ORDER BY queue_id  ASC LIMIT 100";
+		$results = $wpdb->get_results($sql);
+		//loop through results of query whilst results exist
+		while( $wpdb->num_rows > 0 ){
+			//go through current results set
+			foreach($results as $email){
+				//if we reach a limit (provided limit is > 0, remove lock and exit this function
+				if( $count >= $limit && $limit > 0 ){
+					EM_MS_GLOBAL ? update_site_option('em_cron_doing_emails', 0) : update_option('em_cron_doing_emails', 0);
+					return true;
+				}
+				//send email, immediately delete after from queue
+			    if( $EM_Mailer->send($email->subject, $email->body, $email->email, unserialize($email->attachment)) ){
+			    	$wpdb->query("DELETE FROM ".EM_EMAIL_QUEUE_TABLE.' WHERE queue_id ='.$email->queue_id);
+			    }
+				//add to the count and move onto next email
+				$count++;
+			}
+			//if we haven't reached a limit, load up new results
+			$results = $wpdb->get_results($sql);
 		}
-    	//cleanup
-    	if( count($ids_to_delete) > 0 ){
-			$wpdb->query("DELETE FROM ".EM_EMAIL_QUEUE_TABLE.' WHERE queue_id IN ('.implode(',',$ids_to_delete).')');
-		}
-    	remove_action('em_mailer', array('EM_Emails','em_mailer_mod'), 10, 1);
-    	remove_action('em_mailer_sent', array('EM_Emails','em_mailer_mod_cleanup'), 10, 1);
+		//remove the lock on this cron
+		EM_MS_GLOBAL ? update_site_option('em_cron_doing_emails', 0) : update_option('em_cron_doing_emails', 0);
 	}
 
 	/**
 	 * Cleans unused ical files 
 	 */
-	function clean_icals(){
+	public static function clean_icals(){
 	    global $wpdb;
 	    //get theme CSS files
 	    $upload_dir = wp_upload_dir();
@@ -153,21 +176,5 @@ class EM_Emails {
 	    }
 	}
 
-	/**
-	 * Modifies the PHPMailer class to keep SMTP connections alive.
-	 * @param EM_PHPMailer $mail
-	 */
-	function em_mailer_mod($mail){
-	    $mail->SMTPKeepAlive = true;
-	}
-	
-	/**
-	 * Cleans up actions taken in em_mailer_mod, currently closing the SMTP connection kept alive.
-	 * @param EM_PHPMailer $mail 
-	 */
-	function em_mailer_mod_cleanup($mail){
-	    $mail->SmtpClose();
-	}
-
 }
-add_action('init',array('EM_Emails','init'));
+add_action('init',array('EM_Emails','init'), 9);

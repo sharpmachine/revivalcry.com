@@ -141,30 +141,31 @@ function emp_create_bookings_relationships_table(){
 function emp_add_options() {
 	global $wpdb;
 	add_option('em_pro_data', array());
+	add_option('dbem_disable_css',false); //TODO - remove this or create dependency in admin settings
 	//Form Stuff
 	$booking_form_data = array( 'name'=> __('Default','em-pro'), 'form'=> array (
-	  'name' => array ( 'label' => __('Name','dbem'), 'type' => 'name', 'fieldid'=>'user_name', 'required'=>1 ),
-	  'user_email' => array ( 'label' => __('Email','dbem'), 'type' => 'user_email', 'fieldid'=>'user_email', 'required'=>1 ),
-    	'dbem_address' => array ( 'label' => __('Address','dbem'), 'type' => 'dbem_address', 'fieldid'=>'dbem_address', 'required'=>1 ),
-    	'dbem_city' => array ( 'label' => __('City','dbem'), 'type' => 'dbem_city', 'fieldid'=>'dbem_city', 'required'=>1 ),
-    	'dbem_state' => array ( 'label' => __('State/County','dbem'), 'type' => 'dbem_state', 'fieldid'=>'dbem_state', 'required'=>1 ),
-    	'dbem_zip' => array ( 'label' => __('Zip/Post Code','dbem'), 'type' => 'dbem_zip', 'fieldid'=>'dbem_zip', 'required'=>1 ),
-    	'dbem_country' => array ( 'label' => __('Country','dbem'), 'type' => 'dbem_country', 'fieldid'=>'dbem_country', 'required'=>1 ),
-    	'dbem_phone' => array ( 'label' => __('Phone','dbem'), 'type' => 'dbem_phone', 'fieldid'=>'dbem_phone' ),
-    	'dbem_fax' => array ( 'label' => __('Fax','dbem'), 'type' => 'dbem_fax', 'fieldid'=>'dbem_fax' ),
-	  	'booking_comment' => array ( 'label' => __('Comment','dbem'), 'type' => 'textarea', 'fieldid'=>'booking_comment' ),
+	  'name' => array ( 'label' => __emp('Name','dbem'), 'type' => 'name', 'fieldid'=>'user_name', 'required'=>1 ),
+	  'user_email' => array ( 'label' => __emp('Email','dbem'), 'type' => 'user_email', 'fieldid'=>'user_email', 'required'=>1 ),
+    	'dbem_address' => array ( 'label' => __emp('Address','dbem'), 'type' => 'dbem_address', 'fieldid'=>'dbem_address', 'required'=>1 ),
+    	'dbem_city' => array ( 'label' => __emp('City/Town','dbem'), 'type' => 'dbem_city', 'fieldid'=>'dbem_city', 'required'=>1 ),
+    	'dbem_state' => array ( 'label' => __emp('State/County','dbem'), 'type' => 'dbem_state', 'fieldid'=>'dbem_state', 'required'=>1 ),
+    	'dbem_zip' => array ( 'label' => __('Zip/Post Code','em-pro'), 'type' => 'dbem_zip', 'fieldid'=>'dbem_zip', 'required'=>1 ),
+    	'dbem_country' => array ( 'label' => __emp('Country','dbem'), 'type' => 'dbem_country', 'fieldid'=>'dbem_country', 'required'=>1 ),
+    	'dbem_phone' => array ( 'label' => __emp('Phone','dbem'), 'type' => 'dbem_phone', 'fieldid'=>'dbem_phone' ),
+    	'dbem_fax' => array ( 'label' => __('Fax','em-pro'), 'type' => 'dbem_fax', 'fieldid'=>'dbem_fax' ),
+	  	'booking_comment' => array ( 'label' => __emp('Comment','dbem'), 'type' => 'textarea', 'fieldid'=>'booking_comment' ),
 	));
 	add_option('em_booking_form_error_required', __('Please fill in the field: %s','em-pro'));
     $new_fields = array(
-    	'dbem_address' => array ( 'label' => __('Address','dbem'), 'type' => 'text', 'fieldid'=>'dbem_address', 'required'=>1 ),
-    	'dbem_address_2' => array ( 'label' => __('Address Line 2','dbem'), 'type' => 'text', 'fieldid'=>'dbem_address_2' ),
-    	'dbem_city' => array ( 'label' => __('City','dbem'), 'type' => 'text', 'fieldid'=>'dbem_city', 'required'=>1 ),
-    	'dbem_state' => array ( 'label' => __('State/County','dbem'), 'type' => 'text', 'fieldid'=>'dbem_state', 'required'=>1 ),
-    	'dbem_zip' => array ( 'label' => __('Zip/Post Code','dbem'), 'type' => 'text', 'fieldid'=>'dbem_zip', 'required'=>1 ),
-    	'dbem_country' => array ( 'label' => __('Country','dbem'), 'type' => 'country', 'fieldid'=>'dbem_country', 'required'=>1 ),
-    	'dbem_phone' => array ( 'label' => __('Phone','dbem'), 'type' => 'text', 'fieldid'=>'dbem_phone' ),
-    	'dbem_fax' => array ( 'label' => __('Fax','dbem'), 'type' => 'text', 'fieldid'=>'dbem_fax' ),
-    	'dbem_company' => array ( 'label' => __('Company','dbem'), 'type' => 'text', 'fieldid'=>'dbem_company' ),
+    	'dbem_address' => array ( 'label' => __emp('Address','dbem'), 'type' => 'text', 'fieldid'=>'dbem_address', 'required'=>1 ),
+    	'dbem_address_2' => array ( 'label' => __emp('Address Line 2','dbem'), 'type' => 'text', 'fieldid'=>'dbem_address_2' ),
+    	'dbem_city' => array ( 'label' => __emp('City/Town','dbem'), 'type' => 'text', 'fieldid'=>'dbem_city', 'required'=>1 ),
+    	'dbem_state' => array ( 'label' => __emp('State/County','dbem'), 'type' => 'text', 'fieldid'=>'dbem_state', 'required'=>1 ),
+    	'dbem_zip' => array ( 'label' => __('Zip/Post Code','em-pro'), 'type' => 'text', 'fieldid'=>'dbem_zip', 'required'=>1 ),
+    	'dbem_country' => array ( 'label' => __emp('Country','dbem'), 'type' => 'country', 'fieldid'=>'dbem_country', 'required'=>1 ),
+    	'dbem_phone' => array ( 'label' => __emp('Phone','dbem'), 'type' => 'text', 'fieldid'=>'dbem_phone' ),
+    	'dbem_fax' => array ( 'label' => __('Fax','em-pro'), 'type' => 'text', 'fieldid'=>'dbem_fax' ),
+    	'dbem_company' => array ( 'label' => __('Company','em-pro'), 'type' => 'text', 'fieldid'=>'dbem_company' ),
     );
 	add_option('em_user_fields', $new_fields);
 	$customer_fields = array('address' => 'dbem_address','address_2' => 'dbem_address_2','city' => 'dbem_city','state' => 'dbem_state','zip' => 'dbem_zip','country' => 'dbem_country','phone' => 'dbem_phone','fax' => 'dbem_fax','company' => 'dbem_company');
@@ -173,28 +174,32 @@ function emp_add_options() {
 	//Gateway Stuff
     add_option('dbem_emp_booking_form_reg_input', 1);
     add_option('dbem_emp_booking_form_reg_show', 1);
+    add_option('dbem_emp_booking_form_reg_show_email', 0);
+    add_option('dbem_emp_booking_form_reg_show_name', !get_option('em_pro_version'));
 	add_option('dbem_gateway_use_buttons', 0);
 	add_option('dbem_gateway_label', __('Pay With','em-pro'));
 	//paypal
 	add_option('em_paypal_option_name', __('PayPal', 'em-pro'));
 	add_option('em_paypal_form', '<img src="'.plugins_url('events-manager-pro/includes/images/paypal/paypal_info.png','events-manager').'" width="228" height="61" />');
 	add_option('em_paypal_booking_feedback', __('Please wait whilst you are redirected to PayPal to proceed with payment.','em-pro'));
-	add_option('em_paypal_booking_feedback_free', __('Booking successful.', 'dbem'));
+	add_option('em_paypal_booking_feedback_free', __emp('Booking successful.', 'dbem'));
 	add_option('em_paypal_button', 'http://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif');
-	add_option('em_paypal_booking_feedback_thanks', __('Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a seperate email containing account details to access your booking information on this site. You may log into your account at www.paypal.com to view details of this transaction.', 'em-pro'));
+	add_option('em_paypal_booking_feedback_thanks', __('Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a separate email containing account details to access your booking information on this site. You may log into your account at www.paypal.com to view details of this transaction.', 'em-pro'));
+	add_option('em_paypal_inc_tax', get_option('em_pro_version') == false );
 	//offline
 	add_option('em_offline_option_name', __('Pay Offline', 'em-pro'));
-	add_option('em_offline_booking_feedback', __('Booking successful.', 'dbem'));
+	add_option('em_offline_booking_feedback', __emp('Booking successful.', 'dbem'));
 	add_option('em_offline_button', __('Pay Offline', 'em-pro'));
 	//authorize.net
 	add_option('em_authorize_aim_option_name', __('Credit Card', 'em-pro'));
-	add_option('em_authorize_aim_booking_feedback', __('Booking successful.', 'dbem'));
+	add_option('em_authorize_aim_booking_feedback', __emp('Booking successful.', 'dbem'));
 	add_option('em_authorize_aim_booking_feedback_free', __('Booking successful. You have not been charged for this booking.', 'em-pro'));
 	//email reminders
 	add_option('dbem_cron_emails', 0);
-	add_option('dbem_emp_emails_reminder_subject', 'Reminder - #_EVENTNAME');
+	add_option('dbem_cron_emails_limit', get_option('emp_cron_emails_limit', 100));
+	add_option('dbem_emp_emails_reminder_subject', __('Reminder','em-pro').' - #_EVENTNAME');
 	$email_footer = '<br /><br />-------------------------------<br />Powered by Events Manager - http://wp-events-plugin.com';
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br />When : #_EVENTDATES @ #_EVENTTIMES<br />Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br />We look forward to seeing you there!<br />Yours faithfully,<br />#_CONTACTNAME",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />This is a reminder about your #_BOOKINGSPACES space/spaces reserved for #_EVENTNAME.<br />When : #_EVENTDATES @ #_EVENTTIMES<br />Where : #_LOCATIONNAME - #_LOCATIONFULLLINE<br />We look forward to seeing you there!<br />Yours faithfully,<br />#_CONTACTNAME",'em-pro').$email_footer;
 	add_option('dbem_emp_emails_reminder_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	add_option('dbem_emp_emails_reminder_time', '12:00 AM');
 	add_option('dbem_emp_emails_reminder_days', 1);	
@@ -214,27 +219,27 @@ function emp_add_options() {
 	add_option('dbem_multiple_bookings_submit_button', __('Place Order','em_pro'));
 	//multiple bookings - emails
 	add_option('dbem_multiple_bookings_contact_email_subject', __('New Booking','em-pro'));
-	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has made a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has made a booking: <br />#_BOOKINGSUMMARY",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_contact_email_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_contact_email_cancelled_subject', __('Booking Cancelled','em-pro'));
-	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has cancelled a booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("#_BOOKINGNAME (#_BOOKINGEMAIL) has cancelled a booking: <br />#_BOOKINGSUMMARY",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_contact_email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_email_confirmed_subject', __('Booking Confirmed','em-pro'));
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking has been confirmed. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY <br />We look forward to seeing you there!",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking has been confirmed. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY <br />We look forward to seeing you there!",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_email_confirmed_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_email_pending_subject', __('Booking Pending','em-pro'));
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking is currently pending approval by our administrators. Once approved you will receive another confirmation email. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your booking is currently pending approval by our administrators. Once approved you will receive another confirmation email. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_email_pending_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_email_rejected_subject', __('Booking Rejected','em-pro'));
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been rejected. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been rejected. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_email_rejected_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	add_option('dbem_multiple_bookings_email_cancelled_subject', __('Booking Cancelled','em-pro'));
-	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been cancelled. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'dbem').$email_footer;
+	$respondent_email_body_localizable = __("Dear #_BOOKINGNAME, <br />Your requested booking has been cancelled. <br />Below is a summary of your booking: <br />#_BOOKINGSUMMARY",'em-pro').$email_footer;
 	add_option('dbem_multiple_bookings_email_cancelled_body', str_replace("<br />", "\n\r", $respondent_email_body_localizable));
 	
 	//Version updates

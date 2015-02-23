@@ -4,7 +4,7 @@ jQuery(document).ready( function($){
 			el = $(el);
 			var form = el.find('form');
 			var formData = form.serialize();
-			el.find('.em-cart-widget-contents').text(form.find('input[name="loading_text"]').val()).load( EM.bookingajaxurl, formData );
+			el.find('.em-cart-widget-contents').text(form.find('input[name="loading_text"]').val()).load( EM.ajaxurl, formData );
 		});
 	});
 	if( EM.cache ){

@@ -52,7 +52,7 @@ class EM_Coupon extends EM_Object {
 	function __construct($id = false, $search_by = 'id') {
 		global $wpdb;
 		//Initialize
-		$this->required_fields = array("coupon_name" => __('Name', 'em-pro'), "coupon_discount" => __('Discount', 'em-pro'), "coupon_code" => __('Code', 'em-pro'));
+		$this->required_fields = array("coupon_name" => __emp('Name', 'dbem'), "coupon_discount" => __('Discount', 'em-pro'), "coupon_code" => __('Code', 'em-pro'));
 		//Get the array/coupon_id
 		if( is_numeric($id) && $search_by == 'id' ){
 			//search by coupon_id, get post_id and blog_id (if in ms mode) and load the post

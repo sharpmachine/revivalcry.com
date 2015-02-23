@@ -10,7 +10,7 @@ class EM_Attendees_Form {
 	static $form_name;
 	static $form_template;
 	
-	function init(){
+	public static function init(){
 		//Menu/admin page
 		if( is_admin() ){
 			add_action('admin_init',array('EM_Attendees_Form', 'admin_init'), 10);
@@ -34,15 +34,11 @@ class EM_Attendees_Form {
 			add_filter('em_booking_output_placeholder',array('EM_Attendees_Form','placeholders'),1,3); //for emails
 			//custom form chooser in event bookings meta box:
 			add_action('emp_bookings_form_select_footer',array('EM_Attendees_Form', 'event_attendee_custom_form'),20,1);
-			add_filter('em_event_save_meta',array('EM_Attendees_Form', 'em_event_save_meta'),10,2);
-			self::$form_template = array (
-				'attendee_intro' => array ( 'label' => __('Title','dbem'), 'type' => 'html', 'fieldid'=>'attendee_intro', 'options_html_content'=>'<strong>'.sprintf(__('Attendee %s','em-pro'), '#NUM#'). '</strong>'),
-				'attendee_name' => array ( 'label' => __('Name','dbem'), 'type' => 'text', 'fieldid'=>'attendee_name', 'required'=>1 )
-			);
+			add_action('em_event_save_meta_pre',array('EM_Attendees_Form', 'em_event_save_meta_pre'),10,1);
 		}
 	}
 	
-	function admin_init(){
+	public static function admin_init(){
 	    if( current_user_can(get_option('dbem_capability_forms_editor', 'list_users')) ){
 			self::admin_page_actions();
 			add_action('emp_forms_admin_page',array('EM_Attendees_Form', 'admin_page'),11);
@@ -50,12 +46,26 @@ class EM_Attendees_Form {
 	}
 	
 	/**
+	 * Gets the default form structure for creating a new form
+	 * @return array
+	 */
+	public static function get_form_template(){
+	    if( empty(self::$form_template )){
+    		self::$form_template = apply_filters('em_attendees_form_get_form_template', array (
+				'attendee_intro' => array ( 'label' => __emp('Title','dbem'), 'type' => 'html', 'fieldid'=>'attendee_intro', 'options_html_content'=>'<strong>'.sprintf(__('Attendee %s','em-pro'), '#NUM#'). '</strong>'),
+				'attendee_name' => array ( 'label' => __emp('Name','dbem'), 'type' => 'text', 'fieldid'=>'attendee_name', 'required'=>1 )
+    		));	        
+	    }
+	    return self::$form_template;
+	}
+	
+	/**
 	 * Get the EM_Attendee_Form (Extended EM_Form)
 	 * @param EM_Event $EM_Event
 	 * @return EM_Attendee_Form
 	 */
-	function get_form($EM_Event = false){
-		if( empty(self::$form) || (!empty($EM_Event) && !empty(self::$form->event_id) && $EM_Event->event_id == self::$form->event_id) ){
+	public static function get_form($EM_Event = false){
+		if( empty(self::$form) || (!empty($EM_Event) && (empty(self::$form->event_id) || $EM_Event->event_id != self::$form->event_id)) ){
 			global $wpdb;
 			if(is_numeric($EM_Event)){ $EM_Event = em_get_event($EM_Event); }
 			$form_id = self::get_form_id($EM_Event);
@@ -63,7 +73,7 @@ class EM_Attendees_Form {
 				$sql = $wpdb->prepare("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'attendee-form' AND meta_id=%d", $form_id);
 				$form_data_row = $wpdb->get_row($sql, ARRAY_A);
 				if( empty($form_data_row) ){
-					$form_data = self::$form_template;
+					$form_data = self::get_form_template();
 					self::$form_name = __('Default','em-pro');
 				}else{
 					$form_data = unserialize($form_data_row['meta_value']);
@@ -91,7 +101,11 @@ class EM_Attendees_Form {
 		return self::$form;
 	}
 	
-	function get_form_id($EM_Event = false){
+	/**
+	 * Gets the form ID to use from a given EM_Event object or returns the default form id if not defined or no object passed
+	 * @param EM_Event $EM_Event
+	 */
+	public static function get_form_id($EM_Event = false){
 		$custom_form_id = ( !empty($EM_Event->post_id) ) ? get_post_meta($EM_Event->post_id, '_custom_attendee_form', true):0;
 		$form_id = empty($custom_form_id) ? get_option('em_attendee_form_fields') : $custom_form_id;
 	    return $form_id;
@@ -101,7 +115,7 @@ class EM_Attendees_Form {
 	 * Gets all the attendee forms stored in the wp_em_meta table 
 	 * @return array
 	 */
-	function get_forms(){
+	public static function get_forms(){
 		global $wpdb;
 		$forms = array();
 		$forms_data = $wpdb->get_results("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'attendee-form'");
@@ -116,7 +130,7 @@ class EM_Attendees_Form {
 	 * Returns an associative array of form ID => Name
 	 * @return array
 	 */
-	function get_forms_names(){
+	public static function get_forms_names(){
 		global $wpdb;
 		$forms = array();
 		$forms_data = $wpdb->get_results("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'attendee-form'");
@@ -133,7 +147,7 @@ class EM_Attendees_Form {
 	 * @param EM_Ticket $EM_Ticket
 	 * @return EM_Attendee_Form
 	 */
-	function get_ticket_form($form, $EM_Ticket){
+	public static function get_ticket_form($form, $EM_Ticket){
 		//modify field ids to contain ticket number and []
 		foreach($form->form_fields as $field_id => $form_data){
 		    if( $form_data['type'] == 'date' || $form_data['type'] == 'time'){
@@ -174,16 +188,16 @@ class EM_Attendees_Form {
 	 * Returns a formatted multi-dimensional associative array of attendee information for a specific booking ticket.
 	 * example : array('Attendee 1' => array('Label'=>'Value', 'Label 2'=>'Value 2'), 'Attendee 2' => array(...)...);
 	 * @param EM_Ticket_Booking $EM_Ticket_Booking
+	 * @param boolean $padding
+	 * @return array $attendees
 	 */
-	public static function get_ticket_attendees( $EM_Ticket_Booking ){
+	public static function get_ticket_attendees( $EM_Ticket_Booking, $padding = false ){
 	    $attendees = array();
-	    if( is_array($EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ){
-	    	$EM_Form = EM_Attendees_Form::get_form($EM_Ticket_Booking->get_booking()->event_id); //can be repeated since object is stored temporarily
+    	$EM_Form = EM_Attendees_Form::get_form($EM_Ticket_Booking->get_booking()->event_id); //can be repeated since object is stored temporarily
+	    if( !empty($EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) && is_array($EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ){
 			$i = 1; //counter
 	    	foreach( $EM_Ticket_Booking->get_booking()->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id] as $field_values ){
 	    		$EM_Form->field_values = $field_values;
-	    		//backward compatibility for old booking forms and saved comments
-	    		if( empty($EM_Form->field_values['booking_comment']) && !empty($EM_Booking->booking_comment) ){ $EM_Form->field_values['booking_comment'] = $EM_Booking->booking_comment; }
 	    		//output the field values
 	    		$key = sprintf(__('Attendee %s','em-pro'), $i);
 	    		$attendees[$key] = array();
@@ -195,6 +209,17 @@ class EM_Attendees_Form {
 	    		}
 	    		$i++;
 		    }
+	    }elseif( $padding ){
+	    	//no attendees so pad with empty values
+	    	for( $space_no = 1; $space_no <= $EM_Ticket_Booking->ticket_booking_spaces; $space_no++ ){
+	    		$key = sprintf(__('Attendee %s','em-pro'), $space_no);
+	    		$attendees[$key] = array();
+	    		foreach( $EM_Form->form_fields as $fieldid => $field){
+	    			if( !array_key_exists($fieldid, $EM_Form->user_fields) && $field['type'] != 'html' ){
+	    				$attendees[$key][$field['label']] = $EM_Form->get_formatted_value($field, 'n/a');
+	    			}
+	    		}
+	    	}
 	    }
 	    return $attendees;
 	}
@@ -206,7 +231,7 @@ class EM_Attendees_Form {
 	 * 
 	 * @return string
 	 */
-	function js(){
+	public static function js(){
 		include('attendee-forms.js');
 	}
 	
@@ -214,7 +239,7 @@ class EM_Attendees_Form {
 	 * For each ticket in the booking table, add a hidden row with ticket form
 	 * @param EM_Ticket $EM_Ticket
 	 */
-	function tickets_form($EM_Ticket){
+	public static function tickets_form($EM_Ticket){
 		$col_numbers = $EM_Ticket->get_event()->get_bookings()->get_tickets()->get_ticket_collumns();
 		$min_spaces = $EM_Ticket->get_spaces_minimum();
 		if( !$EM_Ticket->is_required() ) $min_spaces = 0; //zero value allowed
@@ -232,7 +257,7 @@ class EM_Attendees_Form {
 	 * For each ticket row in the booking table, add a hidden row with ticket form
 	 * @param EM_Ticket $EM_Ticket
 	 */
-	function ticket_form($EM_Ticket){
+	public static function ticket_form($EM_Ticket){
 		$form = self::get_ticket_form(self::get_form($EM_Ticket->event_id),$EM_Ticket);
 		if( self::$form_id > 0 ){
 			$available_spaces = $EM_Ticket->get_available_spaces();
@@ -269,7 +294,7 @@ class EM_Attendees_Form {
 	 * @param EM_Booking $EM_Booking
 	 * @return bool
 	 */
-	function em_booking_get_post($result, $EM_Booking){
+	public static function em_booking_get_post($result, $EM_Booking){
 		//get, store and validate post data 
 		$EM_Form = self::get_form($EM_Booking->event_id);
 		if( self::$form_id > 0 ){
@@ -303,7 +328,7 @@ class EM_Attendees_Form {
 	 * @param EM_Booking $EM_Booking
 	 * @return boolean
 	 */
-	function em_booking_validate($result, $EM_Booking){
+	public static function em_booking_validate($result, $EM_Booking){
 		//going through each ticket type booked
 		$EM_Form = self::get_form($EM_Booking->event_id);
 		if( self::$form_id > 0 ){
@@ -346,7 +371,7 @@ class EM_Attendees_Form {
 	 * Intercepts a CSV export request before the core version hooks in and using similar code generates a breakdown of bookings with all attendees included at the end.
 	 * Hooking into the original version of this will cause more looping, which is why we're flat out overriding this here.
 	 */
-	function intercept_csv_export(){
+	public static function intercept_csv_export(){
 		if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'export_bookings_csv' && !empty($_REQUEST['show_attendees']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'export_bookings_csv')){
 			//sort out cols
 			if( !empty($_REQUEST['cols']) && is_array($_REQUEST['cols']) ){
@@ -367,11 +392,11 @@ class EM_Attendees_Form {
 			if( !defined('EM_CSV_DISABLE_HEADERS') || !EM_CSV_DISABLE_HEADERS ){
 				if( !empty($_REQUEST['event_id']) ){
 					$EM_Event = em_get_event($_REQUEST['event_id']);
-					echo __('Event','dbem') . ' : ' . $EM_Event->event_name .  "\n";
-					if( $EM_Event->location_id > 0 ) echo __('Where','dbem') . ' - ' . $EM_Event->get_location()->location_name .  "\n";
-					echo __('When','dbem') . ' : ' . $EM_Event->output('#_EVENTDATES - #_EVENTTIMES') .  "\n";
+					_e_emp('Event','dbem') . ' : ' . $EM_Event->event_name .  "\n";
+					if( $EM_Event->location_id > 0 ) _e_emp('Where','dbem') . ' - ' . $EM_Event->get_location()->location_name .  "\n";
+					_e_emp('When','dbem') . ' : ' . $EM_Event->output('#_EVENTDATES - #_EVENTTIMES') .  "\n";
 				}
-				echo sprintf(__('Exported bookings on %s','dbem'), date_i18n('D d M Y h:i', current_time('timestamp'))) .  "\n";
+				echo sprintf(__emp('Exported bookings on %s','dbem'), date_i18n('D d M Y h:i', current_time('timestamp'))) .  "\n";
 			}
 			$headers = $EM_Bookings_Table->get_headers(true);
 			if( !empty($_REQUEST['event_id']) ){
@@ -411,9 +436,9 @@ class EM_Attendees_Form {
 		}
 	}
 	
-	function em_bookings_table_export_options(){
+	public static function em_bookings_table_export_options(){
 		?>
-		<p><?php _e('Split bookings by attendee','dbem')?> <input type="checkbox" name="show_attendees" value="1" />
+		<p><?php _e('Split bookings by attendee','em-pro')?> <input type="checkbox" name="show_attendees" value="1" />
 		<a href="#" title="<?php _e('A row will be created for each space booked and will automatically include any attendee information associated with that booked ticket.'); ?>">?</a>
 		<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -448,22 +473,22 @@ class EM_Attendees_Form {
 	 * @param EM_Ticket $EM_Ticket
 	 * @param EM_Booking $EM_Booking
 	 */
-	function em_bookings_admin_ticket( $EM_Ticket, $EM_Booking ){
+	public static function em_bookings_admin_ticket( $EM_Ticket, $EM_Booking ){
 		//if you want to mess with these values, intercept the em_bookings_single_custom action instead
 		$EM_Tickets_Bookings = $EM_Booking->get_tickets_bookings();
-		if( !empty($EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id]) ){
-			$EM_Ticket_Booking = $EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id];
 			$EM_Form = self::get_form($EM_Booking->event_id);
 			//validate a form for each space booked
 			if( self::$form_id > 0 ){
 				?>
 				<tr>
 				<td colspan="3" class="em-attendee-form-admin">
-					<div class="em-attendee-details" id="em-attendee-details-<?php echo $EM_Ticket->ticket_id; ?>" <?php if( empty($EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id]) ) echo 'style="display:none;"'?>>
+					<div class="em-attendee-details" id="em-attendee-details-<?php echo $EM_Ticket->ticket_id; ?>">
 						<div class="em-attendee-fieldset">
+						<?php if( !empty($EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id]) ): ?>
 							<?php
 							//output the field values
-							$attendees_data = self::get_ticket_attendees($EM_Ticket_Booking);
+							$EM_Ticket_Booking = $EM_Tickets_Bookings->tickets_bookings[$EM_Ticket->ticket_id];
+							$attendees_data = self::get_ticket_attendees($EM_Ticket_Booking, true);
 							$attendee_index = 0;
 							foreach($attendees_data as $attendee_title => $attendee_data){
 								//preload the form object with this attendee information
@@ -496,17 +521,17 @@ class EM_Attendees_Form {
 							$EM_Form->errors = array();
 							$EM_Form->attendee_number = false;
 							?>
+						<?php endif; ?>
 						</div>
 						<div class="em-attendee-fields-template" style="display:none;">
 							<h4><?php echo sprintf(__('Attendee %s','em-pro'), '#NUM#'); ?></h4>
-							<?php self::admin_form($EM_Form, $EM_Ticket_Booking->ticket_id); ?>
+							<?php self::admin_form($EM_Form, $EM_Ticket->ticket_id); ?>
 						</div>
 					</div>
 				</td>
 				</tr>
 				<?php
 			}
-		}
 	}
 
 
@@ -517,7 +542,7 @@ class EM_Attendees_Form {
 	 *
 	 * @return string
 	 */
-	function em_bookings_single_footer(){
+	public static function em_bookings_single_footer(){
 		?>
 		<script type="text/javascript">
 			jQuery(document).ready( function($){
@@ -538,7 +563,7 @@ class EM_Attendees_Form {
 	 * @param EM_Attendee_Form $EM_Form
 	 * @param int $ticket_id
 	 */
-	function admin_form( $EM_Form, $ticket_id ){
+	public static function admin_form( $EM_Form, $ticket_id ){
 		?>
 		<table class="em-form-fields" cellspacing="0" cellpadding="0">
 		<?php
@@ -563,39 +588,34 @@ class EM_Attendees_Form {
 	}
 	
 	/**
-	 * Saves which custom attendee form will be used by this event
-	 * @param boolean $result
+	 * Saves the custom attendee form as post meta. This is done on em_event_save_meta_pre since at that point we know the post id and this will get passed onto recurrences as well.
 	 * @param EM_Event $EM_Event
-	 * @return boolean
 	 */
-	function em_event_save_meta($result, $EM_Event){
+	public static function em_event_save_meta_pre($EM_Event){
 		global $wpdb;
-		if( $result ){
-			if( !empty($_REQUEST['custom_attendee_form']) && is_numeric($_REQUEST['custom_attendee_form']) ){
-				//Make sure form id exists
-				$id = $wpdb->get_var('SELECT meta_id FROM '.EM_META_TABLE." WHERE meta_id='{$_REQUEST['custom_attendee_form']}'");
-				if( $id == $_REQUEST['custom_attendee_form'] ){
-					//add or modify custom booking form id in post data
-					update_post_meta($EM_Event->post_id, '_custom_attendee_form', $id);
-				}
-			}else{
-				update_post_meta($EM_Event->post_id, '_custom_attendee_form', 0);
+		if( !empty($_REQUEST['custom_attendee_form']) && is_numeric($_REQUEST['custom_attendee_form']) ){
+			//Make sure form id exists
+			$id = $wpdb->get_var('SELECT meta_id FROM '.EM_META_TABLE." WHERE meta_id='{$_REQUEST['custom_attendee_form']}'");
+			if( $id == $_REQUEST['custom_attendee_form'] ){
+				//add or modify custom booking form id in post data
+				update_post_meta($EM_Event->post_id, '_custom_attendee_form', $id);
 			}
+		}else{
+			update_post_meta($EM_Event->post_id, '_custom_attendee_form', 0);
 		}
-		return $result;
 	}
 	
 	/**
 	 * Generates a dropdown of available custom attendee forms for selection when editing the event bookings settings
 	 */
-	function event_attendee_custom_form(){
+	public static function event_attendee_custom_form(){
 		//Get available coupons for user
 		global $wpdb, $EM_Event;
 		self::get_form($EM_Event);
 		$default_form_id = get_option('em_attendee_form_fields');
 		?>
 		<br />
-		<?php _e('Selected Attendee Form','dbem'); ?> :
+		<?php _e('Selected Attendee Form','em-pro'); ?> :
 		<select name="custom_attendee_form">
 			<option value="0">[ <?php _e('Default','em-pro'); ?> ]</option>
 			<?php foreach( self::get_forms_names() as $form_key => $form_name_option ): ?>
@@ -618,7 +638,7 @@ class EM_Attendees_Form {
 	 * @param string $full_result
 	 * @return string
 	 */
-	function placeholders($replace, $EM_Booking, $full_result){
+	public static function placeholders($replace, $EM_Booking, $full_result){
 		if( empty($replace) || $replace == $full_result ){
 			$user = $EM_Booking->get_person();
 			$EM_Form = self::get_form($EM_Booking->event_id);
@@ -641,7 +661,7 @@ class EM_Attendees_Form {
 	/**
 	 * Catches posted data when editing custom attendee forms in the Form Editor 
 	 */
-	function admin_page_actions(){
+	public static function admin_page_actions(){
 		global $EM_Pro, $EM_Notices, $wpdb;
 		if( !empty($_REQUEST['page']) && $_REQUEST['page'] == 'events-manager-forms-editor' ){
 			//Load the right form
@@ -684,7 +704,7 @@ class EM_Attendees_Form {
 						$saved = $wpdb->query($wpdb->prepare("DELETE FROM ".EM_META_TABLE." WHERE meta_id='%s'", $_REQUEST['att_form_id']));
 						if( $saved ){
 							self::$form = false;
-							$EM_Notices->add_confirm(sprintf(__('%s Deleted','dbem'), __('Booking Form','em-pro')), 1);
+							$EM_Notices->add_confirm(sprintf(__('%s Deleted','em-pro'), __( 'Attendee Form', 'em-pro' )), 1);
 							
 						}
 					}elseif( $_REQUEST['attendee_form_action'] == 'rename' && wp_verify_nonce($_REQUEST['_wpnonce'], 'attendee_form_rename') ){
@@ -695,7 +715,7 @@ class EM_Attendees_Form {
 						$EM_Notices->add_confirm( sprintf(__('Form renamed to <em>%s</em>.', 'em-pro'), self::$form_name));
 					}elseif( $_REQUEST['attendee_form_action'] == 'add' && wp_verify_nonce($_REQUEST['_wpnonce'], 'attendee_form_add') ){
 						//create new form with this name and save first off
-						$EM_Form = new EM_Form(self::$form_template, 'em_attendee_form');
+						$EM_Form = new EM_Form(self::get_form_template(), 'em_attendee_form');
 						$booking_form_data = array( 'name'=> wp_kses_data($_REQUEST['form_name']), 'form'=> $EM_Form->form_fields );
 						self::$form = $EM_Form;
 						self::$form_name = $booking_form_data['name'];
@@ -716,7 +736,7 @@ class EM_Attendees_Form {
 	/**
 	 *  Outputs the form editor in the admin area
 	 */
-	function admin_page() {
+	public static function admin_page() {
 		$EM_Form = self::get_form();
 		?>
 		<div id="poststuff" class="metabox-holder">
@@ -731,17 +751,17 @@ class EM_Attendees_Form {
 							<p><?php _e ( "If enabled, this form will be shown and required for every space booked.", 'em-pro' )?></p>
 							<form method="post" action="#attendee-form"> 
 								<p>
-								<?php _e('Enable Attendee Forms','dbem'); ?> :
-								<input type="radio" name="em_attendee_fields_enabled" value="1" class="attendee-enable" <?php if(get_option('em_attendee_fields_enabled')){ echo 'checked="checked"'; } ?> /> Yes
-								<input type="radio" name="em_attendee_fields_enabled" value="0" class="attendee-enable" <?php if(!get_option('em_attendee_fields_enabled')){ echo 'checked="checked"'; } ?> /> No
+								<?php _e('Enable Attendee Forms','em-pro'); ?> :
+								<input type="radio" name="em_attendee_fields_enabled" value="1" class="attendee-enable" <?php if(get_option('em_attendee_fields_enabled')){ echo 'checked="checked"'; } ?> /> <?php esc_html_e_emp('Yes','dbem'); ?>
+								<input type="radio" name="em_attendee_fields_enabled" value="0" class="attendee-enable" <?php if(!get_option('em_attendee_fields_enabled')){ echo 'checked="checked"'; } ?> /> <?php esc_html_e_emp('No','dbem'); ?>
 								<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce('em_attendee_fields_enabled'); ?>" />
-								<input type="submit" class="button-secondary" value="Save" />
+								<input type="submit" class="button-secondary" value="<?php esc_attr_e_emp('Save Changes','dbem'); ?>" />
 								</p>
 							</form>
 							<?php if(get_option('em_attendee_fields_enabled')): ?>
 							<div id="em-attendee-form-editor">
 								<form method="get" action="#attendee-form"> 
-									<?php _e('Selected Attendee Form','dbem'); ?> :
+									<?php _e('Selected Attendee Form','em-pro'); ?> :
 									<select name="att_form_id" onchange="this.parentNode.submit()">
 										<option value="0" <?php if(!self::$form_id) echo 'selected="selected"'; ?>><?php _e('None','em-pro'); ?></option>
 										<?php foreach( self::get_forms_names() as $form_key => $form_name_option ): ?>
@@ -767,7 +787,7 @@ class EM_Attendees_Form {
 								</form>
 								<?php do_action('em_attendees_form_admin_page_actions', $EM_Form); ?>
 								<?php if( self::$form_id == get_option('em_attendee_form_fields') && self::$form_id > 0 ): ?>
-								<br /><em><?php _e('This is the default attendee form and will be used for any event where you have not chosen a speficic form to use.','em-pro'); ?></em>
+								<br /><em><?php _e('This is the default attendee form and will be used for any event where you have not chosen a specific form to use.','em-pro'); ?></em>
 								<?php endif; ?>
 								<br /><em><?php _e("If you don't want to ask for attendee information by default, select None as your booking form and make it the default form.", 'em-pro'); ?></em>
 								<?php if( self::$form_id > 0 ): ?>

@@ -1,18 +1,17 @@
 <?php
 class EM_Custom_Emails_Admin {
-    public static $caps = array('custom_emails'=>'manage_others_bookings');
+    public static $caps = array('custom_emails'=>'manage_bookings');
     
     public static function init(){
 		//Custom Event Emails
 		if( get_option('dbem_custom_emails_events') ){
-			if( !get_option('dbem_multiple_bookings') || get_option('dbem_multiple_bookings_contact_email') ){
 				add_action('add_meta_boxes', 'EM_Custom_Emails_Admin::meta_boxes');
 				add_filter('em_event_get_post', 'EM_Custom_Emails_Admin::em_event_get_post',100,2);
 				if( get_option('dbem_custom_emails_events_admins')){
 					add_filter('em_event_validate_meta', 'EM_Custom_Emails_Admin::em_event_validate_meta',100,2);
 				}
 				add_filter('em_event_save_meta', 'EM_Custom_Emails_Admin::em_event_save_meta',100,2);
-			}
+				add_filter('em_event_save_events', 'EM_Custom_Emails_Admin::em_event_save_events',100,4);
 		}
 		//Custom Gateway Emails
 		if( get_option('dbem_custom_emails_gateways') ){
@@ -57,7 +56,7 @@ class EM_Custom_Emails_Admin {
 				<?php if( is_array($admin_emails_custom) ): ?>
 				<label><?php _e('Also Send Event Owner Emails To:', 'em-pro'); ?></label>
 				<input type="text" class="emp-cet-email" name="<?php echo $param ?>_admins[<?php echo $email_array_group_name; ?>]" value="<?php if( !empty($admin_emails_custom[$email_array_group_name]) ) echo $admin_emails_custom[$email_array_group_name]; ?>" /><br />
-				<em><?php _e('For multiple emails, seperate by commas (e.g. email1@test.com,email2@test.com,etc.)','dbem'); ?></em>
+				<em><?php esc_html_e_emp('For multiple emails, seperate by commas (e.g. email1@test.com,email2@test.com,etc.)','dbem'); ?></em>
 				<?php endif; ?>				
 				
 				<?php foreach( $email_array_group['subgroups'] as $email_array_subgroup => $email_array ) : ?>
@@ -157,19 +156,19 @@ class EM_Custom_Emails_Admin {
 						'title' => __('Event Owner Emails','em-pro'),
 						'text' => __('These emails get sent to the event owners when a person has made a booking.','em-pro'),
 						'emails' => array(
-							0 => array('title'=> __('Pending booking email','dbem')),
-							1 => array('title'=> __('Confirmed booking email','dbem')),
-							3 => array('title'=> __('Booking cancelled','dbem'))
+							0 => array('title'=> __emp('Pending booking email','dbem')),
+							1 => array('title'=> __emp('Confirmed booking email','dbem')),
+							3 => array('title'=> __emp('Booking cancelled','dbem'))
 						)
 					),
 					'user'=>array(
 						'title' => __('Attendee Emails','em-pro'),
 						'text' => __('These emails will be sent to the person who booked a place at your event.','em-pro'),
 						'emails' => array(
-							0 => array('title'=> __('Pending booking email','dbem')),
-							1 => array('title'=> __('Confirmed booking email','dbem')),
-							2 => array('title'=> __('Rejected booking email','dbem')),
-							3 => array('title'=> __('Booking cancelled','dbem'))
+							0 => array('title'=> __emp('Pending booking email','dbem')),
+							1 => array('title'=> __emp('Confirmed booking email','dbem')),
+							2 => array('title'=> __emp('Rejected booking email','dbem')),
+							3 => array('title'=> __emp('Booking cancelled','dbem'))
 						)
 					)
 				)
@@ -203,6 +202,7 @@ class EM_Custom_Emails_Admin {
 	}
 	
 	public static function editor_get_post( $custom_email_defaults = array(), $param = 'em_custom_email' ){
+		global $allowedposttags;
 		$emails = !empty($custom_email_defaults) ? $custom_email_defaults : self::get_default_emails(); //override defaults
 		$custom_emails = array();
 		foreach( $emails as $email_group_name => $email_group ){
@@ -213,8 +213,8 @@ class EM_Custom_Emails_Admin {
 						$custom_emails[$email_subgroup_name][$email_type_name]['status'] = $_REQUEST[$param][$email_subgroup_name][$email_type_name]['status'];
 						if( $_REQUEST[$param][$email_subgroup_name][$email_type_name]['status'] == 1 ){
 							//only if enabled do we need to save an email format
-							$custom_emails[$email_subgroup_name][$email_type_name]['subject'] = $_REQUEST[$param][$email_subgroup_name][$email_type_name]['subject'];
-							$custom_emails[$email_subgroup_name][$email_type_name]['message'] = $_REQUEST[$param][$email_subgroup_name][$email_type_name]['message'];
+							$custom_emails[$email_subgroup_name][$email_type_name]['subject'] = stripslashes(wp_kses_data($_REQUEST[$param][$email_subgroup_name][$email_type_name]['subject']));
+							$custom_emails[$email_subgroup_name][$email_type_name]['message'] = wp_kses(stripslashes($_REQUEST[$param][$email_subgroup_name][$email_type_name]['message']), $allowedposttags);
 						}
 					}
 				}
@@ -248,7 +248,7 @@ class EM_Custom_Emails_Admin {
 		}
 		$gateway = $EM_Gateway->gateway;
 		$default_emails[$gateway]['title'] = __('Booking Email Templates','em-pro');
-		$default_emails[$gateway]['text'] = '<p>'. sprintf(__('Below you can modify the emails that are sent when bookings are made. This will override the default emails located in your %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-options#emails:booking-emails').'">'.__('Booking Email Templates','dbem').'</a>');
+		$default_emails[$gateway]['text'] = '<p>'. sprintf(__('Below you can modify the emails that are sent when bookings are made. This will override the default emails located in your %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-options#emails:booking-emails').'">'.esc_html__emp('Booking Email Templates','dbem').'</a>');
 		$default_emails[$gateway]['text'] .= __('Additionally, you can also override these emails at an event level when editing an event. Should you choose not to, any overriden emails on this page will be considered the default email for this gateway.','em-pro') .'</p>';
 		$default_emails[$gateway]['text'] .= '<p>'. __('Note that some gateways do not automatically send pending or confirmed emails, in these cases they may only apply to when event admins manually change the status of a booking resulting in an automated email getting sent.','em-pro').'</p>';
 		$default_emails[$gateway]['text'] .= '<p>'. __('Click on the title texts with a plus (+) next to them to reveal further options, and the minus (-) sign to hide them.','em-pro').'</p>';
@@ -324,19 +324,19 @@ class EM_Custom_Emails_Admin {
 						'title' => __('Event Owner Emails','em-pro'),
 						'text' => __('These emails get sent to the event owners when a person has made a booking using this specific gateway.','em-pro'),
 						'emails' => array(
-							0 => array('title'=> __('Pending booking email','dbem')),
-							1 => array('title'=> __('Confirmed booking email','dbem')),
-							3 => array('title'=> __('Booking cancelled','dbem'))
+							0 => array('title'=> __emp('Pending booking email','dbem')),
+							1 => array('title'=> __emp('Confirmed booking email','dbem')),
+							3 => array('title'=> __emp('Booking cancelled','dbem'))
 						)
 					),
 					$gateway.'-user'=>array(
 						'title' => __('Attendee Emails','em-pro'),
 						'text' => __('These emails will be sent to the person who booked a place at your event and selected this specific gateway.','em-pro'),
 						'emails' => array(
-							0 => array('title'=> __('Pending booking email','dbem')),
-							1 => array('title'=> __('Confirmed booking email','dbem')),
-							2 => array('title'=> __('Rejected booking email','dbem')),
-							3 => array('title'=> __('Booking cancelled','dbem'))
+							0 => array('title'=> __emp('Pending booking email','dbem')),
+							1 => array('title'=> __emp('Confirmed booking email','dbem')),
+							2 => array('title'=> __emp('Rejected booking email','dbem')),
+							3 => array('title'=> __emp('Booking cancelled','dbem'))
 						)
 					)
 				)
@@ -437,6 +437,7 @@ class EM_Custom_Emails_Admin {
 	public static function meta_boxes(){
 		if( current_user_can(self::$caps['custom_emails']) ){
 			add_meta_box('em-event-custom-emails', __('Custom Automated Emails','em-pro'), array('EM_Custom_Emails_Admin','event_meta_box'),EM_POST_TYPE_EVENT, 'normal','low');
+			add_meta_box('em-event-custom-emails', __('Custom Automated Emails','em-pro'), array('EM_Custom_Emails_Admin','event_meta_box'), 'event-recurring', 'normal','low');
 		}
 	}
 	
@@ -448,9 +449,15 @@ class EM_Custom_Emails_Admin {
 		if( get_option('dbem_custom_emails_events_admins')){
 			$custom_admin_emails = EM_Custom_Emails::get_event_admin_emails($EM_Event);
 		}
-		echo '<p>'. sprintf(__('Below you can modify the emails that are sent when bookings are made. This will override the default emails located in your %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-options#emails:booking-emails').'">'.__('Booking Email Templates','dbem').'</a>');
+		if( get_option('dbem_multiple_bookings') ){
+			//warn users that these emails only apply when resending emails in multipl bookings mode
+			echo '<p class="em-event-custom-emails-multiple-bookings-warning" style="font-style:italic; font-weight:bold;">';
+			echo sprintf(esc_html__('Since %s is enabled, these emails will only be sent when individual bookings are modified afterwards, such as changing the status of the booking individually or resending an email.','em-pro'), esc_html__('Multiple Bookings Mode','em-pro'));
+			echo '</p>';
+		}
+		echo '<p>'. sprintf(__('Below you can modify the emails that are sent when bookings are made. This will override the default emails located in your %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-options#emails:booking-emails').'">'.esc_html__emp('Booking Email Templates','dbem').'</a>');
 		if( get_option('dbem_custom_emails_gateways') ){
-			echo '<p>'. sprintf(__('You can also create default emails for specific gateways in your individual %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-gateways').'">'.__('Gateway Settings','dbem').'</a>');
+			echo '<p>'. sprintf(__('You can also create default emails for specific gateways in your individual %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-gateways').'">'.__('Gateway Settings','em-pro').'</a>');
 		}
 		echo "<p>".__('Click on the title texts with a plus (+) next to them to reveal further options, and the minus (-) sign to hide them.','em-pro')."</p>";
 		self::emails_editor($custom_email_values, array(), $custom_admin_emails);
@@ -511,6 +518,28 @@ class EM_Custom_Emails_Admin {
 						$wpdb->insert(EM_META_TABLE, array('object_id'=>$EM_Event->event_id, 'meta_key'=>'event-admin-emails', 'meta_value' => serialize($EM_Event->custom_admin_emails)), array('%d','%s','%s'));
 					}
 				}
+			}
+		}
+		return $result;
+	}
+	
+	public static function em_event_save_events( $result, $EM_Event, $event_ids, $post_ids ){
+		global $wpdb;
+		if( $result && current_user_can(self::$caps['custom_emails']) ){
+			$inserts = array();
+			if( !empty($EM_Event->custom_booking_emails) ){
+				foreach($event_ids as $event_id){
+					$inserts[] = $wpdb->prepare("(%d, 'event-emails', %s)", array($event_id, serialize($EM_Event->custom_booking_emails)));
+				}
+			}
+			if( !empty($EM_Event->custom_admin_emails) ){
+				foreach($event_ids as $event_id){
+					$inserts[] = $wpdb->prepare("(%d, 'event-admin-emails', %s)", array($event_id, serialize($EM_Event->custom_admin_emails)));
+				}
+			}
+			if( !empty($inserts) ){
+				$sql = "INSERT INTO ".EM_META_TABLE." (object_id, meta_key, meta_value) VALUES ". implode(', ', $inserts);
+				$wpdb->query($sql);
 			}
 		}
 		return $result;

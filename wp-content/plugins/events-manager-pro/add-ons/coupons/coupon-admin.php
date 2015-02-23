@@ -37,7 +37,7 @@ class EM_Coupon_Admin extends EM_Coupon {
 		foreach( $this->required_fields as $field => $msg){
 			if( empty($this->$field) ){
 				$validate = false;
-				$this->add_error( sprintf(__("%s is required.", "dbem"),$msg) );
+				$this->add_error( sprintf(__emp("%s is required.", "dbem"),$msg) );
 			}
 		}
 		return apply_filters('em_coupon_validate', $validate, $this );		

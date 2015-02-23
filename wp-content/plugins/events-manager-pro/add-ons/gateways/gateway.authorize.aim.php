@@ -106,7 +106,9 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 							$EM_Notices->notices['confirms'] = array();
 						}
 					}
+					$EM_Booking->manage_override = true;
 					$EM_Booking->delete();
+					$EM_Booking->manage_override = false;
 					return false;
 				}
 			}
@@ -270,7 +272,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
         $sale->card_code = $_REQUEST['x_card_code'];
 
         //Email Info
-        $sale->email_customer = get_option('em_'.$this->gateway.'_header_email_customer',0) ? '1':'0'; //for later
+        $sale->email_customer = get_option('em_'.$this->gateway.'_email_customer',0) ? '1':'0'; //for later
         $sale->header_email_receipt = get_option('em_'.$this->gateway.'_header_email_receipt');
         $sale->footer_email_receipt = get_option('em_'.$this->gateway.'_footer_email_receipt');
 
@@ -305,11 +307,19 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
         //Itemized Billing
         $tax_enabled = (get_option('dbem_bookings_tax') > 0) ? 'Y':'N';
 		foreach( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){
-			$price = $EM_Ticket_Booking->get_ticket()->get_price();
+			$price = round($EM_Ticket_Booking->get_price() / $EM_Ticket_Booking->get_spaces(), 2);
 			if( $price > 0 ){
 				$ticket_name = substr($EM_Ticket_Booking->get_ticket()->ticket_name, 0, 31);
         		$sale->addLineItem($EM_Ticket_Booking->get_ticket()->ticket_id, $ticket_name, $EM_Ticket_Booking->get_ticket()->ticket_description, $EM_Ticket_Booking->get_spaces(), $price, $tax_enabled);
 			}
+		}
+		if( $tax_enabled == 'Y' ){
+			$sale->tax = number_format($EM_Booking->get_price_taxes(), 2);
+		}
+		//Add discounts to itemized billing
+		$discount = $EM_Booking->get_price_discounts_amount('pre') + $EM_Booking->get_price_discounts_amount('post');
+		if( $discount > 0 ){
+			$sale->addLineItem(0, __('Discount','em-pro'), '', 1, $discount, 'N');
 		}
 		
         //Get Payment
@@ -366,7 +376,7 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 		  </tr>
 		</tbody>
 		</table>
-		<h3><?php echo sprintf(__('%s Options','dbem'),'Authorize.net')?></h3>
+		<h3><?php echo sprintf(esc_html__emp('%s Options','dbem'),'Authorize.net')?></h3>
 		<p style="font-style:italic;"><?php echo sprintf(__('Please visit the <a href="%s">documentation</a> for further instructions on setting up Authorize.net with Events Manager.','em-pro'), 'http://wp-events-plugin.com/documentation/event-bookings-with-authorize-net-aim/'); ?></p>
 		<table class="form-table">
 		<tbody>
@@ -409,14 +419,14 @@ class EM_Gateway_Authorize_AIM extends EM_Gateway {
 					<em><?php _e('This is the username you use to log into your merchant interface.','em-pro')?></em>
 				  </td>
 			</tr>
-			<tr><td colspan="2"><strong><?php echo sprintf(__( '%s Options', 'dbem' ),__('Advanced','em-pro')); ?></strong></td></tr>
+			<tr><td colspan="2"><strong><?php echo sprintf(esc_html__emp( '%s Options', 'dbem' ),esc_html__emp('Advanced','dbem')); ?></strong></td></tr>
 			<tr>
 				<th scope="row"><?php _e('Email Customer (on success)', 'emp-pro') ?></th>
 				<td>
 					<select name="email_customer">
 					  	<?php $selected = get_option('em_'.$this->gateway.'_email_customer'); ?>
-						<option value="1" <?php echo ($selected) ? 'selected="selected"':''; ?>><?php _e('Yes','emp-pro'); ?></option>
-						<option value="0" <?php echo (!$selected) ? 'selected="selected"':''; ?>><?php _e('No','emp-pro'); ?></option>
+						<option value="1" <?php echo ($selected) ? 'selected="selected"':''; ?>><?php esc_html_e_emp('Yes','dbem'); ?></option>
+						<option value="0" <?php echo (!$selected) ? 'selected="selected"':''; ?>><?php esc_html_e_emp('No','dbem'); ?></option>
 					</select>
 				</td>
 			</tr>

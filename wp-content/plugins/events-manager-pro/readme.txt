@@ -1,9 +1,9 @@
 === Events Manager Pro ===
 Contributors: netweblogic
 Tags: events, event, event registration, event calendar, events calendar, event management, paypal, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, buddypress, calendar, gigs, payment, payments, sports,
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 2.3.7
+Requires at least: 3.5
+Tested up to: 4.1
+Stable tag: 2.3.9
 
 == Description ==
 
@@ -22,6 +22,94 @@ http://wp-events-plugin.com/support/
 Please visit http://wp-events-plugin.com/documentation/installation/
 
 == Changelog ==
+= 2.3.9 =
+* fixed offline default gateway email not sent when adding offline payment
+* fixed MB transaction IDs not showing on admin table during ajax navigation
+* fixed helpful links for wp cron in the email reminders settings area
+* fixed Authorize.net emails not going out,
+* added tax and discount information to authorize.net itemized billing summary
+* added paypal standard tax inclusion option to prevent price rounding and taxation miscalculations
+* fixed some HTTP <> HTTPS AJAX issues
+* updated admin settings HTML to match new styling
+* changed localization functions for various strings already translated by EM so it's not picked up by the Pro POT file generators
+* fixed translation error where new default booking and attendee forms aren't translated
+* fixed email fields not showing to member if showing name fields is set to no
+* fixed MB mode conflicts with other plugins due to session_start and saving of unserialized objects
+* fixed PayPal auto-deleting of incomplete bookings not deleting MB master booking record 
+* fixed MB mode checkout showing payment options for free booking
+* fixed #_BOOKINGSUMMARY pre-tax subtotal price in MB mode which was showing the last event total
+* updated Czech, German, Spanish, Finnish, French, Italian, Japanese, Norwegian, Polish, Russian, Swedish and Chinese. Thanks to all contributors, get in touch if you'd like to be on our translators credits!
+* updated the POT file
+
+= 2.3.8.1 =
+* fixed erroneous coupon retrieval in some setting combinations due to 2.3.8 update
+
+= 2.3.8 =
+* changed html titles of event admin booking options from bolded text to h4 (coupons & custom forms)
+* fixed booking forms not saving user fields if logged in (reverting previous modification in 2.3.7 which stopped saving this info to booking meta as well)
+* added emp_hidden_reg_fields filter to allow custom showing of name and other hidden user fields
+* fixed "pending payment" bug for authorize.net
+* added optional css class flags (same as EM Booking form) to MB checkout/cart pages
+* fixed custom booking/attendee forms not being passed onto recurrences
+* fixed slashes being added to custom email html
+* added wp_kses sanitization to custom emails
+* changed saving gateway settings will stay on gateway settings page
+* fixed various string translation issues due to lack of textdomain
+* fixed attendees form not showing in bookings admin area for editing tickets with no spaces
+* fixed/changed wp_footer calls to have lower priorities than 10 (i.e. higher than 10)
+* updated French, German and Swedish, Polish
+* updated POT file
+* fixed default gateway emails not being used
+* fixed captchas in individual event bookings triggering validation failures in MB checkout,
+* fixed lack of proper escaping on form tips
+* fixed coupon validation issues with Multiple Bookings Mode
+* fixed cart headers not being translatable
+* fixed bug when duplicating and then editing custom form overwriting default form
+* fixed minor php warning triggered in custom gateway emails
+* added parent hook for new em_booking_is_pending filter in EM_Gateway
+* fixed admin area CSS not being used if pro front-end css is disabled via dbem_disable_css option
+* added dbem_disable_css option to wp_options to prevent extra SQL query
+* fixed country selection ddm field default text not being translated
+* fixed select and multiselect options potentially adding extra spaces to input values
+* fixed paypal IPN validation error due to wp_magic_quotes adding slashes with magic_quotes_gpc disabled
+* changed custom emails meta box to appear on event admin if manage_bookings is enabled (previously required manage_others_bookings),
+* added warning text to custom event emails meta box if in multiple bookings mode
+* fixed potential duplicated reminder emails in MultiSite Global Tables mode
+* fixed missing ical file in reminders due to merged ical templates in EM 5.4.2
+* fixed coupons and transactions not showing master booking values in admin tables when MB mode is active
+* fixed transaction history not showing relevant master booking transactions in individual bookings during MB mode
+* added parent hook for new em_booking_is_pending filter in EM_Gateway
+* changed EM_Multiple_Bookings::get_main_booking so it instantly returns false if EM_Booking object not supplied
+* fixed premature auto-deletion of PayPal bookings since EM 5.5.2 due to blog vs mysql timezone clashes
+* fixed Pro key being deleted from MultiSite network admin settings page
+* fixed MB mode removal of booking in cart not reflecting spaces change and still passing deleted booking to gateways
+* fixed only first instance of #NOW# being replaced in attendee forms
+* fixed MB mode issues with checkout booking forms and coupon codes being submitted as well as via the 'apply discount' button
+* changed lowered cron emails init priority to possibly fix cron issues
+* added Norwegian translation
+* added MB mode feature to allow users with edit_others_bookings to sync no-user booking personal info edits to all bookings in a MB booking set
+* changed PayPal gateway to use HTTP 1.1 when verifying IPN authenticity
+* fixed php warning when invalid user field name supplied to EM_Gateways::get_customer_field
+* improved cart coupon JS and changed template to make coupon application a different html form entirely to allow for graceful fallback
+* fixed bug where wrong data type returned when looking for gateway common fields that don't exist
+* added failsafe for known fatal EM version conflicts
+* fixed manual booking user fields not appearing on front-end in MB mode
+* fixed free MB bookings sending pending emails and saving with 0 status with approvals disabled
+* fixed PHP warnings in MB mode checkout (complementary fix in EM 5.5.2.7)
+* fixed EM_Notice and custom forms warnings in booking admin pages
+* added option to show name and email fields on booking forms to logged in users
+* fixed old bookings from free version not showing comments field for field with id booking_comment
+* fixed first/last name fields not forcing required entry
+* fixed wrong attendee forms showing up in event lists with different forms
+* fixed PayPal gateway not passing customer address info to pre-fill form on paypal.com
+* fixed user fields of html type showing label like input fields on profile page and booking information pages
+* fixed manual bookings not allowing booking of role-restricted tickets if event admin isn't the same role
+* fixed cart page overriding checkout page if the same page is chosen by mistake in MB mode settings
+* fixed false-positive unprocessed email notices for IPNs originating from non-EM PayPal payments
+* fixed dots being saved in custom form field IDs, as this causes validation issues in browsers
+* fixed custom user field date and time pickers not working in WP dashboard profile page
+* fixed recurring events not showing custom email editor 
+
 = 2.3.7 =
 * fixed site/event-wide coupons not showing up in coupon manager in admin area
 * changed event/site wide choice to be one or the other, to avoid confusion
