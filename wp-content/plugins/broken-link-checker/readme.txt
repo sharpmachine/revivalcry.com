@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: links, broken, maintenance, blogroll, custom fields, admin, comments, posts
 Requires at least: 3.2
-Tested up to: 4.1
-Stable tag: 1.10.4
+Tested up to: 4.2-beta
+Stable tag: 1.10.6
 
 This plugin will check your posts, comments and other content for broken links and missing images, and notify you if any are found. 
 
@@ -53,7 +53,7 @@ You can also click on the contents of the "Status" or "Link Text" columns to get
 * Finnish - [Jani Alha](http://www.wysiwyg.fi)
 * French - [Whiler](http://blogs.wittwer.fr/whiler/), Luc Capronnier, [Guillaume Boda](http://www.michtoblog.com/)
 * German - [Ivan Graf](http://blog.bildergallery.com/)
-* Hebrew - [Eitan Caspi](http://caspi.org.il/)
+* Hebrew - [Ahrale](http://atar4u.com/), [Eitan Caspi](http://caspi.org.il/)
 * Hindi - [Outshine Solutions](http://outshinesolutions.com/)
 * Hungarian - [Language Connect](http://www.languageconnect.net/)
 * Irish - [Ray Gren](http://letsbefamous.com/)
@@ -97,6 +97,18 @@ To upgrade your installation
 1. Reactivate the plugin. Your settings will be retained from the previous version.
 
 == Changelog ==
+
+= 1.10.6 =
+* Fixed a serious CSRF/XSS vulnerability.
+* Switched to YouTube API v3. The old API version will be shut down on April 20, so the plugin needs to be updated to continue checking links to YouTube videos.
+* Fixed long URLs overflowing into adjacent table columns.
+* Fixed a few minor PHP strict-mode notices.
+* Added database character set to the "Show debug info" table.
+
+= 1.10.5 =
+* Security: Fixed an XSS vulnerability that could be used by Editors and Administrators to inject arbitrary HTML/JS code in the "Tools -> Broken Links" page.
+* Other minor security fixes.
+* Tested on WordPress 4.2 beta.
 
 = 1.10.4 =
 * Tested on WordPress 4.1.
@@ -776,6 +788,9 @@ To upgrade your installation
 * *There are no release notes for this version*
 
 == Upgrade Notice ==
+
+= 1.10.5 =
+Fixes a significant security issue.
 
 = 1.9.2 =
 Fixes UI issues related to the new WP 3.8 admin style and a few security vulnerabilities.
