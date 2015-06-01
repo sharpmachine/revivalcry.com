@@ -234,7 +234,7 @@ class SU_SettingsData extends SU_Module {
 			echo "\n<p>";
 			_e('You can import settings and data from these plugins. Clicking a plugin&#8217;s name will take you to the importer page, where you can customize parameters and start the import.', 'seo-ultimate');
 			echo "</p>\n";
-			echo "<table class='widefat'>\n";
+			echo "<table class='table table-bordered'>\n";
 			
 			$class = '';
 			foreach ($importmodules as $key => $x_module) {

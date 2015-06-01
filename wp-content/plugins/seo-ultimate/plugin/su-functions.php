@@ -124,4 +124,194 @@ function su_esc_editable_html($str) {
 	return _wp_specialchars($str, ENT_QUOTES, false, true);
 }
 
+// Add a parent shortcut link for admin toolbar
+function seo_ultimate_admin_bar_menu( $meta = true ) {
+	global $wp_admin_bar, $seo_ultimate;
+		if ( !is_user_logged_in() ) { return; }
+		if ( !is_super_admin() || !is_admin_bar_showing() ) { return; }
+		if (isset($seo_ultimate->modules['settings']) && $seo_ultimate->modules['settings']->get_setting('seo_toolbar_menu') === false) { return; }
+
+		// Add the parent link for admin toolbar
+		$args = array(
+			'id' => 'seo-ultimate',
+			'title' => 'SEO', 
+			'href' => self_admin_url( 'admin.php?page=seo' ), 
+			'meta' => array(
+				'class' => 'seo-ultimate', 
+				'title' => 'SEO'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+	
+		// Add the child link for admin toolbar
+		$args = array(
+			'id' => 'su-moduels',
+			'title' => 'Modules', 
+			'href' => self_admin_url( 'admin.php?page=seo' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-moduels', 
+				'title' => 'Modules'
+				)
+		);
+		$wp_admin_bar->add_node($args);	
+
+		$args = array(
+			'id' => 'su-fofs',
+			'title' => '404 Monitor', 
+			'href' => self_admin_url( 'admin.php?page=su-fofs' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-fofs', 
+				'title' => '404 Monitor'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+
+		$args = array(
+			'id' => 'su-user-code',
+			'title' => 'Code Inserter', 
+			'href' => self_admin_url( 'admin.php?page=su-user-code' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-user-code', 
+				'title' => 'Code Inserter'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-autolinks',
+			'title' => 'Deeplink Juggernaut', 
+			'href' => self_admin_url( 'admin.php?page=su-autolinks' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-autolinks', 
+				'title' => 'Deeplink Juggernaut'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-files',
+			'title' => 'File Editor', 
+			'href' => self_admin_url( 'admin.php?page=su-files' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-files', 
+				'title' => 'File Editor'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-internal-link-aliases',
+			'title' => 'Link Mask Generator', 
+			'href' => self_admin_url( 'admin.php?page=su-internal-link-aliases' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-internal-link-aliases', 
+				'title' => 'Link Mask Generator'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-meta-descriptions',
+			'title' => 'Meta Description', 
+			'href' => self_admin_url( 'admin.php?page=su-meta-descriptions' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-meta-descriptions', 
+				'title' => 'Meta Description'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-meta-keywords',
+			'title' => 'Meta Keywords', 
+			'href' => self_admin_url( 'admin.php?page=su-meta-keywords' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-meta-keywords', 
+				'title' => 'Meta Keywords'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-meta-robots',
+			'title' => 'Meta Robot Tags', 
+			'href' => self_admin_url( 'admin.php?page=su-meta-robots' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-meta-robots', 
+				'title' => 'Meta Robot Tags'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-opengraph',
+			'title' => 'Open Graph', 
+			'href' => self_admin_url( 'admin.php?page=su-opengraph' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-opengraph', 
+				'title' => 'Open Graph'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-wp-settings',
+			'title' => 'Settings Monitor', 
+			'href' => self_admin_url( 'admin.php?page=su-wp-settings' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-wp-settings', 
+				'title' => 'Settings Monitor'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-titles',
+			'title' => 'Title Tag Rewriter', 
+			'href' => self_admin_url( 'admin.php?page=su-titles' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-titles', 
+				'title' => 'Title Tag Rewriter'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-sds-blog',
+			'title' => 'Whitepapers', 
+			'href' => self_admin_url( 'admin.php?page=su-sds-blog' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-sds-blog', 
+				'title' => 'Whitepapers'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+		$args = array(
+			'id' => 'su-misc',
+			'title' => 'Miscellaneous', 
+			'href' => self_admin_url( 'admin.php?page=su-misc' ),
+			'parent' => 'seo-ultimate', 
+			'meta' => array(
+				'class' => 'su-misc', 
+				'title' => 'Miscellaneous'
+				)
+		);
+		$wp_admin_bar->add_node($args);
+		
+}
+add_action('admin_bar_menu', 'seo_ultimate_admin_bar_menu', 95);
 ?>

@@ -490,9 +490,7 @@ class SEO_Ultimate {
 						//If this is actually a module...
 						if (class_exists($class)) {
 							
-							if (	   ($module_parent = call_user_func(array($class, 'get_parent_module')))
-									&& !call_user_func(array($class, 'is_independent_module'))
-								)
+							if (($module_parent = call_user_func(array($class, 'get_parent_module'))) && !call_user_func(array($class, 'is_independent_module')))
 								$module_disabled = (isset($oldmodules[$module_parent]) && $oldmodules[$module_parent] == SU_MODULE_DISABLED);
 							else
 								$module_disabled = (isset($oldmodules[$module]) && $oldmodules[$module] == SU_MODULE_DISABLED);
@@ -1088,20 +1086,20 @@ class SEO_Ultimate {
 		$pages = array( 'index.php', 'edit.php', 'post.php', 'post-new.php' );
 		$sdf_admin_pages = array('sdf','sdf-settings','sdf-silo','sdf-silo-manual-builder','sdf-header','sdf-layout','sdf-shortcode','sdf-styles','revslider','sdf-footer','seo', 'su-fofs', 'su-misc', 'su-user-code', 'su-autolinks', 'su-files', 'su-internal-link-aliases', 'su-meta-descriptions', 'su-meta-keywords', 'su-meta-robots', 'su-opengraph', 'seo-ultimate', 'su-wp-settings', 'su-titles', 'su-sds-blog');
 		if( in_array( $pagenow, $pages ) || in_array( $current, $sdf_admin_pages )) {
-			// admin styles 	 	
-			wp_register_style('sdf-bootstrap-admin',  $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap.admin.css', array(), '3.0.3', 'screen');
-			wp_register_style('sdf-bootstrap-admin-theme',  $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap-theme.admin.css', array(), '3.0.3', 'screen');		
-			wp_register_style('sdf-font-awesome', 'https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css', array(), '4.0.3', 'screen');
-			wp_register_style('sdf-css-admin',  $this->plugin_dir_url.'plugin/sdf/sdf.admin.css', array(), '3.0.3', 'screen');
+			// admin styles
+			wp_register_style('sdf-bootstrap-admin', $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap.admin.css', array(), null, 'screen');
+			wp_register_style('sdf-bootstrap-admin-theme', $this->plugin_dir_url.'plugin/sdf/bootstrap/css/bootstrap-theme.admin.css', array(), null, 'screen');		
+			wp_register_style('sdf-font-awesome', 'https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', array(), null, 'screen');
+			wp_register_style('seo-css-admin',  $this->plugin_dir_url.'plugin/seo.admin.css', array(), null, 'screen');
 			wp_enqueue_style('sdf-bootstrap-admin');
 			wp_enqueue_style('sdf-bootstrap-admin-theme');
 			wp_enqueue_style('sdf-font-awesome');
-			wp_enqueue_style('sdf-css-admin');
+			wp_enqueue_style('seo-css-admin');
 		
-			wp_register_script('sdf_bs_js', 'https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array('jquery'), '3.0.3', false);	
-			wp_register_script('sdf_admin_js', $this->plugin_dir_url.'plugin/sdf/sdf.admin.js', array('jquery'), '');
-			wp_enqueue_script('sdf_bs_js');
-			wp_enqueue_script('sdf_admin_js');
+			wp_register_script('sdf_bs_js_admin', $this->plugin_dir_url.'plugin/sdf/bootstrap/js/bootstrap.js', array('jquery'), null, true);	
+			wp_register_script('media_upload_js', $this->plugin_dir_url.'plugin/sdf/sdf.media.upload.js', array('jquery'), '');
+			wp_enqueue_script('sdf_bs_js_admin');
+			wp_enqueue_script('media_upload_js');
 			wp_enqueue_media();
 		}
 		
@@ -2002,7 +2000,7 @@ class SEO_Ultimate {
 		if ($c = count($tabs)) {
 			
 			if ($c >= 1) {
-				echo "\n\n<div class='sdf-meta-wrap'>\n";
+				echo "\n\n<div class='seo-meta-wrap'>\n";
 				echo "\n\n<ul class='nav nav-tabs' id='su-tabset'>\n";
 			}
 			

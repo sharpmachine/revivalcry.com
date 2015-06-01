@@ -40,7 +40,7 @@ class SU_Modules extends SU_Module {
 			
 			update_option('seo_ultimate', $psdata);
 			
-			wp_redirect(add_query_arg('su-modules-updated', '1', suurl::current()), 301);
+			wp_redirect( esc_url( add_query_arg( 'su-modules-updated', '1', suurl::current() ) ), 301 );
 			exit;
 		}
 	}

@@ -21,7 +21,7 @@ class SU_FofsLog extends SU_Module {
 	
 	static function get_module_title() { return __('404 Monitor Log', 'seo-ultimate'); }
 	function get_module_subtitle() { return __('Log', 'seo-ultimate'); }
-	
+	function get_default_status() { return SU_MODULE_DISABLED; }
 	static function has_menu_count() { return true; }
 	function get_settings_key() { return '404s'; }
 	

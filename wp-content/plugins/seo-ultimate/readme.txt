@@ -1,11 +1,11 @@
 === SEO Ultimate ===
-Contributors: SEO Design Solutions, JohnLamansky, djalexandar
+Contributors: SEO Design Solutions, JohnLamansky, djalexandar, M Rub Shuvo
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate, Open Graph, og, microdata, Facebook, Twitter, Schema.org
-Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 7.6.5.1
+Requires at least: 3.9
+Tested up to: 4.2.2
+Stable tag: 7.6.5.5
 
-This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, Open Graph, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
+This all-in-one SEO plugin gives you control over meta titles & descriptions, open graph, auto-linking, rich-snippets, 404 monitoring, siloing & more.
 
 == Description ==
 
@@ -247,6 +247,25 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.6.5.5 (May 12, 2015) =
+* Bugfix: Module Enable/Disable Fix
+* Bugfix: Data Table classes fix
+
+= Version 7.6.5.4 (May 7, 2015) =
+* Bugfix: Toggle for "SEO" Menu in admin toolbar
+
+= Version 7.6.5.3 (April 29, 2015) =
+* Bugfix: Fixing add_query_arg() and remove_query_arg() usage
+* Bugfix: Fixed Strict Standards & Warning Error While Enable or Disable Any Modules From Module Manager
+* Bugfix: Added User Log In & Log Out Conditional Logic For SEO Admin Toolbar
+* Bugfix: Bootstrap Modal Status CSS Class Change .modal-open >>> .sdf-modal-open
+
+= Version 7.6.5.2 (April 28, 2015) =
+* Bugfix: Compatibility Issue With Wordpress 4.2.1
+* Bugfix: Deeplink Juggernaut autolink dampening
+* Bugfix: Twitter Cards
+* Bugfix: Open Graph Integrator module
 
 = Version 7.6.5.1 (June 03, 2014) =
 * Bugfix: Permalink Tweaker (URL Bases)

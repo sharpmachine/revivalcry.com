@@ -103,7 +103,8 @@ class SU_ContentAutolinks extends SU_Module {
 		$dest_limit = $from_post_type ? (bool)$this->get_setting('dest_limit_' . $from_post_type, false) : false;
 		$dest_limit_taxonomies = array();
 		if ($dest_limit) {
-			$from_post_type_taxonomies = suwp::get_object_taxonomy_names($from_post_type);
+			//$from_post_type_taxonomies = suwp::get_object_taxonomy_names($from_post_type);
+			$from_post_type_taxonomies = suwp::get_taxonomy_names($from_post_type);
 			foreach ($from_post_type_taxonomies as $from_post_type_taxonomy) {
 				if ($this->get_setting('dest_limit_' . $from_post_type . '_within_' . $from_post_type_taxonomy, false))
 					$dest_limit_taxonomies[] = $from_post_type_taxonomy;
