@@ -113,7 +113,7 @@ class SU_OpenGraph extends SU_Module {
 				
 				//Title
 				if (!($tags['og:title'] = $this->get_postmeta('og_title')))
-					$tags['og:title'] = strip_tags( apply_filters( 'single_post_title', $post->post_title ) );
+					$tags['og:title'] = strip_tags( apply_filters( 'single_post_title', $post->post_title, $post ) );
 				
 				//Description
 				if (!($tags['og:description'] = $this->get_postmeta('og_description')))

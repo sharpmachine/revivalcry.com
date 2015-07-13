@@ -3,7 +3,7 @@ Contributors: SEO Design Solutions, JohnLamansky, djalexandar, M Rub Shuvo
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate, Open Graph, og, microdata, Facebook, Twitter, Schema.org
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 7.6.5.5
+Stable tag: 7.6.5.6
 
 This all-in-one SEO plugin gives you control over meta titles & descriptions, open graph, auto-linking, rich-snippets, 404 monitoring, siloing & more.
 
@@ -11,7 +11,13 @@ This all-in-one SEO plugin gives you control over meta titles & descriptions, op
 
 = From the Creators of SEO Ultimate =
 
-If You Like SEO Ultimate, You're Going to Love Our [WordPress Theme Framework](http://www.seodesignframework.com/)
+<blockquote>
+<strong>Premium Support Now Available</strong><br>
+<p>The SEO Design Solutions team does not provide support for SEO Ultimate on the WordPress forums. However, dedicated one on one email support is available when you upgrade to <a  title="SEO Ultimate+" href="http://www.seoultimateplus.com">SEO Ultimate+</a>. The premium version of SEO Ultimate also has exclusive new features, detailed training videos and custom revisions not available in the free version.</p>
+<p>You should also check out the <a href="http://www.seodesignframework.com/" title="SEO Design Framework">SEO Design Framework</a> (a drag and drop, multipurpose WordPress theme) created as the perfect companion for SEO Ultimate+.</p>
+</blockquote>
+
+[youtube http://www.youtube.com/watch?v=F_pW_4pl6lc]
 
 = Recent Releases =
 
@@ -247,6 +253,18 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.6.5.7 (June 29, 2015) =
+* Improvement: SEO Admin Toolbar Menu
+* Bugfix: Bootstrap/Prototype Conflict Fix
+* Bugfix: Load seo.admin.css
+* Bugfix: Styles fix for all post types
+* Bugfix: Removed Dashboard Banner
+
+= Version 7.6.5.6 (June 8, 2015) =
+* Bugfix: CiviCRM Conflict Issue With SEO Ultimate Open Graph Integrator & Titles Module
+* Bugfix: Excluded Bootstrap tooltips and popovers from css/js
+* Bugfix: Excluded Bootstrap button js
 
 = Version 7.6.5.5 (May 12, 2015) =
 * Bugfix: Module Enable/Disable Fix

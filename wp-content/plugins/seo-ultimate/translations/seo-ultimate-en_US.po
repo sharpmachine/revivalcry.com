@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the SEO Ultimate package.
 msgid ""
 msgstr ""
-"Project-Id-Version: SEO Ultimate v7.6.5.5\n"
+"Project-Id-Version: SEO Ultimate v7.6.5.7\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/seo-ultimate\n"
-"POT-Creation-Date: 2015-05-12 22:50+0100\n"
-"PO-Revision-Date: 2015-05-12 22:50+0100\n"
+"POT-Creation-Date: 2015-06-29 20:58+0100\n"
+"PO-Revision-Date: 2015-06-29 20:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: SEO Design Solutions <support@seodesignsolutions.com>\n"
 "Language: en_US\n"
@@ -190,6 +190,7 @@ msgid "(Use * as wildcard)"
 msgstr ""
 
 #: modules/404s/fofs.php:11 modules/404s/fofs.php:12
+#: plugin/su-functions.php:239 plugin/su-functions.php:244
 msgid "404 Monitor"
 msgstr ""
 
@@ -344,7 +345,8 @@ msgid ""
 msgstr ""
 
 #: modules/author-links/author-links.php:16
-#: modules/author-links/author-links.php:17
+#: modules/author-links/author-links.php:17 plugin/su-functions.php:251
+#: plugin/su-functions.php:256
 msgid "Author Highlighter"
 msgstr ""
 
@@ -383,6 +385,7 @@ msgid "Google+ Profile URL"
 msgstr ""
 
 #: modules/autolinks/autolinks.php:11 modules/autolinks/autolinks.php:12
+#: plugin/su-functions.php:203 plugin/su-functions.php:208
 msgid "Deeplink Juggernaut"
 msgstr ""
 
@@ -959,6 +962,7 @@ msgid "Negative match"
 msgstr ""
 
 #: modules/canonical/canonical.php:12 modules/canonical/canonical.php:221
+#: plugin/su-functions.php:263 plugin/su-functions.php:268
 msgid "Canonicalizer"
 msgstr ""
 
@@ -1218,11 +1222,11 @@ msgstr ""
 
 #: modules/class.su-module.php:2801 modules/meta/meta-descriptions.php:31
 #: modules/meta/meta-keywords.php:40 modules/opengraph/opengraph.php:352
-#: plugin/class.seo-ultimate.php:1874
+#: plugin/class.seo-ultimate.php:1876
 msgid "Blog Homepage"
 msgstr ""
 
-#: modules/class.su-module.php:2806 plugin/class.seo-ultimate.php:1950
+#: modules/class.su-module.php:2806 plugin/class.seo-ultimate.php:1952
 msgid "Author"
 msgstr ""
 
@@ -1230,7 +1234,7 @@ msgstr ""
 msgid "A Deleted User"
 msgstr ""
 
-#: modules/class.su-module.php:2823 plugin/class.seo-ultimate.php:1980
+#: modules/class.su-module.php:2823 plugin/class.seo-ultimate.php:1982
 msgid "Link Mask"
 msgstr ""
 
@@ -1266,6 +1270,7 @@ msgid ""
 msgstr ""
 
 #: modules/files/files.php:14 modules/files/files.php:15
+#: plugin/su-functions.php:287 plugin/su-functions.php:292
 msgid "File Editor"
 msgstr ""
 
@@ -1413,6 +1418,7 @@ msgstr ""
 
 #: modules/internal-link-aliases/internal-link-aliases.php:27
 #: modules/internal-link-aliases/internal-link-aliases.php:28
+#: plugin/su-functions.php:215 plugin/su-functions.php:220
 msgid "Link Mask Generator"
 msgstr ""
 
@@ -1574,7 +1580,8 @@ msgid ""
 msgstr ""
 
 #: modules/link-nofollow/link-nofollow.php:12
-#: modules/link-nofollow/link-nofollow.php:132
+#: modules/link-nofollow/link-nofollow.php:132 plugin/su-functions.php:347
+#: plugin/su-functions.php:352
 msgid "Nofollow Manager"
 msgstr ""
 
@@ -1657,6 +1664,7 @@ msgid ""
 msgstr ""
 
 #: modules/linkbox/linkbox.php:12 modules/linkbox/linkbox.php:126
+#: plugin/su-functions.php:299 plugin/su-functions.php:304
 msgid "Linkbox Inserter"
 msgstr ""
 
@@ -1734,7 +1742,8 @@ msgid ""
 "</ul>\n"
 msgstr ""
 
-#: modules/meta/meta-descriptions.php:18
+#: modules/meta/meta-descriptions.php:18 plugin/su-functions.php:179
+#: plugin/su-functions.php:184
 msgid "Meta Description Editor"
 msgstr ""
 
@@ -1879,7 +1888,8 @@ msgid ""
 "</ul>\n"
 msgstr ""
 
-#: modules/meta/meta-keywords.php:18
+#: modules/meta/meta-keywords.php:18 plugin/su-functions.php:311
+#: plugin/su-functions.php:316
 msgid "Meta Keywords Editor"
 msgstr ""
 
@@ -1995,7 +2005,8 @@ msgstr ""
 msgid "Meta Robot Tags Editor"
 msgstr ""
 
-#: modules/meta/meta-robots.php:13
+#: modules/meta/meta-robots.php:13 plugin/su-functions.php:191
+#: plugin/su-functions.php:196
 msgid "Meta Robot Tags"
 msgstr ""
 
@@ -2122,6 +2133,7 @@ msgid ""
 msgstr ""
 
 #: modules/meta/webmaster-verify.php:12 modules/meta/webmaster-verify.php:93
+#: plugin/su-functions.php:431 plugin/su-functions.php:436
 msgid "Webmaster Verification Assistant"
 msgstr ""
 
@@ -2165,7 +2177,8 @@ msgid ""
 msgstr ""
 
 #: modules/misc/misc.php:11 modules/misc/misc.php:12
-#: plugin/class.seo-ultimate.php:1584
+#: plugin/class.seo-ultimate.php:1586 plugin/su-functions.php:335
+#: plugin/su-functions.php:340
 msgid "Miscellaneous"
 msgstr ""
 
@@ -2179,7 +2192,8 @@ msgstr ""
 msgid "Module Manager"
 msgstr ""
 
-#: modules/modules/modules.php:13
+#: modules/modules/modules.php:13 plugin/su-functions.php:155
+#: plugin/su-functions.php:160
 msgid "Modules"
 msgstr ""
 
@@ -2275,6 +2289,7 @@ msgid ""
 msgstr ""
 
 #: modules/more-links/more-links.php:12 modules/more-links/more-links.php:102
+#: plugin/su-functions.php:323 plugin/su-functions.php:328
 msgid "More Link Customizer"
 msgstr ""
 
@@ -2807,7 +2822,8 @@ msgid ""
 "</ul>\n"
 msgstr ""
 
-#: modules/permalinks/permalinks.php:15
+#: modules/permalinks/permalinks.php:15 plugin/su-functions.php:227
+#: plugin/su-functions.php:232
 msgid "Permalink Tweaker"
 msgstr ""
 
@@ -2850,7 +2866,8 @@ msgid ""
 msgstr ""
 
 #: modules/rich-snippets/rich-snippets.php:14
-#: modules/rich-snippets/rich-snippets.php:408
+#: modules/rich-snippets/rich-snippets.php:408 plugin/su-functions.php:371
+#: plugin/su-functions.php:376
 msgid "Rich Snippet Creator"
 msgstr ""
 
@@ -3402,7 +3419,8 @@ msgstr ""
 msgid "Plugin Management"
 msgstr ""
 
-#: modules/settings/settings.php:16
+#: modules/settings/settings.php:16 plugin/su-functions.php:359
+#: plugin/su-functions.php:364
 msgid "Plugin Settings"
 msgstr ""
 
@@ -3466,7 +3484,7 @@ msgid "Uninstaller"
 msgstr ""
 
 #: modules/settings/uninstall.php:18 modules/settings/uninstall.php:22
-#: plugin/class.seo-ultimate.php:1412
+#: plugin/class.seo-ultimate.php:1414
 msgid "Uninstall"
 msgstr ""
 
@@ -3511,7 +3529,8 @@ msgid "Uninstallation complete. Thanks for trying SEO Ultimate."
 msgstr ""
 
 #: modules/sharing-buttons/sharing-buttons.php:12
-#: modules/sharing-buttons/sharing-buttons.php:80
+#: modules/sharing-buttons/sharing-buttons.php:80 plugin/su-functions.php:407
+#: plugin/su-functions.php:412
 msgid "Sharing Facilitator"
 msgstr ""
 
@@ -3551,6 +3570,7 @@ msgid ""
 msgstr ""
 
 #: modules/slugs/slugs.php:12 modules/slugs/slugs.php:111
+#: plugin/su-functions.php:419 plugin/su-functions.php:424
 msgid "Slug Optimizer"
 msgstr ""
 
@@ -3627,6 +3647,7 @@ msgid ""
 msgstr ""
 
 #: modules/titles/titles.php:18 modules/titles/titles.php:19
+#: plugin/su-functions.php:167 plugin/su-functions.php:172
 msgid "Title Tag Rewriter"
 msgstr ""
 
@@ -3999,6 +4020,7 @@ msgid ""
 msgstr ""
 
 #: modules/user-code/user-code.php:21 modules/user-code/user-code.php:22
+#: plugin/su-functions.php:275 plugin/su-functions.php:280
 msgid "Code Inserter"
 msgstr ""
 
@@ -4126,7 +4148,8 @@ msgid "Use my <a href=\"%s\" target=\"_blank\">footer link HTML formats</a>"
 msgstr ""
 
 #: modules/wp-settings/wp-settings.php:14
-#: modules/wp-settings/wp-settings.php:15
+#: modules/wp-settings/wp-settings.php:15 plugin/su-functions.php:395
+#: plugin/su-functions.php:400
 msgid "Settings Monitor"
 msgstr ""
 
@@ -4199,102 +4222,104 @@ msgstr ""
 msgid "Go to setting &raquo;"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:852
+#: plugin/class.seo-ultimate.php:852 plugin/su-functions.php:137
+#: plugin/su-functions.php:141
 msgid "SEO"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1133
+#: plugin/class.seo-ultimate.php:1135
 msgid ""
 "It looks like you made changes to the settings of this SEO Ultimate module. "
 "If you leave before saving, those changes will be lost."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1228 plugin/class.seo-ultimate.php:1654
+#: plugin/class.seo-ultimate.php:1230 plugin/class.seo-ultimate.php:1656
+#: plugin/su-functions.php:150
 msgid "SEO Settings"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1267
+#: plugin/class.seo-ultimate.php:1269
 #, php-format
 msgid ""
 "%1$s is known to cause conflicts with SEO Ultimate. Please deactivate %1$s "
 "if you wish to continue using SEO Ultimate."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1311
+#: plugin/class.seo-ultimate.php:1313
 msgid "new module"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1311
+#: plugin/class.seo-ultimate.php:1313
 msgid "new modules"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1312
+#: plugin/class.seo-ultimate.php:1314
 msgid "new feature"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1312
+#: plugin/class.seo-ultimate.php:1314
 msgid "new features"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1313
+#: plugin/class.seo-ultimate.php:1315
 msgid "bugfix"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1313
+#: plugin/class.seo-ultimate.php:1315
 msgid "bugfixes"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1314
+#: plugin/class.seo-ultimate.php:1316
 msgid "improvement"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1314
+#: plugin/class.seo-ultimate.php:1316
 msgid "improvements"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1315
+#: plugin/class.seo-ultimate.php:1317
 msgid "security fix"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1315
+#: plugin/class.seo-ultimate.php:1317
 msgid "security fixes"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1316
+#: plugin/class.seo-ultimate.php:1318
 msgid "new language pack"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1316
+#: plugin/class.seo-ultimate.php:1318
 msgid "new language packs"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1317
+#: plugin/class.seo-ultimate.php:1319
 msgid "language pack update"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1317
+#: plugin/class.seo-ultimate.php:1319
 msgid "language pack updates"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1348
+#: plugin/class.seo-ultimate.php:1350
 #, php-format
 msgid "%d %s"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1354
+#: plugin/class.seo-ultimate.php:1356
 #, php-format
 msgid "Upgrade now to get %s. %s."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1356
+#: plugin/class.seo-ultimate.php:1358
 msgid "View changelog"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1433
+#: plugin/class.seo-ultimate.php:1435
 msgid "Active Modules: "
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1500
+#: plugin/class.seo-ultimate.php:1502
 msgid ""
 "<strong>SEO Ultimate Notice:</strong> Your blog is configured to block "
 "search engine spiders. To resolve this, <a href=\"options-reading.php\" "
@@ -4302,32 +4327,32 @@ msgid ""
 "discourage search engines&#8221; option."
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1581
+#: plugin/class.seo-ultimate.php:1583
 msgid "Search Engine Listing"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1582
+#: plugin/class.seo-ultimate.php:1584
 msgid "Social Networks Listing"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1583
+#: plugin/class.seo-ultimate.php:1585
 msgid "Links"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1685
+#: plugin/class.seo-ultimate.php:1687
 #, php-format
 msgid "%1$s %2$s by %3$s"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1873
+#: plugin/class.seo-ultimate.php:1875
 msgid "Home"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1944
+#: plugin/class.seo-ultimate.php:1946
 msgid "Author Archives"
 msgstr ""
 
-#: plugin/class.seo-ultimate.php:1973
+#: plugin/class.seo-ultimate.php:1975
 msgid "Link Masks"
 msgstr ""
 
@@ -4404,6 +4429,78 @@ msgstr ""
 
 #: plugin/class.su-installer.php:38
 msgid "Plugin upgraded successfully."
+msgstr ""
+
+#: plugin/su-functions.php:383 plugin/su-functions.php:388
+msgid "SEO Ultimate Plus Widgets"
+msgstr ""
+
+#: plugin/su-functions.php:443 plugin/su-functions.php:448
+msgid "What&#39;s New"
+msgstr ""
+
+#: plugin/su-functions.php:457
+msgid "Keyword Research"
+msgstr ""
+
+#: plugin/su-functions.php:476
+msgid "Google AdWords Keyword Planner"
+msgstr ""
+
+#: plugin/su-functions.php:483
+msgid "Google Insights"
+msgstr ""
+
+#: plugin/su-functions.php:496
+msgid "Page Analysis Tools"
+msgstr ""
+
+#: plugin/su-functions.php:502
+msgid "Check OSE DA/PA"
+msgstr ""
+
+#: plugin/su-functions.php:509
+msgid "Check Keyword Density"
+msgstr ""
+
+#: plugin/su-functions.php:516
+msgid "Check Google Cache"
+msgstr ""
+
+#: plugin/su-functions.php:523
+msgid "Check Headers"
+msgstr ""
+
+#: plugin/su-functions.php:530
+msgid "Check Rich Snippets"
+msgstr ""
+
+#: plugin/su-functions.php:537
+msgid "Facebook Debugger"
+msgstr ""
+
+#: plugin/su-functions.php:544
+msgid "Pinterest Rich Pins Validator"
+msgstr ""
+
+#: plugin/su-functions.php:551
+msgid "HTML Validator"
+msgstr ""
+
+#: plugin/su-functions.php:558
+msgid "CSS Validator"
+msgstr ""
+
+#: plugin/su-functions.php:565
+msgid "Google Page Speed Test"
+msgstr ""
+
+#: plugin/su-functions.php:572
+msgid "Modern IE Site Scan"
+msgstr ""
+
+#: plugin/su-functions.php:579
+msgid "Wayback Machine Page Archive"
 msgstr ""
 
 #: seo-ultimate.php:84

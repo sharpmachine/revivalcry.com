@@ -176,12 +176,12 @@ class SU_Titles extends SU_Module {
 		$parent_title = '';
 		if (is_singular()) {
 			$post = $wp_query->get_queried_object();
-			$post_title = strip_tags( apply_filters( 'single_post_title', $post->post_title ) );
+			$post_title = strip_tags( apply_filters( 'single_post_title', $post->post_title, $post ) );
 			$post_id = $post->ID;
 			
 			if ($parent = $post->post_parent) {
 				$parent = get_post($parent);
-				$parent_title = strip_tags( apply_filters( 'single_post_title', $parent->post_title ) );
+				$parent_title = strip_tags( apply_filters( 'single_post_title', $parent->post_title, $post ) );
 			}
 		}
 		

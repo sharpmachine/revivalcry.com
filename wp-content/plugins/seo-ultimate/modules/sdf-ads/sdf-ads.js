@@ -7,8 +7,13 @@ jQuery(document).ready(function($) {
 	$('#sdf_dashboard_widget .inside').hide();
 	var sds_promo_blog_post = $('#sds_promo_blog_post').html();
 	var banners_remote = ({
-"enabled":true,
 "banners": [
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-1.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb1"},
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-2.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb2"},
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-3.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb3"},
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-4.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb4"},
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-5.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb5"},
+{"banner_img":"SEO-Ultimate-Dashboard-Bannner-6.jpg", "banner_link":"https://seoultimateplus.com/?ref=su-sb6"},
 {"banner_img":"InternalLinkBanner.jpg", "banner_link":"https://seodesignframework.leadpages.net/internal-links/"},
 {"banner_img":"MetaWritingBanner.jpg", "banner_link":"https://seodesignframework.leadpages.net/meta-titles-descriptions/"}
 ],
@@ -23,8 +28,10 @@ jQuery(document).ready(function($) {
 ]
 })
 
-	var sdf_carousel = '';
-	if (banners_remote.enabled === true) {
+		
+	var promo_carousel = $('#sdf-promo-carousel');
+	if (promo_carousel.length > 0) {
+		var sdf_carousel = '';
 		var shuffled_banners = shuffleArray(banners_remote.banners);
 		var shuffled_slides = shuffleArray(banners_remote.slides);
 		// check if it's cloud hosted banner
@@ -51,15 +58,15 @@ jQuery(document).ready(function($) {
 		sdf_carousel = sdf_carousel + "<div class=\"item\"><div class=\"container\"><div class=\"carousel-caption\">"+ sds_promo_blog_post + "</div></div></div>";
 		sdf_carousel = sdf_carousel + "</div><a class=\"left carousel-control\" href=\"#sdfCarousel\" data-slide=\"prev\"><span class=\"glyphicon glyphicon-chevron-left\"></span></a><a class=\"right carousel-control\" href=\"#sdfCarousel\" data-slide=\"next\"><span class=\"glyphicon glyphicon-chevron-right\"></span></a></div>";
 		
-		$('#sdf-promo-carousel').html(sdf_carousel).delay(500).fadeIn(400).carousel({ interval:12000 });
-		
-		// dashboard widget
-		$('#sdf_dashboard_widget h3.hndle span').html(banners_remote.dashboard_widget[0].title);
-		$('#sdf_dashboard_widget .inside').html(banners_remote.dashboard_widget[0].content);
-		setTimeout(function(){
-			$('#sdf_dashboard_widget .inside').fadeIn(400);
-		},800);
-	}
+		promo_carousel.html(sdf_carousel).delay(500).fadeIn(400).carousel({ interval:12000 });
+	}	
+	
+	// dashboard widget
+	$('#sdf_dashboard_widget h3.hndle span').html(banners_remote.dashboard_widget[0].title);
+	$('#sdf_dashboard_widget .inside').html(banners_remote.dashboard_widget[0].content);
+	setTimeout(function(){
+		$('#sdf_dashboard_widget .inside').fadeIn(400);
+	},800);
 
 });
  
