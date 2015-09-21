@@ -4,7 +4,7 @@ function emp_install() {
 	$old_version = get_option('em_pro_version');
 	if( EMP_VERSION > $old_version || $old_version == ''|| (is_multisite() && !EM_MS_GLOBAL && get_option('emp_ms_global_install')) ){
 	 	// Creates the tables + options if necessary
-		if( !EM_MS_GLOBAL || (EM_MS_GLOBAL && is_main_blog()) ){
+		if( !EM_MS_GLOBAL || (EM_MS_GLOBAL && is_main_site()) ){
 		    //hm....
 		 	emp_create_transactions_table();
 			emp_create_coupons_table(); 
@@ -63,7 +63,7 @@ function emp_create_transactions_table() {
 		  transaction_gateway_id varchar(30) DEFAULT NULL,
 		  transaction_payment_type varchar(20) DEFAULT NULL,
 		  transaction_timestamp datetime NOT NULL,
-		  transaction_total_amount decimal(8,2) DEFAULT NULL,
+		  transaction_total_amount decimal(14,2) DEFAULT NULL,
 		  transaction_currency varchar(35) DEFAULT NULL,
 		  transaction_status varchar(35) DEFAULT NULL,
 		  transaction_duedate date DEFAULT NULL,
@@ -93,7 +93,7 @@ function emp_create_coupons_table() {
 		  coupon_end datetime DEFAULT NULL,
 		  coupon_type varchar(20) DEFAULT NULL,
 		  coupon_tax varchar(4) DEFAULT NULL,
-		  coupon_discount decimal(8,2) NOT NULL,
+		  coupon_discount decimal(14,2) NOT NULL,
 		  coupon_eventwide bool NOT NULL DEFAULT 0,
 		  coupon_sitewide bool NOT NULL DEFAULT 0,
 		  coupon_private bool NOT NULL DEFAULT 0,
@@ -304,6 +304,10 @@ function emp_add_options() {
 		if( get_option('dbem_muliple_bookings_form') ){ //fix badly stored user dates and times
 			update_option('dbem_multiple_bookings_form', get_option('dbem_muliple_bookings_form'));
 			delete_option('dbem_muliple_bookings_form');
+		}
+		if( get_option('em_pro_version') < 2.392 ){ //disable custom emails for upgrades, prevent unecessary features
+			update_option('em_paypal_booking_feedback_completed', get_option('em_paypal_booking_feedback_thanks'));
+			delete_option('em_paypal_booking_feedback_thanks');
 		}
 	}else{
 		//Booking form stuff only run on install

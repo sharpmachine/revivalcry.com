@@ -14,7 +14,11 @@ class EM_Multiple_Bookings{
 			add_action('em_booking_form_custom','EM_Multiple_Bookings::prevent_user_fields', 1); //prevent user fields from showing
 			add_filter('em_booking_validate', 'EM_Multiple_Bookings::prevent_user_validation', 1); //prevent user fields validation
 	        //hooking into the booking process
-	        add_action('em_booking_add','EM_Multiple_Bookings::em_booking_add', 1, 3); //prevent booking being made and add to cart
+	        add_action('em_booking_add','EM_Multiple_Bookings::em_booking_add', 5, 3); //prevent booking being made and add to cart
+		}
+		 //if we're manually booking, don't load the cart JS stuff
+		if( !empty($_REQUEST['action']) && $_REQUEST['action'] == 'manual_booking' ){
+    		define('EM_CART_JS_LOADED',true); 
 		}
 		add_filter('em_booking_save','EM_Multiple_Bookings::em_booking_save',100,2); //when saving bookings, we need to make sure MB objects update the total price
 		add_filter('em_get_booking','EM_Multiple_Bookings::em_get_booking'); //switch EM_Booking with EM_Multiple_Booking object if applicable
@@ -53,7 +57,11 @@ class EM_Multiple_Bookings{
 		add_filter('em_bookings_table_rows_col', array('EM_Multiple_Bookings','em_bookings_table_rows_col'),10,5);
 		add_filter('em_bookings_table_cols_template', array('EM_Multiple_Bookings','em_bookings_table_cols_template'),10,2);
 		add_action('shutdown', 'EM_Multiple_Bookings::session_save');
+		//multilingual hook
+		add_action('em_ml_init', 'EM_Multiple_Bookings::em_ml_init');
     }
+    
+    public static function em_ml_init(){ include('multiple-bookings-ml.php'); }
     
     public static function em_get_booking($EM_Booking){
         if( !empty($EM_Booking->booking_id) && $EM_Booking->event_id == 0 ){

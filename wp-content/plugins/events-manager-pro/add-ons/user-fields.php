@@ -104,7 +104,7 @@ class EM_User_Fields {
 	 */
 	public static function em_bookings_table_rows_col($value, $col, $EM_Booking, $EM_Bookings_Table, $csv){
 		$EM_Form = self::get_form();
-		if( $EM_Form->is_user_field($col) ){
+		if( $EM_Form->is_user_field($col) && !empty($EM_Form->form_fields[$col]) ){
 			$field = $EM_Form->form_fields[$col];
 			$EM_Person = $EM_Booking->get_person();
 			$guest_user = get_option('dbem_bookings_registration_disable') && $EM_Person->ID == get_option('dbem_bookings_registration_user');
@@ -223,15 +223,15 @@ class EM_User_Fields {
 								<td colspan="2"><?php echo $field['options_html_content']; ?></td>
 								<?php
 							}else{
-								$value = esc_html(self::get_user_meta($EM_Person->ID, $field_id, true));
+								$value = self::get_user_meta($EM_Person->ID, $field_id, true);
 								//override by registration value in case value is now empty, otherwise show n/a
 								if( !empty($EM_Booking->booking_meta['registration'][$field_id]) && (empty($value) || $no_user) ){
 									$value = $EM_Booking->booking_meta['registration'][$field_id];
 								}elseif( empty($value) || $no_user ){
-									$value = "<em>".__('n/a','em-pro')."</em>";
+									$value = "<em>".esc_html__('n/a','em-pro')."</em>";
 								}								
-								if( $value != "<em>".__('n/a','em-pro')."</em>"){ 
-									$value = $EM_Form->get_formatted_value($field, $value);
+								if( $value != "<em>".esc_html__('n/a','em-pro')."</em>"){ 
+									$value = esc_html($EM_Form->get_formatted_value($field, $value));
 								}
 								?>
 								<tr><th><?php echo $field['label']; ?> : </th><td><?php echo $value; ?></td></tr>	

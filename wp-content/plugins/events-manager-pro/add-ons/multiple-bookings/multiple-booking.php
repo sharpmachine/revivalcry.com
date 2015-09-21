@@ -242,7 +242,7 @@ class EM_Multiple_Booking extends EM_Booking{
 		if($format){
 			return $this->format_price($this->booking_price);
 		}
-		return apply_filters('em_multiple_booking_get_price', $this->booking_price, $this);
+		return round($this->booking_price, 2);
 	}
 	
 	function get_price_base( $format=false ){

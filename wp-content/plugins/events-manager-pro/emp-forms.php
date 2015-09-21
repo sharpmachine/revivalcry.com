@@ -97,6 +97,7 @@ class EM_Form extends EM_Object {
 			$value = '';
 			if( !isset($_REQUEST[$fieldid]) ){ //for things like checkboxes when editing
 			    $_REQUEST[$fieldid] = '';
+			    if($field['type'] == 'checkbox') $_REQUEST[$fieldid] = '0'; //force save a 0 rather than a blank so we can check it
 			}
 			if( !is_array($_REQUEST[$fieldid])){
 				$this->field_values[$fieldid] = wp_kses_data(stripslashes($_REQUEST[$fieldid]));
@@ -263,14 +264,31 @@ class EM_Form extends EM_Object {
 				<?php
 				break;
 			case 'captcha':
-				if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptchalib.php'); }
-				if( function_exists('recaptcha_get_html') && !is_user_logged_in() ){
-					?>
-					<p class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
-					<label for='<?php echo $field['fieldid'] ?>'><?php echo $field['label']. $required  ?></label>
-					<?php
-					echo $this->output_field_input($field, $post);
-				}
+			    if( !self::show_reg_fields() ) break;
+			    if( defined('EM_RECAPTCHA_2') && EM_RECAPTCHA_2 ){
+			        if( !class_exists('\ReCaptcha\ReCaptcha') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/autoload.php'); }
+    				if( class_exists('\ReCaptcha\ReCaptcha') && !is_user_logged_in() ){
+    					?>
+    					<p class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
+    					<?php
+    					echo $this->output_field_input($field, $post);
+    					?>
+    					</p>
+    					<?php
+    				}
+			    }else{
+    				if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/recaptchalib.php'); }
+    				if( function_exists('recaptcha_get_html') && !is_user_logged_in() ){
+    					?>
+    					<p class="input-group input-<?php echo $field['type']; ?> input-field-<?php echo $field['fieldid'] ?>">
+    					<label for='<?php echo $field['fieldid'] ?>'><?php echo $field['label']. $required  ?></label>
+    					<?php
+    					echo $this->output_field_input($field, $post);
+    					?>
+    					</p>
+    					<?php
+    				}
+			    }
 				break;
 			default:
 				if( array_key_exists($field['type'], $this->user_fields) && self::show_reg_fields($field) ){
@@ -369,7 +387,7 @@ class EM_Form extends EM_Object {
 				break;
 			case 'checkbox':
 				?>
-				<input type="checkbox" name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" value="1" <?php if( ($default && $default != 'n/a') || $field['options_checkbox_checked']) echo 'checked="checked"'; ?> />
+				<input type="checkbox" name="<?php echo $field_name ?>" id="<?php echo $field['fieldid'] ?>" value="1" <?php if( ($default && $default != 'n/a') || (($post === true || $post === '') && $field['options_checkbox_checked'])) echo 'checked="checked"'; ?> />
 				<?php
 				break;
 			case 'checkboxes':
@@ -471,14 +489,32 @@ class EM_Form extends EM_Object {
     			<?php
     			break;	
 			case 'captcha':
-				if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptchalib.php'); }
-				if( function_exists('recaptcha_get_html') && !is_user_logged_in() ){
-					?>
-					<span> 
-						<?php echo recaptcha_get_html($field['options_captcha_key_pub'], $field['options_captcha_error'], is_ssl()); ?>
-					</span>
-					<?php
-				}
+			    if( !self::show_reg_fields() ) break;
+			    if( defined('EM_RECAPTCHA_2') && EM_RECAPTCHA_2 ){
+			        if( !class_exists('\ReCaptcha\ReCaptcha') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/autoload.php'); }
+    				if( class_exists('\ReCaptcha\ReCaptcha') && !is_user_logged_in() ){
+    				    $lang = str_replace('_', '-', get_locale());
+    				    //language list extracted from - https://developers.google.com/recaptcha/docs/language
+    				    $langs = array('ar', 'bn', 'bg', 'ca', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da', 'nl', 'en-GB', 'en', 'et', 'fil', 'fi', 'fr', 'fr-CA', 'de', 'gu', 'de-AT', 'de-CH', 'el', 'iw', 'hi', 'hu', 'id', 'it', 'ja', 'kn', 'ko', 'lv', 'lt', 'ms', 'ml', 'mr', 'no', 'fa', 'pl', 'pt', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sr', 'sk', 'sl', 'es', 'es-419', 'sv', 'ta', 'te', 'th', 'tr', 'uk', 'ur', 'vi');
+    				    if( !in_array($lang, $langs) && in_array( substr($lang, 0, 2), $langs) ){
+    				    }elseif( !in_array($lang, $langs) ){
+    				        $lang = 'en';
+    				    }
+    					?>
+						<div class="g-recaptcha" data-sitekey="<?php echo $field['options_captcha_key_pub']; ?>"></div>
+						<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang; ?>"></script>
+    					<?php
+    				}
+			    }else{
+    				if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/recaptchalib.php'); }
+    				if( function_exists('recaptcha_get_html') && !is_user_logged_in() ){
+    					?>
+    					<span> 
+    						<?php echo recaptcha_get_html($field['options_captcha_key_pub'], $field['options_captcha_error'], is_ssl()); ?>
+    					</span>
+    					<?php
+    				}
+			    }
 				break;
 			default:
 				if( array_key_exists($field['type'], $this->user_fields) && self::show_reg_fields() ){
@@ -551,7 +587,7 @@ class EM_Form extends EM_Object {
 					break;
 				case 'checkboxes':
 					$values = explode("\r\n",$field['options_selection_values']);
-					array_walk($values,'trim');
+					foreach($values as $k => $v) $values[$k] = trim($v);
 					if( !is_array($value) ) $value = array();
 					//in-values
 					if( (empty($value) && !empty($field['required'])) || count(array_diff($value, $values)) > 0 ){
@@ -562,7 +598,7 @@ class EM_Form extends EM_Object {
 					break;
 				case 'radio':
 					$values = explode("\r\n",$field['options_selection_values']);
-					array_walk($values,'trim');
+					foreach($values as $k => $v) $values[$k] = trim($v);
 					//in-values
 					if( (!empty($value) && !in_array($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_selection_error'])) ? $field['options_selection_error']:$err;
@@ -572,7 +608,7 @@ class EM_Form extends EM_Object {
 					break;
 				case 'multiselect':
 					$values = explode("\r\n",$field['options_select_values']);
-					array_walk($values,'trim');
+					foreach($values as $k => $v) $values[$k] = trim($v);
 					if( !is_array($value) ) $value = array();
 					//in_values
 					if( (empty($value) && !empty($field['required'])) || count(array_diff($value, $values)) > 0 ){
@@ -583,7 +619,7 @@ class EM_Form extends EM_Object {
 					break;
 				case 'select':
 					$values = explode("\r\n",$field['options_select_values']);
-					array_walk($values,'trim');
+					foreach($values as $k => $v) $values[$k] = trim($v);
 					//in-values
 					if( (!empty($value) && !in_array($value, $values)) || (empty($value) && !empty($field['required'])) ){
 						$this_err = (!empty($field['options_select_error'])) ? $field['options_select_error']:$err;
@@ -676,22 +712,37 @@ class EM_Form extends EM_Object {
 					}
 					break;		
 				case 'captcha':
-					if( empty($this->ignore_captcha) ){
-					if( !function_exists('recaptcha_get_html') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptchalib.php'); }
-					if( function_exists('recaptcha_check_answer') && !is_user_logged_in() && !defined('EMP_CHECKED_CAPTCHA') ){
-						if( !empty($_REQUEST['recaptcha_challenge_field']) && !empty($_REQUEST['recaptcha_response_field']) ){
-							$resp = recaptcha_check_answer($field['options_captcha_key_priv'], $_SERVER['REMOTE_ADDR'], $_REQUEST['recaptcha_challenge_field'], $_REQUEST['recaptcha_response_field']);
-							$result = $resp->is_valid;
-						}else{
-							$result = false; //no request vars submitted
-						}
-						if(!$result){
-							$err = !empty($field['options_captcha_error']) ? $field['options_captcha_error']:$err;
-							$this->add_error($err);
-						}
-						define('EMP_CHECKED_CAPTCHA', true); //captchas can only be checked once, and since we only need one captcha per submission....
-					}
-					}
+				    if( !self::validate_reg_fields() || !self::show_reg_fields() ) break;
+					if( !empty($this->ignore_captcha) || defined('EMP_CHECKED_CAPTCHA') ) break;
+    			    if( defined('EM_RECAPTCHA_2') && EM_RECAPTCHA_2 ){
+    			        if( !class_exists('\ReCaptcha\ReCaptcha') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/autoload.php'); }
+        				if( class_exists('\ReCaptcha\ReCaptcha') && !is_user_logged_in() ){
+                            $recaptcha_func = create_function('$key','return new \ReCaptcha\ReCaptcha($key);');
+                            $recaptcha = $recaptcha_func(sanitize_text_field($field['options_captcha_key_priv']));
+        			        $resp = $recaptcha->verify($_REQUEST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+    						$result = $resp->isSuccess();
+    						if(!$result){
+    							$err = !empty($field['options_captcha_error']) ? $field['options_captcha_error']:$err;
+    							$this->add_error($err);
+    						}
+    						define('EMP_CHECKED_CAPTCHA', true); //captchas can only be checked once, and since we only need one captcha per submission....
+        				}
+    			    }else{
+    			        if( !function_exists('recaptcha_check_answer') ) { include_once(trailingslashit(plugin_dir_path(__FILE__)).'includes/lib/recaptcha/recaptchalib.php'); }
+        			    if( function_exists('recaptcha_check_answer') && !is_user_logged_in() ){
+    						if( !empty($_REQUEST['recaptcha_challenge_field']) && !empty($_REQUEST['recaptcha_response_field']) ){
+    							$resp = recaptcha_check_answer($field['options_captcha_key_priv'], $_SERVER['REMOTE_ADDR'], $_REQUEST['recaptcha_challenge_field'], $_REQUEST['recaptcha_response_field']);
+    							$result = $resp->is_valid;
+    						}else{
+    							$result = false; //no request vars submitted
+    						}
+    						if(!$result){
+    							$err = !empty($field['options_captcha_error']) ? $field['options_captcha_error']:$err;
+    							$this->add_error($err);
+    						}
+    						define('EMP_CHECKED_CAPTCHA', true); //captchas can only be checked once, and since we only need one captcha per submission....
+    					}
+    			    }
 					break;
 				default:
 					//Registration and custom fields
@@ -1216,8 +1267,7 @@ class EM_Form extends EM_Object {
 							<div class="bct-captcha bct-options" style="display:none;">
 								<!-- captcha -->
 								<?php 
-									$uri = parse_url(get_option('siteurl')); 
-									$recaptcha_url = "https://www.google.com/recaptcha/admin/create?domains={$uri['host']}&amp;app=wordpress"; 
+									$recaptcha_url = "https://www.google.com/recaptcha/admin#list"; 
 								?>
 								<div class="bct-field">
 									<div class="bct-label"><?php _e('Public Key','em-pro'); ?></div>

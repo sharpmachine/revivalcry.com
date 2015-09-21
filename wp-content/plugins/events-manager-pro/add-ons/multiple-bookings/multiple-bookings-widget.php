@@ -18,7 +18,7 @@ class EM_Multiple_Bookings_Widget extends WP_Widget {
 				'no_bookings_text' => __('No events booked yet','em-pro')
 		);
 		$widget_ops = array('description' => __( "Display a shopping cart widget for currently booked events to check out.", 'em-pro') );
-		parent::WP_Widget(false, $name = 'Event Bookings Cart', $widget_ops);
+		parent::__construct(false, $name = 'Event Bookings Cart', $widget_ops);
 	}
 
 	/** @see WP_Widget::widget */

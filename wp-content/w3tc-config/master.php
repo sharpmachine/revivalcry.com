@@ -408,7 +408,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => true,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '1430760678',
+	'browsercache.timestamp' => '1441642984',
 	'mobile.enabled' => true,
 	'mobile.rgroups' => array(
 		'high' => array(

@@ -37,6 +37,9 @@ class EM_Gateways {
 				//new way, with payment selector
 				add_action('em_booking_form_footer', array('EM_Gateways','event_booking_form_footer'),10,2);
 		}
+		//booking gateways JS
+		add_action('em_booking_js', array('EM_Gateways','em_booking_js'));
+		//delete booking actions
 		add_filter('em_booking_delete', array('EM_Gateways', 'em_booking_delete'), 10, 2);
 		//Gateways and user fields
 		add_action('admin_init',array('EM_Gateways', 'customer_fields_admin_actions'),9); //before bookings
@@ -117,6 +120,9 @@ class EM_Gateways {
 	 */
 	static function get_gateway( $gateway ){
 		global $EM_Gateways;
+		//check for array key first
+		if( !empty($EM_Gateways[$gateway]) && $EM_Gateways[$gateway]->gateway == $gateway ) return $EM_Gateways[$gateway];
+		//otherwise we loop through the gateways array in case the gateway key registered doesn't match the actual gateway name
 		foreach($EM_Gateways as $EM_Gateway){
 			if( $EM_Gateway->gateway == $gateway ) return $EM_Gateway;
 		}
@@ -196,8 +202,6 @@ class EM_Gateways {
 	 */
 	static function booking_form_footer(){
 		global $EM_Gateways;
-		//Display gateway input
-		add_action('em_gateway_js', array('EM_Gateways','em_gateway_js'));
 		//Check if we can user quick pay buttons
 		if( get_option('dbem_gateway_use_buttons', 1) ){ //backward compatability
 			echo EM_Gateways::booking_form_buttons();
@@ -262,7 +266,7 @@ class EM_Gateways {
 		return $return;
 	}
 	
-	static function em_gateway_js(){
+	static function em_booking_js(){
 		include(dirname(__FILE__).'/gateways.js');
 	}
 

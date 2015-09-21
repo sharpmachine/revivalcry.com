@@ -126,7 +126,7 @@ class EM_Coupons_Admin {
     }
     
     static function select_page() {
-    	global $wpdb, $EM_Pro, $EM_Notices;
+    	global $wpdb, $EM_Notices;
     	$url = empty($url) ? $_SERVER['REQUEST_URI']:$url; //url to this page
     	$limit = ( !empty($_REQUEST['limit']) && is_numeric($_REQUEST[ 'limit']) ) ? $_REQUEST['limit'] : 20;//Default limit
     	$page = ( !empty($_REQUEST['pno']) ) ? $_REQUEST['pno']:1;

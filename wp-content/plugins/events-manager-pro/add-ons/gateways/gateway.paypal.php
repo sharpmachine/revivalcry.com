@@ -240,7 +240,7 @@ class EM_Gateway_Paypal extends EM_Gateway {
 	
 	function say_thanks(){
 		if( !empty($_REQUEST['thanks']) ){
-			echo "<div class='em-booking-message em-booking-message-success'>".get_option('em_'.$this->gateway.'_booking_feedback_thanks').'</div>';
+			echo "<div class='em-booking-message em-booking-message-success'>".get_option('em_'.$this->gateway.'_booking_feedback_completed').'</div>';
 		}
 	}
 
@@ -269,7 +269,8 @@ class EM_Gateway_Paypal extends EM_Gateway {
 			//add a CA certificate so that SSL requests always go through
 			add_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			//using WP's HTTP class
-			$ipn_verification_result = wp_remote_get($domain.'?'.$req, array('httpversion', '1.1'));
+			$args = apply_filters('em_paypal_ipn_remote_get_args', array('httpversion'=>'1.1','user-agent'=>'EventsManagerPro/'.EMP_VERSION));
+			$ipn_verification_result = wp_remote_get($domain.'?'.$req, $args);
 			remove_action('http_api_curl','EM_Gateway_Paypal::payment_return_local_ca_curl',10,1);
 			
 			if ( !is_wp_error($ipn_verification_result) && $ipn_verification_result['body'] == 'VERIFIED' ) {
@@ -442,27 +443,9 @@ Events Manager
 		?>
 		<table class="form-table">
 		<tbody>
-		  <tr valign="top">
-			  <th scope="row"><?php _e('Success Message', 'em-pro') ?></th>
-			  <td>
-			  	<input type="text" name="paypal_booking_feedback" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_feedback" )); ?>" style='width: 40em;' /><br />
-			  	<em><?php _e('The message that is shown to a user when a booking is successful whilst being redirected to PayPal for payment.','em-pro'); ?></em>
-			  </td>
-		  </tr>
-		  <tr valign="top">
-			  <th scope="row"><?php _e('Success Free Message', 'em-pro') ?></th>
-			  <td>
-			  	<input type="text" name="paypal_booking_feedback_free" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_feedback_free" )); ?>" style='width: 40em;' /><br />
-			  	<em><?php _e('If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected to PayPal.','em-pro'); ?></em>
-			  </td>
-		  </tr>
-		  <tr valign="top">
-			  <th scope="row"><?php _e('Thank You Message', 'em-pro') ?></th>
-			  <td>
-			  	<input type="text" name="paypal_booking_feedback_thanks" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_feedback_thanks" )); ?>" style='width: 40em;' /><br />
-			  	<em><?php _e('If you choose to return users to the default Events Manager thank you page after a user has paid on PayPal, you can customize the thank you message here.','em-pro'); ?></em>
-			  </td>
-		  </tr>
+		  <?php em_options_input_text( esc_html__('Success Message', 'em-pro'), 'em_'. $this->gateway . '_booking_feedback', esc_html__('The message that is shown to a user when a booking is successful whilst being redirected to PayPal for payment.','em-pro') ); ?>
+		  <?php em_options_input_text( esc_html__('Success Free Message', 'em-pro'), 'em_'. $this->gateway . '_booking_feedback_free', esc_html__('If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected to PayPal.','em-pro') ); ?>
+		  <?php em_options_input_text( esc_html__('Thank You Message', 'em-pro'), 'em_'. $this->gateway . '_booking_feedback_completed', esc_html__('If you choose to return users to the default Events Manager thank you page after a user has paid on PayPal, you can customize the thank you message here.','em-pro') ); ?>
 		</tbody>
 		</table>
 		
@@ -473,7 +456,7 @@ Events Manager
 		<tbody>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Email', 'em-pro') ?></th>
-				  <td><input type="text" name="paypal_email" value="<?php esc_attr_e( get_option('em_'. $this->gateway . "_email" )); ?>" />
+				  <td><input type="text" name="em_paypal_email" value="<?php esc_attr_e( get_option('em_'. $this->gateway . "_email" )); ?>" />
 				  <br />
 			  </td>
 		  </tr>
@@ -487,7 +470,7 @@ Events Manager
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Language', 'em-pro') ?></th>
 			  <td>
-			  	<select name="paypal_lc">
+			  	<select name="em_paypal_lc">
 			  		<option value=""><?php _e('Default','em-pro'); ?></option>
 				  <?php
 					$ccodes = em_get_countries();
@@ -509,7 +492,7 @@ Events Manager
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Mode', 'em-pro') ?></th>
 			  <td>
-				  <select name="paypal_status">
+				  <select name="em_paypal_status">
 					  <option value="live" <?php if (get_option('em_'. $this->gateway . "_status" ) == 'live') echo 'selected="selected"'; ?>><?php _e('Live Site', 'em-pro') ?></option>
 					  <option value="test" <?php if (get_option('em_'. $this->gateway . "_status" ) == 'test') echo 'selected="selected"'; ?>><?php _e('Test Mode (Sandbox)', 'em-pro') ?></option>
 				  </select>
@@ -519,42 +502,42 @@ Events Manager
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Return URL', 'em-pro') ?></th>
 			  <td>
-			  	<input type="text" name="paypal_return" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_return" )); ?>" style='width: 40em;' /><br />
+			  	<input type="text" name="em_paypal_return" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_return" )); ?>" style='width: 40em;' /><br />
 			  	<em><?php _e('Once a payment is completed, users will be offered a link to this URL which confirms to the user that a payment is made. If you would to customize the thank you page, create a new page and add the link here. For automatic redirect, you need to turn auto-return on in your PayPal settings.', 'em-pro'); ?></em>
 			  </td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Cancel URL', 'em-pro') ?></th>
 			  <td>
-			  	<input type="text" name="paypal_cancel_return" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_cancel_return" )); ?>" style='width: 40em;' /><br />
+			  	<input type="text" name="em_paypal_cancel_return" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_cancel_return" )); ?>" style='width: 40em;' /><br />
 			  	<em><?php _e('Whilst paying on PayPal, if a user cancels, they will be redirected to this page.', 'em-pro'); ?></em>
 			  </td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('PayPal Page Logo', 'em-pro') ?></th>
 			  <td>
-			  	<input type="text" name="paypal_format_logo" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_format_logo" )); ?>" style='width: 40em;' /><br />
+			  	<input type="text" name="em_paypal_format_logo" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_format_logo" )); ?>" style='width: 40em;' /><br />
 			  	<em><?php _e('Add your logo to the PayPal payment page. It\'s highly recommended you link to a https:// address.', 'em-pro'); ?></em>
 			  </td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Border Color', 'em-pro') ?></th>
 			  <td>
-			  	<input type="text" name="paypal_format_border" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_format_border" )); ?>" style='width: 40em;' /><br />
+			  	<input type="text" name="em_paypal_format_border" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_format_border" )); ?>" style='width: 40em;' /><br />
 			  	<em><?php _e('Provide a hex value color to change the color from the default blue to another color (e.g. #CCAAAA).','em-pro'); ?></em>
 			  </td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Delete Bookings Pending Payment', 'em-pro') ?></th>
 			  <td>
-			  	<input type="text" name="paypal_booking_timeout" style="width:50px;" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_timeout" )); ?>" style='width: 40em;' /> <?php _e('minutes','em-pro'); ?><br />
+			  	<input type="text" name="em_paypal_booking_timeout" style="width:50px;" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_timeout" )); ?>" style='width: 40em;' /> <?php _e('minutes','em-pro'); ?><br />
 			  	<em><?php _e('Once a booking is started and the user is taken to PayPal, Events Manager stores a booking record in the database to identify the incoming payment. These spaces may be considered reserved if you enable <em>Reserved unconfirmed spaces?</em> in your Events &gt; Settings page. If you would like these bookings to expire after x minutes, please enter a value above (note that bookings will be deleted, and any late payments will need to be refunded manually via PayPal).','em-pro'); ?></em>
 			  </td>
 		  </tr>
 		  <tr valign="top">
 			  <th scope="row"><?php _e('Manually approve completed transactions?', 'em-pro') ?></th>
 			  <td>
-			  	<input type="checkbox" name="paypal_manual_approval" value="1" <?php echo (get_option('em_'. $this->gateway . "_manual_approval" )) ? 'checked="checked"':''; ?> /><br />
+			  	<input type="checkbox" name="em_paypal_manual_approval" value="1" <?php echo (get_option('em_'. $this->gateway . "_manual_approval" )) ? 'checked="checked"':''; ?> /><br />
 			  	<em><?php _e('By default, when someone pays for a booking, it gets automatically approved once the payment is confirmed. If you would like to manually verify and approve bookings, tick this box.','em-pro'); ?></em><br />
 			  	<em><?php echo sprintf(__('Approvals must also be required for all bookings in your <a href="%s">settings</a> for this to work properly.','em-pro'),EM_ADMIN_URL.'&amp;page=events-manager-options'); ?></em>
 			  </td>
@@ -568,30 +551,27 @@ Events Manager
 	 * Run when saving PayPal settings, saves the settings available in EM_Gateway_Paypal::mysettings()
 	 */
 	function update() {
-		parent::update();
-		$gateway_options = array(
-			$this->gateway . "_email" => $_REQUEST[ $this->gateway.'_email' ],
-			$this->gateway . "_site" => $_REQUEST[ $this->gateway.'_site' ],
-			$this->gateway . "_currency" => $_REQUEST[ 'currency' ],
-			$this->gateway . "_inc_tax" => $_REQUEST[ 'em_'.$this->gateway.'_inc_tax' ],
-			$this->gateway . "_lc" => $_REQUEST[ $this->gateway.'_lc' ],
-			$this->gateway . "_status" => $_REQUEST[ $this->gateway.'_status' ],
-			$this->gateway . "_format_logo" => $_REQUEST[ $this->gateway.'_format_logo' ],
-			$this->gateway . "_format_border" => $_REQUEST[ $this->gateway.'_format_border' ],
-			$this->gateway . "_manual_approval" => $_REQUEST[ $this->gateway.'_manual_approval' ],
-			$this->gateway . "_booking_feedback" => wp_kses_data($_REQUEST[ $this->gateway.'_booking_feedback' ]),
-			$this->gateway . "_booking_feedback_free" => wp_kses_data($_REQUEST[ $this->gateway.'_booking_feedback_free' ]),
-			$this->gateway . "_booking_feedback_thanks" => wp_kses_data($_REQUEST[ $this->gateway.'_booking_feedback_thanks' ]),
-			$this->gateway . "_booking_timeout" => $_REQUEST[ $this->gateway.'_booking_timeout' ],
-			$this->gateway . "_return" => $_REQUEST[ $this->gateway.'_return' ],
-			$this->gateway . "_cancel_return" => $_REQUEST[ $this->gateway.'_cancel_return' ],
-		);
-		foreach($gateway_options as $key=>$option){
-			update_option('em_'.$key, stripslashes($option));
-		}
-		//default action is to return true
-		return true;
-
+	    $gateway_options = $options_wpkses = array();
+		$gateway_options[] = 'em_'. $this->gateway . '_email';
+		$gateway_options[] = 'em_'. $this->gateway . '_site';
+		$gateway_options[] = 'em_'. $this->gateway . '_currency';
+		$gateway_options[] = 'em_'. $this->gateway . '_inc_tax';
+		$gateway_options[] = 'em_'. $this->gateway . '_lc';
+		$gateway_options[] = 'em_'. $this->gateway . '_status';
+		$gateway_options[] = 'em_'. $this->gateway . '_format_logo';
+		$gateway_options[] = 'em_'. $this->gateway . '_format_border';
+		$gateway_options[] = 'em_'. $this->gateway . '_manual_approval';
+		$gateway_options[] = 'em_'. $this->gateway . '_booking_timeout';
+		$gateway_options[] = 'em_'. $this->gateway . '_return';
+		$gateway_options[] = 'em_'. $this->gateway . '_cancel_return';
+		//add wp_kses filters for relevant options and merge in
+		$options_wpkses[] = 'em_'. $this->gateway . '_booking_feedback';
+		$options_wpkses[] = 'em_'. $this->gateway . '_booking_feedback_free';
+		$options_wpkses[] = 'em_'. $this->gateway . '_booking_feedback_completed';
+		foreach( $options_wpkses as $option_wpkses ) add_filter('gateway_update_'.$option_wpkses,'wp_kses_post');
+		$gateway_options = array_merge($gateway_options, $options_wpkses);
+		//pass options to parent which handles saving
+		return parent::update($gateway_options);
 	}
 }
 EM_Gateways::register_gateway('paypal', 'EM_Gateway_Paypal');

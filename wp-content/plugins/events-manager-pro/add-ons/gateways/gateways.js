@@ -1,11 +1,11 @@
 //Select Submission
-$('.em-booking-gateway select[name=gateway]').change(function(e){
+$(document).on('change', '.em-booking-gateway select[name=gateway]', function(e){
 	var gateway = $(this).find('option:selected').val();
 	$('div.em-booking-gateway-form').hide();
 	$('div#em-booking-gateway-'+gateway).show();
 });
 //Button Submission
-$('input.em-gateway-button').click(function(e){
+$(document).on('click', 'input.em-gateway-button', function(e){
 	//prevents submission in order to append a hidden field and bind to the booking form submission event
 	e.preventDefault();
 	//get gateway name

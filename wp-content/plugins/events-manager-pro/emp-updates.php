@@ -1,5 +1,5 @@
 <?php
-define( 'EM_PRO_ALT_API', 'http://api.wp-events-plugin.com/pro/' );
+define( 'EM_PRO_ALT_API', 'https://eventsmanagerpro.com/api/updates/' );
 define( 'EM_PRO_ALT_API_2', 'http://api.wp-events-plugin.com/pro/' );
 class EM_Updates {
 	public static function init(){
@@ -58,6 +58,7 @@ class EM_Updates {
 		 * since options are only updated here, its one place fit all
 		 */
 		if( is_super_admin() && !empty($_POST['em-submitted']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'events-manager-options') ){
+		    if( defined('EM_SETTINGS_TABS') && EM_SETTINGS_TABS && !empty($_REQUEST['em_tab']) && $_REQUEST['em_tab'] != 'general' ) return;
 			//Build the array of options here
 			if( is_multisite() && !is_network_admin() ) return; //if MultiSite, only save this on network admin area
 			$request_api_key = !empty($_REQUEST['dbem_pro_api_key']) ? $_REQUEST['dbem_pro_api_key']:'';
@@ -238,6 +239,7 @@ class EM_Updates {
 	    }
 	        
 	    // POST data to send to your API
+		$transient = get_site_transient('dbem_pro_api_key_check');
 	    $args = array(
 	        'action' => 'info',
 	        'slug' => EMP_SLUG,

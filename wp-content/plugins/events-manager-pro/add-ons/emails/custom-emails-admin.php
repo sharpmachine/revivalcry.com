@@ -18,7 +18,11 @@ class EM_Custom_Emails_Admin {
 			add_action('em_gateway_settings_footer','EM_Custom_Emails_Admin::em_gateway_settings_footer', 10, 1);
 			add_action('em_gateway_update','EM_Custom_Emails_Admin::em_gateway_update', 10, 1);
 		}
+		//multilingual hook - this SHOULD fire after the EM_ML init hook as it's added after EM_ML is loaded
+		add_action('em_ml_init', 'EM_Custom_Emails_Admin::em_ml_init');
     }
+    
+    public static function em_ml_init(){ include('custom-emails-admin-ml.php'); }
     
     /*
      * --------------------------------------------
@@ -37,20 +41,18 @@ class EM_Custom_Emails_Admin {
 		$default_emails = self::get_default_email_values();
 		$emails_values = !empty($emails_values_custom) ? $emails_values_custom : self::get_default_email_values(); //override defaults
 		$group_count = count($emails_array);
+		//$admin_emails_custom could be an array of email arrays or an array of comma-delimted emails
+		foreach( $admin_emails_custom as $k => $y ) if( is_array($y) ) $admin_emails_custom[$k] = implode(',', $y); 
 		//output the structure in an html form format
 		?>
 		<div class="emp-cet">
 			<?php foreach( $emails_array as $email_array_group_name => $email_array_group ): ?>
 			<h4 class="emp-cet-group-trigger">
-				<?php if($group_count > 1 ): ?>
-				<a href="#" rel="#emp-cet-group-<?php echo $email_array_group_name; ?>">
-				<?php endif; ?>
+				<a href="#" rel="<?php echo '#'.$param ?>-<?php echo $email_array_group_name; ?>">
 				<?php echo $email_array_group['title'] ?>
-				<?php if($group_count > 1 ): ?>
 				<span>+</span></a>
-				<?php endif; ?>
 			</h4>
-			<div class="emp-cet-group" id="emp-cet-group-<?php echo $email_array_group_name; ?>">
+			<div class="emp-cet-group" id="<?php echo $param ?>-<?php echo $email_array_group_name; ?>">
 				<div><?php if(!empty($email_array_group['text']) ) echo $email_array_group['text']; ?></div>
 				
 				<?php if( is_array($admin_emails_custom) ): ?>
@@ -60,8 +62,8 @@ class EM_Custom_Emails_Admin {
 				<?php endif; ?>				
 				
 				<?php foreach( $email_array_group['subgroups'] as $email_array_subgroup => $email_array ) : ?>
-				<h5 class="emp-cet-subgroup-trigger"><a href="#" rel="#emp-cet-subgroup-<?php echo $email_array_subgroup; ?>"><?php echo $email_array['title']; ?> <span>+</span></a></h5>
-				<div class="emp-cet-subgroup" id="emp-cet-subgroup-<?php echo $email_array_subgroup; ?>" >
+				<h5 class="emp-cet-subgroup-trigger"><a href="#" rel="<?php echo '#'.$param ?>-<?php echo $email_array_subgroup; ?>"><?php echo $email_array['title']; ?> <span>+</span></a></h5>
+				<div class="emp-cet-subgroup" id="<?php echo $param ?>-<?php echo $email_array_subgroup; ?>" >
 					<p><?php echo $email_array['text']; ?></p>
 					<?php foreach( $email_array['emails'] as $email_type_name => $email_type ): ?>
 					<div class="emp-cet-subgroup-email">
@@ -92,7 +94,15 @@ class EM_Custom_Emails_Admin {
 				<?php endforeach; ?>
 			</div>
 			<?php endforeach; ?>
-		</div>		
+		</div>
+		<?php 
+		if ( !defined('EM_CUSTOM_EMAILS_UI_JS') ){
+		    add_action('admin_footer', 'EM_Custom_Emails_Admin::emails_editor_js' );
+		}
+	}
+	
+	public static function emails_editor_js(){
+	    ?>
 		<script type="text/javascript">
 			jQuery(document).ready(function($){
 				//hide all groups by default unless only 1 exists, then just subgroups
@@ -101,6 +111,8 @@ class EM_Custom_Emails_Admin {
 				if( $('.emp-cet-group').length > 1 ){
 					$('.emp-cet-group').hide();
 					trigger_selector = '.emp-cet-group-trigger a, .emp-cet-subgroup-trigger a';
+				}else{
+					$('.emp-cet-group-trigger span').hide();
 				}
 				//add listener to triggers for groups and subgroups
 				$(trigger_selector).click(function(e){
@@ -144,7 +156,7 @@ class EM_Custom_Emails_Admin {
 				})
 			});
 		</script>
-		<?php
+	    <?php
 	}
 	
 	public static function get_default_emails(){
@@ -196,7 +208,13 @@ class EM_Custom_Emails_Admin {
 			)
 		);
 		if( get_option('dbem_custom_emails_gateways') ){
-			$email_values = array_merge($email_values, self::get_gateway_default_values());
+    		foreach(EM_Gateways::active_gateways() as $gateway => $gateway_name ){
+    		    $gateway_email_defaults = self::get_gateway_default_values(EM_Gateways::get_gateway($gateway));
+    			//get custom values if applicable
+    			$possible_email_values = maybe_unserialize(get_option('em_'.$gateway . "_emails"));
+    			$gateway_email_values = self::merge_gateway_default_values($gateway, $gateway_email_defaults, $possible_email_values, true); //merge in only messages here not statuses
+    		    $email_values = array_merge($email_values, $gateway_email_values);
+    		}
 		}
 		return $email_values;
 	}
@@ -208,7 +226,7 @@ class EM_Custom_Emails_Admin {
 		foreach( $emails as $email_group_name => $email_group ){
 			foreach( $email_group['subgroups'] as $email_subgroup_name => $email_subgroup ){
 				foreach( $email_subgroup['emails'] as $email_type_name => $email_type ){
-					if( isset($_REQUEST[$param][$email_subgroup_name][$email_type_name]['status']) ){
+					if( !empty($_REQUEST[$param][$email_subgroup_name][$email_type_name]['status']) ){
 						//status is set, save it and message if needed
 						$custom_emails[$email_subgroup_name][$email_type_name]['status'] = $_REQUEST[$param][$email_subgroup_name][$email_type_name]['status'];
 						if( $_REQUEST[$param][$email_subgroup_name][$email_type_name]['status'] == 1 ){
@@ -239,14 +257,22 @@ class EM_Custom_Emails_Admin {
      * Custom Gateway Booking Emails
      * --------------------------------------------
      */
+	/**
+	 * @param EM_Gateway $EM_Gateway
+	 */
 	public static function em_gateway_settings_footer( $EM_Gateway ){
-		$default_emails = self::get_gateway_default_emails($EM_Gateway);
-		$email_values = self::get_gateway_default_values($EM_Gateway);
+		//get default email structures and values
+	    $default_emails = self::get_gateway_default_emails($EM_Gateway);
+		$default_email_values = self::get_gateway_default_values($EM_Gateway);
+		//get custom values if applicable and merge them into $email_values
+		$gateway_email_values = maybe_unserialize($EM_Gateway->get_option('emails'));
+		$email_values = self::merge_gateway_default_values($gateway, $default_email_values, $gateway_email_values);
 		$admin_emails = false;
 		if( get_option('dbem_custom_emails_gateways_admins') ){
 			$admin_emails = EM_Custom_Emails::get_gateway_admin_emails($EM_Gateway);
 		}
 		$gateway = $EM_Gateway->gateway;
+		echo "<h3>". esc_html__('Custom Booking Email Templates','em-pro').'</h3>';
 		$default_emails[$gateway]['title'] = __('Booking Email Templates','em-pro');
 		$default_emails[$gateway]['text'] = '<p>'. sprintf(__('Below you can modify the emails that are sent when bookings are made. This will override the default emails located in your %s settings page.','em-pro'), '<a href="'.admin_url('edit.php?post_type=event&page=events-manager-options#emails:booking-emails').'">'.esc_html__emp('Booking Email Templates','dbem').'</a>');
 		$default_emails[$gateway]['text'] .= __('Additionally, you can also override these emails at an event level when editing an event. Should you choose not to, any overriden emails on this page will be considered the default email for this gateway.','em-pro') .'</p>';
@@ -262,10 +288,14 @@ class EM_Custom_Emails_Admin {
 			$default_emails[$gateway.'-mb']['text'] .= '<p>'. __('Note that some gateways do not automatically send pending or confirmed emails, in these cases they may only apply to when event admins manually change the status of a booking resulting in an automated email getting sent.','em-pro').'</p>';
 			$default_emails[$gateway.'-mb']['text'] .= '<p>'. __('Click on the title texts with a plus (+) next to them to reveal further options, and the minus (-) sign to hide them.','em-pro').'</p>';		
 			//get default mb values and merge them into email values
-			$mb_email_values = self::get_gateway_mb_default_values($gateway);
-			$email_values = array_merge($email_values, $mb_email_values);
+			$mb_default_email_values = self::get_gateway_mb_default_values($EM_Gateway);
+    		//get custom values if applicable
+    		$mb_email_values = self::merge_gateway_default_values($gateway, $mb_default_email_values, $gateway_email_values);
+			//merge them all together
+    		$email_values = array_merge($email_values, $mb_email_values);
 		}
 		self::emails_editor($email_values, $default_emails, $admin_emails);
+		do_action('after_gatweay_custom_emails', $EM_Gateway, $email_values, $default_emails, $default_email_values, $admin_emails);
 	}
 	
 	public static function add_gateway_mb_default_emails( $default_emails, $EM_Gateway ){
@@ -278,37 +308,55 @@ class EM_Custom_Emails_Admin {
 		return $default_emails;
 	}
 	
+	/**
+	 * Updates the custom email settings for a gateway when a gateway settings page is updated.
+	 * @param EM_Gateway $EM_Gateway
+	 */
 	public static function em_gateway_update( $EM_Gateway ){
 		//update templates
-		$default_emails = self::add_gateway_mb_default_emails(self::get_gateway_default_emails($EM_Gateway), $EM_Gateway);
+		$default_emails = self::get_gateway_default_emails($EM_Gateway);
+		if( get_option('dbem_multiple_bookings') ){
+		    $default_emails = self::add_gateway_mb_default_emails($default_emails, $EM_Gateway);
+		}
 		$custom_booking_emails = self::editor_get_post( $default_emails );
 		$EM_Gateway->update_option('emails', serialize($custom_booking_emails));
 		//update admin email addresses
+		$custom_admin_emails = array();
 		if( get_option('dbem_custom_emails_gateways_admins') ){
-			$custom_admin_emails = self::editor_admin_emails_get_post( $default_emails );
-			//validate emails
-			$email_errors = false;
-			if( !empty($custom_admin_emails) && is_array($custom_admin_emails) ){
-				foreach($custom_admin_emails as $group_key => $emails){
-					if( !empty($emails) ){
-						$emails = explode(',',$emails);
-						foreach ($emails as $email){
-							if( !is_email($email) ){
-								unset($custom_admin_emails[$group_key]);
-								$email_errors = true;
-							}
+	        $custom_admin_emails = self::update_gateway_admin_emails($EM_Gateway, $default_emails);
+	        if( $custom_admin_emails === false ){
+    			global $EM_Notices;
+    			$EM_Notices->add_error(__('An invalid admin email was supplied for your custom emails and was not saved in your settings.','em-pro'),true);
+    		}else{
+    			$EM_Gateway->update_option('emails_admins', serialize($custom_admin_emails));
+    		}
+		}
+		do_action('em_custom_emails_admin_gateway_update',$EM_Gateway, $default_emails, $custom_booking_emails, $custom_admin_emails);
+	}
+	
+	public static function update_gateway_admin_emails( $EM_Gateway, $default_emails = array(), $param = 'em_custom_email_admins' ){
+		$custom_admin_emails = self::editor_admin_emails_get_post( $default_emails, $param );
+		//validate emails
+		$email_errors = false;
+		if( !empty($custom_admin_emails) && is_array($custom_admin_emails) ){
+			foreach($custom_admin_emails as $group_key => $emails){
+				if( !empty($emails) ){
+					$emails = explode(',',$emails);
+					foreach ($emails as $email){
+						if( !is_email($email) ){
+							unset($custom_admin_emails[$group_key]);
+							$email_errors = true;
 						}
-					}else{
-						$custom_admin_emails[$group_key] = ''; //empty = no email
 					}
+				}else{
+					$custom_admin_emails[$group_key] = ''; //empty = no email
 				}
 			}
-			if($email_errors){
-				global $EM_Notices;
-				$EM_Notices->add_error(__('An invalid admin email was supplied for your custom emails and was not saved in your settings.','em-pro'),true);
-			}else{
-				$EM_Gateway->update_option('emails_admins', serialize($custom_admin_emails));
-			}
+		}
+		if($email_errors){
+			return false;
+		}else{
+			return $custom_admin_emails;
 		}
 	}
 
@@ -350,10 +398,11 @@ class EM_Custom_Emails_Admin {
 		return $emails;
 	}
 	
-	public static function get_gateway_default_values( $EM_Gateway = false ){
+	public static function get_gateway_default_values( $EM_Gateway, $lang = false ){
 		global $EM_Gateways;
 		$email_values = array();
-		$gateways = is_object($EM_Gateway) ? array($EM_Gateway->gateway => $EM_Gateway->title) : EM_Gateways::active_gateways();
+		//@todo remove the loop, we don't need it but simpler for revising the SVN commit
+		$gateways = is_object($EM_Gateway) ? array($EM_Gateway->gateway => $EM_Gateway->title) : array();
 		foreach($gateways as $gateway => $gateway_name ){
 			$email_values[$gateway.'-admin'] = array(
 				0 => array('subject'=>get_option('dbem_bookings_contact_email_subject'),'message'=>get_option('dbem_bookings_contact_email_body'),'status'=>0),
@@ -371,14 +420,12 @@ class EM_Custom_Emails_Admin {
 				$email_values[$gateway.'-admin'][5] = array('subject'=>get_option('dbem_bookings_contact_email_subject'),'message'=>get_option('dbem_bookings_contact_email_body'),'status'=>0);
 				$email_values[$gateway.'-user'][5] = array('subject'=>get_option('dbem_bookings_email_pending_subject'),'message'=>get_option('dbem_bookings_email_pending_body'),'status'=>0);
 			}
-			//get custom values if applicable
-			$possible_email_values = maybe_unserialize(get_option('em_'.$gateway . "_emails"));
-			$email_values = self::merge_gateway_default_values($gateway, $email_values, $possible_email_values, count($gateways) > 1);
 		}
 		return $email_values;
 	}
 	
-	public static function get_gateway_mb_default_values( $gateway ){
+	public static function get_gateway_mb_default_values( $EM_Gateway ){
+	    $gateway = $EM_Gateway->gateway;
 		$email_values = array();
 		$email_values[$gateway.'-mb-admin'] = array(
 			0 => array('subject'=>get_option('dbem_multiple_bookings_contact_email_subject'),'message'=>get_option('dbem_multiple_bookings_contact_email_body'),'status'=>0),
@@ -396,9 +443,6 @@ class EM_Custom_Emails_Admin {
 			$email_values[$gateway.'-mb-admin'][5] = array('subject'=>get_option('dbem_multiple_bookings_contact_email_subject'),'message'=>get_option('dbem_multiple_bookings_contact_email_body'),'status'=>0);
 			$email_values[$gateway.'-mb-user'][5] = array('subject'=>get_option('dbem_multiple_bookings_email_pending_subject'),'message'=>get_option('dbem_multiple_bookings_email_pending_body'),'status'=>0);
 		}
-		//get custom values if applicable
-		$possible_email_values = maybe_unserialize(get_option('em_'.$gateway . "_emails"));
-		$email_values = self::merge_gateway_default_values($gateway, $email_values, $possible_email_values);
 		return $email_values;
 	}
 	

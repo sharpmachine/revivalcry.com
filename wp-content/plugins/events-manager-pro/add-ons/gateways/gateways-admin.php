@@ -34,7 +34,7 @@ class EM_Gateways_Admin{
 	}
 
 	public static function handle_gateways_panel() {
-		global $action, $page, $EM_Gateways, $EM_Pro;
+		global $action, $page, $EM_Gateways;
 		wp_reset_vars( array('action', 'page') );
 		switch(addslashes($action)) {
 			case 'edit':	

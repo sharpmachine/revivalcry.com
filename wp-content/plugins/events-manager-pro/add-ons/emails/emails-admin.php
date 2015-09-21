@@ -65,7 +65,7 @@ class EM_Emails_Admin {
 	    global $save_button;
 	    ?>
 		<div  class="postbox " id="em-opt-custom-emails" >
-		<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3><?php _e ( 'Custom Booking Email Templates', 'em-pro' ); ?> <em>(Beta)</em></h3>
+		<div class="handlediv" title="<?php esc_attr_e_emp('Click to toggle', 'dbem'); ?>"><br /></div><h3><?php _e ( 'Custom Booking Email Templates', 'em-pro' ); ?></h3>
 		<div class="inside">
 			<table class='form-table'>
 				<tr class="em-boxheader"><td colspan='2'>

@@ -397,13 +397,7 @@ class EM_Gateway_Offline extends EM_Gateway {
 		?>
 		<table class="form-table">
 		<tbody>
-		  <tr valign="top">
-			  <th scope="row"><?php _e('Success Message', 'em-pro') ?></th>
-			  <td>
-			  	<input type="text" name="offline_booking_feedback" value="<?php esc_attr_e(get_option('em_'. $this->gateway . "_booking_feedback" )); ?>" style='width: 40em;' /><br />
-			  	<em><?php _e('The message that is shown to a user when a booking with offline payments is successful.','em-pro'); ?></em>
-			  </td>
-		  </tr>
+		  <?php em_options_input_text( esc_html__('Success Message', 'em-pro'), 'em_'. $this->gateway . '_booking_feedback', esc_html__('The message that is shown to a user when a booking with offline payments is successful.','em-pro') )?>
 		</tbody>
 		</table>
 		<?php
@@ -413,18 +407,9 @@ class EM_Gateway_Offline extends EM_Gateway {
 	 * Run when saving PayPal settings, saves the settings available in EM_Gateway_Paypal::mysettings()
 	 */
 	function update() {
-		parent::update();
-		$gateway_options = array(
-			$this->gateway . "_button" => $_REQUEST[ 'offline_button' ],
-			$this->gateway . "_form" => $_REQUEST[ 'offline_form' ],
-			$this->gateway . "_booking_feedback" => $_REQUEST[ 'offline_booking_feedback' ]
-		);
-		foreach($gateway_options as $key=>$option){
-			update_option('em_'.$key, stripslashes($option));
-		}
-		//default action is to return true
-		return true;
-
+	    $gateway_options = array('em_'. $this->gateway . '_booking_feedback');
+		foreach( $gateway_options as $option_wpkses ) add_filter('gateway_update_'.$option_wpkses,'wp_kses_post');
+		return parent::update($gateway_options);
 	}
 }
 EM_Gateways::register_gateway('offline', 'EM_Gateway_Offline');

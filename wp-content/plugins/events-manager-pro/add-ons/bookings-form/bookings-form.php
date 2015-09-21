@@ -84,7 +84,7 @@ class EM_Booking_Form {
 			$sql = $wpdb->prepare("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'booking-form' AND meta_id=%d", $form_id);
 			$form_data_row = $wpdb->get_row($sql, ARRAY_A);
 			if( empty($form_data_row) ){
-				$form_data = self::get_form_template();
+				$form_data = array('form'=> self::get_form_template());
 				self::$form_name = __('Default','em-pro');
 			}else{
 				$form_data = unserialize($form_data_row['meta_value']);
@@ -153,14 +153,16 @@ class EM_Booking_Form {
 	 */
 	public static function em_booking_get_post($result, $EM_Booking){
 		//get, store and validate post data 
-		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);				
+		$EM_Form = self::get_form($EM_Booking->event_id, $EM_Booking);
+        //skip registration fields
+		$manual_assigned_booking = !empty($_REQUEST['manual_booking']) && !empty($_REQUEST['person_id']) && wp_verify_nonce($_REQUEST['manual_booking'], 'em_manual_booking_'.$EM_Booking->event_id);				
 		if( $EM_Form->get_post() ){
 			foreach($EM_Form->get_values() as $fieldid => $value){
 				if($fieldid == 'user_password'){
 				    $EM_Booking->temporary_password = $value; //assign a random property so it's never saved
 				}else{
 					//get results and put them into booking meta
-					if( array_key_exists($fieldid, $EM_Form->user_fields) || in_array($fieldid, array('user_email','user_name')) ){
+					if( !$manual_assigned_booking && (array_key_exists($fieldid, $EM_Form->user_fields) || in_array($fieldid, array('user_email','user_name'))) ){
 					    if( !(!empty($EM_Booking->booking_id) && $EM_Booking->can_manage()) || empty($EM_Booking->booking_id) ){ //only save reg fields on first go
 							//registration fields
 							$EM_Booking->booking_meta['registration'][$fieldid] = $value;
@@ -309,6 +311,9 @@ class EM_Booking_Form {
 						}elseif( !empty($EM_Booking->booking_meta['booking'][$field['fieldid']]) ){
 							//match for custom field value
 							$replace = $EM_Form->get_formatted_value($field, $EM_Booking->booking_meta['booking'][$field['fieldid']]);
+						}elseif( $field['type'] == 'html' ){
+						    //output HTML content if requested specifically
+						    $replace = $field['options_html_content'];
 						}
 					}
 				}
@@ -431,7 +436,7 @@ class EM_Booking_Form {
 	 */
 	
 	public static function admin_page_actions(){
-		global $EM_Pro, $EM_Notices, $wpdb;
+		global $EM_Notices, $wpdb;
 		if( !empty($_REQUEST['page']) && $_REQUEST['page'] == 'events-manager-forms-editor' ){
 			//Load the right form
 			if( !empty($_REQUEST['form_id']) ){

@@ -73,7 +73,7 @@ class EM_Attendees_Form {
 				$sql = $wpdb->prepare("SELECT meta_id, meta_value FROM ".EM_META_TABLE." WHERE meta_key = 'attendee-form' AND meta_id=%d", $form_id);
 				$form_data_row = $wpdb->get_row($sql, ARRAY_A);
 				if( empty($form_data_row) ){
-					$form_data = self::get_form_template();
+				    $form_data = array('form'=> self::get_form_template());
 					self::$form_name = __('Default','em-pro');
 				}else{
 					$form_data = unserialize($form_data_row['meta_value']);
@@ -299,6 +299,7 @@ class EM_Attendees_Form {
 		$EM_Form = self::get_form($EM_Booking->event_id);
 		if( self::$form_id > 0 ){
 			if( (empty($EM_Booking->booking_id) || (!empty($EM_Booking->booking_id) && $EM_Booking->can_manage())) ){
+			    $EM_Booking->booking_meta['attendees'] = array();
 				foreach ($EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ){
 				    for( $i = 0; $i < $EM_Ticket_Booking->ticket_booking_spaces; $i++ ){
 						$EM_Booking->booking_meta['attendees'][$EM_Ticket_Booking->ticket_id][$i] = array();
@@ -409,6 +410,7 @@ class EM_Attendees_Form {
 			$EM_Bookings_Table->limit = 150; //if you're having server memory issues, try messing with this number
 			$EM_Bookings = $EM_Bookings_Table->get_bookings();
 			$handle = fopen("php://output", "w");
+			$delimiter = !defined('EM_CSV_DELIMITER') ? ',' : EM_CSV_DELIMITER;
 			while(!empty($EM_Bookings->bookings)){
 				foreach( $EM_Bookings->bookings as $EM_Booking ) {
 					/* @var $EM_Booking EM_Booking */
@@ -422,7 +424,7 @@ class EM_Attendees_Form {
 								foreach( $attendee_data as $field_value){
 									$row[] = $field_value;
 								}
-								fputcsv($handle, $row);
+								fputcsv($handle, $row, $delimiter);
 							}
 						}
 					}
@@ -662,7 +664,7 @@ class EM_Attendees_Form {
 	 * Catches posted data when editing custom attendee forms in the Form Editor 
 	 */
 	public static function admin_page_actions(){
-		global $EM_Pro, $EM_Notices, $wpdb;
+		global $EM_Notices, $wpdb;
 		if( !empty($_REQUEST['page']) && $_REQUEST['page'] == 'events-manager-forms-editor' ){
 			//Load the right form
 			if( isset($_REQUEST['em_attendee_fields_enabled']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'em_attendee_fields_enabled') ){
