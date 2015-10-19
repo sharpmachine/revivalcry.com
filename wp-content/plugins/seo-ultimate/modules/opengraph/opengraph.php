@@ -68,6 +68,7 @@ class SU_OpenGraph extends SU_Module {
 		return array(
 			  'og' => 'http://ogp.me/ns#'
 			, 'fb' => 'http://ogp.me/ns/fb#'
+			, 'article' => 'http://ogp.me/ns/article#'
 		);
 	}
 	

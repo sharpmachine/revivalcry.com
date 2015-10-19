@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the SEO Ultimate package.
 msgid ""
 msgstr ""
-"Project-Id-Version: SEO Ultimate v7.6.5.7\n"
+"Project-Id-Version: SEO Ultimate v7.6.5.8\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/seo-ultimate\n"
-"POT-Creation-Date: 2015-06-29 20:58+0100\n"
-"PO-Revision-Date: 2015-06-29 20:58+0100\n"
+"POT-Creation-Date: 2015-09-24 02:09+0100\n"
+"PO-Revision-Date: 2015-09-24 02:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: SEO Design Solutions <support@seodesignsolutions.com>\n"
 "Language: en_US\n"
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Log"
 msgstr ""
 
-#: modules/404s/fofs-log.php:118 modules/class.su-module.php:1163
+#: modules/404s/fofs-log.php:118 modules/class.su-module.php:1164
 msgid "Actions"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 
 #: modules/404s/fofs-settings.php:17
 #: modules/internal-link-aliases/internal-link-aliases.php:43
-#: modules/opengraph/opengraph.php:351 modules/titles/titles.php:41
+#: modules/opengraph/opengraph.php:352 modules/titles/titles.php:41
 msgid "Settings"
 msgstr ""
 
@@ -203,7 +203,7 @@ msgstr ""
 #: modules/meta/meta-keywords.php:178 modules/meta/meta-robots.php:52
 #: modules/meta/webmaster-verify.php:95 modules/meta/webmaster-verify.php:101
 #: modules/more-links/more-links.php:104 modules/more-links/more-links.php:111
-#: modules/opengraph/opengraph.php:545
+#: modules/opengraph/opengraph.php:546
 #: modules/rich-snippets/rich-snippets.php:410
 #: modules/rich-snippets/rich-snippets.php:417
 #: modules/settings/settings.php:63
@@ -1172,98 +1172,98 @@ msgstr ""
 msgid "&raquo;"
 msgstr ""
 
-#: modules/class.su-module.php:1150
+#: modules/class.su-module.php:1151
 #, php-format
 msgid "Displaying %s&#8211;%s of %s"
 msgstr ""
 
-#: modules/class.su-module.php:1164
+#: modules/class.su-module.php:1165
 msgid "ID"
 msgstr ""
 
-#: modules/class.su-module.php:1217
+#: modules/class.su-module.php:1218
 msgid "View"
 msgstr ""
 
-#: modules/class.su-module.php:1219
+#: modules/class.su-module.php:1220
 msgid "Edit"
 msgstr ""
 
-#: modules/class.su-module.php:1389
+#: modules/class.su-module.php:1390
 msgid "Settings updated."
 msgstr ""
 
-#: modules/class.su-module.php:1410
+#: modules/class.su-module.php:1411
 msgid "Save Changes"
 msgstr ""
 
-#: modules/class.su-module.php:1897
+#: modules/class.su-module.php:1898
 msgid ""
 "Are you sure you want to replace the textbox contents with this default "
 "value?"
 msgstr ""
 
-#: modules/class.su-module.php:1926 modules/settings/settings-data.php:23
+#: modules/class.su-module.php:1927 modules/settings/settings-data.php:23
 msgid "Reset"
 msgstr ""
 
-#: modules/class.su-module.php:2778 modules/class.su-module.php:2790
+#: modules/class.su-module.php:2779 modules/class.su-module.php:2791
 #, php-format
 msgid "A Deleted %s"
 msgstr ""
 
-#: modules/class.su-module.php:2780
+#: modules/class.su-module.php:2781
 msgid "A Deleted Post"
 msgstr ""
 
-#: modules/class.su-module.php:2795
+#: modules/class.su-module.php:2796
 msgid "A Deleted Term"
 msgstr ""
 
-#: modules/class.su-module.php:2801 modules/meta/meta-descriptions.php:31
-#: modules/meta/meta-keywords.php:40 modules/opengraph/opengraph.php:352
+#: modules/class.su-module.php:2802 modules/meta/meta-descriptions.php:31
+#: modules/meta/meta-keywords.php:40 modules/opengraph/opengraph.php:353
 #: plugin/class.seo-ultimate.php:1876
 msgid "Blog Homepage"
 msgstr ""
 
-#: modules/class.su-module.php:2806 plugin/class.seo-ultimate.php:1952
+#: modules/class.su-module.php:2807 plugin/class.seo-ultimate.php:1952
 msgid "Author"
 msgstr ""
 
-#: modules/class.su-module.php:2808
+#: modules/class.su-module.php:2809
 msgid "A Deleted User"
 msgstr ""
 
-#: modules/class.su-module.php:2823 plugin/class.seo-ultimate.php:1982
+#: modules/class.su-module.php:2824 plugin/class.seo-ultimate.php:1982
 msgid "Link Mask"
 msgstr ""
 
-#: modules/class.su-module.php:2825
+#: modules/class.su-module.php:2826
 msgid "Link Mask (Disabled)"
 msgstr ""
 
-#: modules/class.su-module.php:2830
+#: modules/class.su-module.php:2831
 msgid "A Deleted Link Mask"
 msgstr ""
 
-#: modules/class.su-module.php:2860
+#: modules/class.su-module.php:2861
 msgid "Type a URL or start typing the name of an item on your site"
 msgstr ""
 
-#: modules/class.su-module.php:2873
+#: modules/class.su-module.php:2874
 msgid "Remove this location from this textbox"
 msgstr ""
 
-#: modules/class.su-module.php:2873
+#: modules/class.su-module.php:2874
 msgid "X"
 msgstr ""
 
-#: modules/class.su-module.php:2982 modules/sds-blog/sds-blog.php:138
+#: modules/class.su-module.php:2983 modules/sds-blog/sds-blog.php:138
 #, php-format
 msgid "<strong>RSS Error</strong>: %s"
 msgstr ""
 
-#: modules/class.su-module.php:2998 modules/sds-blog/sds-blog.php:154
+#: modules/class.su-module.php:2999 modules/sds-blog/sds-blog.php:154
 msgid ""
 "An error has occurred, which probably means the feed is down. Try again "
 "later."
@@ -1898,12 +1898,12 @@ msgid "Meta Keywords"
 msgstr ""
 
 #: modules/meta/meta-keywords.php:38 modules/meta/meta-robots.php:22
-#: modules/opengraph/opengraph.php:349
+#: modules/opengraph/opengraph.php:350
 msgid "Sitewide Values"
 msgstr ""
 
 #: modules/meta/meta-keywords.php:39 modules/noindex/noindex.php:50
-#: modules/opengraph/opengraph.php:350
+#: modules/opengraph/opengraph.php:351
 msgid "Default Values"
 msgstr ""
 
@@ -2368,8 +2368,8 @@ msgid "Noindex"
 msgstr ""
 
 #: modules/noindex/noindex.php:69 modules/noindex/noindex.php:80
-#: modules/opengraph/opengraph.php:320 modules/opengraph/opengraph.php:451
-#: modules/opengraph/opengraph.php:452
+#: modules/opengraph/opengraph.php:321 modules/opengraph/opengraph.php:452
+#: modules/opengraph/opengraph.php:453
 msgid "Use default"
 msgstr ""
 
@@ -2460,348 +2460,348 @@ msgstr ""
 msgid "Open Graph"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:322
+#: modules/opengraph/opengraph.php:323
 msgid "Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:327
+#: modules/opengraph/opengraph.php:328
 msgid "Title"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:332
+#: modules/opengraph/opengraph.php:333
 msgid "Description"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:337
+#: modules/opengraph/opengraph.php:338
 msgid "Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:360
+#: modules/opengraph/opengraph.php:361
 msgid "Site Name"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:361
+#: modules/opengraph/opengraph.php:362
 msgid "Facebook App ID"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:362
+#: modules/opengraph/opengraph.php:363
 msgid "@username of website"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:363
+#: modules/opengraph/opengraph.php:364
 msgid "Same as twitter:site, but the user&#8217;s Twitter ID"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:364
+#: modules/opengraph/opengraph.php:365
 msgid "@username of content creator"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:365
+#: modules/opengraph/opengraph.php:366
 msgid "Twitter user ID of content creator"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:366
+#: modules/opengraph/opengraph.php:367
 msgid "Description of content (maximum 200 characters)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:367
+#: modules/opengraph/opengraph.php:368
 msgid "Title of content (maximum 70 characters)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:368
+#: modules/opengraph/opengraph.php:369
 msgid "URL of image to use in the card. Image must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:369
+#: modules/opengraph/opengraph.php:370
 msgid "Width of image in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:370
+#: modules/opengraph/opengraph.php:371
 msgid "Height of image in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:371
+#: modules/opengraph/opengraph.php:372
 msgid ""
 "Top customizable data field, can be a relatively short string (ie \"$3.99\")"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:372 modules/opengraph/opengraph.php:374
+#: modules/opengraph/opengraph.php:373 modules/opengraph/opengraph.php:375
 msgid ""
 "Customizable label or units for the information in twitter:data1 (best "
 "practice: use all caps)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:373
+#: modules/opengraph/opengraph.php:374
 msgid ""
 "Bottom customizable data field, can be a relatively short string (ie "
 "\"Seattle, WA\")"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:375
+#: modules/opengraph/opengraph.php:376
 msgid "1st image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:376
+#: modules/opengraph/opengraph.php:377
 msgid "2nd image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:377
+#: modules/opengraph/opengraph.php:378
 msgid "3rd image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:378
+#: modules/opengraph/opengraph.php:379
 msgid "4th image in the gallery. Images must be less than 1MB in size."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:379
+#: modules/opengraph/opengraph.php:380
 msgid " \tHTTPS URL of player iframe"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:380
+#: modules/opengraph/opengraph.php:381
 msgid "Width of iframe in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:381
+#: modules/opengraph/opengraph.php:382
 msgid "Height of iframe in pixels"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:382
+#: modules/opengraph/opengraph.php:383
 msgid "URL to raw video or audio stream"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:383
+#: modules/opengraph/opengraph.php:384
 msgid "Name of your iPhone app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:384
+#: modules/opengraph/opengraph.php:385
 msgid "Your app ID in the iTunes App Store (Note: NOT your bundle ID)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:385
+#: modules/opengraph/opengraph.php:386
 msgid ""
 "Your app&#8217;s custom URL scheme (you must include \"://\" after your "
 "scheme name)"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:386
+#: modules/opengraph/opengraph.php:387
 msgid "Name of your iPad optimized app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:387
+#: modules/opengraph/opengraph.php:388
 msgid "Your app ID in the iTunes App Store"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:388
+#: modules/opengraph/opengraph.php:389
 msgid "Your app&#8217;s custom URL scheme"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:389
+#: modules/opengraph/opengraph.php:390
 msgid "Name of your Android app"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:390
+#: modules/opengraph/opengraph.php:391
 msgid "Your app ID in the Google Play Store"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:391
+#: modules/opengraph/opengraph.php:392
 msgid "Your app#8217;s custom URL scheme"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:398
+#: modules/opengraph/opengraph.php:399
 msgid "Default Types"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:400
+#: modules/opengraph/opengraph.php:401
 msgid "Post Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:401
+#: modules/opengraph/opengraph.php:402
 msgid "Open Graph Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:402
+#: modules/opengraph/opengraph.php:403
 msgid "Twitter Type"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:417 modules/opengraph/opengraph.php:422
+#: modules/opengraph/opengraph.php:418 modules/opengraph/opengraph.php:423
 msgid "Default Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:420
+#: modules/opengraph/opengraph.php:421
 msgid ""
 "In the box below, you can specify an image URL or an image from your media "
 "library to use as a default image in the event that there is no image "
 "otherwise specified for a given webpage on your site."
 msgstr ""
 
-#: modules/opengraph/opengraph.php:429
+#: modules/opengraph/opengraph.php:430
 msgid "Include author data for posts"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:429
+#: modules/opengraph/opengraph.php:430
 msgid "Open Graph Data"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:431
+#: modules/opengraph/opengraph.php:432
 msgid "Use the non-validating code prescribed by Open Graph and Twitter"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:432
+#: modules/opengraph/opengraph.php:433
 msgid "Alter the code to validate as XHTML"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:433
+#: modules/opengraph/opengraph.php:434
 msgid "Alter the code to validate as HTML5"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:434
+#: modules/opengraph/opengraph.php:435
 msgid "HTML Validation"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:440 modules/titles/titles.php:91
+#: modules/opengraph/opengraph.php:441 modules/titles/titles.php:91
 msgid "Blog Homepage Title"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:441
+#: modules/opengraph/opengraph.php:442
 msgid "Blog Homepage Description"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:442
+#: modules/opengraph/opengraph.php:443
 msgid "Blog Homepage Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:448 modules/widgets/widgets.php:140
+#: modules/opengraph/opengraph.php:449 modules/widgets/widgets.php:140
 msgid "Title:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:449
+#: modules/opengraph/opengraph.php:450
 msgid "Description:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:450
+#: modules/opengraph/opengraph.php:451
 msgid "Image:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:451
+#: modules/opengraph/opengraph.php:452
 msgid "Open Graph Type:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:452
+#: modules/opengraph/opengraph.php:453
 msgid "Twitter Type:"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:477
+#: modules/opengraph/opengraph.php:478
 #, php-format
 msgid "Featured Image: %s"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:485
+#: modules/opengraph/opengraph.php:486
 #: modules/rich-snippets/rich-snippets.php:357
 msgid "None"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:486
+#: modules/opengraph/opengraph.php:487
 msgid "Internet"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:487
+#: modules/opengraph/opengraph.php:488
 msgid "Article"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:488
+#: modules/opengraph/opengraph.php:489
 msgid "Blog"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:489
+#: modules/opengraph/opengraph.php:490
 msgid "Profile"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:490
+#: modules/opengraph/opengraph.php:491
 msgid "Website"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:491
+#: modules/opengraph/opengraph.php:492
 msgid "Products"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:492
+#: modules/opengraph/opengraph.php:493
 msgid "Book"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:493
+#: modules/opengraph/opengraph.php:494
 msgid "Music"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:494
+#: modules/opengraph/opengraph.php:495
 msgid "Album"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:495
+#: modules/opengraph/opengraph.php:496
 msgid "Playlist"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:496
+#: modules/opengraph/opengraph.php:497
 msgid "Radio Station"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:497
+#: modules/opengraph/opengraph.php:498
 msgid "Song"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:498
+#: modules/opengraph/opengraph.php:499
 msgid "Videos"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:499
+#: modules/opengraph/opengraph.php:500
 msgid "Movie"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:500
+#: modules/opengraph/opengraph.php:501
 msgid "TV Episode"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:501
+#: modules/opengraph/opengraph.php:502
 msgid "TV Show"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:502
+#: modules/opengraph/opengraph.php:503
 msgid "Video"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:509
+#: modules/opengraph/opengraph.php:510
 msgid "Summary"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:510
+#: modules/opengraph/opengraph.php:511
 msgid "Product"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:511
+#: modules/opengraph/opengraph.php:512
 #: modules/rich-snippets/rich-snippets.php:120
 msgid "Photo"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:512
+#: modules/opengraph/opengraph.php:513
 msgid "Summary Large Image"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:513
+#: modules/opengraph/opengraph.php:514
 msgid "Gallery"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:514
+#: modules/opengraph/opengraph.php:515
 msgid "Player"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:515
+#: modules/opengraph/opengraph.php:516
 msgid "App"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:537
+#: modules/opengraph/opengraph.php:538
 msgid "Twitter Handle"
 msgstr ""
 
-#: modules/opengraph/opengraph.php:546
+#: modules/opengraph/opengraph.php:547
 msgid ""
 "\n"
 "<ul>\n"

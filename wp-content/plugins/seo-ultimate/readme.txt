@@ -2,8 +2,8 @@
 Contributors: SEO Design Solutions, JohnLamansky, djalexandar, M Rub Shuvo
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate, Open Graph, og, microdata, Facebook, Twitter, Schema.org
 Requires at least: 3.9
-Tested up to: 4.2.2
-Stable tag: 7.6.5.6
+Tested up to: 4.3.1
+Stable tag: 7.6.5.8
 
 This all-in-one SEO plugin gives you control over meta titles & descriptions, open graph, auto-linking, rich-snippets, 404 monitoring, siloing & more.
 
@@ -253,6 +253,11 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 
 == Changelog ==
+
+= Version 7.6.5.8 (September 23, 2015) =
+* Bugfix: Admin pagination
+* Bugfix: Problem Of Wrong ID's
+* Bugfix: Yandex Validation Error For Open Graph Article Prefix
 
 = Version 7.6.5.7 (June 29, 2015) =
 * Improvement: SEO Admin Toolbar Menu

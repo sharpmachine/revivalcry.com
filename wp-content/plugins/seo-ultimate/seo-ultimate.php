@@ -3,7 +3,7 @@
 Plugin Name: SEO Ultimate
 Plugin URI: http://www.seodesignsolutions.com/wordpress-seo/
 Description: This all-in-one SEO plugin gives you control over meta titles & descriptions, open graph, auto-linking, rich-snippets, 404 monitoring, siloing & more.
-Version: 7.6.5.7
+Version: 7.6.5.8
 Author: SEO Design Solutions
 Author URI: http://www.seodesignsolutions.com/
 Text Domain: seo-ultimate
@@ -12,7 +12,7 @@ Text Domain: seo-ultimate
 /**
  * The main SEO Ultimate plugin file.
  * @package SeoUltimate
- * @version 7.6.5.7
+ * @version 7.6.5.8
  * @link http://www.seodesignsolutions.com/wordpress-seo/ SEO Ultimate Homepage
  */
 
@@ -48,10 +48,10 @@ define('SU_MINIMUM_WP_VER', '3.9');
 //Reading plugin info from constants is faster than trying to parse it from the header above.
 define('SU_PLUGIN_NAME', 'SEO Ultimate');
 define('SU_PLUGIN_URI', 'http://www.seodesignsolutions.com/wordpress-seo/');
-define('SU_VERSION', '7.6.5.7');
+define('SU_VERSION', '7.6.5.8');
 define('SU_AUTHOR', 'SEO Design Solutions');
 define('SU_AUTHOR_URI', 'http://www.seodesignframework.com/');
-define('SU_USER_AGENT', 'SeoUltimate/7.6.5.7');
+define('SU_USER_AGENT', 'SeoUltimate/7.6.5.8');
 
 /********** INCLUDES **********/
 

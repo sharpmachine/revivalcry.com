@@ -1137,12 +1137,13 @@ class SU_Module {
 		echo "\n<div class='su-meta-edit-table'>\n";
 		
 		$page_links = paginate_links( array(
-			  'base' => esc_url( add_query_arg( $type . '_paged', '%#%' ) ) . '#' . $tab
+			  'base' => html_entity_decode( esc_url( add_query_arg( $type . '_paged', '%#%' ) ) ) . '#' . $tab
 			, 'format' => ''
 			, 'prev_text' => __('&laquo;')
 			, 'next_text' => __('&raquo;')
 			, 'total' => $num_pages
 			, 'current' => $pagenum
+			, 'add_args' => false
 		));
 		
 		if ( $page_links ) {
@@ -1201,7 +1202,7 @@ class SU_Module {
 						$view_url = get_term_link($id, $type);
 					}
 					else{
-						$id = intval($object->term_taxonomy_id);
+						$id = intval($object->term_id);
 						$view_url = get_term_link(intval($object->term_id), $type);
 					}
 					$name = $object->name;
